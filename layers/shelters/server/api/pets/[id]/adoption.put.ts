@@ -1,6 +1,6 @@
 import { and, eq } from 'drizzle-orm'
 import { z } from 'zod'
-import { pets } from '../../../db/schema'
+import { pets } from '@core/server/db/schema'
 import { adoptionFieldsSchema } from '#shared/models'
 
 const paramsSchema = z.object({ id: z.coerce.number().int().positive() })

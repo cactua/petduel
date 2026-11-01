@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { pets, shelters } from '../../db/schema'
+import { pets, shelters } from '@core/server/db/schema'
 
 // Ritira la richiesta di verifica o chiude il rifugio: i pet restano, ma tornano pet normali
 export default defineEventHandler(async (event) => {

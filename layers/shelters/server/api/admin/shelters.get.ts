@@ -1,5 +1,5 @@
 import { asc, eq } from 'drizzle-orm'
-import { shelters, users } from '../../db/schema'
+import { shelters, users } from '@core/server/db/schema'
 import type { ShelterReviewItem } from '#shared/models'
 
 // Rifugi da verificare (i più vecchi per primi) e rifugi già verificati (per nome)

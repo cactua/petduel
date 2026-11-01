@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { shelters } from '../../db/schema'
+import { shelters } from '@core/server/db/schema'
 import { parseShelterImageName } from '#shared/images'
 
 // Banner e logo dei rifugi: pubblici se il rifugio è verificato, altrimenti solo per chi lo gestisce

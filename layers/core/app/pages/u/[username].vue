@@ -2,6 +2,8 @@
 import { shelterImageSources } from '#shared/images'
 import type { AdoptionStatus, PetGallery as Gallery, Profile } from '#shared/models'
 
+const { features } = useAppConfig()
+
 const route = useRoute()
 const { user } = useUserSession()
 const { data: profile, error, refresh } = await useFetch<Profile>(() => `/api/users/${route.params.username}`)
@@ -172,7 +174,7 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
       </div>
 
       <!-- Invito discreto per chi non gestisce ancora un rifugio -->
-      <NuxtLink v-if="profile.isMe && !manage" to="/rifugio" class="profile__become">🏠 {{ $t('profile.becomeShelter') }} →</NuxtLink>
+      <NuxtLink v-if="profile.isMe && !manage && features.shelters" to="/rifugio" class="profile__become">🏠 {{ $t('profile.becomeShelter') }} →</NuxtLink>
     </template>
   </section>
 </template>

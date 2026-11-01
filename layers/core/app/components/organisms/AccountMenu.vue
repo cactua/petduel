@@ -44,10 +44,11 @@ onBeforeUnmount(() => {
 })
 watch(() => route.fullPath, close)
 
-// Il proprio rifugio, con le richieste nuove: si chiede solo aprendo il menu
+// Il proprio rifugio, con le richieste nuove: si chiede solo aprendo il menu, e solo sui siti con i rifugi
+const { features } = useAppConfig()
 const { data: myShelter, refresh: refreshShelter } = useLazyFetch<ShelterManage | null>('/api/shelters/me/summary', { server: false, immediate: false })
 watch(open, (o) => {
-  if (o && loggedIn.value) refreshShelter()
+  if (o && loggedIn.value && features.shelters) refreshShelter()
 })
 
 const initial = computed(() => user.value?.username.charAt(0).toUpperCase() ?? '')
@@ -72,11 +73,13 @@ const initial = computed(() => user.value?.username.charAt(0).toUpperCase() ?? '
           </NuxtLink>
           <nav class="account-menu__links">
             <NuxtLink to="/carica" class="account-menu__link"><AppIcon name="camera" />{{ $t('nav.uploadPhoto') }}</NuxtLink>
-            <NuxtLink v-if="myShelter?.status === 'approved'" to="/rifugio" class="account-menu__link">
-              <AppIcon name="home" /><span class="account-menu__ellipsis">{{ myShelter.name }}</span>
-              <em v-if="myShelter.newRequests" class="badge badge--action" :aria-label="$t('area.newCount', { n: myShelter.newRequests })">{{ myShelter.newRequests }}</em>
-            </NuxtLink>
-            <NuxtLink v-else to="/rifugio" class="account-menu__link"><AppIcon name="home" />{{ myShelter?.status === 'pending' ? `${$t('menu.shelter')} · ${$t('area.pending')}` : $t('menu.becomeShelter') }}</NuxtLink>
+            <template v-if="features.shelters">
+              <NuxtLink v-if="myShelter?.status === 'approved'" to="/rifugio" class="account-menu__link">
+                <AppIcon name="home" /><span class="account-menu__ellipsis">{{ myShelter.name }}</span>
+                <em v-if="myShelter.newRequests" class="badge badge--action" :aria-label="$t('area.newCount', { n: myShelter.newRequests })">{{ myShelter.newRequests }}</em>
+              </NuxtLink>
+              <NuxtLink v-else to="/rifugio" class="account-menu__link"><AppIcon name="home" />{{ myShelter?.status === 'pending' ? `${$t('menu.shelter')} · ${$t('area.pending')}` : $t('menu.becomeShelter') }}</NuxtLink>
+            </template>
             <NuxtLink v-if="user.role === 'admin'" to="/admin" class="account-menu__link"><AppIcon name="shield" />{{ $t('profile.admin') }}</NuxtLink>
             <NuxtLink to="/account" class="account-menu__link"><AppIcon name="face" />{{ $t('account.title') }}</NuxtLink>
           </nav>

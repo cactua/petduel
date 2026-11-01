@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { shelters } from '../../../db/schema'
+import { shelters } from '@core/server/db/schema'
 
 // Nuovo banner o logo: sostituisce subito quello di prima
 export default defineEventHandler(async (event) => {

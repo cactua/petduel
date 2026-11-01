@@ -6,12 +6,13 @@ definePageMeta({ middleware: 'admin' })
 const { data: todo, refresh } = await useFetch<{ photos: number, shelters: number }>('/api/admin/todo', { key: 'admin-todo' })
 const route = useRoute()
 watch(() => route.path, () => refresh())
+const { features } = useAppConfig()
 
 const items = computed(() => [
   { to: '/admin', label: 'Panoramica', emoji: '📊', exact: true },
   { to: '/admin/foto', label: 'Foto', emoji: '📸', badge: todo.value?.photos },
   { to: '/admin/utenti', label: 'Utenti', emoji: '👥' },
-  { to: '/admin/rifugi', label: 'Rifugi', emoji: '🏠', badge: todo.value?.shelters },
+  ...(features.shelters ? [{ to: '/admin/rifugi', label: 'Rifugi', emoji: '🏠', badge: todo.value?.shelters }] : []),
   { to: '/admin/sfide', label: 'Sfide', emoji: '🏁' },
   { to: '/admin/pubblicita', label: 'Pubblicità', emoji: '📣' },
 ])

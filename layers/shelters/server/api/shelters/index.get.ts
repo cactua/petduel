@@ -1,5 +1,5 @@
 import { asc, eq } from 'drizzle-orm'
-import { shelters } from '../../db/schema'
+import { shelters } from '@core/server/db/schema'
 import type { PublicShelter } from '#shared/models'
 
 // Rifugi verificati, in ordine alfabetico

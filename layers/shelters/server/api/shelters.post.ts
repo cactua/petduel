@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { shelters } from '../db/schema'
+import { shelters } from '@core/server/db/schema'
 import { shelterFieldsSchema } from '#shared/models'
 
 // Richiesta di verifica di un rifugio: resta in attesa finché un moderatore non la controlla.

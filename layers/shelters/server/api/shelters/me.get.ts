@@ -1,5 +1,5 @@
 import { desc, eq } from 'drizzle-orm'
-import { adoptionRequests, pets, users } from '../../db/schema'
+import { adoptionRequests, pets, users } from '@core/server/db/schema'
 import type { MyShelter } from '#shared/models'
 
 // Area del rifugio: stato della verifica, dati privati e richieste di adozione ricevute

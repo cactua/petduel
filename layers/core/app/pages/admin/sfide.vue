@@ -2,6 +2,8 @@
 import { SPECIES, challengeFieldsSchema, type ChallengeList, type ChallengeSummary, type Species } from '#shared/models'
 import { speciesName } from '#shared/speciesNames'
 
+const { features } = useAppConfig()
+
 definePageMeta({ middleware: 'admin' })
 useHead({ title: 'Sfide · Admin' })
 
@@ -110,7 +112,7 @@ const scheduled = computed(() => [...(data.value?.current ?? []), ...(data.value
           <input id="c-start" v-model="form.startDate" type="date" class="input">
         </div>
       </div>
-      <label class="label challenge-admin__check"><input v-model="form.adoptionOnly" type="checkbox" class="challenge-admin__checkbox"> Solo per i pet dei rifugi che cercano casa</label>
+      <label v-if="features.shelters" class="label challenge-admin__check"><input v-model="form.adoptionOnly" type="checkbox" class="challenge-admin__checkbox"> Solo per i pet dei rifugi che cercano casa</label>
       <p v-if="error" class="error" role="alert">{{ error }}</p>
       <p v-if="notice" class="admin-page__notice" role="status">{{ notice }}</p>
       <button type="submit" class="btn btn--primary btn--lg challenge-admin__submit" :disabled="sending">{{ sending ? 'Salvataggio…' : 'Programma la sfida' }}</button>

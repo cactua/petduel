@@ -5,6 +5,7 @@ import {
 } from '#shared/models'
 
 const route = useRoute()
+const { features } = useAppConfig()
 const { user } = useUserSession()
 const { t } = useI18n()
 
@@ -97,7 +98,7 @@ const toTop = (p: RankedPet & { toTop: number }) =>
         <template v-else>{{ $t('ranking.totalNote') }}</template>
       </p>
     </header>
-    <NuxtLink to="/rifugi" class="ranking__adopt">🏠 <b>{{ $t('shelters.title') }}</b>: {{ $t('ranking.adoptLink') }} →</NuxtLink>
+    <NuxtLink v-if="features.shelters" to="/rifugi" class="ranking__adopt">🏠 <b>{{ $t('shelters.title') }}</b>: {{ $t('ranking.adoptLink') }} →</NuxtLink>
 
     <div v-if="celebrate" class="ranking__celebrate">
       <span class="ranking__party" aria-hidden="true">🎉</span>

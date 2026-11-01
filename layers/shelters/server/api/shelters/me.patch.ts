@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { shelters } from '../../db/schema'
+import { shelters } from '@core/server/db/schema'
 import { shelterProfileSchema } from '#shared/models'
 
 // Un rifugio verificato cura da solo la sua pagina; nome, città e codice fiscale

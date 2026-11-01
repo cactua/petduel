@@ -1,6 +1,6 @@
 import { and, eq } from 'drizzle-orm'
 import { z } from 'zod'
-import { pets, shelters } from '../../../db/schema'
+import { pets, shelters } from '@core/server/db/schema'
 
 const paramsSchema = z.object({ id: z.coerce.number().int().positive() })
 const reason = z.string().trim().min(3, 'Scrivi il motivo').max(200)

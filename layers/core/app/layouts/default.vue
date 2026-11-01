@@ -2,6 +2,7 @@
 import site from '#site'
 // Template (Atomic Design): testata, contenuto della pagina e dock in basso su mobile
 const { loggedIn, user } = useUserSession()
+const { features } = useAppConfig()
 </script>
 
 <template>
@@ -11,7 +12,7 @@ const { loggedIn, user } = useUserSession()
       <nav class="app-shell__nav">
         <NuxtLink to="/sfide" class="app-shell__nav-link">{{ $t('nav.challenges') }}</NuxtLink>
         <NuxtLink to="/classifica" class="app-shell__nav-link">{{ $t('nav.ranking') }}</NuxtLink>
-        <NuxtLink to="/rifugi" class="app-shell__nav-link">{{ $t('nav.adopt') }}</NuxtLink>
+        <NuxtLink v-if="features.shelters" to="/rifugi" class="app-shell__nav-link">{{ $t('nav.adopt') }}</NuxtLink>
       </nav>
       <!-- Nella barra restano le azioni principali; profilo, lingua, tema ed esci stanno nel menu -->
       <div class="app-shell__account">
@@ -31,7 +32,7 @@ const { loggedIn, user } = useUserSession()
       <NuxtLink to="/sfide" class="app-shell__dock-link"><AppIcon name="flag" /><span>{{ $t('nav.challenges') }}</span></NuxtLink>
       <NuxtLink to="/classifica" class="app-shell__dock-link"><AppIcon name="podium" /><span>{{ $t('nav.ranking') }}</span></NuxtLink>
       <NuxtLink to="/carica" class="app-shell__dock-link app-shell__dock-link--big" :aria-label="$t('nav.uploadPhoto')"><AppIcon name="camera" /></NuxtLink>
-      <NuxtLink to="/rifugi" class="app-shell__dock-link"><AppIcon name="home" /><span>{{ $t('nav.adopt') }}</span></NuxtLink>
+      <NuxtLink v-if="features.shelters" to="/rifugi" class="app-shell__dock-link"><AppIcon name="home" /><span>{{ $t('nav.adopt') }}</span></NuxtLink>
       <NuxtLink :to="loggedIn && user ? `/u/${user.username}` : '/accedi'" class="app-shell__dock-link">
         <AppIcon :name="loggedIn ? 'face' : 'login'" /><span>{{ loggedIn ? $t('nav.profile') : $t('nav.login') }}</span>
       </NuxtLink>
@@ -118,7 +119,9 @@ const { loggedIn, user } = useUserSession()
     margin-bottom: max(8px, env(safe-area-inset-bottom));
     margin-top: $space-7;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    // Colonne uguali per quante voci ci sono (senza rifugi sono 4)
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
     gap: 2px;
     padding: $space-2;
     background: var(--surface);

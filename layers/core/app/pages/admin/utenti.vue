@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { adminUserCreateSchema, passwordSchema, type AdminUser, type AdminUserList } from '#shared/models'
 
+const { features } = useAppConfig()
+
 definePageMeta({ middleware: 'admin' })
 useHead({ title: 'Utenti · Admin' })
 
@@ -142,7 +144,7 @@ const joined = (iso: string) => new Date(iso).toLocaleDateString('it-IT', { date
       <select v-model="filter" aria-label="Filtra" class="input user-admin__filter">
         <option value="all">Tutti</option>
         <option value="admin">Admin</option>
-        <option value="shelter">Con rifugio</option>
+        <option v-if="features.shelters" value="shelter">Con rifugio</option>
         <option value="banned">Sospesi</option>
       </select>
     </div>

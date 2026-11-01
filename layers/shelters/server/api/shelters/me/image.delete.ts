@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
-import { shelters } from '../../../db/schema'
+import { shelters } from '@core/server/db/schema'
 import { SHELTER_IMAGE_KINDS } from '#shared/images'
 
 export default defineEventHandler(async (event) => {

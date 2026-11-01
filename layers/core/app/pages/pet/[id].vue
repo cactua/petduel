@@ -7,9 +7,10 @@ const { data: pet, error, refresh } = await useFetch<PetGallery & { isMine: bool
   () => `/api/pets/${route.params.id}`,
 )
 
-// Il rifugio verificato che possiede il pet può compilarne la scheda di adozione
+// Il rifugio verificato che possiede il pet può compilarne la scheda di adozione (solo sui siti con i rifugi)
+const { features } = useAppConfig()
 const { data: mine, execute: loadMine } = useLazyFetch<MyShelter>('/api/shelters/me', { server: false, immediate: false })
-onMounted(() => watch(() => pet.value?.isMine, isMine => isMine && loadMine(), { immediate: true }))
+onMounted(() => watch(() => pet.value?.isMine, isMine => isMine && features.shelters && loadMine(), { immediate: true }))
 const manage = computed(() => !!pet.value?.isMine && mine.value?.shelter?.status === 'approved')
 
 async function onDeleted() {

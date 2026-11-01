@@ -1,5 +1,5 @@
 import { and, eq, isNotNull } from 'drizzle-orm'
-import { pets, shelters, users } from '../../db/schema'
+import { pets, shelters, users } from '@core/server/db/schema'
 import type { ShelterPage } from '#shared/models'
 
 // Pagina pubblica del rifugio: presentazione e pet con una scheda di adozione
