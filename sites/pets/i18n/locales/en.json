@@ -1,0 +1,179 @@
+{
+  "challenge": {
+    "enterYours": "Enter your pet"
+  },
+  "notif": {
+    "weeklyHearts": "Last week your pets received {n} heart. Most loved: {name} | Last week your pets received {n} hearts. Most loved: {name}"
+  },
+  "validation": {
+    "petName": "Give your pet a name"
+  },
+  "errors": {
+    "petHidden": "You chose to keep this pet out of leaderboards and challenges",
+    "petNotFound": "Pet not found",
+    "wrongSpecies": "This challenge isn't for your pet's species",
+    "alreadyEntered": "This pet is already in the challenge",
+    "pickPet": "Choose the pet"
+  },
+  "auth": {
+    "registerLead": "You need it to upload your pets and get their gallery."
+  },
+  "share": {
+    "text": "Check out {name} on @:{'site.name'}: who's cuter?"
+  },
+  "duel": {
+    "question": "Who's cuter?",
+    "uploadYours": "Upload your pet"
+  },
+  "upload": {
+    "forWhich": "Which pet?",
+    "newPet": "A new pet",
+    "rules": "Only your own photos where the animal is clearly visible. No recognisable people, licence plates or addresses.",
+    "stepDetails": "The pet"
+  },
+  "join": {
+    "needAccount": "You need an account to enter your pet.",
+    "title": "Enter a pet",
+    "pet": "Pet",
+    "onlySpecies": "This challenge is for one species only and you have no suitable pets.",
+    "uploadFirst": "Upload your pet first, then come back here to enter it.",
+    "uploadPet": "Upload a pet",
+    "allIn": "All your eligible pets are already competing. Good luck!"
+  },
+  "pet": {
+    "species": "Species",
+    "breed": "Breed",
+    "delete": "Delete pet",
+    "ogDescription": "{name} is on @:{'site.name'}: who's cuter? Vote too!",
+    "notFound": "Pet not found."
+  },
+  "profile": {
+    "pets": "{n} pets",
+    "noPetsMine": "You haven't uploaded any pets yet.",
+    "noPets": "No public pets, for now.",
+    "uploadFirst": "Upload your first pet",
+    "newPet": "New pet",
+    "statPets": "Pets",
+    "petsTitle": "Pets · {n}",
+    "filter": "Show pets",
+    "jump": "Jump to a pet",
+    "groups": {
+      "other": "Other pets"
+    },
+    "addGuestHint": "Upload photos of a new pet"
+  },
+  "challenges": {
+    "lead": "A new theme every Monday. Enter your pet with the right photo, vote for the others and win the trophy."
+  },
+  "credits": {
+    "lead": "The example pets use freely licensed photos from Wikimedia Commons. Thanks to everyone who took and shared them."
+  },
+  "ranking": {
+    "empty": "No pets on this leaderboard, for now.",
+    "yourPets": "Your pets",
+    "bySpecies": "Top {n} by species",
+    "yourPetsNote": "Pets outside the top {n} are not shown in the rankings: only you can see these."
+  },
+  "menu": {
+    "guest": "Log in to upload your pets, join challenges and get notifications."
+  },
+  "account": {
+    "exportText": "Download a file with everything @:{'site.name'} knows about you: account, pets, photos, votes cast, adoption requests and notifications.",
+    "deleteText": "We immediately erase your profile, pets, photos, shelter, adoption requests and notifications. The votes you cast remain, but anonymous. This cannot be undone.",
+    "understood": "I understand: my pets and their photos will be gone forever"
+  },
+  "badges": {
+    "petOfWeek": {
+      "name": "Pet of the week",
+      "desc": "Finished a week first among its species"
+    }
+  },
+  "species": {
+    "filter": "Filter by species",
+    "cane": {
+      "one": "Dog",
+      "many": "Dogs",
+      "among": "among dogs"
+    },
+    "gatto": {
+      "one": "Cat",
+      "many": "Cats",
+      "among": "among cats"
+    },
+    "coniglio": {
+      "one": "Rabbit",
+      "many": "Rabbits",
+      "among": "among rabbits"
+    },
+    "roditore": {
+      "one": "Rodent",
+      "many": "Rodents",
+      "among": "among rodents"
+    },
+    "uccello": {
+      "one": "Bird",
+      "many": "Birds",
+      "among": "among birds"
+    },
+    "rettile": {
+      "one": "Reptile",
+      "many": "Reptiles",
+      "among": "among reptiles"
+    },
+    "altro": {
+      "one": "Other",
+      "many": "Others",
+      "among": "among other animals"
+    }
+  },
+  "themes": {
+    "dormiglione": {
+      "title": "Sleepyhead",
+      "description": "The cutest nap photo: in bed, on the sofa or in the most unlikely places."
+    },
+    "linguaccia": {
+      "title": "Tongue out!",
+      "description": "Tongue out, no shame at all."
+    },
+    "agguato": {
+      "title": "Feline ambush",
+      "description": "The cat about to pounce: fixed stare and twitching tail."
+    },
+    "scatola": {
+      "title": "King of the box",
+      "description": "Inside a box, a basket, a pot or any spot that's way too small."
+    },
+    "faccia-colpevole": {
+      "title": "Guilty face",
+      "description": "The moment right after the disaster."
+    },
+    "riporto": {
+      "title": "Fetch champion",
+      "description": "Ball, stick or slipper: the dog in action."
+    },
+    "sguardo": {
+      "title": "Irresistible gaze",
+      "description": "The sweetest (or most intense) eyes on the web."
+    },
+    "migliori-amici": {
+      "title": "Best friends",
+      "description": "With their favourite toy, plushie or animal friend."
+    },
+    "esploratore": {
+      "title": "Little explorer",
+      "description": "Outdoor adventures: meadows, beaches, mountains or the balcony at home."
+    },
+    "musetto-goloso": {
+      "title": "Greedy snout",
+      "description": "Caught eating: carrots, seeds, kibble or your sandwich."
+    },
+    "pose-impossibili": {
+      "title": "Impossible poses",
+      "description": "Born contortionists: the most absurd positions."
+    },
+    "bagnetto": {
+      "title": "After the bath",
+      "description": "Wet fur, lost dignity."
+    }
+  }
+}

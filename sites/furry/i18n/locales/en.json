@@ -1,0 +1,84 @@
+{
+  "challenge": {
+    "enterYours": "Enter your character"
+  },
+  "notif": {
+    "weeklyHearts": "Last week your characters received {n} heart. Most loved: {name} | Last week your characters received {n} hearts. Most loved: {name}"
+  },
+  "validation": {
+    "petName": "Give your character a name"
+  },
+  "errors": {
+    "petHidden": "You chose to keep this character out of leaderboards and challenges",
+    "petNotFound": "Character not found",
+    "alreadyEntered": "This character is already in the challenge",
+    "pickPet": "Choose the character"
+  },
+  "auth": {
+    "registerLead": "You need it to upload your characters and get their gallery."
+  },
+  "share": {
+    "text": "Check out {name} on @:{'site.name'}: which one do you like more?"
+  },
+  "duel": {
+    "question": "Which one do you like more?",
+    "uploadYours": "Upload your character"
+  },
+  "upload": {
+    "forWhich": "Which character?",
+    "newPet": "A new character",
+    "rules": "Only your own drawings or ones posted with the artist's permission. No explicit or adult content.",
+    "stepDetails": "The character"
+  },
+  "join": {
+    "needAccount": "You need an account to enter your character.",
+    "title": "Enter a character",
+    "pet": "Character",
+    "uploadFirst": "Upload your character first, then come back here to enter it.",
+    "uploadPet": "Upload a character",
+    "allIn": "All your characters are already competing. Good luck!"
+  },
+  "pet": {
+    "breed": "Species",
+    "delete": "Delete character",
+    "ogDescription": "{name} is on @:{'site.name'}: which one do you like more? Vote too!",
+    "notFound": "Character not found."
+  },
+  "profile": {
+    "pets": "{n} characters",
+    "noPetsMine": "You haven't uploaded any characters yet.",
+    "noPets": "No public characters, for now.",
+    "uploadFirst": "Upload your first character",
+    "newPet": "New character",
+    "statPets": "Characters",
+    "petsTitle": "Characters · {n}",
+    "filter": "Show characters",
+    "jump": "Jump to a character",
+    "groups": {
+      "other": "Other characters"
+    },
+    "addGuestHint": "Upload drawings of a new character"
+  },
+  "challenges": {
+    "lead": "Themed challenges: enter your character with the right drawing, vote for the others and win the trophy."
+  },
+  "ranking": {
+    "yourPets": "Your characters",
+    "empty": "No characters on this leaderboard, for now.",
+    "yourPetsNote": "Characters outside the top {n} are not shown in the rankings: only you can see these."
+  },
+  "menu": {
+    "guest": "Log in to upload your characters, join challenges and get notifications."
+  },
+  "account": {
+    "exportText": "Download a file with everything @:{'site.name'} knows about you: account, characters, drawings, votes cast and notifications.",
+    "deleteText": "We immediately erase your profile, characters, drawings and notifications. The votes you cast remain, but anonymous. This cannot be undone.",
+    "understood": "I understand: my characters and their drawings will be gone forever"
+  },
+  "badges": {
+    "petOfWeek": {
+      "name": "Character of the week",
+      "desc": "Finished a week in first place"
+    }
+  }
+}

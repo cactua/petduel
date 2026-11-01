@@ -2,7 +2,7 @@
 import { adminUserCreateSchema, passwordSchema, type AdminUser, type AdminUserList } from '#shared/models'
 
 definePageMeta({ middleware: 'admin' })
-useHead({ title: 'Utenti · Admin · PetDuel' })
+useHead({ title: 'Utenti · Admin' })
 
 const route = useRoute()
 const { user: me } = useUserSession()

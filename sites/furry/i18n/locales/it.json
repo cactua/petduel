@@ -1,0 +1,84 @@
+{
+  "challenge": {
+    "enterYours": "Iscrivi il tuo personaggio"
+  },
+  "notif": {
+    "weeklyHearts": "La settimana scorsa i tuoi personaggi hanno ricevuto {n} cuore. Il più amato: {name} | La settimana scorsa i tuoi personaggi hanno ricevuto {n} cuori. Il più amato: {name}"
+  },
+  "validation": {
+    "petName": "Dai un nome al tuo personaggio"
+  },
+  "errors": {
+    "petHidden": "Hai scelto di tenere questo personaggio fuori da classifiche e sfide",
+    "petNotFound": "Personaggio non trovato",
+    "alreadyEntered": "Questo personaggio partecipa già alla sfida",
+    "pickPet": "Scegli il personaggio"
+  },
+  "auth": {
+    "registerLead": "Serve per caricare i tuoi personaggi e avere la loro gallery."
+  },
+  "share": {
+    "text": "Guarda {name} su @:{'site.name'}: chi ti piace di più?"
+  },
+  "duel": {
+    "question": "Chi ti piace di più?",
+    "uploadYours": "Carica il tuo personaggio"
+  },
+  "upload": {
+    "forWhich": "Per quale personaggio?",
+    "newPet": "Un nuovo personaggio",
+    "rules": "Solo disegni tuoi o pubblicati con il permesso dell'artista. Niente contenuti espliciti o per adulti.",
+    "stepDetails": "Il personaggio"
+  },
+  "join": {
+    "needAccount": "Per iscrivere il tuo personaggio devi avere un account.",
+    "title": "Iscrivi un personaggio",
+    "pet": "Personaggio",
+    "uploadFirst": "Prima carica il tuo personaggio, poi torna qui per iscriverlo.",
+    "uploadPet": "Carica un personaggio",
+    "allIn": "Tutti i tuoi personaggi sono già in gara. In bocca al lupo!"
+  },
+  "pet": {
+    "breed": "Specie",
+    "delete": "Elimina personaggio",
+    "ogDescription": "{name} è su @:{'site.name'}: chi ti piace di più? Vota anche tu!",
+    "notFound": "Personaggio non trovato."
+  },
+  "profile": {
+    "pets": "{n} personaggi",
+    "noPetsMine": "Non hai ancora caricato nessun personaggio.",
+    "noPets": "Nessun personaggio pubblico, per ora.",
+    "uploadFirst": "Carica il tuo primo personaggio",
+    "newPet": "Nuovo personaggio",
+    "statPets": "Personaggi",
+    "petsTitle": "Personaggi · {n}",
+    "filter": "Mostra i personaggi",
+    "jump": "Vai a un personaggio",
+    "groups": {
+      "other": "Altri personaggi"
+    },
+    "addGuestHint": "Carica i disegni di un nuovo personaggio"
+  },
+  "challenges": {
+    "lead": "Le sfide a tema: iscrivi il tuo personaggio con il disegno giusto, vota gli altri e conquista il trofeo."
+  },
+  "ranking": {
+    "yourPets": "I tuoi personaggi",
+    "empty": "Nessun personaggio in questa classifica, per ora.",
+    "yourPetsNote": "Fuori dalla top {n} i personaggi non compaiono in classifica: questi li vedi solo tu."
+  },
+  "menu": {
+    "guest": "Accedi per caricare i tuoi personaggi, partecipare alle sfide e ricevere gli avvisi."
+  },
+  "account": {
+    "exportText": "Scarica un file con tutto quello che @:{'site.name'} sa di te: account, personaggi, disegni, voti dati e avvisi.",
+    "deleteText": "Cancelliamo subito profilo, personaggi, disegni e avvisi. I voti che hai dato restano, ma anonimi. Non si può tornare indietro.",
+    "understood": "Ho capito: i miei personaggi e i loro disegni spariranno per sempre"
+  },
+  "badges": {
+    "petOfWeek": {
+      "name": "Personaggio della settimana",
+      "desc": "Ha chiuso una settimana al primo posto"
+    }
+  }
+}

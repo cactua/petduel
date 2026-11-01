@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import site from '#site'
 import { SPECIES_SLUG, type MyShelter, type PetGallery } from '#shared/models'
 
 const route = useRoute()
@@ -28,10 +29,11 @@ const shareNow = computed(() => route.query.condividi === '1' && !!pet.value?.is
 const origin = useRequestURL().origin
 const isPublic = computed(() => !!pet.value?.photos.some(p => p.status === 'approved'))
 const { t } = useI18n()
-const title = () => (pet.value ? `${pet.value.name} · PetDuel` : 'Pet · PetDuel')
+const title = () => pet.value?.name ?? ''
 useSeoMeta({
   title,
-  ogTitle: title,
+  // Nelle anteprime dei link il titolo non passa dal titleTemplate: il nome del sito si aggiunge qui
+  ogTitle: () => [title(), site.name].filter(Boolean).join(' · '),
   ogDescription: () => (pet.value ? t('pet.ogDescription', { name: pet.value.name }) : ''),
   ogImage: () => (isPublic.value && pet.value ? `${origin}/card/${pet.value.id}.png?formato=og${sfida.value ? `&sfida=${sfida.value}` : ''}` : undefined),
   ogImageWidth: 1200,

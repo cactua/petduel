@@ -3,6 +3,7 @@ import { defineSite } from '../../layers/core/shared/site'
 // PetDuel: animali domestici. I pet di esempio sono in server/assets/seed
 export default defineSite({
   id: 'pets',
+  name: 'PetDuel',
   categories: [
     { id: 'cane', slug: 'cani', emoji: '🐶' },
     { id: 'gatto', slug: 'gatti', emoji: '🐱' },

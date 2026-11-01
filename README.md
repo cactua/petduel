@@ -7,6 +7,7 @@ Tutto in Nuxt 4, con un solo codice per più siti (animali, furry, moto…), ogn
 - `layers/core/` è il nucleo comune: pagine in `app/`, backend (Nitro, Node) in `server/`, tipi e regole condivise in `shared/`, testi in `i18n/`.
 - `sites/<nome>/` è un sito: il suo `nuxt.config.ts` estende il nucleo e cambia solo ciò che serve. Ogni sito ha il suo `.env`, il suo database e le sue foto in `.data/`, quindi account e dati restano separati.
 - Ogni sito descrive ciò che lo distingue in `site.config.ts` (categorie, temi delle sfide automatiche; il formato è in `layers/core/shared/site.ts`) e mette i suoi contenuti di esempio in `server/assets/seed`.
+- Testi: il nucleo ha testi neutri in `layers/core/i18n/locales`; ogni sito mette in `sites/<nome>/i18n/locales` solo le voci che cambiano (nomi delle categorie, temi, "Chi è più carino?"…). Il nome del sito si scrive `@:{'site.name'}` e viene da `site.config.ts`.
 - Siti: `sites/pets` (`npm run dev`, porta 3000) e `sites/furry` (`npm run dev:furry`, porta 3001, ancora in preparazione: per ora senza categorie, quindi tutti i disegni competono insieme).
 
 ## Avvio in locale

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import site from '#site'
 // Template (Atomic Design): testata, contenuto della pagina e dock in basso su mobile
 const { loggedIn, user } = useUserSession()
 </script>
@@ -6,7 +7,7 @@ const { loggedIn, user } = useUserSession()
 <template>
   <div class="app-shell">
     <header class="app-shell__header">
-      <NuxtLink to="/" class="app-shell__logo"><AppIcon name="paw" />PetDuel</NuxtLink>
+      <NuxtLink to="/" class="app-shell__logo"><AppIcon name="paw" />{{ site.name }}</NuxtLink>
       <nav class="app-shell__nav">
         <NuxtLink to="/sfide" class="app-shell__nav-link">{{ $t('nav.challenges') }}</NuxtLink>
         <NuxtLink to="/classifica" class="app-shell__nav-link">{{ $t('nav.ranking') }}</NuxtLink>

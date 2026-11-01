@@ -2,7 +2,7 @@
 import { AD_DEAL_DEFAULT, AD_LANGS, AD_NETWORK_DEFAULT, AD_TARGETING_DEFAULT, adFieldsSchema, adTextFor, isTranslated, type AdLang, type AdTranslations, adSettingsSchema, type AdCrop, type AdminAd, type AdminAds, type AdSettings } from '#shared/models'
 
 definePageMeta({ middleware: 'admin' })
-useHead({ title: 'Pubblicità · Admin · PetDuel' })
+useHead({ title: 'Pubblicità · Admin' })
 
 const { data, refresh, error: loadError } = await useFetch<AdminAds>('/api/admin/ads')
 

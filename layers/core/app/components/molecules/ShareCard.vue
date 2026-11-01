@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import site from '#site'
 // autoOpen: si apre da sola (arrivando da un avviso di festa o dal riquadro in classifica)
 const props = defineProps<{ petId: number, petName: string, sfida?: string, label?: string, autoOpen?: boolean }>()
 
@@ -42,7 +43,7 @@ onMounted(() => props.autoOpen && open())
 async function share() {
   try {
     if (canShareFile.value && file.value) await navigator.share({ files: [file.value], text: `${text.value} ${link()}` })
-    else await navigator.share({ title: 'PetDuel', text: text.value, url: link() })
+    else await navigator.share({ title: site.name, text: text.value, url: link() })
   }
   catch (e) {
     if ((e as Error).name !== 'AbortError') status.value = t('share.failed')

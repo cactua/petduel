@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { t } = useI18n()
-useHead({ title: () => `${t('credits.title')} · PetDuel` })
+useHead({ title: () => `${t('credits.title')}` })
 const { data } = await useFetch<{ petId: number, name: string, image: string, credit: string, url: string | null }[]>('/api/credits')
 </script>
 

@@ -14,7 +14,7 @@ const { data: challenge, error, refresh } = await useFetch<ChallengeDetail>(() =
 
 const { t } = useI18n()
 const text = computed(() => (challenge.value ? challengeText(challenge.value) : { title: '', description: '' }))
-useHead({ title: () => (challenge.value ? `${text.value.title} · PetDuel` : `${t('nav.challenges')} · PetDuel`) })
+useHead({ title: () => (challenge.value ? `${text.value.title}` : `${t('nav.challenges')}`) })
 
 const isActive = computed(() => challenge.value?.status === 'active')
 const tab = computed<Tab>(() => {

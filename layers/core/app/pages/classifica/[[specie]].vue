@@ -32,7 +32,7 @@ const { data, status } = await useFetch<Leaderboard>('/api/leaderboard', {
 
 const baseTitle = computed(() => species.value ? t('ranking.species', { species: speciesText(species.value, 'many', t) }) : t('ranking.general'))
 const title = computed(() => (city.value ? t('ranking.cityTitle', { title: baseTitle.value, city: city.value }) : baseTitle.value))
-useHead({ title: () => `${title.value} · PetDuel` })
+useHead({ title: () => `${title.value}` })
 
 const isRolling = computed(() => period.value !== 'sempre')
 const podium = computed(() => {

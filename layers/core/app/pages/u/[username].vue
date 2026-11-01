@@ -7,7 +7,7 @@ const { user } = useUserSession()
 const { data: profile, error, refresh } = await useFetch<Profile>(() => `/api/users/${route.params.username}`)
 
 const { t } = useI18n()
-useHead({ title: () => (profile.value?.shelter?.name ?? (profile.value ? `@${profile.value.username}` : t('nav.profile'))) + ' · PetDuel' })
+useHead({ title: () => (profile.value?.shelter?.name ?? (profile.value ? `@${profile.value.username}` : t('nav.profile'))) })
 
 const since = computed(() => profile.value
   ? new Date(profile.value.memberSince).toLocaleDateString(intlLocale(), { month: 'long', year: 'numeric' })

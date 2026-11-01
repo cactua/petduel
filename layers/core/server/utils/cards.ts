@@ -2,6 +2,7 @@ import { and, eq, sql } from 'drizzle-orm'
 import satori from 'satori'
 import sharp from 'sharp'
 import { Resvg } from '@resvg/resvg-js'
+import site from '#site'
 import { TOP_RANK, type Species } from '#shared/models'
 import { speciesName } from '#shared/speciesNames'
 import { pets, users } from '../db/schema'
@@ -216,7 +217,7 @@ function facts(d: CardData, size: number, align: 'center' | 'flex-start') {
 }
 
 const logo = (size: number) => box({ alignItems: 'center', gap: size * 0.2, fontFamily: 'Fredoka', fontSize: size, color: C.coral },
-  img(PAW_ICON(C.coral), { width: size * 0.9, height: size * 0.9, transform: 'rotate(-14deg)' }), 'PetDuel')
+  img(PAW_ICON(C.coral), { width: size * 0.9, height: size * 0.9, transform: 'rotate(-14deg)' }), site.name)
 
 // Biscotto che fa la domanda in un fumetto
 const ask = (size: number) => box({ alignItems: 'flex-end', gap: size * 0.2 },

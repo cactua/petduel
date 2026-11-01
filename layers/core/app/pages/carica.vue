@@ -4,7 +4,7 @@ import type { Crops } from '#shared/images'
 
 definePageMeta({ middleware: 'auth' })
 const { t } = useI18n()
-useHead({ title: () => `${t('nav.upload')} · PetDuel` })
+useHead({ title: () => `${t('nav.upload')}` })
 
 const route = useRoute()
 const { user } = useUserSession()

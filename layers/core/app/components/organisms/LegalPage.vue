@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import site from '#site'
 import { LEGAL_UPDATED, type LegalKey, type LegalTexts } from '../../legal/types'
 import it from '../../legal/it'
 import en from '../../legal/en'
@@ -14,11 +15,12 @@ const LINKS: Record<LegalKey, string> = { privacy: '/privacy', cookie: '/cookie'
 const { locale } = useI18n()
 const texts = computed<LegalTexts>(() => TEXTS[locale.value] ?? it)
 const page = computed(() => texts.value.docs[props.doc])
-useHead({ title: () => `${page.value.title} · PetDuel` })
+useHead({ title: () => `${page.value.title}` })
 
 // Titolare ed email arrivano dal file .env; finché mancano si vede chiaramente cosa completare
 const { legal } = useRuntimeConfig().public
 const fill = (s: string) => s
+  .replaceAll('{site}', site.name)
   .replace('{owner}', legal.owner || `[${texts.value.missing}: NUXT_PUBLIC_LEGAL_OWNER]`)
   .replace('{email}', legal.email || `[${texts.value.missing}: NUXT_PUBLIC_LEGAL_EMAIL]`)
 const updated = computed(() => texts.value.updated.replace('{date}',

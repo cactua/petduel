@@ -3,6 +3,7 @@
 // I percorsi qui partono da questa cartella: "~" e "~~" indicano invece la cartella del sito
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { LANGUAGES } from "./i18n/languages";
 
 const coreDir = (path: string) => fileURLToPath(new URL(path, import.meta.url));
 const isDev = process.env.NODE_ENV === "development";
@@ -31,9 +32,11 @@ export default defineNuxtConfig({
     "@core": coreDir("./"),
   },
   modules: [
-    // "#site" è il site.config.ts del sito che si sta avviando (categorie, temi delle sfide…)
+    // "#site" è il site.config.ts del sito che si sta avviando (categorie, temi delle sfide…),
+    // "#site-it" i suoi testi in italiano (nomi delle categorie per admin e card da condividere)
     (_options, nuxt) => {
       nuxt.options.alias["#site"] = join(nuxt.options.rootDir, "site.config.ts");
+      nuxt.options.alias["#site-it"] = join(nuxt.options.rootDir, "i18n/locales/it.json");
     },
     "nuxt-auth-utils",
     "nuxt-security",
@@ -46,13 +49,7 @@ export default defineNuxtConfig({
   i18n: {
     strategy: "no_prefix",
     defaultLocale: "it",
-    locales: [
-      { code: "it", language: "it-IT", name: "Italiano", file: "it.json" },
-      { code: "en", language: "en-US", name: "English", file: "en.json" },
-      { code: "es", language: "es-ES", name: "Español", file: "es.json" },
-      { code: "fr", language: "fr-FR", name: "Français", file: "fr.json" },
-      { code: "de", language: "de-DE", name: "Deutsch", file: "de.json" },
-    ],
+    locales: LANGUAGES,
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: "lingua",
@@ -75,7 +72,6 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: "PetDuel",
       meta: [
         {
           name: "viewport",

@@ -7,7 +7,7 @@ export default {
   docs: {
     privacy: {
       title: 'Privacy policy',
-      intro: 'This page explains what data PetDuel collects, why, who can see it and how you can control it. We try to collect only what we really need.',
+      intro: 'This page explains what data {site} collects, why, who can see it and how you can control it. We try to collect only what we really need.',
       sections: [
         {
           h: 'Who is responsible',
@@ -85,7 +85,7 @@ export default {
     },
     cookie: {
       title: 'Cookie policy',
-      intro: 'Cookies are small files the site stores in your browser. PetDuel uses only a few, and almost all of them are needed just to make it work.',
+      intro: 'Cookies are small files the site stores in your browser. {site} uses only a few, and almost all of them are needed just to make it work.',
       sections: [
         {
           h: 'Technical cookies',
@@ -123,11 +123,11 @@ export default {
     },
     terms: {
       title: 'Terms of use',
-      intro: 'By using PetDuel you accept these rules. They are meant to keep the site fun, fair and safe for people and animals.',
+      intro: 'By using {site} you accept these rules. They are meant to keep the site fun, fair and safe for people and animals.',
       sections: [
         {
           h: 'The service',
-          p: ['PetDuel is a free site where you vote on pairs of animal photos, join themed challenges and discover animals looking for a home. It is run by {owner}.'],
+          p: ['{site} is a free site where you vote on pairs of animal photos, join themed challenges and discover animals looking for a home. It is run by {owner}.'],
         },
         {
           h: 'Your account',
@@ -142,7 +142,7 @@ export default {
           list: [
             'Only upload photos you took or have the right to use, and only of animals that are yours or in your care.',
             'Not allowed: photos with recognisable people, violent, cruel or sexual content, mistreated or endangered animals, advertising and offensive text.',
-            'Your photos remain yours. By uploading them you let us show them on PetDuel, in duels, rankings, challenges and share cards, until you delete them.',
+            'Your photos remain yours. By uploading them you let us show them on {site}, in duels, rankings, challenges and share cards, until you delete them.',
             'Every photo is checked before going public. We may reject or remove a photo that breaks these rules.',
           ],
         },
@@ -154,7 +154,7 @@ export default {
           h: 'Shelters and adoptions',
           list: [
             'Shelters must give true information about themselves and their animals. We verify them before they go public.',
-            'Adoptions happen directly between you and the shelter. PetDuel puts you in touch but is not part of the adoption and is not responsible for any agreement made.',
+            'Adoptions happen directly between you and the shelter. {site} puts you in touch but is not part of the adoption and is not responsible for any agreement made.',
           ],
         },
         {

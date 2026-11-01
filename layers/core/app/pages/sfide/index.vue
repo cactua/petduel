@@ -2,7 +2,7 @@
 import type { ChallengeList } from '#shared/models'
 
 const { t } = useI18n()
-useHead({ title: () => `${t('challenges.title')} · PetDuel` })
+useHead({ title: () => `${t('challenges.title')}` })
 const { data } = await useFetch<ChallengeList>('/api/challenges')
 </script>
 

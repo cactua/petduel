@@ -3,7 +3,7 @@ import { SPECIES, challengeFieldsSchema, type ChallengeList, type ChallengeSumma
 import { speciesName } from '#shared/speciesNames'
 
 definePageMeta({ middleware: 'admin' })
-useHead({ title: 'Sfide · Admin · PetDuel' })
+useHead({ title: 'Sfide · Admin' })
 
 const { data, refresh } = await useFetch<ChallengeList>('/api/challenges')
 

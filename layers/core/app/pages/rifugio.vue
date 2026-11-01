@@ -3,7 +3,7 @@ import { shelterFieldsSchema, type AdoptionRequestItem, type MyShelter, type Req
 
 definePageMeta({ middleware: 'auth' })
 const { t } = useI18n()
-useHead({ title: () => `${t('area.title')} · PetDuel` })
+useHead({ title: () => `${t('area.title')}` })
 
 const { user } = useUserSession()
 const { data, refresh } = await useFetch<MyShelter>('/api/shelters/me')

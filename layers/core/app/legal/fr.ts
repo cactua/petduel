@@ -7,7 +7,7 @@ export default {
   docs: {
     privacy: {
       title: 'Politique de confidentialité',
-      intro: 'Ici nous expliquons quelles données PetDuel collecte, pourquoi, qui peut les voir et comment tu peux les contrôler. Nous essayons de ne collecter que le strict nécessaire.',
+      intro: 'Ici nous expliquons quelles données {site} collecte, pourquoi, qui peut les voir et comment tu peux les contrôler. Nous essayons de ne collecter que le strict nécessaire.',
       sections: [
         {
           h: 'Responsable du traitement',
@@ -85,7 +85,7 @@ export default {
     },
     cookie: {
       title: 'Politique cookies',
-      intro: 'Les cookies sont de petits fichiers que le site enregistre dans ton navigateur. PetDuel en utilise peu, et presque tous servent seulement à le faire fonctionner.',
+      intro: 'Les cookies sont de petits fichiers que le site enregistre dans ton navigateur. {site} en utilise peu, et presque tous servent seulement à le faire fonctionner.',
       sections: [
         {
           h: 'Cookies techniques',
@@ -123,11 +123,11 @@ export default {
     },
     terms: {
       title: 'Conditions d\'utilisation',
-      intro: 'En utilisant PetDuel tu acceptes ces règles. Elles servent à garder le site agréable, juste et sûr pour les personnes et les animaux.',
+      intro: 'En utilisant {site} tu acceptes ces règles. Elles servent à garder le site agréable, juste et sûr pour les personnes et les animaux.',
       sections: [
         {
           h: 'Le service',
-          p: ['PetDuel est un site gratuit où l\'on vote pour des photos d\'animaux deux par deux, où l\'on participe à des défis à thème et où l\'on découvre des animaux qui cherchent une famille. Il est géré par {owner}.'],
+          p: ['{site} est un site gratuit où l\'on vote pour des photos d\'animaux deux par deux, où l\'on participe à des défis à thème et où l\'on découvre des animaux qui cherchent une famille. Il est géré par {owner}.'],
         },
         {
           h: 'Ton compte',
@@ -142,7 +142,7 @@ export default {
           list: [
             'Publie seulement des photos que tu as prises ou que tu as le droit d\'utiliser, et seulement d\'animaux qui sont à toi ou dont tu t\'occupes.',
             'Sont interdites les photos avec des personnes reconnaissables, les contenus violents, cruels ou sexuels, les animaux maltraités ou en danger, la publicité et les textes offensants.',
-            'Tes photos restent à toi. En les publiant, tu nous permets de les afficher sur PetDuel, dans les duels, les classements, les défis et les cartes à partager, jusqu\'à ce que tu les supprimes.',
+            'Tes photos restent à toi. En les publiant, tu nous permets de les afficher sur {site}, dans les duels, les classements, les défis et les cartes à partager, jusqu\'à ce que tu les supprimes.',
             'Chaque photo est vérifiée avant d\'être publique. Nous pouvons refuser ou retirer une photo qui ne respecte pas ces règles.',
           ],
         },
@@ -154,7 +154,7 @@ export default {
           h: 'Refuges et adoptions',
           list: [
             'Les refuges doivent donner des informations vraies sur eux-mêmes et sur les animaux. Nous les vérifions avant de les rendre publics.',
-            'Les adoptions se font directement entre toi et le refuge. PetDuel vous met en contact mais ne participe pas à l\'adoption et ne répond pas des accords conclus.',
+            'Les adoptions se font directement entre toi et le refuge. {site} vous met en contact mais ne participe pas à l\'adoption et ne répond pas des accords conclus.',
           ],
         },
         {

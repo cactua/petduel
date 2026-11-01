@@ -2,7 +2,7 @@
 import type { AdminOverview } from '#shared/models'
 
 definePageMeta({ middleware: 'admin' })
-useHead({ title: 'Admin · PetDuel' })
+useHead({ title: 'Admin' })
 
 const { data, refresh, error } = await useFetch<AdminOverview>('/api/admin/overview')
 

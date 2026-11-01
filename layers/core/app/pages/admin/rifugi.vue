@@ -2,7 +2,7 @@
 import type { ShelterReviewItem } from '#shared/models'
 
 definePageMeta({ middleware: 'admin' })
-useHead({ title: 'Rifugi · Admin · PetDuel' })
+useHead({ title: 'Rifugi · Admin' })
 
 const { data, refresh, error: loadError } = await useFetch<{ pending: ShelterReviewItem[], approved: ShelterReviewItem[] }>('/api/admin/shelters')
 const reason = reactive<Record<number, string>>({})

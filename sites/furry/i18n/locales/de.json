@@ -1,0 +1,84 @@
+{
+  "challenge": {
+    "enterYours": "Melde deinen Charakter an"
+  },
+  "notif": {
+    "weeklyHearts": "Letzte Woche haben deine Charaktere {n} Herz bekommen. Am beliebtesten: {name} | Letzte Woche haben deine Charaktere {n} Herzen bekommen. Am beliebtesten: {name}"
+  },
+  "validation": {
+    "petName": "Gib deinem Charakter einen Namen"
+  },
+  "errors": {
+    "petHidden": "Du hast diesen Charakter aus Ranglisten und Challenges herausgenommen",
+    "petNotFound": "Charakter nicht gefunden",
+    "alreadyEntered": "Dieser Charakter nimmt bereits an der Challenge teil",
+    "pickPet": "Wähle den Charakter"
+  },
+  "auth": {
+    "registerLead": "Damit kannst du deine Charaktere hochladen und ihre Galerie haben."
+  },
+  "share": {
+    "text": "Schau dir {name} auf @:{'site.name'} an: Wer gefällt dir besser?"
+  },
+  "duel": {
+    "question": "Wer gefällt dir besser?",
+    "uploadYours": "Lade deinen Charakter hoch"
+  },
+  "upload": {
+    "forWhich": "Für welchen Charakter?",
+    "newPet": "Ein neuer Charakter",
+    "rules": "Nur eigene Zeichnungen oder solche mit Erlaubnis der Künstlerin oder des Künstlers. Keine expliziten Inhalte oder Inhalte für Erwachsene.",
+    "stepDetails": "Der Charakter"
+  },
+  "join": {
+    "needAccount": "Um deinen Charakter anzumelden, brauchst du ein Konto.",
+    "title": "Charakter anmelden",
+    "pet": "Charakter",
+    "uploadFirst": "Lade zuerst deinen Charakter hoch und komm dann hierher zurück, um ihn anzumelden.",
+    "uploadPet": "Charakter hochladen",
+    "allIn": "Alle deine Charaktere sind schon im Rennen. Viel Glück!"
+  },
+  "pet": {
+    "breed": "Spezies",
+    "delete": "Charakter löschen",
+    "ogDescription": "{name} ist auf @:{'site.name'}: Wer gefällt dir besser? Stimm auch ab!",
+    "notFound": "Charakter nicht gefunden."
+  },
+  "profile": {
+    "pets": "{n} Charaktere",
+    "noPetsMine": "Du hast noch keinen Charakter hochgeladen.",
+    "noPets": "Noch keine öffentlichen Charaktere.",
+    "uploadFirst": "Lade deinen ersten Charakter hoch",
+    "newPet": "Neuer Charakter",
+    "statPets": "Charaktere",
+    "petsTitle": "Charaktere · {n}",
+    "filter": "Charaktere anzeigen",
+    "jump": "Zu einem Charakter springen",
+    "groups": {
+      "other": "Weitere Charaktere"
+    },
+    "addGuestHint": "Zeichnungen eines neuen Charakters hochladen"
+  },
+  "challenges": {
+    "lead": "Challenges mit Thema: Melde deinen Charakter mit der passenden Zeichnung an, stimm für die anderen ab und hol dir die Trophäe."
+  },
+  "ranking": {
+    "yourPets": "Deine Charaktere",
+    "empty": "Noch keine Charaktere in dieser Rangliste.",
+    "yourPetsNote": "Charaktere außerhalb der Top {n} erscheinen nicht in der Rangliste: Diese siehst nur du."
+  },
+  "menu": {
+    "guest": "Melde dich an, um deine Charaktere hochzuladen, bei Challenges mitzumachen und Benachrichtigungen zu erhalten."
+  },
+  "account": {
+    "exportText": "Lade eine Datei mit allem herunter, was @:{'site.name'} über dich weiß: Konto, Charaktere, Zeichnungen, abgegebene Stimmen und Hinweise.",
+    "deleteText": "Wir löschen sofort Profil, Charaktere, Zeichnungen und Hinweise. Deine abgegebenen Stimmen bleiben, aber anonym. Das lässt sich nicht rückgängig machen.",
+    "understood": "Ich verstehe: Meine Charaktere und ihre Zeichnungen verschwinden für immer"
+  },
+  "badges": {
+    "petOfWeek": {
+      "name": "Charakter der Woche",
+      "desc": "Hat eine Woche auf Platz 1 beendet"
+    }
+  }
+}

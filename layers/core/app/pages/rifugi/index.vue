@@ -3,7 +3,7 @@ import { shelterImageSources } from '#shared/images'
 import type { AdoptablePet, PublicShelter, Species } from '#shared/models'
 
 const { t } = useI18n()
-useHead({ title: () => `${t('shelters.title')} · PetDuel` })
+useHead({ title: () => `${t('shelters.title')}` })
 useSeoMeta({ description: () => t('shelters.seo') })
 
 const route = useRoute()

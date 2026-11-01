@@ -1,0 +1,179 @@
+{
+  "challenge": {
+    "enterYours": "Melde dein Tier an"
+  },
+  "notif": {
+    "weeklyHearts": "Letzte Woche haben deine Tiere {n} Herz bekommen. Am beliebtesten: {name} | Letzte Woche haben deine Tiere {n} Herzen bekommen. Am beliebtesten: {name}"
+  },
+  "validation": {
+    "petName": "Gib deinem Tier einen Namen"
+  },
+  "errors": {
+    "petHidden": "Du hast dieses Tier aus Ranglisten und Challenges herausgenommen",
+    "petNotFound": "Tier nicht gefunden",
+    "wrongSpecies": "Diese Challenge ist nicht für die Tierart deines Tiers",
+    "alreadyEntered": "Dieses Tier nimmt bereits an der Challenge teil",
+    "pickPet": "Wähle das Tier"
+  },
+  "auth": {
+    "registerLead": "Damit kannst du deine Tiere hochladen und ihre Galerie haben."
+  },
+  "share": {
+    "text": "Schau dir {name} auf @:{'site.name'} an: Wer ist süßer?"
+  },
+  "duel": {
+    "question": "Wer ist süßer?",
+    "uploadYours": "Lade dein Tier hoch"
+  },
+  "upload": {
+    "forWhich": "Für welches Tier?",
+    "newPet": "Ein neues Tier",
+    "rules": "Nur eigene Fotos, auf denen das Tier gut zu sehen ist. Keine erkennbaren Personen, Kennzeichen oder Adressen.",
+    "stepDetails": "Das Tier"
+  },
+  "join": {
+    "needAccount": "Um dein Tier anzumelden, brauchst du ein Konto.",
+    "title": "Tier anmelden",
+    "pet": "Tier",
+    "onlySpecies": "Diese Challenge ist nur für eine Tierart und du hast kein passendes Tier.",
+    "uploadFirst": "Lade zuerst dein Tier hoch und komm dann hierher zurück, um es anzumelden.",
+    "uploadPet": "Tier hochladen",
+    "allIn": "Alle deine passenden Tiere sind schon im Rennen. Viel Glück!"
+  },
+  "pet": {
+    "species": "Tierart",
+    "breed": "Rasse",
+    "delete": "Tier löschen",
+    "ogDescription": "{name} ist auf @:{'site.name'}: Wer ist süßer? Stimm auch ab!",
+    "notFound": "Tier nicht gefunden."
+  },
+  "profile": {
+    "pets": "{n} Tiere",
+    "noPetsMine": "Du hast noch kein Tier hochgeladen.",
+    "noPets": "Noch keine öffentlichen Tiere.",
+    "uploadFirst": "Lade dein erstes Tier hoch",
+    "newPet": "Neues Tier",
+    "statPets": "Tiere",
+    "petsTitle": "Tiere · {n}",
+    "filter": "Tiere anzeigen",
+    "jump": "Zu einem Tier springen",
+    "groups": {
+      "other": "Weitere Tiere"
+    },
+    "addGuestHint": "Fotos eines neuen Tiers hochladen"
+  },
+  "challenges": {
+    "lead": "Jeden Montag ein neues Thema. Melde dein Tier mit dem passenden Foto an, stimm für die anderen ab und hol dir die Trophäe."
+  },
+  "credits": {
+    "lead": "Die Beispieltiere verwenden frei lizenzierte Fotos von Wikimedia Commons. Danke an alle, die sie aufgenommen und geteilt haben."
+  },
+  "ranking": {
+    "empty": "Noch keine Tiere in dieser Rangliste.",
+    "yourPets": "Deine Tiere",
+    "bySpecies": "Top {n} nach Tierart",
+    "yourPetsNote": "Tiere außerhalb der Top {n} erscheinen nicht in der Rangliste: Diese siehst nur du."
+  },
+  "menu": {
+    "guest": "Melde dich an, um deine Tiere hochzuladen, bei Challenges mitzumachen und Benachrichtigungen zu erhalten."
+  },
+  "account": {
+    "exportText": "Lade eine Datei mit allem herunter, was @:{'site.name'} über dich weiß: Konto, Tiere, Fotos, abgegebene Stimmen, Adoptionsanfragen und Hinweise.",
+    "deleteText": "Wir löschen sofort Profil, Tiere, Fotos, Tierheim, Adoptionsanfragen und Hinweise. Deine abgegebenen Stimmen bleiben, aber anonym. Das lässt sich nicht rückgängig machen.",
+    "understood": "Ich verstehe: Meine Tiere und ihre Fotos verschwinden für immer"
+  },
+  "badges": {
+    "petOfWeek": {
+      "name": "Tier der Woche",
+      "desc": "Hat eine Woche als Erstes seiner Art beendet"
+    }
+  },
+  "species": {
+    "filter": "Nach Tierart filtern",
+    "cane": {
+      "one": "Hund",
+      "many": "Hunde",
+      "among": "unter den Hunden"
+    },
+    "gatto": {
+      "one": "Katze",
+      "many": "Katzen",
+      "among": "unter den Katzen"
+    },
+    "coniglio": {
+      "one": "Kaninchen",
+      "many": "Kaninchen",
+      "among": "unter den Kaninchen"
+    },
+    "roditore": {
+      "one": "Nagetier",
+      "many": "Nagetiere",
+      "among": "unter den Nagetieren"
+    },
+    "uccello": {
+      "one": "Vogel",
+      "many": "Vögel",
+      "among": "unter den Vögeln"
+    },
+    "rettile": {
+      "one": "Reptil",
+      "many": "Reptilien",
+      "among": "unter den Reptilien"
+    },
+    "altro": {
+      "one": "Andere",
+      "many": "Andere",
+      "among": "unter den anderen Tieren"
+    }
+  },
+  "themes": {
+    "dormiglione": {
+      "title": "Die größte Schlafmütze",
+      "description": "Das süßeste Nickerchen-Foto: im Bett, auf dem Sofa oder an den unwahrscheinlichsten Orten."
+    },
+    "linguaccia": {
+      "title": "Zunge raus!",
+      "description": "Zunge raus, ganz ohne Scham."
+    },
+    "agguato": {
+      "title": "Katzen-Hinterhalt",
+      "description": "Die Katze kurz vor dem Sprung: starrer Blick und zuckender Schwanz."
+    },
+    "scatola": {
+      "title": "König der Kiste",
+      "description": "In einer Kiste, einem Korb, einem Topf oder einem viel zu kleinen Platz."
+    },
+    "faccia-colpevole": {
+      "title": "Schuldiger Blick",
+      "description": "Der Moment direkt nach dem Unglück."
+    },
+    "riporto": {
+      "title": "Apportier-König",
+      "description": "Ball, Stock oder Hausschuh: der Hund in Aktion."
+    },
+    "sguardo": {
+      "title": "Unwiderstehlicher Blick",
+      "description": "Die süßesten (oder intensivsten) Augen im Netz."
+    },
+    "migliori-amici": {
+      "title": "Beste Freunde",
+      "description": "Mit dem Lieblingsspielzeug, Kuscheltier oder tierischen Freund."
+    },
+    "esploratore": {
+      "title": "Kleiner Entdecker",
+      "description": "Abenteuer an der frischen Luft: Wiesen, Strände, Berge oder der heimische Balkon."
+    },
+    "musetto-goloso": {
+      "title": "Kleines Leckermaul",
+      "description": "Beim Fressen erwischt: Karotten, Körner, Trockenfutter oder dein Brötchen."
+    },
+    "pose-impossibili": {
+      "title": "Unmögliche Posen",
+      "description": "Geborene Schlangenmenschen: die absurdesten Positionen."
+    },
+    "bagnetto": {
+      "title": "Nach dem Bad",
+      "description": "Nasses Fell, verlorene Würde."
+    }
+  }
+}

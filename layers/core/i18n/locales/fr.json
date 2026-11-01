@@ -29,43 +29,8 @@
     "language": "Langue"
   },
   "species": {
-    "filter": "Filtrer par espèce",
-    "all": "Tous",
-    "cane": {
-      "one": "Chien",
-      "many": "Chiens",
-      "among": "parmi les chiens"
-    },
-    "gatto": {
-      "one": "Chat",
-      "many": "Chats",
-      "among": "parmi les chats"
-    },
-    "coniglio": {
-      "one": "Lapin",
-      "many": "Lapins",
-      "among": "parmi les lapins"
-    },
-    "roditore": {
-      "one": "Rongeur",
-      "many": "Rongeurs",
-      "among": "parmi les rongeurs"
-    },
-    "uccello": {
-      "one": "Oiseau",
-      "many": "Oiseaux",
-      "among": "parmi les oiseaux"
-    },
-    "rettile": {
-      "one": "Reptile",
-      "many": "Reptiles",
-      "among": "parmi les reptiles"
-    },
-    "altro": {
-      "one": "Autre",
-      "many": "Autres",
-      "among": "parmi les autres animaux"
-    }
+    "filter": "Filtrer par catégorie",
+    "all": "Tous"
   },
   "challenge": {
     "ofTheWeek": "Défi de la semaine",
@@ -84,7 +49,7 @@
     "sections": "Sections du défi",
     "needTwo": "Il faut au moins deux participants pour lancer les duels.",
     "allVoted": "Tu as voté pour toutes les paires de ce défi. Reviens plus tard : de nouveaux participants arrivent.",
-    "enterYours": "Inscris ton animal",
+    "enterYours": "Inscris ton participant",
     "winner": "Gagnant",
     "notStarted": "Le défi n'a pas encore commencé : les inscriptions ouvrent le {date}.",
     "noEntries": "Aucun participant approuvé pour l'instant."
@@ -103,7 +68,7 @@
     "challengePlace": "{name} : {rank}e sur {total} dans le défi « {challenge} »",
     "rankFirst": "{name} est n° 1 du classement {species} de cette semaine !",
     "rankTop": "{name} est dans le top {tier} du classement {species} de cette semaine",
-    "weeklyHearts": "La semaine dernière, tes animaux ont reçu {n} cœur. Le plus aimé : {name} | La semaine dernière, tes animaux ont reçu {n} cœurs. Le plus aimé : {name}"
+    "weeklyHearts": "La semaine dernière, tes participants ont reçu {n} cœur. Le plus aimé : {name} | La semaine dernière, tes participants ont reçu {n} cœurs. Le plus aimé : {name}"
   },
   "time": {
     "now": "maintenant",
@@ -123,7 +88,7 @@
     "username": "Nom d'utilisateur : de 3 à 20 caractères parmi lettres, chiffres et _",
     "passwordMin": "Le mot de passe doit contenir au moins 10 caractères",
     "passwordMax": "Le mot de passe peut contenir au maximum 128 caractères",
-    "petName": "Donne un nom à ton animal",
+    "petName": "Choisis un nom",
     "website": "Adresse du site non valide",
     "shelterName": "Indique le nom du refuge",
     "city": "Indique la ville",
@@ -149,7 +114,7 @@
     "tooManyRequests": "Tu as déjà envoyé beaucoup de demandes aujourd'hui, réessaie demain",
     "alreadyRequested": "Tu as déjà écrit au refuge pour cet animal",
     "alreadyVoted": "Tu as déjà voté pour cette paire",
-    "petHidden": "Tu as choisi de garder cet animal hors des classements et des défis",
+    "petHidden": "Tu as choisi de le garder hors des classements et des défis",
     "shelterAlreadyVerified": "Ton refuge est déjà vérifié",
     "originalMissing": "Image originale introuvable : publie-la à nouveau",
     "photoTooBig": "La photo dépasse 10 Mo",
@@ -165,12 +130,12 @@
     "cannotDeleteSelf": "Tu ne peux pas supprimer ton propre compte d'ici",
     "cannotSelf": "Tu ne peux pas faire ça sur ton propre compte",
     "entryNotFound": "Participation introuvable",
-    "petNotFound": "Animal introuvable",
-    "wrongSpecies": "Ce défi n'est pas pour l'espèce de ton animal",
+    "petNotFound": "Introuvable",
+    "wrongSpecies": "Ce défi est pour une autre catégorie",
     "adoptionOnly": "Ce défi est réservé aux animaux de refuge qui cherchent une famille",
     "banned": "Ce compte a été suspendu",
     "notAdoptable": "Cet animal ne cherche pas de famille pour le moment",
-    "alreadyEntered": "Cet animal participe déjà au défi",
+    "alreadyEntered": "Participe déjà au défi",
     "usernameUnavailable": "Ce nom d'utilisateur n'est pas disponible",
     "forbidden": "Demande non autorisée",
     "requestNotFound": "Demande introuvable",
@@ -178,7 +143,7 @@
     "shelterNotFound": "Refuge introuvable",
     "invalidCrops": "Recadrages non valides",
     "invalidCrop": "Recadrage non valide",
-    "pickPet": "Choisis l'animal",
+    "pickPet": "Choisis qui inscrire",
     "sessionExpired": "Session expirée, reconnecte-toi",
     "challengeNotFound": "Défi introuvable",
     "joinOnlyActive": "On ne peut participer qu'aux défis en cours",
@@ -196,60 +161,10 @@
     "lastAdmin": "Tu es le seul administrateur : nomme un autre admin avant de supprimer ton compte",
     "geocode": "La recherche d'adresse ne répond pas pour l'instant. Réessaie bientôt ou touche la carte."
   },
-  "themes": {
-    "dormiglione": {
-      "title": "Le plus gros dormeur",
-      "description": "La photo de sieste la plus attendrissante : au lit, sur le canapé ou dans les endroits les plus improbables."
-    },
-    "linguaccia": {
-      "title": "Tire la langue !",
-      "description": "Langue dehors, sans aucune honte."
-    },
-    "agguato": {
-      "title": "Embuscade féline",
-      "description": "Le chat prêt à bondir : regard fixe et queue qui frémit."
-    },
-    "scatola": {
-      "title": "Roi du carton",
-      "description": "Dans un carton, un panier, un pot ou n'importe quel endroit bien trop petit."
-    },
-    "faccia-colpevole": {
-      "title": "Tête de coupable",
-      "description": "Le moment juste après la catastrophe."
-    },
-    "riporto": {
-      "title": "Le roi du rapport",
-      "description": "Balle, bâton ou chausson : le chien en action."
-    },
-    "sguardo": {
-      "title": "Regard irrésistible",
-      "description": "Les yeux les plus doux (ou les plus intenses) du web."
-    },
-    "migliori-amici": {
-      "title": "Meilleurs amis",
-      "description": "Avec son jouet, sa peluche ou son ami animal préféré."
-    },
-    "esploratore": {
-      "title": "Petit explorateur",
-      "description": "Aventures en plein air : prés, plages, montagnes ou le balcon de la maison."
-    },
-    "musetto-goloso": {
-      "title": "Petit gourmand",
-      "description": "Pris sur le fait en train de manger : carottes, graines, croquettes ou ton sandwich."
-    },
-    "pose-impossibili": {
-      "title": "Poses impossibles",
-      "description": "Contorsionnistes nés : les positions les plus absurdes."
-    },
-    "bagnetto": {
-      "title": "Après le bain",
-      "description": "Poils mouillés, dignité perdue."
-    }
-  },
   "auth": {
     "registerTitle": "Crée ton compte",
     "loginTitle": "Bon retour !",
-    "registerLead": "Il te permet de publier tes animaux et d'avoir leur galerie.",
+    "registerLead": "Il te permet de publier tes participants et d'avoir leur galerie.",
     "loginLead": "Connecte-toi pour publier des photos et voir ton profil.",
     "usernamePlaceholder": "ex. fan_de_biscuit",
     "usernameHelp": "Visible par tous. Lettres, chiffres et _ (3-20 caractères).",
@@ -267,11 +182,11 @@
     "label": "Publicité",
     "sponsored": "Sponsorisé",
     "continue": "Continuer à voter",
-    "thanks": "Merci : la publicité garde PetDuel gratuit"
+    "thanks": "Merci : la publicité garde @:{'site.name'} gratuit"
   },
   "share": {
-    "text": "Regarde {name} sur PetDuel : qui est le plus mignon ?",
-    "textChallenge": "Vote pour {name} dans le défi PetDuel !",
+    "text": "Regarde {name} sur @:{'site.name'} !",
+    "textChallenge": "Vote pour {name} dans le défi @:{'site.name'} !",
     "prepareFailed": "Impossible de préparer l'image",
     "failed": "Le partage a échoué",
     "copied": "Lien copié !",
@@ -305,9 +220,9 @@
     "beat": "{winner} a battu {loser} !",
     "votesMilestone": "{n} votes !",
     "voteFailed": "Vote non enregistré",
-    "question": "Qui est le plus mignon ?",
+    "question": "Tu préfères lequel ?",
     "votedTimes": "Tu as voté {n} fois",
-    "uploadYours": "Publie ton animal"
+    "uploadYours": "Publie ton participant"
   },
   "adoption": {
     "status": {
@@ -366,17 +281,17 @@
     "sentHelp": "Un modérateur la vérifie avant de la publier : c'est généralement rapide. En attendant, tu la vois dans ton profil comme « En attente ».",
     "toProfile": "Aller à ton profil",
     "another": "Publier une autre photo",
-    "forWhich": "Pour quel animal ?",
-    "newPet": "Un nouvel animal",
+    "forWhich": "Pour quel participant ?",
+    "newPet": "Un nouveau participant",
     "pick": "Touche pour choisir une photo",
     "pickHelp": "ou colle-la (Ctrl+V) ou fais-la glisser ici. Ensuite choisis comment la recadrer",
     "cityPlaceholder": "Lyon",
-    "rules": "Uniquement tes propres photos où l'on voit bien l'animal. Pas de personnes reconnaissables, de plaques d'immatriculation ni d'adresses.",
+    "rules": "Uniquement des images à toi ou que tu as le droit de publier. Pas de personnes reconnaissables, de plaques d'immatriculation ni d'adresses.",
     "uploading": "Publication…",
     "submit": "Envoyer pour approbation",
     "intro": "Une photo à la fois : un modérateur la vérifie avant qu'elle n'entre dans les duels.",
     "stepPhoto": "La photo",
-    "stepDetails": "L'animal",
+    "stepDetails": "Le participant",
     "drop": "Glisse une photo ici",
     "dropHelp": "ou colle-la avec Ctrl+V. JPG, PNG, WebP ou HEIC : ensuite tu choisis le recadrage.",
     "browse": "Choisir une photo",
@@ -385,7 +300,7 @@
   },
   "join": {
     "pickPhoto": "Choisis une photo",
-    "needAccount": "Il te faut un compte pour inscrire ton animal.",
+    "needAccount": "Il te faut un compte pour t'inscrire à un défi.",
     "loginOrRegister": "Connexion ou inscription",
     "yourEntries": "Tes participants",
     "status": {
@@ -394,8 +309,8 @@
       "rejected": "Refusée"
     },
     "askVotes": "Demander des votes",
-    "title": "Inscrire un animal",
-    "pet": "Animal",
+    "title": "Inscrire un participant",
+    "pet": "Participant",
     "whichPhoto": "Quelle photo",
     "fromGallery": "De la galerie",
     "newPhoto": "Nouvelle photo",
@@ -404,10 +319,10 @@
     "pickThemedHelp": "ou colle-la (Ctrl+V) ou fais-la glisser ici. Elle sera modérée avant d'entrer en compétition",
     "submit": "Participer au défi",
     "onlyShelters": "Ce défi est réservé aux animaux des refuges vérifiés qui cherchent une famille.",
-    "onlySpecies": "Ce défi est réservé à une seule espèce et tu n'as pas d'animal adapté.",
-    "uploadFirst": "Publie d'abord ton animal, puis reviens ici pour l'inscrire.",
-    "uploadPet": "Publier un animal",
-    "allIn": "Tous tes animaux éligibles sont déjà en lice. Bonne chance !"
+    "onlySpecies": "Ce défi est réservé à une seule catégorie et tu n'as rien d'adapté.",
+    "uploadFirst": "Publie d'abord ton participant, puis reviens ici pour l'inscrire.",
+    "uploadPet": "Publier un participant",
+    "allIn": "Tous tes participants éligibles sont déjà en lice. Bonne chance !"
   },
   "pet": {
     "photoOf": "Photo de {name}",
@@ -421,14 +336,14 @@
     },
     "addPhoto": "Ajouter une photo",
     "name": "Nom",
-    "species": "Espèce",
-    "breed": "Race",
+    "species": "Catégorie",
+    "breed": "Détails",
     "city": "Ville",
     "editData": "Modifier les infos",
     "confirmDelete": "Oui, supprimer {name} et toutes ses photos",
-    "delete": "Supprimer l'animal",
-    "ogDescription": "{name} est sur PetDuel : qui est le plus mignon ? Vote toi aussi !",
-    "notFound": "Animal introuvable.",
+    "delete": "Supprimer",
+    "ogDescription": "{name} est sur @:{'site.name'}. Vote toi aussi !",
+    "notFound": "Introuvable.",
     "inChallenge": "{name} participe à un défi : aller au défi",
     "rank": "{rank}e {among}",
     "hearts": "cœurs"
@@ -457,28 +372,28 @@
   },
   "profile": {
     "notFound": "Ce profil n'existe pas.",
-    "since": "Sur PetDuel depuis {date}",
-    "pets": "{n} animaux",
+    "since": "Sur @:{'site.name'} depuis {date}",
+    "pets": "{n} participants",
     "admin": "Panneau d'admin",
     "becomeShelter": "Tu gères un refuge ou un chenil ? Fais-toi vérifier",
     "pending": "{n} photo est en attente d'approbation : toi seul la vois jusqu'à ce qu'un modérateur la vérifie. | {n} photos sont en attente d'approbation : toi seul les vois jusqu'à ce qu'un modérateur les vérifie.",
-    "noPetsMine": "Tu n'as encore publié aucun animal.",
-    "noPets": "Aucun animal public, pour l'instant.",
-    "uploadFirst": "Publie ton premier animal",
-    "newPet": "Nouvel animal",
-    "statPets": "Animaux",
+    "noPetsMine": "Tu n'as encore rien publié.",
+    "noPets": "Rien de public, pour l'instant.",
+    "uploadFirst": "Publie ton premier participant",
+    "newPet": "Nouveau participant",
+    "statPets": "Participants",
     "statVotes": "Votes donnés",
     "statWins": "Cœurs",
     "statTrophies": "Défis gagnés",
-    "petsTitle": "Animaux · {n}",
-    "filter": "Afficher les animaux",
+    "petsTitle": "Participants · {n}",
+    "filter": "Afficher les participants",
     "all": "Tous",
-    "jump": "Aller à un animal",
+    "jump": "Aller à un participant",
     "groups": {
       "available": "Cherchent une famille",
       "fostered": "En famille d'accueil",
       "adopted": "Adoptés",
-      "other": "Autres animaux"
+      "other": "Autres participants"
     },
     "statGuests": "Pensionnaires",
     "visitShelter": "Notre refuge",
@@ -488,7 +403,7 @@
     "customize": "Personnaliser la page",
     "customizeHint": "Couverture, carte, horaires, dons",
     "addGuest": "Ajouter un pensionnaire",
-    "addGuestHint": "Charge les photos d'un nouvel animal",
+    "addGuestHint": "Charge les images d'un nouveau participant",
     "publicPage": "Voir la page",
     "publicPageHint": "Comme les autres la voient",
     "adoptionHint": "Pour mettre un pensionnaire dans « Cherchent un foyer », ouvre sa fiche ci-dessous et remplis la fiche d'adoption.",
@@ -501,13 +416,13 @@
   },
   "challenges": {
     "title": "Défis hebdomadaires",
-    "lead": "Chaque lundi un nouveau thème. Inscris ton animal avec la bonne photo, vote pour les autres et remporte le trophée.",
+    "lead": "Chaque lundi un nouveau thème. Inscris-toi avec la bonne image, vote pour les autres et remporte le trophée.",
     "upcoming": "À venir",
     "past": "Palmarès"
   },
   "credits": {
     "title": "Crédits photo",
-    "lead": "Les animaux d'exemple utilisent des photos sous licence libre de Wikimedia Commons. Merci à celles et ceux qui les ont prises et partagées."
+    "lead": "Le contenu d'exemple utilise des images sous licence libre. Merci à celles et ceux qui les ont créées et partagées."
   },
   "ranking": {
     "notFound": "Classement introuvable",
@@ -527,12 +442,12 @@
     "totalNote": "Tous les cœurs reçus : chaque vote vaut un cœur, et on n'en perd jamais.",
     "adoptLink": "les animaux de refuge les plus aimés, prêts à être adoptés",
     "noDuels": "Aucun duel {period} pour l'instant",
-    "empty": "Aucun animal dans ce classement, pour l'instant.",
+    "empty": "Personne dans ce classement, pour l'instant.",
     "goVote": "Aller voter",
-    "yourPets": "Tes animaux",
-    "bySpecies": "Top {n} par espèce",
+    "yourPets": "Tes participants",
+    "bySpecies": "Top {n} par catégorie",
     "toTop": "Il manque {n} cœur pour le top {top} {among} | Il manque {n} cœurs pour le top {top} {among}",
-    "yourPetsNote": "Hors du top {n}, les animaux n'apparaissent pas au classement : toi seul les vois.",
+    "yourPetsNote": "Hors du top {n}, on n'apparaît pas au classement : toi seul les vois.",
     "city": "Ville",
     "allCities": "Toutes les villes",
     "inCity": "à {city}",
@@ -603,7 +518,7 @@
     "withdraw": "Retirer la demande",
     "rejected": "La demande n'a pas été approuvée : {reason}. Corrige les informations et envoie-la à nouveau.",
     "applyTitle": "Fais-toi vérifier comme refuge",
-    "applyText": "Pour les chenils, refuges, chatteries et associations qui font de l'adoption. Nous vérifions que l'association existe : numéro SIRET, e-mail et téléphone ne sont visibles que par les modérateurs. Sur PetDuel on adopte, c'est tout : ni vente ni prix.",
+    "applyText": "Pour les chenils, refuges, chatteries et associations qui font de l'adoption. Nous vérifions que l'association existe : numéro SIRET, e-mail et téléphone ne sont visibles que par les modérateurs. Sur @:{'site.name'} on adopte, c'est tout : ni vente ni prix.",
     "name": "Nom du refuge",
     "public": "publique",
     "descriptionPlaceholder": "Qui vous êtes, combien d'animaux vous accueillez, comment se passent les adoptions et les visites préalables…",
@@ -617,7 +532,7 @@
     "open": "Menu du compte",
     "seeProfile": "Voir ton profil",
     "shelter": "Espace refuge",
-    "guest": "Connecte-toi pour publier tes animaux, participer aux défis et recevoir des notifications.",
+    "guest": "Connecte-toi pour publier, participer aux défis et recevoir des notifications.",
     "theme": "Thème",
     "themes": {
       "system": "Automatique",
@@ -652,15 +567,15 @@
   "account": {
     "title": "Ton compte",
     "exportTitle": "Tes données",
-    "exportText": "Télécharge un fichier avec tout ce que PetDuel sait de toi : compte, animaux, photos, votes donnés, demandes d'adoption et alertes.",
+    "exportText": "Télécharge un fichier avec tout ce que @:{'site.name'} sait de toi : compte, participants, images, votes donnés et alertes.",
     "exportButton": "Télécharger mes données",
     "consentText": "Choisis si tu veux voir les publicités Google, qui utilisent des cookies.",
     "consentButton": "Changer mon choix",
     "deleteTitle": "Supprimer le compte",
-    "deleteText": "Nous effaçons immédiatement profil, animaux, photos, refuge, demandes d'adoption et alertes. Les votes que tu as donnés restent, mais anonymes. C'est définitif.",
+    "deleteText": "Nous effaçons immédiatement profil, participants, images et alertes. Les votes que tu as donnés restent, mais anonymes. C'est définitif.",
     "deleteButton": "Supprimer le compte",
     "passwordLabel": "Par sécurité, saisis ton mot de passe",
-    "understood": "Je comprends : mes animaux et leurs photos disparaîtront pour toujours",
+    "understood": "Je comprends : mes participants et leurs images disparaîtront pour toujours",
     "deleteConfirm": "Supprimer définitivement"
   },
   "badges": {
@@ -687,8 +602,8 @@
       "desc": "Au moins 1000 cœurs reçus"
     },
     "petOfWeek": {
-      "name": "Animal de la semaine",
-      "desc": "A terminé une semaine premier de son espèce"
+      "name": "Le meilleur de la semaine",
+      "desc": "A terminé une semaine premier de sa catégorie"
     },
     "photogenic": {
       "name": "Photogénique",
@@ -700,7 +615,7 @@
     },
     "adopted": {
       "name": "A trouvé une famille",
-      "desc": "Adopté grâce à un refuge sur PetDuel"
+      "desc": "Adopté grâce à un refuge sur @:{'site.name'}"
     }
   },
   "shelterEdit": {

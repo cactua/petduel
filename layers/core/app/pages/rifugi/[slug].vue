@@ -6,7 +6,7 @@ const route = useRoute()
 const { data: shelter, error } = await useFetch<ShelterPage>(() => `/api/shelters/${route.params.slug}`)
 
 const { t } = useI18n()
-useHead({ title: () => (shelter.value ? `${shelter.value.name} · PetDuel` : `${t('shelters.verified')} · PetDuel`) })
+useHead({ title: () => shelter.value?.name ?? t('shelters.verified') })
 useSeoMeta({
   description: () => (shelter.value?.tagline || shelter.value?.description.slice(0, 160)) ?? '',
   ogImage: () => (shelter.value?.banner ? shelterImageSources(shelter.value.banner, 'banner').src : undefined),

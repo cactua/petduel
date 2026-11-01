@@ -7,7 +7,7 @@ export default {
   docs: {
     privacy: {
       title: 'Datenschutzerklärung',
-      intro: 'Hier erklären wir, welche Daten PetDuel erhebt, wofür, wer sie sehen kann und wie du sie kontrollierst. Wir erheben nur, was wir wirklich brauchen.',
+      intro: 'Hier erklären wir, welche Daten {site} erhebt, wofür, wer sie sehen kann und wie du sie kontrollierst. Wir erheben nur, was wir wirklich brauchen.',
       sections: [
         {
           h: 'Verantwortlicher',
@@ -85,7 +85,7 @@ export default {
     },
     cookie: {
       title: 'Cookie-Richtlinie',
-      intro: 'Cookies sind kleine Dateien, die die Seite in deinem Browser speichert. PetDuel nutzt nur wenige, und fast alle sind nur für den Betrieb nötig.',
+      intro: 'Cookies sind kleine Dateien, die die Seite in deinem Browser speichert. {site} nutzt nur wenige, und fast alle sind nur für den Betrieb nötig.',
       sections: [
         {
           h: 'Technische Cookies',
@@ -123,11 +123,11 @@ export default {
     },
     terms: {
       title: 'Nutzungsbedingungen',
-      intro: 'Mit der Nutzung von PetDuel akzeptierst du diese Regeln. Sie sollen die Seite angenehm, fair und sicher für Menschen und Tiere halten.',
+      intro: 'Mit der Nutzung von {site} akzeptierst du diese Regeln. Sie sollen die Seite angenehm, fair und sicher für Menschen und Tiere halten.',
       sections: [
         {
           h: 'Der Dienst',
-          p: ['PetDuel ist eine kostenlose Seite, auf der man paarweise über Tierfotos abstimmt, an Themen-Challenges teilnimmt und Tiere entdeckt, die ein Zuhause suchen. Betrieben wird sie von {owner}.'],
+          p: ['{site} ist eine kostenlose Seite, auf der man paarweise über Tierfotos abstimmt, an Themen-Challenges teilnimmt und Tiere entdeckt, die ein Zuhause suchen. Betrieben wird sie von {owner}.'],
         },
         {
           h: 'Dein Konto',
@@ -142,7 +142,7 @@ export default {
           list: [
             'Lade nur Fotos hoch, die du selbst gemacht hast oder nutzen darfst, und nur von Tieren, die dir gehören oder um die du dich kümmerst.',
             'Verboten sind Fotos mit erkennbaren Personen, gewalttätige, grausame oder sexuelle Inhalte, misshandelte oder gefährdete Tiere, Werbung und beleidigende Texte.',
-            'Deine Fotos bleiben deine. Mit dem Hochladen erlaubst du uns, sie auf PetDuel zu zeigen, in Duellen, Ranglisten, Challenges und Teilen-Karten, bis du sie löschst.',
+            'Deine Fotos bleiben deine. Mit dem Hochladen erlaubst du uns, sie auf {site} zu zeigen, in Duellen, Ranglisten, Challenges und Teilen-Karten, bis du sie löschst.',
             'Jedes Foto wird vor der Veröffentlichung geprüft. Wir können Fotos ablehnen oder entfernen, die gegen diese Regeln verstoßen.',
           ],
         },
@@ -154,7 +154,7 @@ export default {
           h: 'Tierheime und Adoptionen',
           list: [
             'Tierheime müssen wahre Angaben über sich und die Tiere machen. Wir prüfen sie vor der Veröffentlichung.',
-            'Adoptionen erfolgen direkt zwischen dir und dem Tierheim. PetDuel stellt den Kontakt her, ist aber nicht an der Adoption beteiligt und haftet nicht für getroffene Vereinbarungen.',
+            'Adoptionen erfolgen direkt zwischen dir und dem Tierheim. {site} stellt den Kontakt her, ist aber nicht an der Adoption beteiligt und haftet nicht für getroffene Vereinbarungen.',
           ],
         },
         {

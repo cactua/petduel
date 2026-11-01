@@ -2,7 +2,7 @@
 // Il proprio account: scaricare i dati ed eliminare tutto (diritti di accesso e cancellazione)
 definePageMeta({ middleware: 'auth' })
 const { t } = useI18n()
-useHead({ title: () => `${t('account.title')} · PetDuel` })
+useHead({ title: () => `${t('account.title')}` })
 
 const { user, clear } = useUserSession()
 const { open: openConsent } = useConsent()

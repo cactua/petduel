@@ -1,0 +1,179 @@
+{
+  "challenge": {
+    "enterYours": "Iscrivi il tuo pet"
+  },
+  "notif": {
+    "weeklyHearts": "La settimana scorsa i tuoi pet hanno ricevuto {n} cuore. Il più amato: {name} | La settimana scorsa i tuoi pet hanno ricevuto {n} cuori. Il più amato: {name}"
+  },
+  "validation": {
+    "petName": "Dai un nome al tuo pet"
+  },
+  "errors": {
+    "petHidden": "Hai scelto di tenere questo pet fuori da classifiche e sfide",
+    "petNotFound": "Pet non trovato",
+    "wrongSpecies": "Questa sfida non è per la specie del tuo pet",
+    "alreadyEntered": "Questo pet partecipa già alla sfida",
+    "pickPet": "Scegli il pet"
+  },
+  "auth": {
+    "registerLead": "Serve per caricare i tuoi pet e avere la loro gallery."
+  },
+  "share": {
+    "text": "Guarda {name} su @:{'site.name'}: chi è più carino?"
+  },
+  "duel": {
+    "question": "Chi è più carino?",
+    "uploadYours": "Carica il tuo pet"
+  },
+  "upload": {
+    "forWhich": "Per quale pet?",
+    "newPet": "Un nuovo pet",
+    "rules": "Solo foto tue in cui si vede bene l'animale. Niente persone riconoscibili, targhe o indirizzi.",
+    "stepDetails": "Il pet"
+  },
+  "join": {
+    "needAccount": "Per iscrivere il tuo pet devi avere un account.",
+    "title": "Iscrivi un pet",
+    "pet": "Pet",
+    "onlySpecies": "Questa sfida è solo per una specie e non hai pet adatti.",
+    "uploadFirst": "Prima carica il tuo pet, poi torna qui per iscriverlo.",
+    "uploadPet": "Carica un pet",
+    "allIn": "Tutti i tuoi pet adatti sono già in gara. In bocca al lupo!"
+  },
+  "pet": {
+    "species": "Specie",
+    "breed": "Razza",
+    "delete": "Elimina pet",
+    "ogDescription": "{name} è su @:{'site.name'}: chi è più carino? Vota anche tu!",
+    "notFound": "Pet non trovato."
+  },
+  "profile": {
+    "pets": "{n} pet",
+    "noPetsMine": "Non hai ancora caricato nessun pet.",
+    "noPets": "Nessun pet pubblico, per ora.",
+    "uploadFirst": "Carica il tuo primo pet",
+    "newPet": "Nuovo pet",
+    "statPets": "Pet",
+    "petsTitle": "I pet · {n}",
+    "filter": "Mostra i pet",
+    "jump": "Vai a un pet",
+    "groups": {
+      "other": "Altri pet"
+    },
+    "addGuestHint": "Carica le foto di un nuovo pet"
+  },
+  "challenges": {
+    "lead": "Ogni lunedì un tema nuovo. Iscrivi il tuo pet con la foto giusta, vota gli altri e conquista il trofeo."
+  },
+  "credits": {
+    "lead": "I pet di esempio usano foto con licenza libera da Wikimedia Commons. Grazie a chi le ha scattate e condivise."
+  },
+  "ranking": {
+    "empty": "Nessun pet in questa classifica, per ora.",
+    "yourPets": "I tuoi pet",
+    "bySpecies": "Top {n} per specie",
+    "yourPetsNote": "Fuori dalla top {n} i pet non compaiono in classifica: questi li vedi solo tu."
+  },
+  "menu": {
+    "guest": "Accedi per caricare i tuoi pet, partecipare alle sfide e ricevere gli avvisi."
+  },
+  "account": {
+    "exportText": "Scarica un file con tutto quello che @:{'site.name'} sa di te: account, pet, foto, voti dati, richieste di adozione e avvisi.",
+    "deleteText": "Cancelliamo subito profilo, pet, foto, rifugio, richieste di adozione e avvisi. I voti che hai dato restano, ma anonimi. Non si può tornare indietro.",
+    "understood": "Ho capito: i miei pet e le loro foto spariranno per sempre"
+  },
+  "badges": {
+    "petOfWeek": {
+      "name": "Pet della settimana",
+      "desc": "Ha chiuso una settimana al primo posto della sua specie"
+    }
+  },
+  "species": {
+    "filter": "Filtra per specie",
+    "cane": {
+      "one": "Cane",
+      "many": "Cani",
+      "among": "tra i cani"
+    },
+    "gatto": {
+      "one": "Gatto",
+      "many": "Gatti",
+      "among": "tra i gatti"
+    },
+    "coniglio": {
+      "one": "Coniglio",
+      "many": "Conigli",
+      "among": "tra i conigli"
+    },
+    "roditore": {
+      "one": "Roditore",
+      "many": "Roditori",
+      "among": "tra i roditori"
+    },
+    "uccello": {
+      "one": "Uccello",
+      "many": "Uccelli",
+      "among": "tra gli uccelli"
+    },
+    "rettile": {
+      "one": "Rettile",
+      "many": "Rettili",
+      "among": "tra i rettili"
+    },
+    "altro": {
+      "one": "Altro",
+      "many": "Altri",
+      "among": "tra gli altri animali"
+    }
+  },
+  "themes": {
+    "dormiglione": {
+      "title": "Il più dormiglione",
+      "description": "La foto del pisolino più tenero: nel letto, sul divano o nei posti più improbabili."
+    },
+    "linguaccia": {
+      "title": "Linguaccia!",
+      "description": "Lingua di fuori, senza vergogna."
+    },
+    "agguato": {
+      "title": "Agguato felino",
+      "description": "Il gatto pronto a balzare: sguardo fisso e coda che vibra."
+    },
+    "scatola": {
+      "title": "Re della scatola",
+      "description": "Dentro una scatola, un cesto, un vaso o qualsiasi posto troppo piccolo."
+    },
+    "faccia-colpevole": {
+      "title": "Faccia da colpevole",
+      "description": "Il momento subito dopo il disastro."
+    },
+    "riporto": {
+      "title": "Il re del riporto",
+      "description": "Pallina, bastone o ciabatta: il cane in azione."
+    },
+    "sguardo": {
+      "title": "Sguardo che conquista",
+      "description": "Gli occhi più dolci (o più intensi) del web."
+    },
+    "migliori-amici": {
+      "title": "Migliori amici",
+      "description": "Con il gioco, il peluche o l'amico animale preferito."
+    },
+    "esploratore": {
+      "title": "Piccolo esploratore",
+      "description": "Avventure all'aria aperta: prati, spiagge, montagne o il balcone di casa."
+    },
+    "musetto-goloso": {
+      "title": "Musetto goloso",
+      "description": "Il pet sorpreso a mangiare: carote, semi, crocchette o il tuo panino."
+    },
+    "pose-impossibili": {
+      "title": "Pose impossibili",
+      "description": "Contorsionisti nati: le posizioni più assurde."
+    },
+    "bagnetto": {
+      "title": "Dopo il bagnetto",
+      "description": "Pelo bagnato, dignità perduta."
+    }
+  }
+}

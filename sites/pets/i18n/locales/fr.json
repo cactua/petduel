@@ -1,0 +1,179 @@
+{
+  "challenge": {
+    "enterYours": "Inscris ton animal"
+  },
+  "notif": {
+    "weeklyHearts": "La semaine dernière, tes animaux ont reçu {n} cœur. Le plus aimé : {name} | La semaine dernière, tes animaux ont reçu {n} cœurs. Le plus aimé : {name}"
+  },
+  "validation": {
+    "petName": "Donne un nom à ton animal"
+  },
+  "errors": {
+    "petHidden": "Tu as choisi de garder cet animal hors des classements et des défis",
+    "petNotFound": "Animal introuvable",
+    "wrongSpecies": "Ce défi n'est pas pour l'espèce de ton animal",
+    "alreadyEntered": "Cet animal participe déjà au défi",
+    "pickPet": "Choisis l'animal"
+  },
+  "auth": {
+    "registerLead": "Il te permet de publier tes animaux et d'avoir leur galerie."
+  },
+  "share": {
+    "text": "Regarde {name} sur @:{'site.name'} : qui est le plus mignon ?"
+  },
+  "duel": {
+    "question": "Qui est le plus mignon ?",
+    "uploadYours": "Publie ton animal"
+  },
+  "upload": {
+    "forWhich": "Pour quel animal ?",
+    "newPet": "Un nouvel animal",
+    "rules": "Uniquement tes propres photos où l'on voit bien l'animal. Pas de personnes reconnaissables, de plaques d'immatriculation ni d'adresses.",
+    "stepDetails": "L'animal"
+  },
+  "join": {
+    "needAccount": "Il te faut un compte pour inscrire ton animal.",
+    "title": "Inscrire un animal",
+    "pet": "Animal",
+    "onlySpecies": "Ce défi est réservé à une seule espèce et tu n'as pas d'animal adapté.",
+    "uploadFirst": "Publie d'abord ton animal, puis reviens ici pour l'inscrire.",
+    "uploadPet": "Publier un animal",
+    "allIn": "Tous tes animaux éligibles sont déjà en lice. Bonne chance !"
+  },
+  "pet": {
+    "species": "Espèce",
+    "breed": "Race",
+    "delete": "Supprimer l'animal",
+    "ogDescription": "{name} est sur @:{'site.name'} : qui est le plus mignon ? Vote toi aussi !",
+    "notFound": "Animal introuvable."
+  },
+  "profile": {
+    "pets": "{n} animaux",
+    "noPetsMine": "Tu n'as encore publié aucun animal.",
+    "noPets": "Aucun animal public, pour l'instant.",
+    "uploadFirst": "Publie ton premier animal",
+    "newPet": "Nouvel animal",
+    "statPets": "Animaux",
+    "petsTitle": "Animaux · {n}",
+    "filter": "Afficher les animaux",
+    "jump": "Aller à un animal",
+    "groups": {
+      "other": "Autres animaux"
+    },
+    "addGuestHint": "Charge les photos d'un nouvel animal"
+  },
+  "challenges": {
+    "lead": "Chaque lundi un nouveau thème. Inscris ton animal avec la bonne photo, vote pour les autres et remporte le trophée."
+  },
+  "credits": {
+    "lead": "Les animaux d'exemple utilisent des photos sous licence libre de Wikimedia Commons. Merci à celles et ceux qui les ont prises et partagées."
+  },
+  "ranking": {
+    "empty": "Aucun animal dans ce classement, pour l'instant.",
+    "yourPets": "Tes animaux",
+    "bySpecies": "Top {n} par espèce",
+    "yourPetsNote": "Hors du top {n}, les animaux n'apparaissent pas au classement : toi seul les vois."
+  },
+  "menu": {
+    "guest": "Connecte-toi pour publier tes animaux, participer aux défis et recevoir des notifications."
+  },
+  "account": {
+    "exportText": "Télécharge un fichier avec tout ce que @:{'site.name'} sait de toi : compte, animaux, photos, votes donnés, demandes d'adoption et alertes.",
+    "deleteText": "Nous effaçons immédiatement profil, animaux, photos, refuge, demandes d'adoption et alertes. Les votes que tu as donnés restent, mais anonymes. C'est définitif.",
+    "understood": "Je comprends : mes animaux et leurs photos disparaîtront pour toujours"
+  },
+  "badges": {
+    "petOfWeek": {
+      "name": "Animal de la semaine",
+      "desc": "A terminé une semaine premier de son espèce"
+    }
+  },
+  "species": {
+    "filter": "Filtrer par espèce",
+    "cane": {
+      "one": "Chien",
+      "many": "Chiens",
+      "among": "parmi les chiens"
+    },
+    "gatto": {
+      "one": "Chat",
+      "many": "Chats",
+      "among": "parmi les chats"
+    },
+    "coniglio": {
+      "one": "Lapin",
+      "many": "Lapins",
+      "among": "parmi les lapins"
+    },
+    "roditore": {
+      "one": "Rongeur",
+      "many": "Rongeurs",
+      "among": "parmi les rongeurs"
+    },
+    "uccello": {
+      "one": "Oiseau",
+      "many": "Oiseaux",
+      "among": "parmi les oiseaux"
+    },
+    "rettile": {
+      "one": "Reptile",
+      "many": "Reptiles",
+      "among": "parmi les reptiles"
+    },
+    "altro": {
+      "one": "Autre",
+      "many": "Autres",
+      "among": "parmi les autres animaux"
+    }
+  },
+  "themes": {
+    "dormiglione": {
+      "title": "Le plus gros dormeur",
+      "description": "La photo de sieste la plus attendrissante : au lit, sur le canapé ou dans les endroits les plus improbables."
+    },
+    "linguaccia": {
+      "title": "Tire la langue !",
+      "description": "Langue dehors, sans aucune honte."
+    },
+    "agguato": {
+      "title": "Embuscade féline",
+      "description": "Le chat prêt à bondir : regard fixe et queue qui frémit."
+    },
+    "scatola": {
+      "title": "Roi du carton",
+      "description": "Dans un carton, un panier, un pot ou n'importe quel endroit bien trop petit."
+    },
+    "faccia-colpevole": {
+      "title": "Tête de coupable",
+      "description": "Le moment juste après la catastrophe."
+    },
+    "riporto": {
+      "title": "Le roi du rapport",
+      "description": "Balle, bâton ou chausson : le chien en action."
+    },
+    "sguardo": {
+      "title": "Regard irrésistible",
+      "description": "Les yeux les plus doux (ou les plus intenses) du web."
+    },
+    "migliori-amici": {
+      "title": "Meilleurs amis",
+      "description": "Avec son jouet, sa peluche ou son ami animal préféré."
+    },
+    "esploratore": {
+      "title": "Petit explorateur",
+      "description": "Aventures en plein air : prés, plages, montagnes ou le balcon de la maison."
+    },
+    "musetto-goloso": {
+      "title": "Petit gourmand",
+      "description": "Pris sur le fait en train de manger : carottes, graines, croquettes ou ton sandwich."
+    },
+    "pose-impossibili": {
+      "title": "Poses impossibles",
+      "description": "Contorsionnistes nés : les positions les plus absurdes."
+    },
+    "bagnetto": {
+      "title": "Après le bain",
+      "description": "Poils mouillés, dignité perdue."
+    }
+  }
+}

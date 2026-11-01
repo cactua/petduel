@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import site from '#site'
 import type { GeocodeResult } from '#shared/models'
 
 const querySchema = z.object({ q: z.string().trim().min(3).max(140) })
@@ -9,7 +10,7 @@ const search = defineCachedFunction(async (q: string, lang: string): Promise<Geo
   const { legal } = useRuntimeConfig().public
   const rows = await $fetch<{ display_name: string, lat: string, lon: string }[]>('https://nominatim.openstreetmap.org/search', {
     query: { q, format: 'jsonv2', limit: 5 },
-    headers: { 'user-agent': `PetDuel/1.0 (${legal.email || 'petduel'})`, 'accept-language': lang },
+    headers: { 'user-agent': `${site.name}/1.0 (${legal.email || site.id})`, 'accept-language': lang },
     timeout: 8000,
   })
   return rows.map(r => ({ label: r.display_name, lat: Number(r.lat), lng: Number(r.lon) }))

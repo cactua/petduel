@@ -5,7 +5,7 @@ import { speciesName } from '#shared/speciesNames'
 type Reason = (typeof REJECT_REASONS)[number]
 
 definePageMeta({ middleware: 'admin' })
-useHead({ title: 'Foto · Admin · PetDuel' })
+useHead({ title: 'Foto · Admin' })
 
 const route = useRoute()
 const tab = computed(() => (route.query.vista === 'approvate' ? 'approved' : 'pending'))

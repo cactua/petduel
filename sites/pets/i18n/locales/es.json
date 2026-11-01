@@ -1,0 +1,179 @@
+{
+  "challenge": {
+    "enterYours": "Inscribe a tu mascota"
+  },
+  "notif": {
+    "weeklyHearts": "La semana pasada tus mascotas recibieron {n} corazón. La más querida: {name} | La semana pasada tus mascotas recibieron {n} corazones. La más querida: {name}"
+  },
+  "validation": {
+    "petName": "Ponle un nombre a tu mascota"
+  },
+  "errors": {
+    "petHidden": "Elegiste mantener esta mascota fuera de rankings y retos",
+    "petNotFound": "Mascota no encontrada",
+    "wrongSpecies": "Este reto no es para la especie de tu mascota",
+    "alreadyEntered": "Esta mascota ya participa en el reto",
+    "pickPet": "Elige la mascota"
+  },
+  "auth": {
+    "registerLead": "La necesitas para subir tus mascotas y tener su galería."
+  },
+  "share": {
+    "text": "Mira a {name} en @:{'site.name'}: ¿quién es más mono?"
+  },
+  "duel": {
+    "question": "¿Quién es más mono?",
+    "uploadYours": "Sube a tu mascota"
+  },
+  "upload": {
+    "forWhich": "¿Para qué mascota?",
+    "newPet": "Una mascota nueva",
+    "rules": "Solo fotos tuyas en las que se vea bien al animal. Nada de personas reconocibles, matrículas o direcciones.",
+    "stepDetails": "La mascota"
+  },
+  "join": {
+    "needAccount": "Necesitas una cuenta para inscribir a tu mascota.",
+    "title": "Inscribe una mascota",
+    "pet": "Mascota",
+    "onlySpecies": "Este reto es solo para una especie y no tienes mascotas adecuadas.",
+    "uploadFirst": "Primero sube a tu mascota y luego vuelve aquí para inscribirla.",
+    "uploadPet": "Sube una mascota",
+    "allIn": "Todas tus mascotas adecuadas ya están compitiendo. ¡Mucha suerte!"
+  },
+  "pet": {
+    "species": "Especie",
+    "breed": "Raza",
+    "delete": "Eliminar mascota",
+    "ogDescription": "{name} está en @:{'site.name'}: ¿quién es más mono? ¡Vota tú también!",
+    "notFound": "Mascota no encontrada."
+  },
+  "profile": {
+    "pets": "{n} mascotas",
+    "noPetsMine": "Aún no has subido ninguna mascota.",
+    "noPets": "Ninguna mascota pública, por ahora.",
+    "uploadFirst": "Sube tu primera mascota",
+    "newPet": "Nueva mascota",
+    "statPets": "Mascotas",
+    "petsTitle": "Mascotas · {n}",
+    "filter": "Mostrar mascotas",
+    "jump": "Ir a una mascota",
+    "groups": {
+      "other": "Otras mascotas"
+    },
+    "addGuestHint": "Sube las fotos de una nueva mascota"
+  },
+  "challenges": {
+    "lead": "Cada lunes un tema nuevo. Inscribe a tu mascota con la foto adecuada, vota a las demás y gana el trofeo."
+  },
+  "credits": {
+    "lead": "Las mascotas de ejemplo usan fotos con licencia libre de Wikimedia Commons. Gracias a quienes las hicieron y compartieron."
+  },
+  "ranking": {
+    "empty": "Ninguna mascota en este ranking, por ahora.",
+    "yourPets": "Tus mascotas",
+    "bySpecies": "Top {n} por especie",
+    "yourPetsNote": "Fuera del top {n} las mascotas no aparecen en la clasificación: estas solo las ves tú."
+  },
+  "menu": {
+    "guest": "Entra para subir tus mascotas, participar en los retos y recibir avisos."
+  },
+  "account": {
+    "exportText": "Descarga un archivo con todo lo que @:{'site.name'} sabe de ti: cuenta, mascotas, fotos, votos dados, solicitudes de adopción y avisos.",
+    "deleteText": "Borramos enseguida perfil, mascotas, fotos, refugio, solicitudes de adopción y avisos. Los votos que diste se quedan, pero anónimos. No se puede deshacer.",
+    "understood": "Lo entiendo: mis mascotas y sus fotos desaparecerán para siempre"
+  },
+  "badges": {
+    "petOfWeek": {
+      "name": "Mascota de la semana",
+      "desc": "Terminó una semana en primer lugar de su especie"
+    }
+  },
+  "species": {
+    "filter": "Filtrar por especie",
+    "cane": {
+      "one": "Perro",
+      "many": "Perros",
+      "among": "entre los perros"
+    },
+    "gatto": {
+      "one": "Gato",
+      "many": "Gatos",
+      "among": "entre los gatos"
+    },
+    "coniglio": {
+      "one": "Conejo",
+      "many": "Conejos",
+      "among": "entre los conejos"
+    },
+    "roditore": {
+      "one": "Roedor",
+      "many": "Roedores",
+      "among": "entre los roedores"
+    },
+    "uccello": {
+      "one": "Pájaro",
+      "many": "Pájaros",
+      "among": "entre los pájaros"
+    },
+    "rettile": {
+      "one": "Reptil",
+      "many": "Reptiles",
+      "among": "entre los reptiles"
+    },
+    "altro": {
+      "one": "Otro",
+      "many": "Otros",
+      "among": "entre los demás animales"
+    }
+  },
+  "themes": {
+    "dormiglione": {
+      "title": "El más dormilón",
+      "description": "La foto de la siesta más tierna: en la cama, en el sofá o en los sitios más insospechados."
+    },
+    "linguaccia": {
+      "title": "¡Lengua fuera!",
+      "description": "Lengua fuera, sin vergüenza."
+    },
+    "agguato": {
+      "title": "Emboscada felina",
+      "description": "El gato a punto de saltar: mirada fija y cola que vibra."
+    },
+    "scatola": {
+      "title": "Rey de la caja",
+      "description": "Dentro de una caja, una cesta, una maceta o cualquier sitio demasiado pequeño."
+    },
+    "faccia-colpevole": {
+      "title": "Cara de culpable",
+      "description": "El momento justo después del desastre."
+    },
+    "riporto": {
+      "title": "El rey de la pelota",
+      "description": "Pelota, palo o zapatilla: el perro en acción."
+    },
+    "sguardo": {
+      "title": "Mirada que enamora",
+      "description": "Los ojos más dulces (o más intensos) de la red."
+    },
+    "migliori-amici": {
+      "title": "Mejores amigos",
+      "description": "Con su juguete, peluche o amigo animal favorito."
+    },
+    "esploratore": {
+      "title": "Pequeño explorador",
+      "description": "Aventuras al aire libre: prados, playas, montañas o el balcón de casa."
+    },
+    "musetto-goloso": {
+      "title": "Hocico glotón",
+      "description": "Pillado comiendo: zanahorias, semillas, pienso o tu bocadillo."
+    },
+    "pose-impossibili": {
+      "title": "Posturas imposibles",
+      "description": "Contorsionistas natos: las posturas más absurdas."
+    },
+    "bagnetto": {
+      "title": "Después del baño",
+      "description": "Pelo mojado, dignidad perdida."
+    }
+  }
+}

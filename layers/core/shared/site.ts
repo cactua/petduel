@@ -20,6 +20,8 @@ export interface ChallengeTheme {
 
 export interface SiteConfig {
   id: string
+  /** Nome del sito: logo, titoli delle pagine, card da condividere, testi legali ("@:site.name" nei file di lingua) */
+  name: string
   /**
    * Categorie tra cui scegliere (duelli e classifiche restano dentro la stessa categoria).
    * Vuota: niente scelta, tutti i contenuti competono insieme

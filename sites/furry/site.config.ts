@@ -4,6 +4,8 @@ import { defineSite } from '../../layers/core/shared/site'
 // Categorie e temi delle sfide ancora da decidere: senza categorie tutti i disegni competono insieme
 export default defineSite({
   id: 'furry',
+  // Nome provvisorio, da decidere
+  name: 'FurDuel',
   categories: [],
   challengeThemes: [],
 })
