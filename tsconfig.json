@@ -1,18 +1,5 @@
 {
-  // https://nuxt.com/docs/guide/concepts/typescript
+  // Ogni sito ha il suo tsconfig generato da Nuxt: qui il sito di riferimento per l'editor
   "files": [],
-  "references": [
-    {
-      "path": "./.nuxt/tsconfig.app.json"
-    },
-    {
-      "path": "./.nuxt/tsconfig.server.json"
-    },
-    {
-      "path": "./.nuxt/tsconfig.shared.json"
-    },
-    {
-      "path": "./.nuxt/tsconfig.node.json"
-    }
-  ]
+  "references": [{ "path": "./sites/pets" }]
 }

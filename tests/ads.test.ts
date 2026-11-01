@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { AD_TARGETING_DEFAULT, adTextFor, type AdTargeting } from '#shared/models'
-import { adMatches, type AdVisitor } from '../server/utils/adAudience'
+import { adMatches, type AdVisitor } from '../layers/core/server/utils/adAudience'
 
 const visitor = (v: Partial<AdVisitor> = {}): AdVisitor => ({
   country: 'IT', city: 'Torino', lat: 45.07, lng: 7.69, timezone: 'Europe/Rome',

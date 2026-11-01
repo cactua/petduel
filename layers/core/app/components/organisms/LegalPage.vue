@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { LEGAL_UPDATED, type LegalKey, type LegalTexts } from '~/legal/types'
-import it from '~/legal/it'
-import en from '~/legal/en'
-import es from '~/legal/es'
-import fr from '~/legal/fr'
-import de from '~/legal/de'
+import { LEGAL_UPDATED, type LegalKey, type LegalTexts } from '../../legal/types'
+import it from '../../legal/it'
+import en from '../../legal/en'
+import es from '../../legal/es'
+import fr from '../../legal/fr'
+import de from '../../legal/de'
 
 // Privacy, cookie e termini: testi lunghi, uno per lingua in app/legal (non nei file di traduzione)
 const props = defineProps<{ doc: LegalKey }>()

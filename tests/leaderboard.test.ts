@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Species } from '#shared/models'
-import { splitBoard, type BoardRow } from '../server/utils/leaderboard'
+import { splitBoard, type BoardRow } from '../layers/core/server/utils/leaderboard'
 
 // Righe come le restituisce il database: già ordinate, con le posizioni calcolate
 function board(list: { id: number, species: Species, score: number, owner?: number }[]) {

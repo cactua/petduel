@@ -5,7 +5,7 @@ import { defineConfig } from 'vitest/config'
 // Si lanciano con: npm test
 export default defineConfig({
   resolve: {
-    alias: { '#shared': fileURLToPath(new URL('./shared', import.meta.url)) },
+    alias: { '#shared': fileURLToPath(new URL('./layers/core/shared', import.meta.url)) },
   },
   test: {
     include: ['tests/**/*.test.ts'],

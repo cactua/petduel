@@ -12,7 +12,7 @@ interface SeedPet {
 
 // Pet di esempio con foto libere di Wikimedia Commons (preparate da scripts/commons/import.mjs)
 export async function seedPets(db: Db) {
-  const assets = useStorage('assets:server')
+  const assets = useStorage('assets:core')
   const list = await assets.getItem<SeedPet[]>('seed:pets.json')
   if (!list?.length) {
     console.warn('[seed] Nessun pet di esempio: lancia node scripts/commons/import.mjs')

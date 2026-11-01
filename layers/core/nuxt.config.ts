@@ -1,4 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// Nucleo condiviso da tutti i siti: ogni sito in sites/<nome> lo estende e cambia solo ciò che serve.
+// I percorsi qui partono da questa cartella: "~" e "~~" indicano invece la cartella del sito
+import { fileURLToPath } from "node:url";
+
+const coreDir = (path: string) => fileURLToPath(new URL(path, import.meta.url));
 const isDev = process.env.NODE_ENV === "development";
 
 // Domini da cui Google AdSense carica immagini e pixel di misurazione
@@ -19,6 +24,11 @@ const GOOGLE_ADS = [
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
+  alias: {
+    // "#shared" punterebbe alla cartella shared del sito: qui serve quella del nucleo
+    "#shared": coreDir("./shared"),
+    "@core": coreDir("./"),
+  },
   modules: ["nuxt-auth-utils", "nuxt-security", "@nuxtjs/i18n", "@nuxt/eslint"],
 
   // Lingue: stessi indirizzi per tutte, la scelta resta in un cookie. Alla prima visita si usa
@@ -41,14 +51,14 @@ export default defineNuxtConfig({
     },
   },
   // Stili in SCSS (Atomic Design + BEM): globali in assets/scss, il resto nei componenti
-  css: ["~/assets/scss/main.scss"],
+  css: [coreDir("./app/assets/scss/main.scss")],
   // Componenti divisi in atoms/molecules/organisms senza cambiare i nomi usati nei template
-  components: [{ path: "~/components", pathPrefix: false }],
+  components: [{ path: coreDir("./app/components"), pathPrefix: false }],
   vite: {
     css: {
       preprocessorOptions: {
         // Token, breakpoint e mixin disponibili in ogni <style lang="scss">
-        scss: { additionalData: '@use "~/assets/scss/abstracts" as *;\n' },
+        scss: { additionalData: '@use "@core/app/assets/scss/abstracts" as *;\n' },
       },
     },
   },
@@ -153,6 +163,8 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    // Foto dei pet di esempio e font delle card. Non "server": Nitro aggiunge da sé quel nome per la cartella del sito
+    serverAssets: [{ baseName: "core", dir: coreDir("./server/assets") }],
     storage: {
       uploads: { driver: "fs", base: "./.data/uploads" },
     },

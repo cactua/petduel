@@ -6,14 +6,14 @@
     "node": "^22.21.0 || ^24.11.0 || >=26.0.0"
   },
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    "dev": "npm run dev:pets",
+    "dev:pets": "cd sites/pets && nuxt dev",
+    "build:pets": "cd sites/pets && nuxt build",
+    "preview:pets": "cd sites/pets && nuxt preview",
+    "postinstall": "nuxt prepare sites/pets",
     "make-admin": "node scripts/make-admin.mjs",
     "lint": "eslint .",
-    "typecheck": "nuxi typecheck",
+    "typecheck": "nuxi typecheck sites/pets",
     "test": "vitest run"
   },
   "dependencies": {

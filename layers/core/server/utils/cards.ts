@@ -138,7 +138,7 @@ function loadFonts() {
     ['Nunito', 'nunito-latin-700-normal.woff', 700],
     ['Nunito', 'nunito-latin-800-normal.woff', 800],
   ] as const).map(async ([name, file, weight]) => {
-    const raw = await useStorage('assets:server').getItemRaw(`fonts:${file}`)
+    const raw = await useStorage('assets:core').getItemRaw(`fonts:${file}`)
     if (!raw) throw new Error(`Font mancante: ${file}`)
     return { name, data: Buffer.from(raw), weight }
   }))

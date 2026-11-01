@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { eloDelta, pairKey, pickPair } from '../server/utils/ranking'
+import { eloDelta, pairKey, pickPair } from '../layers/core/server/utils/ranking'
 
 describe('Elo nascosto (serve solo ad abbinare i duelli)', () => {
   it('tra pari il vincitore prende metà del fattore K', () => {
