@@ -57,7 +57,7 @@ const winner = computed(() => challenge.value?.status === 'ended' ? challenge.va
           <div>
             <h1 class="challenge-page__name">{{ text.title }}</h1>
             <p class="challenge-page__meta">
-              <span v-if="challenge.species" class="challenge-page__tag">{{ $t('challenge.onlySpecies', { species: $t(`species.${challenge.species}.many`) }) }}</span>
+              <span v-if="challenge.species" class="challenge-page__tag">{{ $t('challenge.onlySpecies', { species: speciesText(challenge.species, 'many') }) }}</span>
               {{ when }} · {{ $t('challenge.entries', { n: challenge.entries }) }}
             </p>
           </div>
@@ -97,7 +97,7 @@ const winner = computed(() => challenge.value?.status === 'ended' ? challenge.va
         <p v-if="challenge.status === 'upcoming'" class="challenge-page__empty">{{ $t('challenge.notStarted', { date: shortDate(challenge.startsAt, true) }) }}</p>
         <ol v-else-if="challenge.standings.length" class="challenge-page__list">
           <li v-for="p in challenge.standings" :key="p.entryId" class="challenge-page__row">
-            <PetRankRow :pet="p" :score="`♥ ${p.score}`" :detail="[p.breed || $t(`species.${p.species}.one`), p.city].filter(Boolean).join(' · ')" :show-species="!challenge.species" />
+            <PetRankRow :pet="p" :score="`♥ ${p.score}`" :detail="[p.breed || speciesText(p.species, 'one'), p.city].filter(Boolean).join(' · ')" :show-species="!challenge.species" />
           </li>
         </ol>
         <p v-else class="challenge-page__empty">{{ $t('challenge.noEntries') }}</p>

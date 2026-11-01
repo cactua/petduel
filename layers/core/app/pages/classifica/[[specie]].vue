@@ -30,7 +30,7 @@ const { data, status } = await useFetch<Leaderboard>('/api/leaderboard', {
   query: { species, period, city },
 })
 
-const baseTitle = computed(() => species.value ? t('ranking.species', { species: t(`species.${species.value}.many`) }) : t('ranking.general'))
+const baseTitle = computed(() => species.value ? t('ranking.species', { species: speciesText(species.value, 'many', t) }) : t('ranking.general'))
 const title = computed(() => (city.value ? t('ranking.cityTitle', { title: baseTitle.value, city: city.value }) : baseTitle.value))
 useHead({ title: () => `${title.value} · PetDuel` })
 
@@ -48,7 +48,7 @@ const periodText = computed(() => (period.value === 'sempre' ? '' : t(`ranking.t
 
 // Il punteggio è in cuori: si vede solo per chi è in top (e per i propri pet)
 const score = (p: RankedPet) => `♥ ${p.score}`
-const detail = (p: RankedPet) => [p.breed || t(`species.${p.species}.one`), p.city].filter(Boolean).join(' · ')
+const detail = (p: RankedPet) => [p.breed || speciesText(p.species, 'one', t), p.city].filter(Boolean).join(' · ')
 const isMine = (p: RankedPet) => !!user.value && p.owner === user.value.username
 // Il proprio pet meglio piazzato tra quelli in vetrina (generale o della sua specie)
 const celebrate = computed(() => {
@@ -61,7 +61,7 @@ const speciesLink = (s: Species) => ({ path: `/classifica/${SPECIES_SLUG[s]}`, q
 const toTop = (p: RankedPet & { toTop: number }) =>
   t('ranking.toTop', {
     n: p.toTop, top: TOP_RANK,
-    among: [t(`species.${p.species}.among`), city.value ? t('ranking.inCity', { city: city.value }) : ''].filter(Boolean).join(' '),
+    among: [speciesText(p.species, 'among', t), city.value ? t('ranking.inCity', { city: city.value }) : ''].filter(Boolean).join(' '),
   }, p.toTop)
 </script>
 
@@ -104,7 +104,7 @@ const toTop = (p: RankedPet & { toTop: number }) =>
       <p class="ranking__celebrate-text">
         {{ $t('ranking.celebrate', {
           name: celebrate.pet.name, place: celebrate.place,
-          among: [$t(`species.${celebrate.pet.species}.among`), city ? $t('ranking.inCity', { city }) : ''].filter(Boolean).join(' '),
+          among: [speciesText(celebrate.pet.species, 'among'), city ? $t('ranking.inCity', { city }) : ''].filter(Boolean).join(' '),
         }) }}
       </p>
       <ShareCard :pet-id="celebrate.pet.id" :pet-name="celebrate.pet.name" :label="$t('ranking.celebrateShare')" />
@@ -136,7 +136,7 @@ const toTop = (p: RankedPet & { toTop: number }) =>
         <p>
           <template v-if="isRolling">
             {{ $t('ranking.noDuels', { period: periodText }) }}
-            {{ species ? $t(`species.${species}.among`) : '' }} {{ species ? SPECIES_EMOJI[species] : '' }}
+            {{ species ? speciesText(species, 'among') : '' }} {{ species ? SPECIES_EMOJI[species] : '' }}
           </template>
           <template v-else>{{ $t('ranking.empty') }}</template>
         </p>
@@ -148,7 +148,7 @@ const toTop = (p: RankedPet & { toTop: number }) =>
         <div class="ranking__species-grid">
           <section v-for="g in data.bySpecies" :key="g.species" class="ranking__species">
             <h3 class="ranking__species-title">
-              <NuxtLink :to="speciesLink(g.species)" class="ranking__species-link">{{ SPECIES_EMOJI[g.species] }} {{ $t(`species.${g.species}.many`) }} <span class="ranking__arrow">→</span></NuxtLink>
+              <NuxtLink :to="speciesLink(g.species)" class="ranking__species-link">{{ SPECIES_EMOJI[g.species] }} {{ speciesText(g.species, 'many') }} <span class="ranking__arrow">→</span></NuxtLink>
             </h3>
             <ol class="ranking__list">
               <li v-for="p in g.top" :key="p.id" class="ranking__row" :class="{ 'is-mine': isMine(p) }">

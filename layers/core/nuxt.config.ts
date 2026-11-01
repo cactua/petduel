@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // Nucleo condiviso da tutti i siti: ogni sito in sites/<nome> lo estende e cambia solo ciò che serve.
 // I percorsi qui partono da questa cartella: "~" e "~~" indicano invece la cartella del sito
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const coreDir = (path: string) => fileURLToPath(new URL(path, import.meta.url));
@@ -29,7 +30,16 @@ export default defineNuxtConfig({
     "#shared": coreDir("./shared"),
     "@core": coreDir("./"),
   },
-  modules: ["nuxt-auth-utils", "nuxt-security", "@nuxtjs/i18n", "@nuxt/eslint"],
+  modules: [
+    // "#site" è il site.config.ts del sito che si sta avviando (categorie, temi delle sfide…)
+    (_options, nuxt) => {
+      nuxt.options.alias["#site"] = join(nuxt.options.rootDir, "site.config.ts");
+    },
+    "nuxt-auth-utils",
+    "nuxt-security",
+    "@nuxtjs/i18n",
+    "@nuxt/eslint",
+  ],
 
   // Lingue: stessi indirizzi per tutte, la scelta resta in un cookie. Alla prima visita si usa
   // la lingua del browser (se non è tra queste, inglese). Testi in i18n/locales/<lingua>.json

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Species } from '#shared/models'
+import { SPECIES, type Species } from '#shared/models'
 
 // Orecchie (o ciuffo, o cresta) della specie, appoggiate sopra la cornice della foto.
 // Il genitore deve essere position: relative; la dimensione si regola con --ear.
@@ -8,7 +8,7 @@ const pair = computed(() => !['uccello', 'rettile'].includes(props.species))
 </script>
 
 <template>
-  <span class="pet-ears" :class="`pet-ears--${species}`" aria-hidden="true">
+  <span v-if="SPECIES.includes(species)" class="pet-ears" :class="`pet-ears--${species}`" aria-hidden="true">
     <template v-if="pair">
       <svg v-for="side in ['l', 'r']" :key="side" class="pet-ears__ear" :class="`pet-ears__ear--${side}`" :viewBox="species === 'cane' ? '0 0 46 70' : species === 'gatto' ? '0 0 52 46' : species === 'coniglio' ? '0 0 40 80' : '0 0 40 40'">
         <path v-if="species === 'cane'" d="M23 3C39 3 45 20 42 43c-2 17-11 24-20 24C11 67 4 57 4 40 4 18 9 3 23 3z" fill="#c99366" />

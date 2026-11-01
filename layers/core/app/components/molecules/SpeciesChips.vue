@@ -14,15 +14,18 @@ function updateFade() {
 }
 let observer: ResizeObserver | undefined
 onMounted(() => {
+  // Il sito non ha categorie: la riga non c'è
+  if (!row.value) return
   updateFade()
   observer = new ResizeObserver(updateFade)
-  observer.observe(row.value!)
+  observer.observe(row.value)
 })
 onBeforeUnmount(() => observer?.disconnect())
 </script>
 
 <template>
   <div
+    v-if="SPECIES.length"
     ref="row" class="species-chips"
     :class="{ 'species-chips--fade-start': more.start, 'species-chips--fade-end': more.end }"
     role="group" :aria-label="$t('species.filter')" @scroll.passive="updateFade"
@@ -32,7 +35,7 @@ onBeforeUnmount(() => observer?.disconnect())
       v-for="s in SPECIES" :key="s" type="button" class="species-chips__chip"
       :class="[`species-chips__chip--${s}`, { 'is-active': model === s }]" :aria-pressed="model === s" @click="model = s"
     >
-      <span aria-hidden="true">{{ SPECIES_EMOJI[s] }}</span> {{ $t(`species.${s}.many`) }}
+      <span aria-hidden="true">{{ SPECIES_EMOJI[s] }}</span> {{ speciesText(s, 'many') }}
     </button>
   </div>
 </template>

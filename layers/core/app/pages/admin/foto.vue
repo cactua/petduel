@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { REJECT_REASONS, SPECIES_ONE, type ModerationItem } from '#shared/models'
+import { REJECT_REASONS, type ModerationItem } from '#shared/models'
+import { speciesName } from '#shared/speciesNames'
 
 type Reason = (typeof REJECT_REASONS)[number]
 
@@ -104,7 +105,7 @@ const viewerPhotos = computed(() => (queue.value ?? []).map(q => ({ image: q.ima
         </button>
         <div class="photo-review__info">
           <h2 class="photo-review__name"><NuxtLink :to="`/pet/${item.pet.id}`" class="photo-review__name-link">{{ item.pet.name }}</NuxtLink></h2>
-          <p class="photo-review__line">{{ SPECIES_ONE[item.pet.species] }} · <NuxtLink :to="`/admin/utenti?q=${item.owner}`" class="photo-review__link">@{{ item.owner }}</NuxtLink></p>
+          <p class="photo-review__line"><template v-if="item.pet.species">{{ speciesName(item.pet.species, 'one') }} · </template><NuxtLink :to="`/admin/utenti?q=${item.owner}`" class="photo-review__link">@{{ item.owner }}</NuxtLink></p>
           <p class="photo-review__line photo-review__line--small">
             {{ timeAgo(item.createdAt) }} · {{ item.pet.approvedPhotos ? `${item.pet.approvedPhotos} foto già approvate` : 'pet nuovo' }}
           </p>

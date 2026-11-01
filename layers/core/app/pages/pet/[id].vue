@@ -58,7 +58,7 @@ useSeoMeta({
               class="pet-page__rank"
             >
               <PetRosette v-if="pet.speciesRank <= 3" :place="pet.speciesRank" class="pet-page__rosette" />
-              {{ $t('pet.rank', { rank: pet.speciesRank, among: $t(`species.${pet.species}.among`) }) }}
+              {{ $t('pet.rank', { rank: pet.speciesRank, among: speciesText(pet.species, 'among') }) }}
             </NuxtLink>
             <ShareCard v-if="isPublic" :pet-id="pet.id" :pet-name="pet.name" :sfida="sfida" :auto-open="shareNow" />
           </div>

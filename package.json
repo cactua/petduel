@@ -10,10 +10,13 @@
     "dev:pets": "cd sites/pets && nuxt dev",
     "build:pets": "cd sites/pets && nuxt build",
     "preview:pets": "cd sites/pets && nuxt preview",
-    "postinstall": "nuxt prepare sites/pets",
+    "dev:furry": "cd sites/furry && nuxt dev --port 3001",
+    "build:furry": "cd sites/furry && nuxt build",
+    "preview:furry": "cd sites/furry && nuxt preview",
+    "postinstall": "nuxt prepare sites/pets && nuxt prepare sites/furry",
     "make-admin": "node scripts/make-admin.mjs",
     "lint": "eslint .",
-    "typecheck": "nuxi typecheck sites/pets",
+    "typecheck": "nuxi typecheck sites/pets && nuxi typecheck sites/furry",
     "test": "vitest run"
   },
   "dependencies": {

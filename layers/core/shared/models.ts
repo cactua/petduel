@@ -1,30 +1,28 @@
 import { z } from 'zod'
+import site from '#site'
 import type { Badge } from './badges'
 
-export const SPECIES = ['cane', 'gatto', 'coniglio', 'roditore', 'uccello', 'rettile', 'altro'] as const
-export type Species = (typeof SPECIES)[number]
+// Categorie del sito (per PetDuel le specie). Se il sito non ne ha, ogni contenuto ha categoria "" e competono tutti insieme
+export const SPECIES = site.categories.map(c => c.id)
+export type Species = string
+export const NO_SPECIES = ''
 
-const SPECIES_INFO: Record<Species, { one: string, many: string, slug: string, emoji: string }> = {
-  cane: { one: 'Cane', many: 'Cani', slug: 'cani', emoji: '🐶' },
-  gatto: { one: 'Gatto', many: 'Gatti', slug: 'gatti', emoji: '🐱' },
-  coniglio: { one: 'Coniglio', many: 'Conigli', slug: 'conigli', emoji: '🐰' },
-  roditore: { one: 'Roditore', many: 'Roditori', slug: 'roditori', emoji: '🐹' },
-  uccello: { one: 'Uccello', many: 'Uccelli', slug: 'uccelli', emoji: '🦜' },
-  rettile: { one: 'Rettile', many: 'Rettili', slug: 'rettili', emoji: '🦎' },
-  altro: { one: 'Altro', many: 'Altri', slug: 'altri', emoji: '🐾' },
-}
+const pick = (key: 'slug' | 'emoji') =>
+  Object.fromEntries(site.categories.map(c => [c.id, c[key]])) as Record<Species, string>
 
-const pick = <K extends 'one' | 'many' | 'slug' | 'emoji'>(key: K) =>
-  Object.fromEntries(SPECIES.map(s => [s, SPECIES_INFO[s][key]])) as Record<Species, string>
-
-export const SPECIES_LABEL = pick('many')
-export const SPECIES_ONE = pick('one')
 export const SPECIES_SLUG = pick('slug')
 export const SPECIES_EMOJI = pick('emoji')
 
 // "/classifica/gatti" -> "gatto"
 export const speciesFromSlug = (slug: unknown) =>
-  SPECIES.find(s => SPECIES_INFO[s].slug === slug)
+  site.categories.find(c => c.slug === slug)?.id
+
+// Categoria valida per questo sito ("" se il sito non ha categorie)
+export const speciesSchema = SPECIES.length
+  ? z.enum(SPECIES as [Species, ...Species[]])
+  : z.literal(NO_SPECIES).default(NO_SPECIES)
+// Filtro facoltativo per categoria (duelli, classifiche, adozioni)
+export const speciesFilterSchema = z.enum(SPECIES as [Species, ...Species[]]).optional()
 
 // Classifica settimanale e mensile: si azzerano lunedì e il primo del mese (ora italiana)
 export const PERIODS = ['settimana', 'mese', 'sempre'] as const
@@ -73,7 +71,7 @@ export const loginSchema = z.object({
 })
 export const petFieldsSchema = z.object({
   name: text(40).min(1, 'validation.petName'),
-  species: z.enum(SPECIES),
+  species: speciesSchema,
   breed: text(40).default(''),
   city: text(40).default(''),
 })
@@ -202,7 +200,7 @@ export const challengeFieldsSchema = z.object({
   title: text(60).min(3, 'Titolo troppo corto'),
   description: text(200).min(3, 'Aggiungi una descrizione'),
   emoji: text(16).min(1, 'Scegli un\'emoji'),
-  species: z.enum(SPECIES).nullable().default(null),
+  species: z.enum(SPECIES as [Species, ...Species[]]).nullable().default(null),
   adoptionOnly: z.boolean().default(false),
   // Data di inizio (YYYY-MM-DD): la sfida dura 7 giorni da mezzanotte, ora italiana
   startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Data non valida'),
@@ -521,7 +519,7 @@ export const adTargetingSchema = z.object({
   unknownLocation: z.boolean().default(false),
   languages: z.array(z.enum(AD_LANGS)).default([]),
   // Solo nei duelli filtrati per queste specie (e in "Tutti")
-  species: z.array(z.enum(SPECIES)).default([]),
+  species: z.array(z.enum(SPECIES as [Species, ...Species[]])).default([]),
   audience: z.enum(['all', 'users', 'guests']).default('all'),
   // Giorni della settimana (1 = lunedì) e fascia oraria [from, to) nell'ora locale di chi vota
   days: z.array(z.number().int().min(1).max(7)).max(7).default([]),

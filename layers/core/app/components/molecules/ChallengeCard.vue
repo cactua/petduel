@@ -34,7 +34,7 @@ const when = computed(() => {
         <p v-if="big" class="challenge-card__desc">{{ text.description }}</p>
         <p class="challenge-card__meta">
           <span v-if="challenge.adoptionOnly" class="challenge-card__tag">🏠 {{ $t('challenge.adoptionTag') }}</span>
-          <span v-if="challenge.species" class="challenge-card__tag">{{ $t('challenge.onlySpecies', { species: $t(`species.${challenge.species}.many`) }) }}</span>
+          <span v-if="challenge.species" class="challenge-card__tag">{{ $t('challenge.onlySpecies', { species: speciesText(challenge.species, 'many') }) }}</span>
           {{ when }}
           <template v-if="challenge.status !== 'upcoming'"> · {{ $t('challenge.entries', { n: challenge.entries }) }}</template>
         </p>

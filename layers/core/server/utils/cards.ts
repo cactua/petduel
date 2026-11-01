@@ -2,7 +2,8 @@ import { and, eq, sql } from 'drizzle-orm'
 import satori from 'satori'
 import sharp from 'sharp'
 import { Resvg } from '@resvg/resvg-js'
-import { SPECIES_LABEL, SPECIES_ONE, TOP_RANK, type Species } from '#shared/models'
+import { TOP_RANK, type Species } from '#shared/models'
+import { speciesName } from '#shared/speciesNames'
 import { pets, users } from '../db/schema'
 import { useDb } from './db'
 import { aheadOf, coverImage, hasApprovedPhoto } from './pets'
@@ -124,12 +125,6 @@ async function loadCardData(petId: number, slug?: string): Promise<CardData> {
   }
 }
 
-// "tra i gatti", "tra gli uccelli", "tra gli altri animali"
-function amongSpecies(species: Species) {
-  if (species === 'altro') return 'tra gli altri animali'
-  const label = SPECIES_LABEL[species].toLowerCase()
-  return `${/^[aeiou]/.test(label) ? 'tra gli' : 'tra i'} ${label}`
-}
 
 let fonts: Promise<{ name: string, data: Buffer, weight: 600 | 700 | 800 }[]> | undefined
 function loadFonts() {
@@ -182,6 +177,7 @@ function rosette(d: CardData, width: number) {
 
 function ears(species: Species, s: number): Node[] {
   const e = EARS[species]
+  if (!e) return []
   const w = e.w * s
   const h = e.h * s
   if (!e.pair) return [box({ position: 'absolute', top: e.top * s, left: 0, right: 0, justifyContent: 'center' }, img(e.svg, { width: w, height: h }))]
@@ -199,11 +195,11 @@ function framed(d: CardData, photo: string, p: { width: number, height: number }
   },
   img(photo, { ...p, borderRadius: u * 2.9, objectFit: 'cover' }),
   box({ alignItems: 'center', gap: u, padding: `${u * 0.9}px ${u}px ${u}px ${u * 0.4}px` },
-    box({ width: u * 4.6, height: u * 4.6, flexShrink: 0, borderRadius: 999, background: MEDAL[d.species], alignItems: 'center', justifyContent: 'center' },
+    box({ width: u * 4.6, height: u * 4.6, flexShrink: 0, borderRadius: 999, background: MEDAL[d.species] ?? C.coral, alignItems: 'center', justifyContent: 'center' },
       img(PAW_ICON(C.white), { width: u * 2.5, height: u * 2.5 })),
     box({ flex: 1, flexDirection: 'column', minWidth: 0 },
       box({ fontFamily: 'Fredoka', fontSize: nameSize(d.name, u * 5.4), lineHeight: 1.05 }, d.name),
-      box({ fontSize: u * 2.1, fontWeight: 800, color: C.muted }, [d.breed || SPECIES_ONE[d.species], d.city].filter(Boolean).join(' · '))),
+      box({ fontSize: u * 2.1, fontWeight: 800, color: C.muted }, [d.breed || speciesName(d.species, 'one'), d.city].filter(Boolean).join(' · '))),
     rosette(d, u * 5)),
   ...ears(d.species, earSize))
 }
@@ -216,7 +212,7 @@ function facts(d: CardData, size: number, align: 'center' | 'flex-start') {
   }, text)
   return box({ gap: size * 0.45, flexWrap: 'wrap', justifyContent: align },
     d.badge && pill(d.badge.text, C.sun),
-    !!d.speciesRank && pill(`${d.speciesRank}° ${amongSpecies(d.species)} · ${d.wins} ${d.wins === 1 ? 'cuore' : 'cuori'}`, C.white))
+    !!d.speciesRank && pill(`${d.speciesRank}° ${speciesName(d.species, 'among')} · ${d.wins} ${d.wins === 1 ? 'cuore' : 'cuori'}`, C.white))
 }
 
 const logo = (size: number) => box({ alignItems: 'center', gap: size * 0.2, fontFamily: 'Fredoka', fontSize: size, color: C.coral },

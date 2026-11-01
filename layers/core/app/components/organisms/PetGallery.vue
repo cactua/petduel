@@ -121,7 +121,7 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
             {{ managing ? $t('gallery.done') : $t('gallery.manage') }}
           </button>
         </div>
-        <p class="pet-gallery__sub">{{ [pet.breed || $t(`species.${pet.species}.one`), pet.city, hero ? `@${pet.owner}` : ''].filter(Boolean).join(' · ') }}</p>
+        <p class="pet-gallery__sub">{{ [pet.breed || speciesText(pet.species, 'one'), pet.city, hero ? `@${pet.owner}` : ''].filter(Boolean).join(' · ') }}</p>
         <slot name="actions" />
         <!-- I cuori li vede solo il proprietario: agli altri non si mostra un numero basso -->
         <div v-if="editable" class="pet-gallery__stats">
@@ -172,9 +172,9 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
     <form v-if="editable && managing && editing" class="pet-gallery__edit" novalidate @submit.prevent="save">
       <div class="pet-gallery__fields">
         <label class="pet-gallery__field">{{ $t('pet.name') }}<input v-model="form.name" required maxlength="40" class="input"></label>
-        <label class="pet-gallery__field">{{ $t('pet.species') }}
+        <label v-if="SPECIES.length" class="pet-gallery__field">{{ $t('pet.species') }}
           <select v-model="form.species" class="input">
-            <option v-for="s in SPECIES" :key="s" :value="s">{{ $t(`species.${s}.one`) }}</option>
+            <option v-for="s in SPECIES" :key="s" :value="s">{{ speciesText(s, 'one') }}</option>
           </select>
         </label>
         <label class="pet-gallery__field">{{ $t('pet.breed') }}<input v-model="form.breed" maxlength="40" class="input"></label>

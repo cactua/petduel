@@ -15,8 +15,9 @@ export function challengeStatus(c: Pick<Challenge, 'startsAt' | 'endsAt'>, now =
   return 'ended'
 }
 
-/** Garantisce che ci sia sempre una sfida in corso e una per la settimana prossima. */
+/** Garantisce che ci sia sempre una sfida in corso e una per la settimana prossima (se il sito ha un calendario di temi). */
 export async function ensureChallenges() {
+  if (!THEMES.length) return
   const db = await useDb()
   const { rows: [week] } = await db.execute<{ start: Date }>(
     sql`select date_trunc('week', now() at time zone ${TZ}) at time zone ${TZ} as start`,

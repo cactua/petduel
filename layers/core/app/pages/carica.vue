@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SPECIES, SPECIES_EMOJI, petFieldsSchema, type PetGallery, type Profile, type Species } from '#shared/models'
+import { NO_SPECIES, SPECIES, SPECIES_EMOJI, petFieldsSchema, type PetGallery, type Profile, type Species } from '#shared/models'
 import type { Crops } from '#shared/images'
 
 definePageMeta({ middleware: 'auth' })
@@ -12,7 +12,7 @@ const { data: profile, refresh: refreshProfile } = await useFetch<Profile>(() =>
 
 // "new" = nuovo pet, altrimenti l'id di un pet esistente a cui aggiungere la foto
 const target = ref<'new' | number>(Number(route.query.pet) || 'new')
-const blankForm = () => ({ name: '', species: 'cane' as Species, breed: '', city: '' })
+const blankForm = () => ({ name: '', species: (SPECIES[0] ?? NO_SPECIES) as Species, breed: '', city: '' })
 const form = reactive(blankForm())
 const photo = ref<File | null>(null)
 const preview = ref('')
@@ -114,7 +114,7 @@ function again() {
           <label v-for="p in profile.pets" :key="p.id" class="upload-page__option upload-page__option--target" :class="{ 'is-active': target === p.id }">
             <input v-model="target" type="radio" name="target" :value="p.id" class="upload-page__hidden-input">
             <img v-if="thumb(p)" :src="thumb(p)" alt="" class="upload-page__thumb">
-            <span v-else class="upload-page__thumb upload-page__thumb--empty" aria-hidden="true">{{ SPECIES_EMOJI[p.species] }}</span>
+            <span v-else class="upload-page__thumb upload-page__thumb--empty" aria-hidden="true">{{ SPECIES_EMOJI[p.species] ?? '🐾' }}</span>
             <b class="upload-page__target-name">{{ p.name }}</b>
           </label>
           <label class="upload-page__option upload-page__option--target" :class="{ 'is-active': target === 'new' }">
@@ -161,11 +161,11 @@ function again() {
             <input id="name" v-model="form.name" required maxlength="40" placeholder="Biscotto" class="input upload-page__input">
           </div>
 
-          <fieldset class="upload-page__species">
+          <fieldset v-if="SPECIES.length" class="upload-page__species">
             <legend class="label upload-page__legend">{{ $t('pet.species') }}</legend>
             <label v-for="sp in SPECIES" :key="sp" class="upload-page__option" :class="{ 'is-active': form.species === sp }">
               <input v-model="form.species" type="radio" name="species" :value="sp" class="upload-page__hidden-input">
-              <span aria-hidden="true">{{ SPECIES_EMOJI[sp] }}</span> {{ $t(`species.${sp}.one`) }}
+              <span aria-hidden="true">{{ SPECIES_EMOJI[sp] }}</span> {{ speciesText(sp, 'one') }}
             </label>
           </fieldset>
 

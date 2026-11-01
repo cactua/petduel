@@ -1,9 +1,9 @@
 import { sql } from 'drizzle-orm'
 import { z } from 'zod'
-import { SPECIES, type AdoptablePet, type AdoptionStatus, type Species } from '#shared/models'
+import { speciesFilterSchema, type AdoptablePet, type AdoptionStatus, type Species } from '#shared/models'
 
 const querySchema = z.object({
-  species: z.enum(SPECIES).optional(),
+  species: speciesFilterSchema,
   city: z.string().trim().max(40).optional(),
 })
 

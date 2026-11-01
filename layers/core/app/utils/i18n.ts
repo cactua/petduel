@@ -9,6 +9,14 @@ export function tr(msg: string, params?: Record<string, unknown>) {
   return te(msg) ? t(msg, params ?? {}) : msg
 }
 
+/**
+ * Nome tradotto della categoria ("Gatto", "Gatti", "tra i gatti"); vuoto se il sito non ha categorie.
+ * Nel codice che gira fuori dal setup (computed per useHead, funzioni chiamate dopo un await) va passato il t di useI18n
+ */
+export function speciesText(species: string, form: 'one' | 'many' | 'among', t: (key: string) => string = i18n().t) {
+  return species ? t(`species.${species}.${form}`) : ''
+}
+
 /** Lingua del browser per Intl ("it-IT", "en-US"...) */
 export const intlLocale = () => i18n().localeProperties.value.language ?? 'it-IT'
 
@@ -33,7 +41,7 @@ export function notificationText(n: AppNotification) {
   const p: Record<string, unknown> = { ...n.params }
   if (typeof p.challengeSlug === 'string' && typeof p.challenge === 'string') p.challenge = challengeText({ slug: p.challengeSlug, title: p.challenge }).title
   if (typeof p.reason === 'string') p.reason = rejectReason(p.reason)
-  if (typeof p.species === 'string') p.species = t(`species.${p.species}.many`)
+  if (typeof p.species === 'string') p.species = speciesText(p.species, 'many')
   // {n} numerico: il testo può avere singolare e plurale
   return typeof p.n === 'number' ? t(n.text, p, p.n) : t(n.text, p)
 }

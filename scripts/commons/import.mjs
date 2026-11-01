@@ -1,4 +1,4 @@
-// Scarica le foto scelte in scripts/commons/pets.json e prepara i pet di esempio in layers/core/server/assets/seed.
+// Scarica le foto scelte in scripts/commons/pets.json e prepara i pet di esempio in sites/pets/server/assets/seed.
 // Uso: node scripts/commons/import.mjs   (poi cancella .data per ricreare il database con i nuovi esempi)
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
@@ -7,7 +7,7 @@ import { api, fetchBuffer, freeLicense, plainText, sleep } from './lib.mjs'
 
 const sharp = createRequire(import.meta.url)('sharp')
 const root = new URL('../../', import.meta.url)
-const outDir = new URL('layers/core/server/assets/seed/', root)
+const outDir = new URL('sites/pets/server/assets/seed/', root)
 const list = JSON.parse(await readFile(new URL('scripts/commons/pets.json', root), 'utf8'))
 
 await rm(outDir, { recursive: true, force: true })
@@ -44,4 +44,4 @@ for (const pet of list) {
 }
 
 await writeFile(new URL('pets.json', outDir), JSON.stringify(pets, null, 2))
-console.log(`${pets.length} pet e ${n} foto in layers/core/server/assets/seed`)
+console.log(`${pets.length} pet e ${n} foto in sites/pets/server/assets/seed`)

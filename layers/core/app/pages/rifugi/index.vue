@@ -41,13 +41,13 @@ const { loggedIn } = useUserSession()
       <li v-for="p in data.pets" :key="p.id">
         <NuxtLink :to="`/pet/${p.id}`" class="shelters-page__pet">
           <div class="shelters-page__photo">
-            <picture><source v-for="s in photoSources(p.image, 'v', '(min-width: 760px) 240px, 46vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="p.image" :alt="$t('shelters.alt', { name: p.name, species: $t(`species.${p.species}.one`).toLowerCase() })" loading="lazy" class="shelters-page__img"></picture>
+            <picture><source v-for="s in photoSources(p.image, 'v', '(min-width: 760px) 240px, 46vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="p.image" :alt="$t('shelters.alt', { name: p.name, species: speciesText(p.species, 'one').toLowerCase() })" loading="lazy" class="shelters-page__img"></picture>
             <span class="shelters-page__ribbon" :class="`shelters-page__ribbon--${p.adoption}`">{{ $t(`adoption.status.${p.adoption}`) }}</span>
             <span v-if="p.rank && p.rank <= 3 && !species && !city" class="shelters-page__rank">{{ $t('shelters.mostLoved', { n: p.rank }) }}</span>
           </div>
           <div class="shelters-page__text">
             <b class="shelters-page__name">{{ p.name }}</b>
-            <small class="shelters-page__meta">{{ [p.breed || $t(`species.${p.species}.one`), p.city].filter(Boolean).join(' · ') }}</small>
+            <small class="shelters-page__meta">{{ [p.breed || speciesText(p.species, 'one'), p.city].filter(Boolean).join(' · ') }}</small>
             <small class="shelters-page__meta shelters-page__meta--shelter">{{ p.shelter.name }}</small>
           </div>
         </NuxtLink>

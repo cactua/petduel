@@ -1,13 +1,13 @@
 import { sql } from 'drizzle-orm'
 import { z } from 'zod'
-import { PERIODS, SPECIES, TOP_RANK, type Leaderboard, type Period, type RankedPet, type Species } from '#shared/models'
+import { PERIODS, TOP_RANK, speciesFilterSchema, type Leaderboard, type Period, type RankedPet, type Species } from '#shared/models'
 import { splitBoard } from '../utils/leaderboard'
 
 const TZ = 'Europe/Rome'
 const UNIT: Record<Exclude<Period, 'sempre'>, string> = { settimana: 'week', mese: 'month' }
 
 const querySchema = z.object({
-  species: z.enum(SPECIES).optional(),
+  species: speciesFilterSchema,
   period: z.enum(PERIODS).default('settimana'),
   // Classifica di una città: più pet possono essere primi da qualche parte
   city: z.string().trim().min(1).max(40).optional(),

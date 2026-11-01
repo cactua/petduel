@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { SPECIES, SPECIES_LABEL, challengeFieldsSchema, type ChallengeList, type ChallengeSummary, type Species } from '#shared/models'
+import { SPECIES, challengeFieldsSchema, type ChallengeList, type ChallengeSummary, type Species } from '#shared/models'
+import { speciesName } from '#shared/speciesNames'
 
 definePageMeta({ middleware: 'admin' })
 useHead({ title: 'Sfide · Admin · PetDuel' })
@@ -97,11 +98,11 @@ const scheduled = computed(() => [...(data.value?.current ?? []), ...(data.value
       <label for="c-desc" class="label">Descrizione (cosa deve mostrare la foto)</label>
       <textarea id="c-desc" v-model="form.description" maxlength="200" rows="2" placeholder="Costumi, cappellini e mantelli: il pet più elegante di Halloween." class="input" />
       <div class="challenge-admin__row">
-        <div class="field challenge-admin__grow">
+        <div v-if="SPECIES.length" class="field challenge-admin__grow">
           <label for="c-species" class="label">Per chi</label>
           <select id="c-species" v-model="form.species" class="input">
             <option :value="null">Tutte le specie</option>
-            <option v-for="s in SPECIES" :key="s" :value="s">Solo {{ SPECIES_LABEL[s].toLowerCase() }}</option>
+            <option v-for="s in SPECIES" :key="s" :value="s">Solo {{ speciesName(s, 'many').toLowerCase() }}</option>
           </select>
         </div>
         <div class="field challenge-admin__grow">

@@ -161,11 +161,11 @@ const toggleSpecies = (s: Species) => (t.value.species = toggle(t.value.species,
       <small class="admin-form__hint">Utile se il testo dell'annuncio è in una lingua sola.</small>
     </div>
 
-    <div class="admin-form__group">
+    <div v-if="SPECIES.length" class="admin-form__group">
       <span class="admin-form__label">Specie <em>nessuna scelta = tutte</em></span>
       <div class="admin-form__options">
         <button v-for="s in SPECIES" :key="s" type="button" class="admin-form__option" :class="{ 'is-active': t.species.includes(s) }" :aria-pressed="t.species.includes(s)" @click="toggleSpecies(s)">
-          {{ SPECIES_EMOJI[s] }} {{ $t(`species.${s}.many`) }}
+          {{ SPECIES_EMOJI[s] }} {{ speciesText(s, 'many') }}
         </button>
       </div>
       <small class="admin-form__hint">Compare quando chi vota filtra queste specie, e nei duelli con tutte le specie.</small>

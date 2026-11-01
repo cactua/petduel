@@ -10,14 +10,12 @@ interface SeedPet {
   photos: { file: string, credit: string, url: string }[]
 }
 
-// Pet di esempio con foto libere di Wikimedia Commons (preparate da scripts/commons/import.mjs)
+// Contenuti di esempio del sito, in sites/<nome>/server/assets/seed (per PetDuel: foto libere di Wikimedia Commons
+// preparate da scripts/commons/import.mjs). Un sito senza quella cartella parte vuoto
 export async function seedPets(db: Db) {
-  const assets = useStorage('assets:core')
+  const assets = useStorage('assets:server')
   const list = await assets.getItem<SeedPet[]>('seed:pets.json')
-  if (!list?.length) {
-    console.warn('[seed] Nessun pet di esempio: lancia node scripts/commons/import.mjs')
-    return
-  }
+  if (!list?.length) return
 
   // Account tecnico proprietario dei pet di esempio: l'hash "!" non corrisponde a nessuna password
   const [owner] = await db.insert(users)

@@ -1,9 +1,9 @@
 import { and, eq, inArray, ne } from 'drizzle-orm'
 import { z } from 'zod'
 import { pets, users, votes } from '../db/schema'
-import { SPECIES, type Duel } from '#shared/models'
+import { speciesFilterSchema, type Duel } from '#shared/models'
 
-const querySchema = z.object({ species: z.enum(SPECIES).optional() })
+const querySchema = z.object({ species: speciesFilterSchema })
 
 export default defineEventHandler(async (event): Promise<Duel> => {
   const { species } = await getValidatedQuery(event, querySchema.parse)
