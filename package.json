@@ -15,6 +15,7 @@
     "preview:furry": "cd sites/furry && nuxt preview",
     "postinstall": "nuxt prepare sites/pets && nuxt prepare sites/furry",
     "make-admin": "node scripts/make-admin.mjs",
+    "upload-to-r2": "node scripts/upload-to-r2.mjs",
     "lint": "eslint .",
     "typecheck": "nuxi typecheck sites/pets && nuxi typecheck sites/furry",
     "test": "vitest run"
@@ -25,6 +26,7 @@
     "@fontsource/nunito": "^5.3.0",
     "@nuxtjs/i18n": "^10.6.0",
     "@resvg/resvg-js": "^2.6.2",
+    "aws4fetch": "^1.0.20",
     "drizzle-orm": "^0.45.4",
     "leaflet": "^1.9.4",
     "nuxt": "^4.6.3",

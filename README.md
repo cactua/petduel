@@ -27,6 +27,16 @@ Apri http://localhost:3000. Al primo avvio il database viene creato e riempito c
 
 Per ripartire da zero: ferma il server e cancella la cartella `sites/pets/.data/`.
 
+### Immagini su Cloudflare R2
+
+Di base le immagini stanno su disco in `sites/<sito>/.data/uploads`. Con le quattro chiavi `R2_*` nel `.env` del sito (vedi `.env.example`) vanno nel suo bucket R2: lo decide all'avvio `layers/core/server/plugins/uploads.ts`, e il resto del codice non cambia. Il bucket resta privato: le immagini passano sempre dalle rotte del sito, così quelle in attesa di approvazione non si vedono.
+
+Per copiare nel bucket le immagini già caricate (si può rilanciare, salta quelle già presenti):
+
+```bash
+npm run upload-to-r2 -- furry
+```
+
 ### Diventare moderatore
 
 1. Registrati dal sito.
