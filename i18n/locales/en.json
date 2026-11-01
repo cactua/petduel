@@ -1,0 +1,780 @@
+{
+  "common": {
+    "yours": "yours",
+    "loading": "Loading…",
+    "save": "Save",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "close": "Close",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "retry": "Try again",
+    "yes": "Yes",
+    "no": "No",
+    "optional": "optional",
+    "sending": "Sending…",
+    "confirm": "Confirm"
+  },
+  "nav": {
+    "challenges": "Challenges",
+    "ranking": "Leaderboard",
+    "adopt": "Adopt",
+    "upload": "Upload",
+    "uploadPhoto": "Upload a photo",
+    "logout": "Log out",
+    "login": "Log in",
+    "profile": "Profile",
+    "sections": "Sections",
+    "language": "Language"
+  },
+  "species": {
+    "filter": "Filter by species",
+    "all": "All",
+    "cane": {
+      "one": "Dog",
+      "many": "Dogs",
+      "among": "among dogs"
+    },
+    "gatto": {
+      "one": "Cat",
+      "many": "Cats",
+      "among": "among cats"
+    },
+    "coniglio": {
+      "one": "Rabbit",
+      "many": "Rabbits",
+      "among": "among rabbits"
+    },
+    "roditore": {
+      "one": "Rodent",
+      "many": "Rodents",
+      "among": "among rodents"
+    },
+    "uccello": {
+      "one": "Bird",
+      "many": "Birds",
+      "among": "among birds"
+    },
+    "rettile": {
+      "one": "Reptile",
+      "many": "Reptiles",
+      "among": "among reptiles"
+    },
+    "altro": {
+      "one": "Other",
+      "many": "Others",
+      "among": "among other animals"
+    }
+  },
+  "challenge": {
+    "ofTheWeek": "Challenge of the week",
+    "join": "Join",
+    "endsIn": "Ends in {time}",
+    "ends": "Ends {time}",
+    "starts": "Starts {date}",
+    "adoptionTag": "Looking for a home",
+    "onlySpecies": "{species} only",
+    "entries": "{n} competing",
+    "leading": "Leading:",
+    "vote": "Vote",
+    "ended": "Challenge over",
+    "notFound": "Challenge not found.",
+    "seeAll": "See all challenges",
+    "sections": "Challenge sections",
+    "needTwo": "At least two entries are needed to start the duels.",
+    "allVoted": "You've voted on every pair in this challenge. Come back later: new entries keep arriving.",
+    "enterYours": "Enter your pet",
+    "winner": "Winner",
+    "notStarted": "The challenge hasn't started yet: entries open {date}.",
+    "noEntries": "No approved entries yet."
+  },
+  "notif": {
+    "title": "Notifications",
+    "unread": "Notifications, {n} unread",
+    "empty": "Nothing yet. This is where you'll find approved photos, challenge results and leaderboard climbs.",
+    "photoApproved": "{name}'s photo has been approved",
+    "photoApprovedChallenge": "{name}'s photo for the \"{challenge}\" challenge has been approved",
+    "photoRemoved": "{name}'s photo has been removed: {reason}",
+    "photoRemovedChallenge": "{name}'s photo for the \"{challenge}\" challenge has been removed: {reason}",
+    "photoRejected": "{name}'s photo wasn't approved: {reason}",
+    "photoRejectedChallenge": "{name}'s photo for the \"{challenge}\" challenge wasn't approved: {reason}",
+    "challengeWon": "{name} won the \"{challenge}\" challenge!",
+    "challengePlace": "{name}: #{rank} of {total} in the \"{challenge}\" challenge",
+    "rankFirst": "{name} is #1 on this week's {species} leaderboard!",
+    "rankTop": "{name} is in the top {tier} of this week's {species} leaderboard",
+    "weeklyHearts": "Last week your pets received {n} heart. Most loved: {name} | Last week your pets received {n} hearts. Most loved: {name}"
+  },
+  "time": {
+    "now": "now",
+    "inMinutes": "in a few minutes",
+    "days": "{n}d"
+  },
+  "reasons": [
+    "No animal visible",
+    "Inappropriate content",
+    "Low-quality photo",
+    "Not your photo or copyrighted",
+    "Personal data visible",
+    "Off-topic for the challenge"
+  ],
+  "validation": {
+    "email": "Invalid email",
+    "username": "Username: 3 to 20 characters, letters, numbers and _",
+    "passwordMin": "The password must be at least 10 characters long",
+    "passwordMax": "The password can be at most 128 characters long",
+    "petName": "Give your pet a name",
+    "website": "Invalid website address",
+    "shelterName": "Enter the shelter's name",
+    "city": "Enter the city",
+    "shelterDescription": "Describe the shelter in at least 20 characters",
+    "taxCode": "Invalid tax code or VAT number",
+    "adoptionMessage": "Tell us something about yourself and your home (at least 30 characters)",
+    "phone": "Invalid phone number",
+    "check": "Check the fields",
+    "iban": "Invalid IBAN: check the letters and numbers."
+  },
+  "errors": {
+    "generic": "Something went wrong, please try again",
+    "loginRequired": "You need to log in",
+    "adNotFound": "Campaign not found",
+    "invalidDate": "Invalid date",
+    "duelExpired": "Duel expired or invalid",
+    "emailTaken": "Email already registered",
+    "emailTakenLogin": "Email already registered: try logging in",
+    "emailOrUsernameTaken": "Email or username already in use",
+    "challengeExists": "A challenge with this title and date already exists",
+    "photoAlreadyModerated": "Photo not found or already moderated",
+    "photoNotFound": "Photo not found",
+    "tooManyRequests": "You've already sent many requests today, try again tomorrow",
+    "alreadyRequested": "You've already written to the shelter about this pet",
+    "alreadyVoted": "You've already voted on this pair",
+    "petHidden": "You chose to keep this pet out of leaderboards and challenges",
+    "shelterAlreadyVerified": "Your shelter is already verified",
+    "originalMissing": "Original image not found: upload it again",
+    "photoTooBig": "The photo is larger than 10 MB",
+    "passwordContainsName": "The password can't contain your username or email",
+    "shelterPending": "The request is already being reviewed",
+    "challengeInPast": "The challenge would end in the past",
+    "challengeHasEntries": "The challenge already has entries",
+    "challengeNotActive": "The challenge isn't running",
+    "challengeEnded": "The challenge is over",
+    "photoMissing": "The photo is missing",
+    "emptyForm": "Empty form",
+    "noShelter": "No shelter to close",
+    "cannotDeleteSelf": "You can't delete your own account from here",
+    "cannotSelf": "You can't do this on your own account",
+    "entryNotFound": "Entry not found",
+    "petNotFound": "Pet not found",
+    "wrongSpecies": "This challenge isn't for your pet's species",
+    "adoptionOnly": "This challenge is only for shelter pets looking for a home",
+    "banned": "This account has been suspended",
+    "notAdoptable": "This pet isn't looking for a home right now",
+    "alreadyEntered": "This pet is already in the challenge",
+    "usernameUnavailable": "This username isn't available",
+    "forbidden": "Request not allowed",
+    "requestNotFound": "Request not found",
+    "shelterAlreadyReviewed": "Shelter not found or already reviewed",
+    "shelterNotFound": "Shelter not found",
+    "invalidCrops": "Invalid crops",
+    "invalidCrop": "Invalid crop",
+    "pickPet": "Choose the pet",
+    "sessionExpired": "Session expired, please log in again",
+    "challengeNotFound": "Challenge not found",
+    "joinOnlyActive": "You can only join running challenges",
+    "adminOnly": "Moderators only",
+    "verifiedOnly": "Verified shelters only",
+    "usernameTaken": "Username already in use",
+    "userNotFound": "User not found",
+    "voteTooFast": "Voting too fast",
+    "ownShelterPet": "It's a pet from your shelter",
+    "invalidData": "Invalid data",
+    "wrongCredentials": "Wrong email or password",
+    "tooManyPending": "You already have {n} photos awaiting approval",
+    "invalidImage": "The file isn't a valid image",
+    "wrongPassword": "Wrong password",
+    "lastAdmin": "You are the only admin: appoint another admin before deleting your account",
+    "geocode": "Address search isn't responding right now. Try again soon or tap the map."
+  },
+  "themes": {
+    "dormiglione": {
+      "title": "Sleepyhead",
+      "description": "The cutest nap photo: in bed, on the sofa or in the most unlikely places."
+    },
+    "linguaccia": {
+      "title": "Tongue out!",
+      "description": "Tongue out, no shame at all."
+    },
+    "agguato": {
+      "title": "Feline ambush",
+      "description": "The cat about to pounce: fixed stare and twitching tail."
+    },
+    "scatola": {
+      "title": "King of the box",
+      "description": "Inside a box, a basket, a pot or any spot that's way too small."
+    },
+    "faccia-colpevole": {
+      "title": "Guilty face",
+      "description": "The moment right after the disaster."
+    },
+    "riporto": {
+      "title": "Fetch champion",
+      "description": "Ball, stick or slipper: the dog in action."
+    },
+    "sguardo": {
+      "title": "Irresistible gaze",
+      "description": "The sweetest (or most intense) eyes on the web."
+    },
+    "migliori-amici": {
+      "title": "Best friends",
+      "description": "With their favourite toy, plushie or animal friend."
+    },
+    "esploratore": {
+      "title": "Little explorer",
+      "description": "Outdoor adventures: meadows, beaches, mountains or the balcony at home."
+    },
+    "musetto-goloso": {
+      "title": "Greedy snout",
+      "description": "Caught eating: carrots, seeds, kibble or your sandwich."
+    },
+    "pose-impossibili": {
+      "title": "Impossible poses",
+      "description": "Born contortionists: the most absurd positions."
+    },
+    "bagnetto": {
+      "title": "After the bath",
+      "description": "Wet fur, lost dignity."
+    }
+  },
+  "auth": {
+    "registerTitle": "Create your account",
+    "loginTitle": "Welcome back!",
+    "registerLead": "You need it to upload your pets and get their gallery.",
+    "loginLead": "Log in to upload photos and see your profile.",
+    "usernamePlaceholder": "e.g. biscuit_fan",
+    "usernameHelp": "Visible to everyone. Letters, numbers and _ (3-20 characters).",
+    "passwordHelp": "At least 10 characters. A phrase is better than a word.",
+    "wait": "One moment…",
+    "register": "Sign up",
+    "haveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "password": "Password",
+    "email": "Email",
+    "username": "Username",
+    "legal": "By signing up you accept the {terms} and confirm you have read the {privacy} policy. You must be at least 14."
+  },
+  "ad": {
+    "label": "Advertisement",
+    "sponsored": "Sponsored",
+    "continue": "Keep voting",
+    "thanks": "Thanks: ads keep PetDuel free"
+  },
+  "share": {
+    "text": "Check out {name} on PetDuel: who's cuter?",
+    "textChallenge": "Vote for {name} in the PetDuel challenge!",
+    "prepareFailed": "Couldn't prepare the image",
+    "failed": "Sharing failed",
+    "copied": "Link copied!",
+    "share": "Share",
+    "title": "Share {name}",
+    "cardAlt": "{name}'s card",
+    "shareImage": "Share image",
+    "shareLink": "Share link",
+    "download": "Download image",
+    "copy": "Copy link",
+    "hint": "Perfect for Instagram and WhatsApp stories: anyone who sees it can vote for {name}."
+  },
+  "photo": {
+    "prev": "Previous photo",
+    "next": "Next photo",
+    "credit": "Photo: {text}",
+    "creditInfo": "Photo author and license"
+  },
+  "duel": {
+    "allVoted": "You've voted on every available pair",
+    "loadFailed": "Couldn't load the duel.",
+    "loading": "Loading the duel",
+    "nudge": "With an account your votes count {times} more",
+    "nudgeTimes": "{n} times",
+    "signUp": "Sign up",
+    "hint": "Drag your favourite {over} to make it win",
+    "hintOver": "onto the other one",
+    "hintHold": "press and hold to zoom",
+    "makeWin": "Make {name} win",
+    "wins": "Wins!",
+    "beat": "{winner} beat {loser}!",
+    "votesMilestone": "{n} votes!",
+    "voteFailed": "Vote not recorded",
+    "question": "Who's cuter?",
+    "votedTimes": "You voted {n} times",
+    "uploadYours": "Upload your pet"
+  },
+  "adoption": {
+    "status": {
+      "available": "Looking for a home",
+      "fostered": "In foster care",
+      "adopted": "Adopted!"
+    },
+    "sex": {
+      "m": "Male",
+      "f": "Female"
+    },
+    "size": {
+      "piccola": "small",
+      "media": "medium",
+      "grande": "large"
+    },
+    "sizeOf": "Size: {size}",
+    "neuteredM": "Neutered",
+    "neuteredF": "Spayed",
+    "notNeutered": "Not neutered",
+    "card": "Adoption profile",
+    "statusLabel": "Status",
+    "noCard": "No profile (shelter pet)",
+    "sexLabel": "Sex",
+    "notSet": "Not specified",
+    "age": "Age",
+    "agePlaceholder": "2 years",
+    "sizeLabel": "Size",
+    "neuteredLabel": "Neutered",
+    "about": "Personality and story",
+    "aboutPlaceholder": "Very sweet with people, gets along with other dogs, looking for a home with a garden…",
+    "hide": "Keep out of leaderboards and challenges",
+    "hideHelp": "Stays in duels and in \"Looking for a home\", with no ranking or competitions.",
+    "noCardHint": "This pet has no adoption profile: add one to show it in \"Looking for a home\".",
+    "hidden": "Out of leaderboards and challenges, as you chose.",
+    "adopted": "{name} found a home! Thanks to everyone who voted and shared.",
+    "fostered": "In foster care: no requests for now, but you can follow and vote for them.",
+    "editCard": "Edit profile",
+    "addCard": "Add adoption profile",
+    "sent": "Request sent! The shelter will reply to your account's email.",
+    "loginToAdopt": "Log in to adopt {name}",
+    "want": "Want to adopt {name}?",
+    "writeShelter": "Write to the shelter",
+    "messagePlaceholder": "Who you are, what your home is like, whether you have other animals, how much time you can give them…",
+    "phone": "Phone",
+    "note": "The shelter will receive your message and your account's email so they can reply. Nobody pays anything: you adopt, you don't buy.",
+    "send": "Send request"
+  },
+  "upload": {
+    "noClipboardPhoto": "There's no photo on the clipboard: copy one and try again",
+    "clipboardDenied": "The browser didn't allow reading the clipboard",
+    "change": "Change photo",
+    "paste": "Paste photo",
+    "failed": "Upload failed, please try again",
+    "sent": "Photo sent!",
+    "sentHelp": "A moderator checks it before publishing: it usually doesn't take long. Meanwhile you'll see it in your profile as \"Pending\".",
+    "toProfile": "Go to your profile",
+    "another": "Upload another photo",
+    "forWhich": "Which pet?",
+    "newPet": "A new pet",
+    "pick": "Tap to choose a photo",
+    "pickHelp": "or paste it (Ctrl+V) or drag it here. Then choose how to crop it",
+    "cityPlaceholder": "London",
+    "rules": "Only your own photos where the animal is clearly visible. No recognisable people, licence plates or addresses.",
+    "uploading": "Uploading…",
+    "submit": "Send for approval",
+    "intro": "One photo at a time: a moderator checks it before it enters the duels.",
+    "stepPhoto": "The photo",
+    "stepDetails": "The pet",
+    "drop": "Drag a photo here",
+    "dropHelp": "or paste it with Ctrl+V. JPG, PNG, WebP or HEIC: then choose how to crop it.",
+    "browse": "Choose a photo",
+    "remove": "Remove photo",
+    "addTo": "The photo will be added to {name}'s gallery."
+  },
+  "join": {
+    "pickPhoto": "Choose a photo",
+    "needAccount": "You need an account to enter your pet.",
+    "loginOrRegister": "Log in or sign up",
+    "yourEntries": "Your entries",
+    "status": {
+      "pending": "Awaiting approval",
+      "approved": "Competing",
+      "rejected": "Rejected"
+    },
+    "askVotes": "Ask for votes",
+    "title": "Enter a pet",
+    "pet": "Pet",
+    "whichPhoto": "Which photo",
+    "fromGallery": "From the gallery",
+    "newPhoto": "New photo",
+    "galleryPhoto": "Gallery photo",
+    "pickThemed": "Tap to choose an on-theme photo",
+    "pickThemedHelp": "or paste it (Ctrl+V) or drag it here. It will be moderated before joining the competition",
+    "submit": "Join the challenge",
+    "onlyShelters": "This challenge is only for verified shelter pets looking for a home.",
+    "onlySpecies": "This challenge is for one species only and you have no suitable pets.",
+    "uploadFirst": "Upload your pet first, then come back here to enter it.",
+    "uploadPet": "Upload a pet",
+    "allIn": "All your eligible pets are already competing. Good luck!"
+  },
+  "pet": {
+    "photoOf": "Photo of {name}",
+    "openGallery": "Open the gallery",
+    "trophies": "Challenges won",
+    "zoomPhoto": "Enlarge photo",
+    "photoStatus": {
+      "pending": "Pending",
+      "approved": "Public",
+      "rejected": "Rejected"
+    },
+    "addPhoto": "Add photo",
+    "name": "Name",
+    "species": "Species",
+    "breed": "Breed",
+    "city": "City",
+    "editData": "Edit details",
+    "confirmDelete": "Yes, delete {name} and all photos",
+    "delete": "Delete pet",
+    "ogDescription": "{name} is on PetDuel: who's cuter? Vote too!",
+    "notFound": "Pet not found.",
+    "inChallenge": "{name} is in a challenge: go to the challenge",
+    "rank": "#{rank} {among}",
+    "hearts": "hearts"
+  },
+  "crop": {
+    "failed": "The browser can't display this photo: we'll crop it ourselves, centred.",
+    "shapes": "Photo shapes",
+    "variant": {
+      "v": {
+        "label": "Portrait",
+        "uses": "Duels on computer, gallery, podium"
+      },
+      "h": {
+        "label": "Landscape",
+        "uses": "Duels on phone"
+      },
+      "s": {
+        "label": "Square",
+        "uses": "Profile, leaderboards, share cards"
+      }
+    },
+    "alt": "Photo crop",
+    "zoom": "Zoom",
+    "center": "Centre",
+    "help": "Drag the photo to move it, use the slider (or two fingers) to zoom."
+  },
+  "profile": {
+    "notFound": "This profile doesn't exist.",
+    "since": "On PetDuel since {date}",
+    "pets": "{n} pets",
+    "admin": "Admin panel",
+    "becomeShelter": "Run a shelter or a kennel? Get verified",
+    "pending": "{n} photo is awaiting approval: only you can see it until a moderator checks it. | {n} photos are awaiting approval: only you can see them until a moderator checks them.",
+    "noPetsMine": "You haven't uploaded any pets yet.",
+    "noPets": "No public pets, for now.",
+    "uploadFirst": "Upload your first pet",
+    "newPet": "New pet",
+    "statPets": "Pets",
+    "statVotes": "Votes cast",
+    "statWins": "Hearts",
+    "statTrophies": "Challenges won",
+    "petsTitle": "Pets · {n}",
+    "filter": "Show pets",
+    "all": "All",
+    "jump": "Jump to a pet",
+    "groups": {
+      "available": "Looking for a home",
+      "fostered": "In foster care",
+      "adopted": "Adopted",
+      "other": "Other pets"
+    },
+    "statGuests": "Guests",
+    "visitShelter": "Our shelter",
+    "seeGuests": "See the guests",
+    "manageTitle": "Manage your shelter",
+    "noNewRequests": "None new",
+    "customize": "Customize the page",
+    "customizeHint": "Cover, map, hours, donations",
+    "addGuest": "Add a guest",
+    "addGuestHint": "Upload photos of a new pet",
+    "publicPage": "View the page",
+    "publicPageHint": "How others see it",
+    "adoptionHint": "To list a guest under \"Looking for a home\", open its card below and fill in the adoption details.",
+    "pendingShelter": "We're checking your details: tap to see where it stands.",
+    "rejectedShelter": "Verification didn't go through: tap to see why and try again.",
+    "guestsTitle": "Our guests · {n}"
+  },
+  "shelter": {
+    "verified": "Verified shelter"
+  },
+  "challenges": {
+    "title": "Weekly challenges",
+    "lead": "A new theme every Monday. Enter your pet with the right photo, vote for the others and win the trophy.",
+    "upcoming": "Coming up",
+    "past": "Hall of fame"
+  },
+  "credits": {
+    "title": "Photo credits",
+    "lead": "The example pets use freely licensed photos from Wikimedia Commons. Thanks to everyone who took and shared them."
+  },
+  "ranking": {
+    "notFound": "Leaderboard not found",
+    "species": "{species} leaderboard",
+    "general": "Overall leaderboard",
+    "this": {
+      "settimana": "this week",
+      "mese": "this month"
+    },
+    "period": "Period",
+    "periods": {
+      "settimana": "Week",
+      "mese": "Month",
+      "sempre": "All time"
+    },
+    "rollingNote": "Hearts received {period}: every vote is one heart. Back to zero on {date}.",
+    "totalNote": "All hearts received: every vote is one heart, and hearts are never lost.",
+    "adoptLink": "the most loved shelter pets, ready to be adopted",
+    "noDuels": "No duels yet {period}",
+    "empty": "No pets on this leaderboard, for now.",
+    "goVote": "Go vote",
+    "yourPets": "Your pets",
+    "bySpecies": "Top {n} by species",
+    "toTop": "{n} heart to go for the top {top} {among} | {n} hearts to go for the top {top} {among}",
+    "yourPetsNote": "Pets outside the top {n} are not shown in the rankings: only you can see these.",
+    "city": "City",
+    "allCities": "All cities",
+    "inCity": "in {city}",
+    "nearYou": "📍 {city}, your city",
+    "cityTitle": "{title} in {city}",
+    "celebrate": "{name} is #{place} {among}: celebrate!",
+    "celebrateShare": "Share the card"
+  },
+  "shelters": {
+    "title": "Looking for a home",
+    "seo": "Dogs, cats and other animals from verified shelters looking for a family. Vote for them, share them, adopt them.",
+    "lead": "Animals from verified shelters waiting for a family, sorted by the most loved in duels. Every vote and every share shows them to more people.",
+    "near": "Near",
+    "everywhere": "Everywhere",
+    "alt": "{name}, {species} looking for a home",
+    "mostLoved": "#{n} most loved",
+    "noneFiltered": "No pets looking for a home with these filters, for now.",
+    "none": "No shelter has published its animals yet. Come back soon!",
+    "verified": "Verified shelters",
+    "available": "{n} looking for a home",
+    "adopted": "{n} adopted",
+    "joinTitle": "Run a shelter, a kennel or an association?",
+    "joinText": "Get verified: your animals join the duels with the \"Looking for a home\" ribbon and you receive adoption requests here, without publishing your contact details.",
+    "joinCta": "Request verification",
+    "notFound": "Shelter not found.",
+    "website": "Shelter website",
+    "looking": "Looking for a home",
+    "noneLooking": "No animals looking for a home right now.",
+    "adoptedTitle": "Adopted"
+  },
+  "area": {
+    "title": "Shelter area",
+    "updated": "Details updated.",
+    "verified": "Verified",
+    "publicPage": "Public page",
+    "step1": "Upload your animals from {upload}, just like any pet.",
+    "yourProfile": "your profile",
+    "adoptionCard": "adoption profile",
+    "step2": "Once the photo is approved, open the pet's page from {profile} and add the {card}.",
+    "step3": "The pet appears in \"Looking for a home\" and in duels with the ribbon. Requests arrive below.",
+    "description": "Description",
+    "website": "Website",
+    "modEmail": "Email for moderators",
+    "private": "private",
+    "edit": "Customize the shelter page",
+    "requests": "Adoption requests",
+    "newCount": "{n} new",
+    "whichRequests": "Which requests",
+    "open": "Open",
+    "closed": "Closed",
+    "noneOpen": "No open requests.",
+    "noneClosed": "No closed requests.",
+    "status": {
+      "new": "New",
+      "contacted": "Contacted",
+      "closed": "Closed"
+    },
+    "for": "For",
+    "mailSubject": "Adoption of {name}",
+    "markContacted": "Mark as contacted",
+    "reopen": "Reopen",
+    "confirmClose": "Yes, close the shelter and remove all adoption profiles",
+    "closeShelter": "Close the shelter",
+    "pending": "Under review",
+    "pendingText": "Thanks! A moderator checks the details (usually within a couple of days). If needed, we'll write to {email}.",
+    "pendingHint": "Meanwhile you can already upload your animals: the \"Looking for a home\" ribbon turns on after verification.",
+    "confirmWithdraw": "Yes, withdraw the request",
+    "withdraw": "Withdraw the request",
+    "rejected": "The request wasn't approved: {reason}. Fix the details and send it again.",
+    "applyTitle": "Get verified as a shelter",
+    "applyText": "For kennels, shelters, catteries and associations that do adoptions. We check that the association exists: tax code, email and phone are only seen by moderators. On PetDuel you just adopt: no sales, no prices.",
+    "name": "Shelter name",
+    "public": "public",
+    "descriptionPlaceholder": "Who you are, how many animals you host, how adoptions and pre-adoption checks work…",
+    "websiteSocial": "Website or social page",
+    "optionalPublic": "optional, public",
+    "taxCode": "Association's tax code or VAT number",
+    "email": "Association's email",
+    "submit": "Send for verification"
+  },
+  "menu": {
+    "open": "Account menu",
+    "seeProfile": "See your profile",
+    "shelter": "Shelter area",
+    "guest": "Log in to upload your pets, join challenges and get notifications.",
+    "theme": "Theme",
+    "themes": {
+      "system": "Automatic",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "becomeShelter": "Run a shelter?"
+  },
+  "gallery": {
+    "manage": "Manage",
+    "done": "Done",
+    "showAll": "All {n} photos",
+    "showLess": "Show fewer photos"
+  },
+  "consent": {
+    "title": "Cookies and ads",
+    "text": "The site only uses the cookies it needs to work: sign-in, language and theme. Google ads use cookies to measure and personalise advertising, and we only load them if you accept. You can change your mind anytime from the menu.",
+    "accept": "Accept",
+    "reject": "Reject",
+    "now": {
+      "ads": "Currently: Google ads accepted.",
+      "none": "Currently: Google ads rejected."
+    },
+    "more": "Cookie policy"
+  },
+  "legal": {
+    "title": "Legal",
+    "privacy": "Privacy",
+    "cookie": "Cookies",
+    "terms": "Terms of use"
+  },
+  "account": {
+    "title": "Your account",
+    "exportTitle": "Your data",
+    "exportText": "Download a file with everything PetDuel knows about you: account, pets, photos, votes cast, adoption requests and notifications.",
+    "exportButton": "Download my data",
+    "consentText": "Choose whether to show Google ads, which use cookies.",
+    "consentButton": "Change choice",
+    "deleteTitle": "Delete account",
+    "deleteText": "We immediately erase your profile, pets, photos, shelter, adoption requests and notifications. The votes you cast remain, but anonymous. This cannot be undone.",
+    "deleteButton": "Delete account",
+    "passwordLabel": "For safety, type your password",
+    "understood": "I understand: my pets and their photos will be gone forever",
+    "deleteConfirm": "Delete forever"
+  },
+  "badges": {
+    "title": "Achievements",
+    "next": "Next goal: {emoji} {name}, {n} heart to go | Next goal: {emoji} {name}, {n} hearts to go",
+    "firstWin": {
+      "name": "First win",
+      "desc": "Won its first duel"
+    },
+    "loved": {
+      "name": "Loved",
+      "desc": "At least 25 hearts received"
+    },
+    "adored": {
+      "name": "Adored",
+      "desc": "At least 100 hearts received"
+    },
+    "star": {
+      "name": "Star",
+      "desc": "At least 250 hearts received"
+    },
+    "legend": {
+      "name": "Legend",
+      "desc": "At least 1000 hearts received"
+    },
+    "petOfWeek": {
+      "name": "Pet of the week",
+      "desc": "Finished a week first among its species"
+    },
+    "photogenic": {
+      "name": "Photogenic",
+      "desc": "At least 5 approved photos"
+    },
+    "challenger": {
+      "name": "Challenger",
+      "desc": "Joined at least 3 challenges"
+    },
+    "adopted": {
+      "name": "Found a home",
+      "desc": "Adopted through a shelter on PetDuel"
+    }
+  },
+  "shelterEdit": {
+    "look": "Look",
+    "banner": "Cover image",
+    "bannerHint": "(wide, at the top of the page)",
+    "logo": "Logo",
+    "accent": "Page color",
+    "accents": {
+      "coral": "Coral",
+      "sky": "Sky",
+      "mint": "Mint",
+      "sun": "Sun",
+      "lilac": "Lilac",
+      "forest": "Forest"
+    },
+    "tagline": "Line under the name",
+    "taglinePlaceholder": "Finding homes since 1998",
+    "story": "Who you are and how to help",
+    "help": "How to help us",
+    "helpPlaceholder": "Volunteering, fostering, dog walks, donation drives…",
+    "needs": "What you need",
+    "needsPlaceholder": "Puppy food",
+    "add": "Add",
+    "removeItem": "Remove {item}",
+    "donateUrl": "Donation link",
+    "where": "Where you are",
+    "address": "Address",
+    "addressPlaceholder": "12 Rose Street",
+    "findOnMap": "Find on map",
+    "addressFirst": "Type the address first.",
+    "noResults": "Address not found: try writing it differently or tap the map.",
+    "mapLabel": "Map: tap to place the pin",
+    "mapHint": "Not in the right spot? Drag the pin or tap the map.",
+    "mapEmpty": "Without a pin, the page shows no map.",
+    "pinByHand": "Place it by hand",
+    "hideMap": "Remove the map",
+    "hours": "Visiting hours",
+    "hoursPlaceholder": "Mon–Sat 10–12 and 3–6 pm\nSunday by appointment",
+    "contacts": "Contacts and socials",
+    "publicEmail": "Public email",
+    "publicPhone": "Public phone",
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "tiktok": "TikTok",
+      "youtube": "YouTube"
+    },
+    "privateHint": "These two stay private: only moderators use them.",
+    "dragHint": "Drag the photo to choose what shows.",
+    "useImage": "Use this",
+    "change": "Change",
+    "choose": "Choose a photo",
+    "remove": "Remove"
+  },
+  "shelterPage": {
+    "logoAlt": "{name} logo",
+    "waiting": "waiting for a home",
+    "foundHome": "found a home",
+    "actions": "Quick contacts",
+    "meet": "Meet our guests",
+    "donate": "Donate",
+    "site": "Website",
+    "call": "Call",
+    "write": "Write",
+    "directions": "Directions",
+    "about": "About us",
+    "help": "How to help",
+    "needs": "We need",
+    "copy": "Copy",
+    "copied": "Copied ✓",
+    "where": "Where we are",
+    "mapOf": "Map of {name}",
+    "hours": "Visiting hours",
+    "follow": "Follow and contact us"
+  }
+}

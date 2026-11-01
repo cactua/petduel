@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>PetDuel – desktop</title>
+<style>
+  :root{--bg:#fdfbff;--ink:#1f1a2e;--muted:#7a6f86;--pink:#ff5a7a;--violet:#7c5cff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);font-family:"Segoe UI",system-ui,sans-serif;color:var(--ink);width:1440px;height:900px;display:flex;flex-direction:column}
+  header{display:flex;align-items:center;gap:36px;padding:20px 48px;border-bottom:1px solid #eee}
+  .logo{font-weight:900;font-size:26px;color:var(--pink)}
+  nav{display:flex;gap:26px;color:var(--muted);font-weight:600}
+  nav .on{color:var(--ink);border-bottom:3px solid var(--pink);padding-bottom:4px}
+  .right{margin-left:auto;display:flex;gap:14px;align-items:center}
+  .up{background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;font-weight:700}
+  .av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#ffd29d,#ff5a7a)}
+  main{flex:1;display:flex;gap:36px;padding:30px 48px}
+  .arena{flex:1;display:flex;flex-direction:column;align-items:center}
+  .filters{display:flex;gap:10px;margin-bottom:16px}
+  .chip{padding:7px 14px;border-radius:20px;background:#f1ecff;color:var(--violet);font-weight:600;font-size:14px}
+  .chip.on{background:var(--violet);color:#fff}
+  h2{font-size:30px;margin-bottom:18px}
+  .duel{display:flex;gap:28px;position:relative}
+  .pet{width:400px;height:500px;border-radius:26px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:170px;box-shadow:0 14px 34px rgba(60,30,80,.15)}
+  .pet.hover{transform:translateY(-8px) rotate(-1.5deg);box-shadow:0 0 0 5px var(--pink),0 22px 40px rgba(255,90,122,.35)}
+  .g1{background:linear-gradient(135deg,#ffd29d,#ff9a8b)}
+  .g2{background:linear-gradient(135deg,#a1c4fd,#c2e9fb)}
+  .meta{position:absolute;left:0;right:0;bottom:0;padding:18px 22px;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;font-size:15px}
+  .meta b{font-size:24px;display:block}
+  .key{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.9);border-radius:8px;padding:4px 10px;font-weight:800;font-size:15px}
+  .vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:var(--ink);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;border:5px solid #fff;font-size:21px;z-index:2}
+  .hint{margin-top:18px;color:var(--muted)}
+  .hint kbd{background:#fff;border:1px solid #ddd;border-bottom-width:3px;border-radius:6px;padding:2px 8px;font-family:inherit;font-weight:700;color:var(--ink)}
+  aside{width:300px;display:flex;flex-direction:column;gap:20px}
+  .box{background:#fff;border-radius:20px;padding:20px;box-shadow:0 6px 20px rgba(60,30,80,.08)}
+  .box h3{font-size:17px;margin-bottom:12px}
+  .lb{display:flex;align-items:center;gap:12px;padding:7px 0;font-size:15px}
+  .lb .n{width:22px;font-weight:800;color:var(--muted)}
+  .lb .e{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;background:#f6f1ff}
+  .lb .s{margin-left:auto;font-weight:700;color:var(--violet)}
+  .stat{display:flex;justify-content:space-between;font-size:15px;padding:5px 0}
+  .stat b{color:var(--pink)}
+</style>
+</head>
+<body>
+<header>
+  <span class="logo">🐾 PetDuel</span>
+  <nav><span class="on">Duelli</span><span>Classifiche</span><span>Esplora</span><span>Tornei</span></nav>
+  <div class="right"><span class="up">➕ Carica il tuo pet</span><span class="av"></span></div>
+</header>
+<main>
+  <section class="arena">
+    <div class="filters"><span class="chip on">Tutti</span><span class="chip">🐶 Cani</span><span class="chip">🐱 Gatti</span><span class="chip">🐰 Altri</span><span class="chip">📍 Vicino a me</span></div>
+    <h2>Chi è più carino?</h2>
+    <div class="duel">
+      <div class="pet g1 hover"><span class="key">←</span>🐶<div class="meta"><b>Biscotto</b>Beagle · 2 anni · Torino · 🏅 312 vittorie</div></div>
+      <div class="pet g2"><span class="key">→</span>🐱<div class="meta"><b>Nuvola</b>Europeo · 4 anni · Bari · 🏅 287 vittorie</div></div>
+      <div class="vs">VS</div>
+    </div>
+    <div class="hint">Clicca la foto, trascinala, oppure usa <kbd>←</kbd> <kbd>→</kbd> · <kbd>Spazio</kbd> per saltare</div>
+  </section>
+  <aside>
+    <div class="box"><h3>🏆 Top della settimana</h3>
+      <div class="lb"><span class="n">1</span><span class="e">🐕</span>Rocky<span class="s">1842</span></div>
+      <div class="lb"><span class="n">2</span><span class="e">🐈</span>Mochi<span class="s">1810</span></div>
+      <div class="lb"><span class="n">3</span><span class="e">🐹</span>Pippo<span class="s">1777</span></div>
+      <div class="lb"><span class="n">4</span><span class="e">🐩</span>Lola<span class="s">1741</span></div>
+      <div class="lb"><span class="n">5</span><span class="e">🦜</span>Kiwi<span class="s">1720</span></div>
+    </div>
+    <div class="box"><h3>📊 La tua sessione</h3>
+      <div class="stat">Voti dati<b>48</b></div>
+      <div class="stat">Serie attuale<b>🔥 12</b></div>
+      <div class="stat">D'accordo con la maggioranza<b>71%</b></div>
+    </div>
+  </aside>
+</main>
+</body>
+</html>

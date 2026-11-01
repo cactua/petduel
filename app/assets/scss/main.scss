@@ -1,0 +1,15 @@
+// Ingresso degli stili globali (Atomic Design):
+// abstracts (solo strumenti) → base (tema, reset, tipografia) → atoms (pezzi riusabili).
+// Molecole e template condivisi da più componenti (moduli e pagine admin) stanno qui; le altre
+// molecole, organismi, template e pagine hanno gli stili nel proprio componente, in BEM.
+@use "base/themes";
+@use "base/reset";
+@use "base/typography";
+@use "atoms/button";
+@use "atoms/badge";
+@use "atoms/chip";
+@use "atoms/field";
+@use "atoms/card";
+@use "atoms/utilities";
+@use "molecules/admin-form";
+@use "templates/admin-page";

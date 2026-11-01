@@ -1,0 +1,8 @@
+@use "../abstracts" as *;
+
+// Atomo: superficie a scheda
+.card {
+  @include card;
+
+  &--compact { padding: $space-6; border-radius: $radius-lg; }
+}

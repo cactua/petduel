@@ -1,0 +1,591 @@
+<title>Corso PetDuel</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: una colonna di lettura da manuale, con capitoli numerati (sono davvero una sequenza) e "schede file" in stile PetDuel */
+:root {
+  --bg: #fff8f1;
+  --surface: #ffffff;
+  --ink: #4a2d1e;
+  --muted: #87604b;
+  --line: #f1dccb;
+  --coral: #d2412f;
+  --coral-soft: #ffe3dc;
+  --sun: #ffe9a8;
+  --sun-ink: #4a2d1e;
+  --mint: #17785c;
+  --mint-soft: #dcf3ea;
+  --code-bg: #fdf1e6;
+  --code-ink: #5b3422;
+  --display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Nunito", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #21171a; --surface: #2f2226; --ink: #fff0e8; --muted: #cdb0a1; --line: #45333a;
+    --coral: #ff8a7d; --coral-soft: #4a2a27; --sun: #4a3d1c; --sun-ink: #ffe9b0;
+    --mint: #5fd3ad; --mint-soft: #1d3a31; --code-bg: #2a1d21; --code-ink: #ffd9c7;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #21171a; --surface: #2f2226; --ink: #fff0e8; --muted: #cdb0a1; --line: #45333a;
+  --coral: #ff8a7d; --coral-soft: #4a2a27; --sun: #4a3d1c; --sun-ink: #ffe9b0;
+  --mint: #5fd3ad; --mint-soft: #1d3a31; --code-bg: #2a1d21; --code-ink: #ffd9c7;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.62;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+}
+.wrap { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 600; line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(34px, 7vw, 48px); font-weight: 700; }
+h2 { font-size: 28px; padding-top: 18px; display: flex; gap: 12px; align-items: baseline; }
+h2 .n { font-size: 15px; font-family: var(--mono); color: var(--coral); background: var(--coral-soft); padding: 3px 9px; border-radius: 999px; flex-shrink: 0; position: relative; top: -4px; }
+h3 { font-size: 21px; padding-top: 6px; }
+p { margin: 0; max-width: 66ch; }
+a { color: var(--coral); font-weight: 700; }
+code { font-family: var(--mono); font-size: .86em; background: var(--code-bg); color: var(--code-ink); padding: 1px 6px; border-radius: 6px; overflow-wrap: anywhere; }
+pre { margin: 0; background: var(--code-bg); color: var(--code-ink); border-radius: 16px; padding: 14px 16px; overflow-x: auto; font-family: var(--mono); font-size: 13.5px; line-height: 1.55; border: 1px solid var(--line); }
+pre code { background: none; padding: 0; font-size: inherit; overflow-wrap: normal; }
+pre .c { color: var(--muted); }
+ul, ol { margin: 0; padding-left: 22px; max-width: 66ch; display: flex; flex-direction: column; gap: 4px; }
+strong { font-weight: 800; }
+
+.lead { font-size: 19px; color: var(--muted); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 13px; font-weight: 800; padding: 4px 11px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+
+/* Indice */
+.toc { background: var(--surface); border-radius: 24px; padding: 18px 20px; border: 1px solid var(--line); }
+.toc h4 { font-size: 15px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; font-family: var(--body); font-weight: 800; }
+.toc ol { gap: 2px; }
+.toc a { text-decoration: none; color: var(--ink); font-weight: 700; }
+.toc a:hover, .toc a:focus-visible { color: var(--coral); }
+
+/* Scheda di un file: percorso in mono, poi la spiegazione */
+.file { background: var(--surface); border-radius: 20px; border: 1px solid var(--line); padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.file > .path { font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--coral); overflow-wrap: anywhere; }
+.file > .path .kind { font-family: var(--body); font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-left: 6px; }
+.fn { border-top: 1px dashed var(--line); padding-top: 9px; display: flex; flex-direction: column; gap: 4px; }
+.fn > code:first-child { align-self: flex-start; font-weight: 600; }
+
+/* Box didattici */
+.note { border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+.note b.t { font-family: var(--display); font-weight: 600; font-size: 17px; }
+.nuxt { background: var(--mint-soft); }
+.nuxt b.t { color: var(--mint); }
+.vue { background: var(--sun); color: var(--sun-ink); }
+.why { background: var(--coral-soft); }
+
+/* Tabelle (rotte, cartelle) */
+.table { overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); font-weight: 800; }
+tr:last-child td { border-bottom: 0; }
+td code { white-space: nowrap; }
+
+.tree { font-size: 13px; }
+.mermaid { background: var(--surface); border-radius: 16px; border: 1px solid var(--line); padding: 12px; overflow-x: auto; }
+.steps { counter-reset: s; list-style: none; padding: 0; gap: 10px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 30px 1fr; gap: 10px; }
+.steps li::before { content: counter(s); width: 28px; height: 28px; border-radius: 50%; background: var(--coral); color: #fff; font-weight: 800; font-size: 14px; display: grid; place-items: center; margin-top: 2px; }
+.steps li > div { min-width: 0; }
+footer { color: var(--muted); font-size: 14px; padding-top: 20px; border-top: 1px solid var(--line); }
+:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; border-radius: 4px; }
+</style>
+
+<div class="wrap">
+
+<header style="display:flex;flex-direction:column;gap:12px">
+  <div class="meta"><span class="chip">Nuxt 4</span><span class="chip">Nitro</span><span class="chip">Drizzle + PGlite</span><span class="chip">Zod</span><span class="chip">sharp · satori</span></div>
+  <h1>Corso PetDuel</h1>
+  <p class="lead">Tutto l'applicativo spiegato cartella per cartella, file per file, funzione per funzione. Dai per scontato Vue: qui ci concentriamo su cosa aggiunge Nuxt e su come PetDuel è costruito. Quando un file ripete un'idea già vista, lo dico e passo oltre.</p>
+</header>
+
+<nav class="toc" aria-label="Indice">
+  <h4>Indice</h4>
+  <ol>
+    <li><a href="#concetti">Le 7 idee di Nuxt da capire prima</a></li>
+    <li><a href="#mappa">La mappa del progetto</a></li>
+    <li><a href="#radice">I file nella radice: config e segreti</a></li>
+    <li><a href="#shared">shared/: il codice che usano sia server sia browser</a></li>
+    <li><a href="#db">Il database: schema, PGlite, esempi</a></li>
+    <li><a href="#sicurezza">Login, sessione e sicurezza</a></li>
+    <li><a href="#duelli">Il cuore: duelli, voti ed Elo</a></li>
+    <li><a href="#foto">Foto: caricamento, ritagli, varianti</a></li>
+    <li><a href="#pet">Pet, profili e moderazione</a></li>
+    <li><a href="#classifiche">Classifiche e sfide</a></li>
+    <li><a href="#card">Card da condividere</a></li>
+    <li><a href="#rifugi">Rifugi e adozioni</a></li>
+    <li><a href="#app">app/: il guscio, lo stile e il routing</a></li>
+    <li><a href="#componenti">Componenti, composable e utils del client</a></li>
+    <li><a href="#viaggi">Due viaggi completi, dal tocco al database</a></li>
+    <li><a href="#esercizi">Esercizi per mettere le mani nel codice</a></li>
+  </ol>
+</nav>
+
+<!-- 1 -->
+<h2 id="concetti"><span class="n">01</span>Le 7 idee di Nuxt da capire prima</h2>
+<p>Nuxt è Vue più una serie di <strong>convenzioni</strong>: metti un file nella cartella giusta e Nuxt sa già cosa farne. Quasi tutto quello che vedrai nel progetto si spiega con queste sette idee.</p>
+
+<h3>1. Il nome della cartella decide il ruolo del file</h3>
+<p>Non registri rotte, componenti o API a mano. Nuxt guarda dove sta il file:</p>
+<div class="table"><table>
+<thead><tr><th>Cartella</th><th>Cosa diventa</th></tr></thead>
+<tbody>
+<tr><td><code>app/pages/</code></td><td>una pagina con il suo URL (<code>pages/carica.vue</code> → <code>/carica</code>)</td></tr>
+<tr><td><code>app/components/</code></td><td>componenti usabili ovunque <em>senza import</em></td></tr>
+<tr><td><code>app/composables/</code>, <code>app/utils/</code></td><td>funzioni usabili ovunque nel client senza import</td></tr>
+<tr><td><code>app/middleware/</code></td><td>controlli che girano prima di entrare in una pagina</td></tr>
+<tr><td><code>server/api/</code></td><td>endpoint HTTP (<code>api/vote.post.ts</code> → <code>POST /api/vote</code>)</td></tr>
+<tr><td><code>server/routes/</code></td><td>endpoint senza il prefisso <code>/api</code> (<code>/img/…</code>, <code>/card/…</code>)</td></tr>
+<tr><td><code>server/utils/</code></td><td>funzioni usabili in tutto il server senza import</td></tr>
+<tr><td><code>server/middleware/</code></td><td>codice che gira su <em>ogni</em> richiesta al server</td></tr>
+<tr><td><code>server/plugins/</code></td><td>codice che gira una volta all'avvio del server</td></tr>
+<tr><td><code>shared/</code></td><td>codice importabile sia dal client sia dal server (alias <code>#shared</code>)</td></tr>
+</tbody></table></div>
+
+<h3>2. Auto-import</h3>
+<p>Per questo nei file vedi <code>ref</code>, <code>computed</code>, <code>useFetch</code>, <code>navigateTo</code>, <code>requireUser</code>, <code>useDb</code> usati senza nessun <code>import</code>. Nuxt genera le dichiarazioni in <code>.nuxt/</code> così TypeScript le conosce. Gli import espliciti che restano sono per le librerie (drizzle, zod) e per <code>#shared</code>.</p>
+
+<h3>3. Due mondi nello stesso progetto: app e server</h3>
+<p><code>app/</code> è Vue: gira nel browser (e una prima volta sul server, vedi il punto 4). <code>server/</code> è <strong>Nitro</strong>, il backend Node di Nuxt: non arriva mai al browser, quindi lì stanno database, password e segreti. Si parlano solo via HTTP (<code>/api/...</code>).</p>
+
+<h3>4. SSR e hydration</h3>
+<p>Alla prima visita il server esegue i componenti Vue e manda HTML già pronto (veloce e leggibile da Google e dalle anteprime di WhatsApp). Poi nel browser Vue "si aggancia" a quell'HTML: è l'<strong>hydration</strong>. Da lì in avanti la navigazione è una normale SPA. Conseguenza pratica: <code>window</code>, <code>document</code> e <code>matchMedia</code> esistono solo dentro <code>onMounted</code> (o con <code>server: false</code>), mai nel corpo di <code>&lt;script setup&gt;</code>.</p>
+
+<h3>5. <code>useFetch</code> contro <code>$fetch</code></h3>
+<ul>
+  <li><code>await useFetch('/api/…')</code> carica i dati <em>per la pagina</em>: durante l'SSR li prende il server, li mette nell'HTML, e il browser non rifà la chiamata. Restituisce ref reattive (<code>data</code>, <code>error</code>, <code>refresh</code>). Se l'URL è una funzione, si ricarica quando cambia.</li>
+  <li><code>useLazyFetch</code> è uguale ma non blocca la pagina; con <code>server: false</code> parte solo nel browser.</li>
+  <li><code>$fetch('/api/…', { method: 'POST', body })</code> è una chiamata singola, da usare nelle azioni (click, invio di un form).</li>
+</ul>
+
+<h3>6. Gli handler del server</h3>
+<p>Ogni file in <code>server/api</code> esporta <code>defineEventHandler(async (event) =&gt; …)</code>. <code>event</code> è la richiesta: da lì leggi body, parametri, query, cookie. Quello che restituisci diventa la risposta JSON. Per un errore fai <code>throw createError({ statusCode, statusMessage })</code>. Il metodo HTTP sta nel nome del file: <code>.get.ts</code>, <code>.post.ts</code>, <code>.patch.ts</code>, <code>.delete.ts</code>. I parametri tra quadre: <code>[id].get.ts</code> → <code>getRouterParam(event, 'id')</code>.</p>
+
+<h3>7. Configurazione e segreti</h3>
+<p><code>runtimeConfig</code> in <code>nuxt.config.ts</code> dichiara i valori; Nuxt li riempie dalle variabili d'ambiente che iniziano con <code>NUXT_</code> (es. <code>NUXT_VOTE_SECRET</code> → <code>useRuntimeConfig().voteSecret</code>). Quelli fuori da <code>public</code> restano solo sul server.</p>
+
+<div class="note vue"><b class="t">Ponte da Vue</b><p>Se in un progetto Vue+Vite avevi <code>router/index.js</code>, <code>main.js</code> e un backend Express separato, qui il router è la cartella <code>pages/</code>, <code>main.js</code> è <code>nuxt.config.ts</code> + <code>app.vue</code>, ed Express è <code>server/</code>.</p></div>
+
+<!-- 2 -->
+<h2 id="mappa"><span class="n">02</span>La mappa del progetto</h2>
+<pre class="tree"><code>PetSocial/
+├─ nuxt.config.ts        <span class="c">configurazione di tutto</span>
+├─ package.json          <span class="c">dipendenze e comandi</span>
+├─ .env                  <span class="c">segreti (non va su git)</span>
+├─ .data/                <span class="c">database e foto caricate (generati)</span>
+├─ .nuxt/                <span class="c">generato da Nuxt: tipi e auto-import</span>
+├─ public/               <span class="c">file serviti così come sono</span>
+├─ scripts/              <span class="c">comandi da terminale (admin, import esempi)</span>
+├─ docs/mockup/          <span class="c">bozze grafiche, fuori dall'app</span>
+├─ shared/               <span class="c">regole e tipi comuni a client e server</span>
+├─ server/
+│  ├─ db/schema.ts       <span class="c">tabelle</span>
+│  ├─ utils/             <span class="c">logica riusabile (auth, voti, foto…)</span>
+│  ├─ api/               <span class="c">endpoint JSON</span>
+│  ├─ routes/            <span class="c">immagini: /img e /card</span>
+│  ├─ middleware/        <span class="c">controllo CSRF</span>
+│  ├─ plugins/           <span class="c">aggancio alla sessione</span>
+│  └─ assets/            <span class="c">font e foto di esempio</span>
+└─ app/
+   ├─ app.vue            <span class="c">guscio: header, dock, tema</span>
+   ├─ assets/css/        <span class="c">stile globale e colori</span>
+   ├─ pages/             <span class="c">una pagina = un URL</span>
+   ├─ components/        <span class="c">pezzi di interfaccia</span>
+   ├─ composables/       <span class="c">logica riusabile con stato</span>
+   ├─ middleware/        <span class="c">auth e admin</span>
+   └─ utils/             <span class="c">funzioni piccole</span></code></pre>
+
+<!-- 3 -->
+<h2 id="radice"><span class="n">03</span>I file nella radice: config e segreti</h2>
+
+<div class="file"><div class="path">package.json</div>
+<p>Le dipendenze principali e il perché:</p>
+<ul>
+<li><code>nuxt</code>, <code>vue</code>, <code>vue-router</code>: il framework.</li>
+<li><code>nuxt-auth-utils</code>: sessione in un cookie cifrato e hash delle password.</li>
+<li><code>nuxt-security</code>: header di sicurezza, limite di richieste, limite di dimensione.</li>
+<li><code>@electric-sql/pglite</code> + <code>drizzle-orm</code>: PostgreSQL che gira dentro Node (niente da installare) e un ORM tipizzato.</li>
+<li><code>zod</code>: validazione dei dati.</li>
+<li><code>sharp</code>: elaborazione delle immagini.</li>
+<li><code>satori</code> + <code>@resvg/resvg-js</code>: disegnano le card PNG da condividere.</li>
+</ul>
+<p>Script: <code>npm run dev</code> (sviluppo con ricarica automatica), <code>build</code>/<code>preview</code> (versione di produzione), <code>postinstall</code> (rigenera <code>.nuxt/</code> dopo ogni install), <code>make-admin</code>.</p>
+</div>
+
+<div class="file"><div class="path">nuxt.config.ts</div>
+<p>È il "main" dell'applicazione. Sezione per sezione:</p>
+<div class="fn"><code>modules</code><p>Attiva i moduli Nuxt: ognuno aggiunge funzioni auto-importate (es. <code>useUserSession</code>, <code>requireUserSession</code>) e configurazione.</p></div>
+<div class="fn"><code>css</code><p>Il foglio globale <code>~/assets/css/main.css</code>, incluso in ogni pagina. <code>~</code> punta ad <code>app/</code>.</p></div>
+<div class="fn"><code>app.head</code><p>Tag <code>&lt;head&gt;</code> di default per tutte le pagine: lingua, viewport, colore della barra del telefono, Google Fonts. Le singole pagine li arricchiscono con <code>useHead</code> e <code>useSeoMeta</code>.</p></div>
+<div class="fn"><code>runtimeConfig</code><p>Segreto dei voti e configurazione della sessione (30 giorni, cookie <code>SameSite=Lax</code>, <code>Secure</code> in produzione). I valori veri arrivano da <code>.env</code>.</p></div>
+<div class="fn"><code>security</code><p>Content Security Policy (da dove si possono caricare immagini, font, stili), divieto di essere messi in un iframe, rate limit di 600 richieste ogni 5 minuti per IP, body massimo 100 KB (11 MB per gli upload).</p></div>
+<div class="fn"><code>routeRules</code><p>Regole per gruppi di URL. Qui: login e registrazione hanno un limite molto più stretto (10 tentativi ogni 15 minuti) contro chi prova password a raffica.</p></div>
+<div class="fn"><code>nitro.storage</code><p>Definisce uno "storage" di nome <code>uploads</code> che scrive su disco in <code>.data/uploads</code>. Nel codice si usa con <code>useStorage('uploads')</code>: domani lo puoi spostare su S3 cambiando solo il driver qui.</p></div>
+</div>
+
+<div class="file"><div class="path">.env · .env.example</div>
+<p><code>NUXT_SESSION_PASSWORD</code> cifra il cookie di sessione, <code>NUXT_VOTE_SECRET</code> firma i duelli, <code>PGLITE_DIR</code> dice dove salvare il database. <code>.env.example</code> è il modello da copiare; <code>.env</code> vero non si committa.</p>
+</div>
+
+<div class="file"><div class="path">tsconfig.json · .nuxt/</div>
+<p><code>tsconfig.json</code> si limita a rimandare ai quattro tsconfig che Nuxt genera in <code>.nuxt/</code> (app, server, shared, node): ognuno sa quali auto-import esistono in quel mondo. Non si modifica <code>.nuxt/</code> a mano: si rigenera.</p>
+</div>
+
+<div class="file"><div class="path">public/ · .data/ · docs/</div>
+<p><code>public/</code> serve file statici così come sono (<code>favicon.ico</code>, <code>robots.txt</code>). <code>.data/</code> contiene il database PGlite e le foto: cancellarla azzera tutto (al riavvio ritornano i pet di esempio). <code>docs/</code> contiene solo bozze grafiche e questa guida.</p>
+</div>
+
+<div class="file"><div class="path">scripts/make-admin.mjs <span class="kind">script</span></div>
+<p>Script Node da terminale: apre il database e mette <code>role = 'admin'</code> a un utente. Va lanciato <strong>a server fermo</strong> perché PGlite è un file che un solo processo alla volta può aprire.</p>
+</div>
+
+<div class="file"><div class="path">scripts/commons/ <span class="kind">script</span></div>
+<p><code>discover.mjs</code> cerca foto di animali con licenza libera su Wikimedia Commons; <code>pets.json</code> è la lista scelta; <code>import.mjs</code> le scarica, le converte in WebP con <code>sharp</code> e scrive <code>server/assets/seed/</code> con autori e licenze. <code>lib.mjs</code> contiene le funzioni comuni (chiamate all'API, filtro sulle licenze). Si usano raramente, solo per cambiare i pet di esempio.</p>
+</div>
+
+<!-- 4 -->
+<h2 id="shared"><span class="n">04</span>shared/: il codice che usano sia server sia browser</h2>
+<div class="note nuxt"><b class="t">Perché esiste</b><p>Le stesse regole devono valere nel form (per dare l'errore subito) e nell'API (perché il browser non è affidabile). Scriverle due volte vuol dire, prima o poi, averle diverse. Con <code>shared/</code> le scrivi una volta e le importi con <code>import … from '#shared/models'</code>.</p></div>
+
+<div class="file"><div class="path">shared/models.ts</div>
+<div class="fn"><code>SPECIES</code>, <code>SPECIES_LABEL</code>, <code>SPECIES_ONE</code>, <code>SPECIES_SLUG</code>, <code>SPECIES_EMOJI</code><p>La lista delle specie e le sue etichette. <code>as const</code> fa sì che TypeScript conosca i valori esatti, così <code>type Species</code> è <code>'cane' | 'gatto' | …</code>. La funzione privata <code>pick</code> costruisce le varie mappe da un'unica tabella.</p></div>
+<div class="fn"><code>speciesFromSlug(slug)</code><p>Da <code>"gatti"</code> (nell'URL) a <code>"gatto"</code>.</p></div>
+<div class="fn"><code>PERIODS</code>, <code>PHOTO_STATUS</code>, <code>REJECT_REASONS</code>, <code>ADOPTION_STATUS</code>…<p>Elenchi chiusi di valori: lo stesso schema "array <code>as const</code> + tipo derivato".</p></div>
+<div class="fn"><code>registerSchema</code>, <code>loginSchema</code>, <code>petFieldsSchema</code>, <code>challengeFieldsSchema</code>, <code>shelterFieldsSchema</code>, <code>adoptionFieldsSchema</code>, <code>adoptionRequestSchema</code><p>Schemi <strong>Zod</strong>: descrivono la forma dei dati e i messaggi di errore in italiano. Si usano con <code>schema.safeParse(dati)</code>, che restituisce <code>{ success, data }</code> oppure <code>{ success: false, error }</code>. Fanno anche pulizia: <code>.trim()</code>, <code>.toLowerCase()</code>, valori di default.</p></div>
+<div class="fn"><code>interface PublicPet</code>, <code>RankedPet</code>, <code>Leaderboard</code>, <code>Duel</code>, <code>PetGallery</code>, <code>Profile</code>, <code>ChallengeDetail</code>…<p>La forma delle risposte delle API. Il server le usa come tipo di ritorno, il client come tipo di <code>useFetch&lt;…&gt;</code>: se cambi un campo da una parte, TypeScript te lo segnala dall'altra.</p></div>
+</div>
+
+<div class="file"><div class="path">shared/images.ts</div>
+<div class="fn"><code>IMAGE_VARIANTS</code><p>Le tre forme di ritaglio: <code>v</code> verticale 3:4, <code>h</code> orizzontale 3:2, <code>s</code> quadrata. Per ognuna le larghezze generate (anche doppie e triple, per gli schermi retina) e dove si usa.</p></div>
+<div class="fn"><code>cropSchema</code>, <code>cropsSchema</code><p>Un ritaglio è <code>{x, y, w, h}</code> in <em>frazioni</em> dell'immagine (0-1), così non dipende dalla risoluzione.</p></div>
+<div class="fn"><code>variantName(image, variant, width, format)</code><p>Il nome del file di una variante: <code>abc.webp</code> → <code>abc-h960.avif</code>.</p></div>
+<div class="fn"><code>parseImageName(name)</code><p>Il contrario: da un nome richiesto all'URL ricava foto, forma, larghezza e formato, rifiutando larghezze non previste (nessuno può farci generare 10.000 misure diverse).</p></div>
+<div class="fn"><code>variantSrcset(src, variant, format)</code><p>Costruisce l'attributo <code>srcset</code> ("<code>…-v360.avif 360w, …-v720.avif 720w</code>"): il browser sceglie da solo la misura giusta.</p></div>
+<div class="fn"><code>centeredCrop(width, height, ratio)</code><p>Il ritaglio centrato più grande possibile: si usa quando l'utente non sceglie.</p></div>
+</div>
+
+<div class="file"><div class="path">shared/types/auth.d.ts</div>
+<p>Estende i tipi di <code>nuxt-auth-utils</code>: dice a TypeScript che <code>session.user</code> ha <code>id</code>, <code>username</code>, <code>role</code> e che la sessione contiene anche <code>voterId</code> e <code>recent</code>. È la tecnica chiamata <em>module augmentation</em>.</p>
+</div>
+
+<!-- 5 -->
+<h2 id="db"><span class="n">05</span>Il database: schema, PGlite, esempi</h2>
+
+<div class="file"><div class="path">server/db/schema.ts</div>
+<p>Le tabelle descritte con <strong>Drizzle</strong>. Ogni <code>pgTable('nome', { colonne })</code> diventa un oggetto TypeScript che usi nelle query (<code>db.select().from(pets)</code>) con autocompletamento e controllo dei tipi.</p>
+<div class="table"><table>
+<thead><tr><th>Tabella</th><th>Contiene</th></tr></thead>
+<tbody>
+<tr><td><code>users</code></td><td>account: email, username, hash della password, ruolo</td></tr>
+<tr><td><code>pets</code></td><td>il pet, il proprietario, Elo, vittorie, sconfitte, scheda di adozione</td></tr>
+<tr><td><code>photos</code></td><td>le foto di un pet con stato di moderazione e crediti</td></tr>
+<tr><td><code>votes</code></td><td>ogni voto: chi, quale coppia, chi ha vinto, quanti punti</td></tr>
+<tr><td><code>challenges</code>, <code>challenge_entries</code>, <code>challenge_votes</code></td><td>sfide, iscritti con la foto scelta, voti delle sfide</td></tr>
+<tr><td><code>shelters</code>, <code>adoption_requests</code></td><td>rifugi da verificare e richieste di adozione</td></tr>
+</tbody></table></div>
+<p>Dettagli da notare: <code>references(() =&gt; users.id, { onDelete: 'cascade' })</code> fa sparire i figli quando cancelli il padre (elimini un pet → spariscono foto e voti). <code>unique().on(t.voterId, t.pairKey)</code> impedisce a livello di database di votare due volte la stessa coppia. <code>$type&lt;Species&gt;()</code> dice a TypeScript che una colonna <code>text</code> contiene solo certi valori.</p>
+<div class="fn"><code>CREATE_TABLES_SQL</code><p>Lo stesso schema scritto in SQL, eseguito a ogni avvio. Usa <code>CREATE TABLE IF NOT EXISTS</code> e <code>ALTER TABLE … ADD COLUMN IF NOT EXISTS</code>: così aggiungere una colonna non rompe un database esistente. È una "migrazione fatta a mano"; con il progetto più grande si passa a <code>drizzle-kit</code>, che genera le migrazioni da solo.</p></div>
+</div>
+
+<div class="file"><div class="path">server/utils/db.ts</div>
+<div class="fn"><code>useDb()</code><p>Il punto d'accesso al database per tutto il server. La prima volta crea le tabelle e, se non ci sono pet, carica gli esempi; le volte dopo restituisce subito la connessione. Il trucco è <code>ready ??= (async () =&gt; …)()</code>: la Promise si crea una volta sola e chiunque arrivi dopo aspetta la stessa.</p></div>
+<div class="fn"><code>imageUrl(image)</code><p>Da nome del file a URL pubblico (<code>/img/…</code>).</p></div>
+<div class="fn"><code>photoCredit(text, url)</code>, <code>toPublicPet(pet, image, owner, credit)</code><p>Trasformano righe del database in oggetti da mandare al browser, scegliendo cosa esporre (mai email, mai id del proprietario).</p></div>
+</div>
+
+<div class="file"><div class="path">server/utils/seed.ts</div>
+<div class="fn"><code>seedPets(db)</code><p>Al primo avvio crea l'account tecnico <code>petduel</code> (con hash <code>"!"</code>, che non corrisponde a nessuna password) e i pet di esempio, copiando le foto da <code>server/assets/seed</code> nello storage <code>uploads</code>. <code>useStorage('assets:server')</code> legge i file messi in <code>server/assets</code>, che Nitro include nel build.</p></div>
+</div>
+
+<!-- 6 -->
+<h2 id="sicurezza"><span class="n">06</span>Login, sessione e sicurezza</h2>
+<div class="note nuxt"><b class="t">Come funziona la sessione</b><p><code>nuxt-auth-utils</code> salva la sessione in un cookie <strong>cifrato</strong> con <code>NUXT_SESSION_PASSWORD</code>: il browser lo tiene ma non può leggerlo né modificarlo. Sul server lo leggi con <code>getUserSession(event)</code>, lo scrivi con <code>replaceUserSession</code>. Nel client <code>useUserSession()</code> ti dà <code>loggedIn</code> e <code>user</code>, chiedendoli a <code>/api/_auth/session</code>.</p></div>
+
+<div class="file"><div class="path">server/api/auth/register.post.ts · login.post.ts · logout.post.ts</div>
+<p>Registrazione: valida con <code>registerSchema</code>, blocca username riservati e password che contengono username o email, controlla duplicati, salva l'hash con <code>hashPassword</code> (scrypt), apre la sessione. Login: stessa risposta e <em>stesso tempo</em> sia se l'email non esiste sia se la password è sbagliata, così non si scopre chi è iscritto; se l'algoritmo di hash è cambiato, ricalcola l'hash (<code>passwordNeedsReHash</code>). Logout: <code>clearUserSession</code>.</p>
+</div>
+
+<div class="file"><div class="path">server/utils/auth.ts</div>
+<div class="fn"><code>requireUser(event)</code><p>La prima riga di quasi ogni API protetta. Esige la sessione (altrimenti 401) e <strong>rilegge l'utente dal database</strong>: un account cancellato o un ruolo tolto valgono subito, non quando scade il cookie.</p></div>
+<div class="fn"><code>requireAdmin(event)</code><p>Come sopra, più il controllo <code>role === 'admin'</code> (altrimenti 403).</p></div>
+<div class="fn"><code>loadSessionUser</code>, <code>isAdmin</code><p>Letture veloci dell'utente e del ruolo.</p></div>
+<div class="fn"><code>startSession(event, user)</code><p>Scrive la sessione dopo login o registrazione, con <code>voterId: "u:&lt;id&gt;"</code>.</p></div>
+<div class="fn"><code>getDummyHash()</code><p>Un hash finto, calcolato una volta, usato nel login quando l'email non esiste (per il trucco del tempo uguale).</p></div>
+</div>
+
+<div class="file"><div class="path">server/plugins/session.ts <span class="kind">plugin Nitro</span></div>
+<p><code>defineNitroPlugin</code> gira all'avvio. Qui si aggancia all'evento <code>fetch</code> della sessione: ogni volta che il browser chiede chi è l'utente, il ruolo viene aggiornato dal database. È per questo che, dopo <code>make-admin</code>, a cactua è comparsa la voce Moderazione.</p>
+</div>
+
+<div class="file"><div class="path">server/middleware/origin.ts <span class="kind">middleware server</span></div>
+<p>Gira su ogni richiesta. Per le richieste che modificano dati (POST, PATCH, DELETE su <code>/api</code>) controlla che l'header <code>Origin</code> sia il nostro sito: un altro sito non può farti votare o cancellare cose a tua insaputa (attacco CSRF).</p>
+</div>
+
+<div class="file"><div class="path">app/middleware/auth.ts · admin.ts <span class="kind">middleware di rotta</span></div>
+<p>Girano nel client prima di aprire una pagina che li dichiara con <code>definePageMeta({ middleware: 'auth' })</code>. Se non sei loggato ti mandano ad <code>/accedi?redirect=…</code>. Sono solo una comodità: <strong>la vera protezione è sempre sull'API</strong>, perché chiunque può chiamare un endpoint senza passare dalla pagina.</p>
+</div>
+
+<!-- 7 -->
+<h2 id="duelli"><span class="n">07</span>Il cuore: duelli, voti ed Elo</h2>
+
+<div class="file"><div class="path">server/utils/ranking.ts</div>
+<div class="fn"><code>pairKey(a, b)</code><p>Una chiave uguale per la coppia (3,8) e (8,3): <code>"3-8"</code>. Serve a ricordare le coppie già votate.</p></div>
+<div class="fn"><code>eloDelta(winnerElo, loserElo)</code><p>Il sistema Elo degli scacchi: calcola quanto era "atteso" che vincesse il vincitore e gli dà <code>32 × (1 − atteso)</code> punti. Battere un favorito vale molto, battere uno sfavorito quasi niente.</p></div>
+<div class="fn"><code>pickPair(pets, voted, recent)</code><p>Sceglie la coppia "quasi casuale": stessa specie, Elo vicino, più probabilità a chi ha fatto pochi duelli, quasi mai un pet visto da poco, mai una coppia già votata.</p></div>
+<div class="fn"><code>weighted(items, weight)</code><p>Estrazione a sorte pesata: ogni elemento ha probabilità proporzionale al suo peso.</p></div>
+</div>
+
+<div class="file"><div class="path">server/utils/voter.ts</div>
+<div class="fn"><code>getVoter(event)</code><p>Chi sta votando. Con account: <code>u:&lt;id&gt;</code>. Senza account: un id casuale salvato nel cookie cifrato. Restituisce anche gli ultimi pet visti.</p></div>
+<div class="fn"><code>rememberSeen</code>, <code>saveVoter</code><p>Aggiornano la lista degli ultimi 8 pet visti nella sessione.</p></div>
+<div class="fn"><code>issueDuelToken(voterId, ids, scope)</code><p>Quando il server propone una coppia, firma con HMAC un "biglietto" che contiene votante, coppia, ora e ambito (duelli normali o una certa sfida). Il voto deve riportare quel biglietto.</p></div>
+<div class="fn"><code>readDuelToken</code>, <code>sign</code><p>Verificano la firma (con <code>timingSafeEqual</code>, che non rivela nulla tramite i tempi) e la scadenza di 10 minuti.</p></div>
+<div class="fn"><code>readVote(event, scope)</code><p>Valida un voto: biglietto valido, dello stesso votante, dello stesso ambito, vincitore che fa parte della coppia, e non più veloce di 300 ms (un umano non ci riesce, un bot sì).</p></div>
+</div>
+
+<div class="file"><div class="path">server/api/duel.get.ts</div>
+<p>Prende i pet candidati (filtro specie, esclusi <strong>i tuoi</strong>, solo con foto approvata) e le coppie che hai già votato, chiama <code>pickPair</code>, sceglie una foto a caso per ciascuno (<code>randomApprovedImages</code>) e risponde con i due pet più il biglietto firmato.</p>
+</div>
+
+<div class="file"><div class="path">server/api/vote.post.ts</div>
+<p>Legge il voto con <code>readVote</code>, poi in una <strong>transazione</strong> (tutto o niente): inserisce il voto con il suo delta Elo (se la coppia era già votata, <code>onConflictDoNothing</code> non inserisce nulla e rispondiamo 409) e sposta i punti tra i due pet. L'aggiornamento è <code>elo = elo + d</code> fatto in SQL, così due voti contemporanei non si sovrascrivono.</p>
+</div>
+
+<!-- 8 -->
+<h2 id="foto"><span class="n">08</span>Foto: caricamento, ritagli, varianti</h2>
+
+<div class="file"><div class="path">server/utils/photos.ts</div>
+<div class="fn"><code>readPhotoUpload(event)</code><p>Legge un form multipart (<code>readMultipartFormData</code>): campi di testo, file e ritagli scelti. Controlla la dimensione, poi passa il file a <code>sharp</code> che lo raddrizza secondo l'EXIF e lo decodifica: se non è un'immagine vera, fallisce qui. La ricodifica butta via tutto il resto (GPS, metadati, eventuale contenuto nascosto). Infine genera tutte le varianti.</p></div>
+<div class="fn"><code>cropRect(crop, width, height, ratio)</code><p>Da frazioni a pixel, correggendo gli arrotondamenti per avere esattamente le proporzioni giuste.</p></div>
+<div class="fn"><code>renderVariant</code>, <code>encode</code><p>Una variante: ritaglia, ridimensiona senza mai ingrandire, codifica in AVIF (qualità 52) o WebP (qualità 78).</p></div>
+<div class="fn"><code>writeVariants(image, source, crops)</code><p>Genera in parallelo 3 forme × più larghezze × 2 formati, più la foto base 900×1200, e le salva nello storage <code>uploads</code>.</p></div>
+<div class="fn"><code>ensureVariant(image, variant, width, format)</code><p>Per le foto caricate prima che esistessero i ritagli: genera la variante al primo bisogno, con un ritaglio automatico che cerca il soggetto (<code>sharp.strategy.attention</code>), e la salva per le volte dopo.</p></div>
+<div class="fn"><code>assertPendingQuota(userId)</code><p>Massimo 10 foto in attesa per utente, per non intasare la coda di moderazione.</p></div>
+<div class="fn"><code>removeImage(image)</code><p>Cancella la foto base e tutte le sue varianti.</p></div>
+</div>
+
+<div class="file"><div class="path">server/routes/img/[name].get.ts</div>
+<p>Serve <code>/img/…</code>. Interpreta il nome con <code>parseImageName</code>, cerca la foto nel database e decide chi può vederla: le approvate tutti, le altre solo il proprietario o un moderatore. Le foto pubbliche hanno una cache di una settimana, le private nessuna cache.</p>
+</div>
+
+<div class="file"><div class="path">app/utils/pictures.ts</div>
+<div class="fn"><code>photoSources(src, variant, sizes, desktop?)</code><p>Produce la lista dei <code>&lt;source&gt;</code> per un <code>&lt;picture&gt;</code>: prima AVIF, poi WebP, ciascuno con <code>srcset</code> e <code>sizes</code>. Con <code>desktop</code> aggiunge un ritaglio diverso sopra i 760px (es. duelli orizzontali su telefono e verticali su computer). Nel template: <code>&lt;source v-for="s in photoSources(...)" v-bind="s"&gt;</code>.</p></div>
+</div>
+<div class="note why"><b class="t">Perché <code>picture { display: contents }</code></b><p>Nel CSS globale <code>&lt;picture&gt;</code> "sparisce" dal layout, così le regole scritte per <code>img</code> continuano a funzionare. E <code>picture &gt; source { display: none }</code> serve perché Chrome mostrerebbe i <code>&lt;source&gt;</code> come blocchi vuoti dentro un flex (era il bug della pagina di moderazione).</p></div>
+
+<div class="file"><div class="path">app/components/PhotoCropper.vue</div>
+<p>L'editor dei ritagli. Lo stato per ogni forma è <code>{ zoom, cx, cy }</code> (centro del ritaglio in frazioni).</p>
+<div class="fn"><code>cropOf(v)</code><p>Calcola il ritaglio più grande possibile per quelle proporzioni, diviso per lo zoom, tenuto dentro la foto.</p></div>
+<div class="fn"><code>settle(v)</code><p>Riporta il centro dove il ritaglio è valido, così trascinare oltre il bordo non "accumula" spostamento.</p></div>
+<div class="fn"><code>imgStyle(v)</code><p>Posiziona la foto dentro la cornice con percentuali: la cornice è il ritaglio.</p></div>
+<div class="fn"><code>onDown</code>, <code>onMove</code>, <code>onUp</code>, <code>setZoom</code>, <code>onWheel</code>, <code>reset</code><p>Pointer events: un dito o il mouse spostano, due dita fanno il pinch (si confronta la distanza tra le dita), la rotellina zooma. <code>setPointerCapture</code> continua a ricevere il movimento anche se il dito esce dalla cornice.</p></div>
+<p>Con <code>defineModel</code> espone i ritagli come <code>v-model</code>: la pagina li riceve già pronti per il campo <code>crops</code>.</p>
+</div>
+
+<div class="file"><div class="path">app/composables/usePhotoPaste.ts</div>
+<p>Ascolta <code>paste</code>, <code>dragover</code> e <code>drop</code> su tutto il documento e chiama una funzione col primo file immagine. <code>readClipboard</code> usa <code>navigator.clipboard.read()</code> per il pulsante "Incolla" sul telefono. Gli ascoltatori si aggiungono in <code>onMounted</code> e si tolgono in <code>onBeforeUnmount</code>: <strong>è la regola d'oro dei composable</strong> che toccano il DOM.</p>
+</div>
+
+<div class="file"><div class="path">app/pages/carica.vue</div>
+<p>Il form di caricamento. Con <code>URL.createObjectURL(file)</code> mostra l'anteprima senza caricare nulla; invia un <code>FormData</code> con i campi, la foto e i ritagli in JSON. Se nella query c'è <code>?pet=12</code>, aggiunge la foto a quel pet invece di crearne uno nuovo.</p>
+</div>
+
+<!-- 9 -->
+<h2 id="pet"><span class="n">09</span>Pet, profili e moderazione</h2>
+
+<div class="file"><div class="path">server/utils/pets.ts</div>
+<div class="fn"><code>hasApprovedPhoto</code>, <code>coverImage</code><p>Pezzi di SQL riusabili (<code>sql`…`</code> di Drizzle): "ha almeno una foto approvata" e "ultima foto approvata". Si infilano nelle <code>where</code> e nelle <code>select</code>.</p></div>
+<div class="fn"><code>randomApprovedImages(petIds)</code><p>Una foto approvata a caso per ogni pet, con <code>distinct on</code> di PostgreSQL.</p></div>
+<div class="fn"><code>loadGalleries(where, includePrivate)</code><p>Carica pet + foto + proprietari + trofei + schede di adozione in poche query parallele (<code>Promise.all</code>) e le ricompone. Con <code>includePrivate</code> il proprietario vede anche le foto in attesa o rifiutate.</p></div>
+<div class="fn"><code>publicStats(pet)</code><p>I campi del pet che si possono mostrare.</p></div>
+</div>
+
+<div class="file"><div class="path">server/api/pets.post.ts · pets/[id]/photos.post.ts</div>
+<p>Nuovo pet con la prima foto, oppure nuova foto per un pet esistente. Notare l'ordine: prima <code>readPhotoUpload</code>, poi la validazione dei campi; se i campi sono sbagliati, la foto appena salvata viene cancellata. Pet e foto si inseriscono in una transazione.</p>
+</div>
+<div class="file"><div class="path">server/api/pets/[id].get.ts · [id].patch.ts · [id].delete.ts</div>
+<p>Leggere il pet (con la posizione in classifica della sua specie), correggerne i dati, eliminarlo. La condizione <code>eq(pets.ownerId, user.id)</code> dentro la <code>where</code> dell'update fa sì che un altro utente semplicemente non trovi nulla da modificare (404).</p>
+</div>
+<div class="file"><div class="path">server/api/photos/[id].delete.ts · users/[username].get.ts</div>
+<p>Togliere una foto (il proprietario o un moderatore) e il profilo pubblico: username, data di iscrizione, rifugio verificato se c'è, pet. Mai l'email.</p>
+</div>
+<div class="file"><div class="path">server/api/admin/photos.get.ts · admin/photos/[id].post.ts</div>
+<p>La coda di moderazione (dalla più vecchia) e la decisione. <code>z.discriminatedUnion('action', […])</code> accetta <code>{ action: 'approve' }</code> oppure <code>{ action: 'reject', reason }</code>, con il motivo obbligatorio solo nel secondo caso. Una foto rifiutata viene cancellata dal disco.</p>
+</div>
+
+<div class="file"><div class="path">app/pages/u/[username].vue · pet/[id].vue · admin/moderazione.vue</div>
+<p>Le pagine corrispondenti. Il nome tra quadre diventa un parametro: <code>route.params.username</code>. Nella pagina del pet <code>useSeoMeta</code> imposta titolo e immagine di anteprima per WhatsApp e social, che vengono già scritti nell'HTML grazie all'SSR.</p>
+</div>
+
+<!-- 10 -->
+<h2 id="classifiche"><span class="n">10</span>Classifiche e sfide</h2>
+
+<div class="file"><div class="path">server/api/leaderboard.get.ts</div>
+<p>La query più "SQL" del progetto, da leggere con calma:</p>
+<ol>
+<li><code>stats</code>: per "di sempre" prende l'Elo; per settimana e mese somma i delta dei voti dal lunedì (o dal primo del mese) <strong>in ora italiana</strong> con <code>date_trunc</code>. Il <code>left join</code> tiene anche i pet senza voti, a quota zero.</li>
+<li><code>ranked</code>: <code>row_number() over (order by score desc …)</code> numera le posizioni.</li>
+<li>Restituisce i primi 50 più i tuoi pet se sono più giù.</li>
+</ol>
+</div>
+
+<div class="file"><div class="path">server/utils/challenges.ts</div>
+<div class="fn"><code>THEMES</code><p>Il calendario dei temi automatici.</p></div>
+<div class="fn"><code>challengeStatus(c)</code><p>In arrivo, in corso o finita, confrontando le date con adesso.</p></div>
+<div class="fn"><code>ensureChallenges()</code><p>Garantisce una sfida in corso e una per la settimana dopo; il tema si sceglie dal numero della settimana. Poi iscrive i pet di esempio con <code>enterExamplePets</code>.</p></div>
+<div class="fn"><code>romeDate</code>, <code>romeMidnightAfter</code><p>Date nel fuso italiano. La mezzanotte la calcola PostgreSQL, che gestisce correttamente il cambio dell'ora legale.</p></div>
+<div class="fn"><code>getChallenge(slug)</code>, <code>loadStandings</code>, <code>toSummaries</code>, <code>loadTrophies</code><p>Una sfida dallo slug, la sua classifica (Elo separato da quello generale), il riassunto per le card, le sfide vinte da ogni pet.</p></div>
+</div>
+
+<div class="file"><div class="path">server/api/challenges/…</div>
+<p><code>index.get</code> (elenco), <code>[slug]/index.get</code> (dettaglio + le tue iscrizioni), <code>[slug]/duel.get</code> e <code>[slug]/vote.post</code> (identici ai duelli normali, ma tra iscrizioni e con lo scope <code>c:&lt;id&gt;</code> nel biglietto), <code>[slug]/entries.post</code> (iscrizione con una foto della gallery in JSON, oppure con una foto nuova in multipart: lo distingue dal <code>content-type</code>). In <code>admin/</code> creazione ed eliminazione.</p>
+</div>
+
+<div class="file"><div class="path">app/pages/classifica/[[specie]].vue · sfide/index.vue · sfide/[slug].vue</div>
+<p>Le doppie quadre <code>[[specie]]</code> rendono il parametro <strong>facoltativo</strong>: la stessa pagina risponde a <code>/classifica</code> e <code>/classifica/gatti</code>. Nella sfida le schede (Vota, Classifica, Partecipa) stanno nella query <code>?tab=</code>, così il link si può condividere e il tasto indietro funziona.</p>
+</div>
+
+<!-- 11 -->
+<h2 id="card"><span class="n">11</span>Card da condividere</h2>
+<div class="file"><div class="path">server/utils/cards.ts · server/routes/card/[name].get.ts</div>
+<p><strong>Satori</strong> trasforma un albero di elementi in stile JSX (oggetti <code>{ type, props }</code>) in SVG, con un sottoinsieme di CSS flexbox; <strong>resvg</strong> lo converte in PNG. I font sono letti da <code>server/assets/fonts</code>.</p>
+<div class="fn"><code>renderPetCard(petId, format, host, slug?)</code><p>Carica il pet e la foto quadrata, sceglie il layout (storia 1080×1920 o anteprima 1200×630, eventualmente con la sfida) e restituisce il PNG.</p></div>
+<div class="fn"><code>page</code>, <code>framed</code>, <code>ears</code>, <code>ask</code>, <code>cta</code>, <code>blob</code><p>Mattoncini grafici delle card: sfondo con macchie, foto con orecchie e medaglietta, fumetto della mascotte, invito a votare.</p></div>
+<p>La rotta risponde a <code>/card/12.png?formato=og</code> con una CSP che vieta qualsiasi contenuto attivo.</p>
+</div>
+<div class="file"><div class="path">app/components/ShareCard.vue</div>
+<p>Apre un <code>&lt;dialog&gt;</code>, scarica subito la card come <code>Blob</code> (su iOS la condivisione deve partire immediatamente dal tocco) e offre <code>navigator.share</code> con il file, la condivisione del link o lo scaricamento.</p>
+</div>
+
+<!-- 12 -->
+<h2 id="rifugi"><span class="n">12</span>Rifugi e adozioni</h2>
+<div class="file"><div class="path">server/utils/shelters.ts</div>
+<div class="fn"><code>slugify</code>, <code>uniqueShelterSlug</code><p>Da "Rifugio Code Felici" a <code>rifugio-code-felici</code>, aggiungendo <code>-2</code>, <code>-3</code> se il nome è già preso (e riservando <code>me</code>).</p></div>
+<div class="fn"><code>shelterOfUser</code>, <code>requireShelter</code><p>Il rifugio di un utente; e la "guardia" per le API dei soli rifugi verificati.</p></div>
+<div class="fn"><code>toPublicShelters</code>, <code>loadAdoptions</code><p>Dati pubblici con i conteggi (in cerca di casa, adottati) e schede di adozione dei pet.</p></div>
+</div>
+<div class="file"><div class="path">server/api/shelters… · adoptables.get.ts · pets/[id]/adoption… · adoption-requests/… · admin/shelters…</div>
+<p>Richiesta di verifica, area privata (<code>me</code>: get, patch, delete), elenco e pagina pubblica, "Cercano casa" con filtri, scheda di adozione, invio di una richiesta (massimo 5 al giorno, una per pet grazie a un vincolo <code>unique</code>), gestione delle richieste, verifica e revoca da parte degli admin.</p>
+</div>
+<div class="file"><div class="path">app/pages/rifugi/index.vue · rifugi/[slug].vue · rifugio.vue · admin/rifugi.vue · components/AdoptionCard.vue</div>
+<p>Le pagine relative. Da notare in <code>rifugi/index.vue</code>: la città scelta finisce nell'URL (<code>navigateTo({ query })</code>) e <code>useFetch</code> con una <code>query</code> computed ricarica da solo i risultati quando cambiano i filtri.</p>
+</div>
+
+<!-- 13 -->
+<h2 id="app"><span class="n">13</span>app/: il guscio, lo stile e il routing</h2>
+
+<div class="file"><div class="path">app/app.vue</div>
+<p>Il componente radice: ogni pagina viene disegnata al posto di <code>&lt;NuxtPage /&gt;</code>. Contiene l'header (logo, menu desktop, account, tema), il dock in basso su mobile e <code>&lt;NuxtRouteAnnouncer /&gt;</code> (annuncia il cambio pagina agli screen reader).</p>
+<div class="fn"><code>logout()</code><p>Chiama l'API, aggiorna la sessione nel client, torna alla home.</p></div>
+<div class="fn"><code>themeCookie</code>, <code>useHead({ htmlAttrs })</code>, <code>toggleTheme()</code><p>Il tema scelto sta in un <strong>cookie</strong> (non in localStorage) perché il server lo deve leggere per mandare già l'HTML con <code>data-theme</code> giusto: niente lampo di colori sbagliati. <code>useCookie</code> funziona sia sul server sia nel browser.</p></div>
+<div class="fn"><code>systemDark</code>, <code>themeReady</code><p>Il tema del sistema si conosce solo nel browser (<code>matchMedia</code> in <code>onMounted</code>); fino ad allora l'icona del pulsante resta invisibile.</p></div>
+<p>Dettaglio: <code>.shell:has(.fit-screen)</code> fa stare i duelli esattamente in uno schermo; le altre pagine scorrono normalmente.</p>
+</div>
+<div class="note why"><b class="t">Il bug del corallo gigante</b><p>Lo stile <code>scoped</code> di <code>app.vue</code> vale anche sull'elemento radice delle pagine (Vue gli passa l'attributo del genitore). La pagina Carica aveva <code>&lt;section class="upload"&gt;</code>, come il pulsante "+ Carica" dell'header, e ne prendeva lo stile. Lezione: nei componenti genitori evita classi generiche.</p></div>
+
+<div class="file"><div class="path">app/assets/css/main.css</div>
+<p>I colori sono <strong>variabili CSS</strong> (<code>--bg</code>, <code>--coral</code>, <code>--action</code>…) definite per il tema chiaro, ridefinite per il tema scuro sotto <code>prefers-color-scheme: dark</code> (se non hai scelto) e sotto <code>[data-theme="dark"]</code> (se hai scelto). I componenti usano solo le variabili, quindi cambiano tema da soli. Poi lo sfondo con le macchie, i font, le regole di base per input e pulsanti.</p>
+</div>
+
+<h3>Le pagine e i loro URL</h3>
+<div class="table"><table>
+<thead><tr><th>File</th><th>URL</th><th>Cosa fa</th></tr></thead>
+<tbody>
+<tr><td><code>index.vue</code></td><td><code>/</code></td><td>duelli</td></tr>
+<tr><td><code>accedi.vue</code>, <code>registrati.vue</code></td><td><code>/accedi</code>, <code>/registrati</code></td><td>entrambe usano <code>AuthForm</code></td></tr>
+<tr><td><code>carica.vue</code></td><td><code>/carica</code></td><td>upload con ritagli</td></tr>
+<tr><td><code>classifica/[[specie]].vue</code></td><td><code>/classifica</code>, <code>/classifica/gatti</code></td><td>podio e lista</td></tr>
+<tr><td><code>sfide/index.vue</code>, <code>sfide/[slug].vue</code></td><td><code>/sfide</code>, <code>/sfide/…</code></td><td>sfide</td></tr>
+<tr><td><code>pet/[id].vue</code>, <code>u/[username].vue</code></td><td><code>/pet/12</code>, <code>/u/cactua</code></td><td>pet e profilo</td></tr>
+<tr><td><code>rifugi/…</code>, <code>rifugio.vue</code></td><td><code>/rifugi</code>, <code>/rifugio</code></td><td>adozioni</td></tr>
+<tr><td><code>crediti.vue</code></td><td><code>/crediti</code></td><td>autori e licenze delle foto di esempio</td></tr>
+<tr><td><code>admin/…</code></td><td><code>/admin/moderazione</code>, <code>/admin/sfide</code>, <code>/admin/rifugi</code></td><td>pannelli dei moderatori</td></tr>
+</tbody></table></div>
+
+<!-- 14 -->
+<h2 id="componenti"><span class="n">14</span>Componenti, composable e utils del client</h2>
+
+<div class="file"><div class="path">app/composables/useDuelQueue.ts</div>
+<p>Un <strong>composable</strong> è una funzione che usa la reattività di Vue e restituisce stato + azioni: il modo Nuxt/Vue di riusare logica tra pagine. Questo è usato dalla home e dalle sfide, con URL diversi passati come getter (<code>MaybeRefOrGetter</code> + <code>toValue</code>).</p>
+<div class="fn"><code>load()</code><p>Mostra la coppia già precaricata (<code>next</code>) e intanto chiede la successiva: così dopo il voto non si aspetta la rete.</p></div>
+<div class="fn"><code>vote(index)</code><p>Invia il voto in parallelo a un piccolo ritardo (<code>Promise.allSettled</code>), mostra il risultato ("+12 · −12") e dopo 1,2 secondi passa alla coppia successiva.</p></div>
+<div class="fn"><code>reset()</code><p>Butta via la coda quando cambia il filtro di specie.</p></div>
+</div>
+
+<div class="file"><div class="path">app/components/DuelArena.vue</div>
+<p>Il gesto del voto. <code>geometry(i)</code> calcola direzione e distanza verso l'avversario (in verticale su telefono, in orizzontale su computer). <code>onDown</code>/<code>onMove</code>/<code>onUp</code> spostano la card con <code>transform</code>; si vota solo oltre il 40% del percorso, quindi un clic non vota. Con le frecce della tastiera si vota lo stesso (accessibilità). Una piccola animazione iniziale (<code>coach</code>) mostra il gesto.</p>
+</div>
+
+<div class="file"><div class="path">app/components/ (gli altri)</div>
+<ul>
+<li><code>DuelPanel</code>: tutti gli stati dell'area di gioco (duello, finito, errore, caricamento) più suggerimento e toast. Lo <code>&lt;slot name="empty"&gt;</code> permette a ogni pagina il suo messaggio.</li>
+<li><code>PetGallery</code>: un pet con copertina, statistiche, trofei, foto e, per il proprietario, modifica ed eliminazione.</li>
+<li><code>PetRankRow</code>, <code>PetRosette</code>: una riga di classifica e la coccarda dei primi tre.</li>
+<li><code>ChallengeCard</code>, <code>ChallengeBanner</code>, <code>ChallengeJoin</code>: card di una sfida, striscia in home, form di iscrizione.</li>
+<li><code>SpeciesChips</code>: i filtri per specie con <code>defineModel</code>, quindi si usano con <code>v-model</code>.</li>
+<li><code>AuthForm</code>: login e registrazione insieme, con la prop <code>mode</code>.</li>
+<li><code>PetMascot</code>, <code>PetEars</code>, <code>AppIcon</code>: disegni SVG (la mascotte, le orecchie per specie, le icone).</li>
+<li><code>PhotoCropper</code>, <code>ShareCard</code>, <code>AdoptionCard</code>: già visti sopra.</li>
+</ul>
+</div>
+
+<div class="file"><div class="path">app/utils/http.ts · time.ts</div>
+<div class="fn"><code>errorMessage(e, fallback)</code><p>Estrae il messaggio italiano che le nostre API mettono in <code>statusMessage</code>.</p></div>
+<div class="fn"><code>safeRedirect(target)</code><p>Accetta solo percorsi interni: <code>?redirect=//sito-cattivo.com</code> non porta fuori dal sito.</p></div>
+<div class="fn"><code>timeUntil</code>, <code>shortDate</code><p>Date leggibili ("tra 2 giorni", "26 ott").</p></div>
+</div>
+
+<!-- 15 -->
+<h2 id="viaggi"><span class="n">15</span>Due viaggi completi, dal tocco al database</h2>
+
+<h3>Viaggio 1: voti un duello</h3>
+<pre class="mermaid">sequenceDiagram
+  participant B as Browser (index.vue)
+  participant S as Server Nitro
+  participant D as Database
+  B->>S: GET /api/duel?species=gatto
+  S->>D: pet candidati e coppie già votate
+  S-->>B: due pet + biglietto firmato
+  Note over B: trascini la card oltre il 40%
+  B->>S: POST /api/vote {token, winnerId}
+  S->>S: readVote: firma, votante, tempo
+  S->>D: transazione: voto + Elo
+  S-->>B: { delta: 12 }
+  Note over B: toast, poi la coppia già precaricata</pre>
+
+<h3>Viaggio 2: carichi la foto di un nuovo pet</h3>
+<ol class="steps">
+<li><div><code>carica.vue</code> mostra l'anteprima con un URL <code>blob:</code> e apre <code>PhotoCropper</code>; tu scegli i tre ritagli.</div></li>
+<li><div>All'invio parte un <code>FormData</code> verso <code>POST /api/pets</code>. Prima ancora di arrivare all'handler: <code>nuxt-security</code> controlla dimensione e rate limit, <code>origin.ts</code> controlla da dove arriva.</div></li>
+<li><div>L'handler chiama <code>requireUser</code> (chi sei), <code>assertPendingQuota</code> (non troppe foto in attesa), <code>readPhotoUpload</code> (decodifica, ripulisce, genera 21 file).</div></li>
+<li><div>Valida i campi con lo stesso <code>petFieldsSchema</code> che il form ha già usato, poi inserisce pet e foto (stato <code>pending</code>) in una transazione.</div></li>
+<li><div>Un moderatore la vede in <code>/admin/moderazione</code> e la approva: da quel momento <code>hasApprovedPhoto</code> è vero e il pet entra in duelli e classifiche.</div></li>
+<li><div>Quando qualcuno apre il pet, il browser chiede per esempio <code>/img/&lt;id&gt;-v720.avif</code>: <code>routes/img</code> controlla i permessi e serve il file giusto per il suo schermo.</div></li>
+</ol>
+
+<!-- 16 -->
+<h2 id="esercizi"><span class="n">16</span>Esercizi per mettere le mani nel codice</h2>
+<p>In ordine di difficoltà. Ognuno ti fa toccare una parte diversa.</p>
+<ol class="steps">
+<li><div><strong>Una nuova specie</strong> ("pesce"). Tocca solo <code>shared/models.ts</code> e guarda quanti posti si aggiornano da soli. Poi aggiungi il colore della medaglietta in <code>DuelArena.vue</code>.</div></li>
+<li><div><strong>Una pagina "Chi siamo"</strong>: crea <code>app/pages/chi-siamo.vue</code> e aggiungi il link in <code>app.vue</code>. Usa <code>useHead</code> per il titolo.</div></li>
+<li><div><strong>Un endpoint</strong> <code>server/api/stats.get.ts</code> che restituisce quanti pet e quanti voti ci sono. Usa <code>useDb()</code> e <code>count(*)</code>, poi mostralo nella pagina nuova con <code>useFetch</code>.</div></li>
+<li><div><strong>Una regola nuova</strong>: impedisci nomi di pet tutti in maiuscolo. Aggiungila allo schema Zod in <code>shared/</code> e verifica che il messaggio compaia sia nel form sia chiamando l'API direttamente.</div></li>
+<li><div><strong>Una classifica per città</strong>: aggiungi un parametro <code>city</code> a <code>leaderboard.get.ts</code> (validato con Zod) e un filtro nella pagina, prendendo spunto da <code>adoptables.get.ts</code>.</div></li>
+</ol>
+<div class="note nuxt"><b class="t">Strumenti che aiutano</b><p>I Nuxt DevTools (attivi in sviluppo: il simbolo in basso nella pagina) mostrano pagine, componenti, composable e chiamate. <code>npx nuxi typecheck</code> controlla i tipi di tutto il progetto. La documentazione ufficiale è su <a href="https://nuxt.com/docs" target="_blank" rel="noopener">nuxt.com/docs</a>.</p></div>
+
+<footer>Guida scritta sul codice di PetDuel del 30 ottobre 2026. Se il codice cambia, alcune righe possono non corrispondere più.</footer>
+</div>

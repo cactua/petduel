@@ -1,0 +1,4 @@
+// Strumenti senza output CSS: disponibili in ogni <style lang="scss"> (vedi nuxt.config, additionalData)
+@forward "tokens";
+@forward "breakpoints";
+@forward "mixins";

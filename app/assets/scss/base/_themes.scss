@@ -1,0 +1,28 @@
+@use "../abstracts" as *;
+
+@mixin theme-vars($theme) {
+  // Le chiavi come "coral" o "ink" sono nomi di colore per Sass: "" + le tratta come testo
+  @each $name, $value in $theme {
+    --#{"" + $name}: #{$value};
+  }
+}
+
+:root {
+  @include theme-vars($theme-light);
+  --display: #{$font-display};
+  --body: #{$font-body};
+  color-scheme: light;
+}
+
+// Tema scuro: segue il sistema, salvo scelta esplicita dal menu (data-theme su <html>)
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @include theme-vars($theme-dark);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  @include theme-vars($theme-dark);
+  color-scheme: dark;
+}

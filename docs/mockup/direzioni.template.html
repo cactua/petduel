@@ -1,0 +1,325 @@
+<title>PetDuel tre direzioni</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap">
+<style>
+:root { --page: #f6efe6; --text: #2b1a10; --sub: #7d6656; --rule: #e4d6c6; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --page: #1c1511; --text: #f6ece2; --sub: #b9a291; --rule: #3a2d25; color-scheme: dark; } }
+:root[data-theme="dark"] { --page: #1c1511; --text: #f6ece2; --sub: #b9a291; --rule: #3a2d25; color-scheme: dark; }
+body {
+  background: var(--page); color: var(--text); font-family: Nunito, "Segoe UI", system-ui, sans-serif;
+  padding-block: 28px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.intro { max-width: 640px; margin: 0 auto 28px; display: flex; flex-direction: column; gap: 8px; }
+.intro h1 { font-family: Fredoka, system-ui, sans-serif; font-size: 32px; margin: 0; line-height: 1.1; text-wrap: balance; }
+.intro p { margin: 0; color: var(--sub); font-weight: 700; line-height: 1.5; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 380px)); justify-content: center; gap: 44px 32px; }
+.dir { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.dir header { display: flex; flex-direction: column; gap: 4px; }
+.dir .letter { font-family: Fredoka, system-ui, sans-serif; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--sub); font-weight: 700; }
+.dir h2 { font-family: Fredoka, system-ui, sans-serif; font-size: 24px; margin: 0; }
+.dir ul { margin: 0; padding-left: 18px; color: var(--sub); font-weight: 700; font-size: 14px; line-height: 1.5; }
+
+/* ---------- telefono comune ---------- */
+.phone {
+  position: relative; width: 100%; max-width: 360px; height: 760px; margin: 0 auto; overflow: hidden;
+  border-radius: 44px; border: 9px solid #17110d; box-shadow: 0 30px 50px -30px rgba(0,0,0,.6);
+  display: flex; flex-direction: column; gap: 12px; padding: 18px 16px 14px;
+}
+.phone .top { display: flex; align-items: center; justify-content: space-between; }
+.phone .arena { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; gap: 4px; min-height: 0; position: relative; }
+.phone .pc { position: relative; margin: 0; width: 92%; }
+.phone .photo { width: 100%; height: 200px; background-size: cover; background-position: center; }
+.phone .chips { display: flex; gap: 6px; overflow: hidden; }
+.phone .chips span { white-space: nowrap; }
+.phone .dock { display: grid; grid-template-columns: repeat(5, 1fr); align-items: center; }
+.phone .dock span { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; font-weight: 900; }
+.phone svg.i { width: 22px; height: 22px; }
+.ear { position: absolute; z-index: 2; pointer-events: none; }
+
+/* ---------- A · Adesivi ---------- */
+.d1 {
+  --ink: #2b1a10; background: #ffd23f url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Cg fill='none' stroke='%232b1a10' stroke-opacity='.16' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 30a7 7 0 1 1 9-8h22a7 7 0 1 1 9 8 7 7 0 1 1-9 8H31a7 7 0 1 1-9-8z'/%3E%3Cpath d='M92 100c10-12 30-12 38 0-8 12-28 12-38 0zm38 0 10-8v16z'/%3E%3Ccircle cx='40' cy='112' r='13'/%3E%3Cpath d='M29 106c8 2 15 8 19 17M30 118c6-6 15-8 22-6'/%3E%3Cpath d='M112 26l4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z'/%3E%3C/g%3E%3C/svg%3E");
+  color: var(--ink); font-family: Nunito, system-ui, sans-serif;
+}
+.d1 .logo { font-family: "Baloo 2", Fredoka, system-ui, sans-serif; font-weight: 800; font-size: 30px; color: #fff; -webkit-text-stroke: 7px var(--ink); paint-order: stroke fill; letter-spacing: .5px; line-height: 1; transform: rotate(-3deg); }
+.d1 .me { width: 38px; height: 38px; border-radius: 50%; border: 3px solid var(--ink); background-color: #fff; background-size: cover; background-position: center; box-shadow: 3px 3px 0 var(--ink); }
+.d1 h3 { margin: 0; font-family: "Baloo 2", system-ui, sans-serif; font-weight: 800; font-size: 30px; line-height: 1; }
+.d1 h3 em { font-style: normal; background: #ff5b3a; color: #fff; padding: 0 8px; border: 3px solid var(--ink); border-radius: 12px; display: inline-block; transform: rotate(-3deg); box-shadow: 3px 3px 0 var(--ink); }
+.d1 .chips span { background: #fff; border: 2.5px solid var(--ink); border-radius: 999px; padding: 4px 12px; font-weight: 900; font-size: 13px; box-shadow: 2px 2px 0 var(--ink); }
+.d1 .chips span.on { background: #4dc3ff; }
+.d1 .pc { background: #fff; padding: 7px; border: 3px solid var(--ink); border-radius: 24px; box-shadow: 6px 6px 0 var(--ink); }
+.d1 .pc:first-child { transform: rotate(-2deg); }
+.d1 .pc:last-child { transform: rotate(1.8deg); }
+.d1 .photo { height: 168px; border-radius: 16px; border: 2.5px solid var(--ink); }
+.d1 .bubble {
+  position: absolute; left: -8px; bottom: -14px; z-index: 3; background: #fff; border: 3px solid var(--ink); border-radius: 18px;
+  padding: 2px 14px; font-family: "Baloo 2", system-ui, sans-serif; font-weight: 800; font-size: 22px; box-shadow: 3px 3px 0 var(--ink);
+}
+.d1 .bubble small { font-family: Nunito, sans-serif; font-weight: 800; font-size: 11px; display: block; margin-top: -6px; color: #7a5a44; }
+.d1 .pc:last-child .bubble { left: auto; right: -8px; }
+.d1 .vs { position: relative; z-index: 4; margin: -22px 0; width: 112px; height: 52px; transform: rotate(-8deg); }
+.d1 .vs b { position: absolute; inset: 0; display: grid; place-items: center; font-family: "Baloo 2", system-ui, sans-serif; font-weight: 800; font-size: 24px; color: #fff; -webkit-text-stroke: 5px var(--ink); paint-order: stroke fill; }
+.d1 .hint { margin: 0; text-align: center; font-weight: 900; font-size: 13px; }
+.d1 .dock { background: #fff; border: 3px solid var(--ink); border-radius: 22px; padding: 7px 4px; box-shadow: 4px 4px 0 var(--ink); }
+.d1 .dock .on { color: #fff; }
+.d1 .dock .on svg { background: #ff5b3a; border: 2.5px solid var(--ink); border-radius: 12px; padding: 3px; width: 32px; height: 30px; box-shadow: 2px 2px 0 var(--ink); }
+.d1 .dock .on { color: var(--ink); }
+.d1 .ear.dog { top: -10px; width: 44px; height: 66px; }
+.d1 .ear.dog.l { left: -16px; transform: rotate(16deg); }
+.d1 .ear.dog.r { right: -16px; transform: rotate(-16deg) scaleX(-1); }
+.d1 .ear.cat { top: -34px; width: 52px; height: 46px; }
+.d1 .ear.cat.l { left: 22px; transform: rotate(-12deg); }
+.d1 .ear.cat.r { right: 22px; transform: rotate(12deg) scaleX(-1); }
+
+/* ---------- B · Cuccioli ---------- */
+.d2 {
+  background:
+    radial-gradient(circle at 12% 18%, #ffd9e6 0 70px, transparent 71px),
+    radial-gradient(circle at 92% 46%, #d7f2ff 0 90px, transparent 91px),
+    radial-gradient(circle at 10% 86%, #fff1b8 0 80px, transparent 81px),
+    #fff8f1;
+  color: #4a2d1e; font-family: Nunito, system-ui, sans-serif;
+}
+.d2 .logo { display: flex; align-items: center; gap: 6px; font-family: Fredoka, system-ui, sans-serif; font-weight: 700; font-size: 22px; color: #ff6f61; }
+.d2 .logo svg { width: 26px; height: 26px; color: #ff6f61; transform: rotate(-14deg); }
+.d2 .me { font-weight: 900; font-size: 12px; background: #fff; border-radius: 999px; padding: 6px 12px; box-shadow: 0 6px 14px -8px rgba(255,111,97,.6); }
+.d2 .ask { display: flex; align-items: flex-end; gap: 6px; margin-top: -4px; }
+.d2 .ask svg { width: 78px; height: 72px; flex-shrink: 0; animation: tilt 3s ease-in-out infinite; transform-origin: 50% 100%; }
+.d2 .ask p { margin: 0 0 14px; background: #fff; border-radius: 20px 20px 20px 4px; padding: 8px 14px; font-family: Fredoka, system-ui, sans-serif; font-weight: 600; font-size: 19px; box-shadow: 0 8px 18px -12px rgba(74,45,30,.5); }
+.d2 .chips span { border-radius: 999px; padding: 5px 11px; font-weight: 900; font-size: 12px; background: #fff; }
+.d2 .chips span.dog { background: #ffe3b8; } .d2 .chips span.cat { background: #e8ddff; } .d2 .chips span.bun { background: #ffdce8; }
+.d2 .chips span.on { background: #ff6f61; color: #fff; }
+.d2 .pc { background: #fff; padding: 6px 6px 0; border-radius: 30px; box-shadow: 0 16px 26px -18px rgba(255,111,97,.9); }
+.d2 .photo { height: 158px; border-radius: 24px; }
+.d2 .collar { display: flex; align-items: center; gap: 8px; padding: 7px 8px 8px; }
+.d2 .tag { width: 30px; height: 30px; border-radius: 50%; background: #ffc83d; display: grid; place-items: center; box-shadow: inset 0 -3px 0 #e9a400; flex-shrink: 0; }
+.d2 .tag svg { width: 16px; height: 16px; color: #8a5a00; }
+.d2 .collar b { font-family: Fredoka, system-ui, sans-serif; font-weight: 600; font-size: 19px; line-height: 1; }
+.d2 .collar small { display: block; font-size: 11px; color: #a27e68; font-weight: 800; }
+.d2 .collar .heart { margin-left: auto; background: #ffe6ea; color: #ff4f6d; font-weight: 900; font-size: 12px; border-radius: 999px; padding: 5px 10px; }
+.d2 .pc.cat .tag { background: #b9a4ff; box-shadow: inset 0 -3px 0 #8d74e8; } .d2 .pc.cat .tag svg { color: #fff; }
+.d2 .vs { position: relative; z-index: 4; margin: -16px 0; width: 82px; height: 50px; }
+.d2 .vs b { position: absolute; inset: 14px 0 0; text-align: center; font-family: Fredoka, system-ui, sans-serif; font-weight: 700; font-size: 17px; color: #fff; }
+.d2 .trail { position: absolute; right: 2px; top: 44%; display: flex; flex-direction: column; gap: 6px; color: #ffb1a8; }
+.d2 .trail svg { width: 14px; height: 14px; }
+.d2 .trail svg:nth-child(odd) { transform: translateX(8px) rotate(10deg); }
+.d2 .hint { margin: 0; text-align: center; font-weight: 800; font-size: 12px; color: #a27e68; }
+.d2 .dock { background: #fff; border-radius: 26px; padding: 8px 4px; box-shadow: 0 12px 24px -14px rgba(74,45,30,.5); color: #b79a86; }
+.d2 .dock .on { color: #ff6f61; }
+.d2 .dock .big svg { width: 50px; height: 50px; margin-top: -26px; padding: 12px; border-radius: 50%; background: #ff6f61; color: #fff; box-shadow: 0 8px 16px -6px rgba(255,111,97,.9); }
+.d2 .ear.dog { top: -12px; width: 46px; height: 70px; }
+.d2 .ear.dog.l { left: -12px; transform: rotate(14deg); }
+.d2 .ear.dog.r { right: -12px; transform: rotate(-14deg) scaleX(-1); }
+.d2 .ear.cat { top: -32px; width: 52px; height: 46px; animation: twitch 4s ease-in-out infinite; }
+.d2 .ear.cat.l { left: 26px; transform: rotate(-12deg); }
+.d2 .ear.cat.r { right: 26px; transform: rotate(12deg) scaleX(-1); animation: none; }
+@keyframes tilt { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(5deg); } }
+@keyframes twitch { 0%, 86%, 100% { transform: rotate(-12deg); } 90% { transform: rotate(-24deg); } 94% { transform: rotate(-8deg); } }
+
+/* ---------- C · Album ---------- */
+.d3 {
+  background:
+    radial-gradient(circle at 80% 12%, rgba(120,72,30,.10) 0 46px, transparent 47px),
+    radial-gradient(rgba(90,55,25,.13) 1px, transparent 1.5px) 0 0 / 9px 9px,
+    #e8d2ad;
+  color: #3b2414; font-family: Nunito, system-ui, sans-serif;
+}
+.d3 .logo { position: relative; background: #fffaf0; padding: 4px 14px 2px; font-family: Caveat, cursive; font-weight: 700; font-size: 28px; transform: rotate(-2deg); box-shadow: 0 4px 8px -4px rgba(0,0,0,.35); }
+.d3 .logo::before { content: ""; position: absolute; left: 50%; top: -9px; width: 56px; height: 18px; margin-left: -28px; background: repeating-linear-gradient(45deg, rgba(255,140,120,.75) 0 6px, rgba(255,190,170,.75) 6px 12px); transform: rotate(-4deg); }
+.d3 .me { font-family: Caveat, cursive; font-weight: 700; font-size: 20px; }
+.d3 h3 { margin: 0; font-family: Caveat, cursive; font-weight: 700; font-size: 38px; line-height: .95; color: #24356e; }
+.d3 h3 u { text-decoration: none; background: linear-gradient(transparent 62%, rgba(255,200,61,.8) 62% 90%, transparent 90%); }
+.d3 .chips span { position: relative; background: #fffaf0; padding: 3px 10px 3px 18px; font-weight: 900; font-size: 12px; clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%); }
+.d3 .chips span::before { content: ""; position: absolute; left: 7px; top: 50%; width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%; background: #e8d2ad; }
+.d3 .chips span.on { background: #24356e; color: #fffaf0; }
+.d3 .pc { background: #fffdf7; padding: 9px 9px 40px; box-shadow: 0 14px 22px -14px rgba(60,30,10,.7); }
+.d3 .pc:first-child { transform: rotate(-3deg); }
+.d3 .pc:last-child { transform: rotate(2.6deg); }
+.d3 .photo { height: 160px; filter: saturate(1.05) contrast(1.02); }
+.d3 .pc b { position: absolute; left: 14px; bottom: 4px; font-family: Caveat, cursive; font-weight: 700; font-size: 28px; color: #24356e; }
+.d3 .pc small { position: absolute; right: 12px; bottom: 11px; font-family: Caveat, cursive; font-size: 17px; color: #7a6250; }
+.d3 .tape { position: absolute; top: -12px; left: 50%; width: 92px; height: 24px; margin-left: -46px; background: repeating-linear-gradient(90deg, rgba(126,200,227,.75) 0 8px, rgba(170,222,240,.75) 8px 16px); transform: rotate(3deg); z-index: 2; }
+.d3 .pc:last-child .tape { background: repeating-linear-gradient(90deg, rgba(255,200,61,.75) 0 8px, rgba(255,226,140,.75) 8px 16px); transform: rotate(-4deg); left: 30%; }
+.d3 .stamp { position: absolute; right: 10px; top: 14px; width: 46px; height: 46px; color: rgba(200,40,40,.78); transform: rotate(-14deg); z-index: 2; }
+.d3 .vs { position: relative; z-index: 4; margin: -20px 0; width: 70px; height: 70px; border-radius: 50%; border: 3px solid rgba(200,40,40,.85); display: grid; place-items: center; transform: rotate(-10deg); background: rgba(232,210,173,.55); }
+.d3 .vs::before { content: ""; position: absolute; inset: 4px; border-radius: 50%; border: 1.5px dashed rgba(200,40,40,.8); }
+.d3 .vs b { font-family: "Baloo 2", system-ui, sans-serif; font-weight: 800; font-size: 24px; color: rgba(200,40,40,.9); letter-spacing: 1px; }
+.d3 .note { position: absolute; z-index: 5; left: -4px; top: 46%; font-family: Caveat, cursive; font-weight: 700; font-size: 22px; color: #24356e; transform: rotate(-8deg); display: flex; align-items: center; }
+.d3 .note svg { width: 54px; height: 40px; }
+.d3 .hint { margin: 0; text-align: center; font-family: Caveat, cursive; font-weight: 600; font-size: 19px; }
+.d3 .dock { background: #fffaf0; padding: 8px 4px; box-shadow: 0 6px 12px -6px rgba(0,0,0,.35); transform: rotate(-.6deg); position: relative; }
+.d3 .dock::before, .d3 .dock::after { content: ""; position: absolute; top: -9px; width: 44px; height: 16px; background: rgba(255,140,120,.6); }
+.d3 .dock::before { left: 8px; transform: rotate(-12deg); } .d3 .dock::after { right: 8px; transform: rotate(10deg); }
+.d3 .dock .on { color: #c82828; }
+.d3 .dock span { font-family: Caveat, cursive; font-size: 15px; font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) { .d2 .ask svg, .d2 .ear.cat { animation: none; } }
+
+/* foto */
+.p-dog { background-image: url({{DOG}}); }
+.p-cat { background-image: url({{CAT}}); }
+.p-bun { background-image: url({{BUN}}); }
+.p-pig { background-image: url({{PIG}}); }
+.p-me { background-image: url({{ME}}); }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="paw" viewBox="0 0 24 24"><g fill="currentColor"><ellipse cx="12" cy="15.5" rx="5" ry="4.2"/><circle cx="6" cy="9.5" r="2.2"/><circle cx="9.8" cy="6" r="2.2"/><circle cx="14.2" cy="6" r="2.2"/><circle cx="18" cy="9.5" r="2.2"/></g></symbol>
+  <symbol id="flag" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 21V4m0 1h11l-2.5 4L17 13H6"/></symbol>
+  <symbol id="podium" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" d="M9 20V8h6v12M3 20v-7h6M15 20v-5h6v5zM2 20h20"/></symbol>
+  <symbol id="camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.4"/></g></symbol>
+  <symbol id="face" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M5 10 3.5 4.5 9 7.5M19 10l1.5-5.5L15 7.5"/><circle cx="12" cy="13.5" r="7"/></g></symbol>
+  <!-- orecchie: cane (a penzoloni) e gatto (a punta) -->
+  <symbol id="ear-dog" viewBox="0 0 46 70"><path d="M23 3C39 3 45 20 42 43c-2 17-11 24-20 24C11 67 4 57 4 40 4 18 9 3 23 3z"/></symbol>
+  <symbol id="ear-cat" viewBox="0 0 52 46"><path d="M4 44 18 6c2-4 6-5 9-1l22 36z"/><path class="in" d="M15 38 22 15l13 22z"/></symbol>
+  <symbol id="bone" viewBox="0 0 112 52"><path d="M20 10a11 11 0 0 1 15 6h42a11 11 0 1 1 15 14 11 11 0 1 1-15 14H35a11 11 0 1 1-15-14 11 11 0 0 1 0-20z" transform="translate(0 -4)"/></symbol>
+  <symbol id="bowl" viewBox="0 0 82 50"><path d="M6 14h70l-8 30c-1 3-3 5-6 5H20c-3 0-5-2-6-5z" fill="#ff6f61"/><path d="M6 14h70" stroke="#e2493a" stroke-width="5" stroke-linecap="round"/><g fill="#c98a4b"><circle cx="24" cy="10" r="6"/><circle cx="36" cy="7" r="6"/><circle cx="48" cy="9" r="6"/><circle cx="59" cy="10" r="5"/></g></symbol>
+  <symbol id="pawstamp" viewBox="0 0 48 48"><circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2.5"/><g fill="currentColor"><ellipse cx="24" cy="29" rx="8" ry="6.5"/><circle cx="14.5" cy="20" r="3.4"/><circle cx="20.5" cy="14.5" r="3.4"/><circle cx="27.5" cy="14.5" r="3.4"/><circle cx="33.5" cy="20" r="3.4"/></g></symbol>
+</svg>
+
+<header class="intro">
+  <h1>Tre strade più pet-friendly</h1>
+  <p>Stessa schermata, il duello, in tre stili molto più carichi di quello attuale. Ognuno usa un dettaglio che esiste solo nel mondo degli animali: orecchie sulle foto, ciotole, timbri a zampa, ossi. Scegline una (o mescolale) e la applico a tutta l'app.</p>
+</header>
+
+<main class="grid">
+  <!-- A -->
+  <section class="dir">
+    <header>
+      <span class="letter">Direzione A</span>
+      <h2>Adesivi</h2>
+      <ul>
+        <li>Contorni spessi e ombre piene, come adesivi da diario</li>
+        <li>Le foto hanno le orecchie della specie: a penzoloni per i cani, a punta per i gatti</li>
+        <li>Il "VS" è un osso, i nomi sono fumetti</li>
+      </ul>
+    </header>
+    <div class="phone d1">
+      <div class="top"><span class="logo">PetDuel</span><span class="me p-me"></span></div>
+      <h3>Chi è più <em>carino?</em></h3>
+      <div class="chips"><span>Tutti</span><span class="on">Cani</span><span>Gatti</span><span>Conigli</span><span>Uccelli</span></div>
+      <div class="arena">
+        <figure class="pc">
+          <svg class="ear dog l" style="fill:#b06a32;stroke:#2b1a10;stroke-width:3"><use href="#ear-dog"/></svg>
+          <svg class="ear dog r" style="fill:#b06a32;stroke:#2b1a10;stroke-width:3"><use href="#ear-dog"/></svg>
+          <div class="photo p-dog"></div>
+          <span class="bubble">Fiocco!<small>Westie · Bergamo</small></span>
+        </figure>
+        <div class="vs"><svg viewBox="0 0 112 52" style="width:100%;height:100%;fill:#ff5b3a;stroke:#2b1a10;stroke-width:3.5"><use href="#bone"/></svg><b>VS</b></div>
+        <figure class="pc">
+          <svg class="ear cat l" style="fill:#f2a65a;stroke:#2b1a10;stroke-width:3"><use href="#ear-cat"/></svg>
+          <svg class="ear cat r" style="fill:#f2a65a;stroke:#2b1a10;stroke-width:3"><use href="#ear-cat"/></svg>
+          <div class="photo p-cat"></div>
+          <span class="bubble">Zar!<small>Siberiano · Udine</small></span>
+        </figure>
+      </div>
+      <p class="hint">Trascina il preferito sopra l'altro ✋</p>
+      <nav class="dock">
+        <span class="on"><svg class="i"><use href="#paw"/></svg>Duelli</span>
+        <span><svg class="i"><use href="#flag"/></svg>Sfide</span>
+        <span><svg class="i"><use href="#podium"/></svg>Classifica</span>
+        <span><svg class="i"><use href="#camera"/></svg>Carica</span>
+        <span><svg class="i"><use href="#face"/></svg>Profilo</span>
+      </nav>
+    </div>
+  </section>
+
+  <!-- B -->
+  <section class="dir">
+    <header>
+      <span class="letter">Direzione B</span>
+      <h2>Cuccioli</h2>
+      <ul>
+        <li>Pastelli morbidi e una mascotte che fa la domanda</li>
+        <li>Orecchie sulle foto e un collare con medaglietta al posto dell'etichetta</li>
+        <li>Il "VS" è una ciotola di crocchette, impronte tra le foto</li>
+      </ul>
+    </header>
+    <div class="phone d2">
+      <div class="top"><span class="logo"><svg><use href="#paw"/></svg>PetDuel</span><span class="me">Voti: 12 ♥</span></div>
+      <div class="ask">
+        <svg viewBox="0 0 84 76" aria-hidden="true">
+          <ellipse cx="15" cy="34" rx="11" ry="20" fill="#b9814f" transform="rotate(20 15 34)"/>
+          <ellipse cx="69" cy="34" rx="11" ry="20" fill="#b9814f" transform="rotate(-20 69 34)"/>
+          <ellipse cx="42" cy="42" rx="28" ry="26" fill="#f6d7ae"/>
+          <ellipse cx="54" cy="35" rx="9" ry="8" fill="#e8b98a"/>
+          <circle cx="32" cy="40" r="4.2" fill="#3d2416"/><circle cx="52" cy="40" r="4.2" fill="#3d2416"/>
+          <circle cx="33.4" cy="38.5" r="1.4" fill="#fff"/><circle cx="53.4" cy="38.5" r="1.4" fill="#fff"/>
+          <ellipse cx="42" cy="50" rx="5" ry="3.6" fill="#3d2416"/>
+          <path d="M35 55q7 6 14 0" fill="none" stroke="#3d2416" stroke-width="2" stroke-linecap="round"/>
+          <ellipse cx="42" cy="60" rx="3.6" ry="4.6" fill="#ff7b8a"/>
+          <ellipse cx="25" cy="51" rx="5" ry="3" fill="#ffb3b3" opacity=".75"/><ellipse cx="59" cy="51" rx="5" ry="3" fill="#ffb3b3" opacity=".75"/>
+          <ellipse cx="28" cy="72" rx="9" ry="5" fill="#f6d7ae"/><ellipse cx="56" cy="72" rx="9" ry="5" fill="#f6d7ae"/>
+        </svg>
+        <p>Chi è più carino? 🐾</p>
+      </div>
+      <div class="chips"><span class="on">Tutti</span><span class="dog">Cani</span><span class="cat">Gatti</span><span class="bun">Conigli</span></div>
+      <div class="arena">
+        <figure class="pc">
+          <svg class="ear dog l" style="fill:#c99366"><use href="#ear-dog"/></svg>
+          <svg class="ear dog r" style="fill:#c99366"><use href="#ear-dog"/></svg>
+          <div class="photo p-dog"></div>
+          <div class="collar"><span class="tag"><svg><use href="#paw"/></svg></span><div><b>Fiocco</b><small>Westie · Bergamo</small></div><span class="heart">1° cani</span></div>
+        </figure>
+        <div class="vs"><svg viewBox="0 0 82 50" style="width:100%;height:100%"><use href="#bowl"/></svg><b>VS</b></div>
+        <figure class="pc cat">
+          <svg class="ear cat l" style="fill:#ffc2d1"><use href="#ear-cat"/></svg>
+          <svg class="ear cat r" style="fill:#ffc2d1"><use href="#ear-cat"/></svg>
+          <div class="photo p-cat"></div>
+          <div class="collar"><span class="tag"><svg><use href="#paw"/></svg></span><div><b>Zar</b><small>Siberiano · Udine</small></div><span class="heart">🏆 Sfida</span></div>
+        </figure>
+        <div class="trail" aria-hidden="true"><svg><use href="#paw"/></svg><svg><use href="#paw"/></svg><svg><use href="#paw"/></svg></div>
+      </div>
+      <p class="hint">Trascina il preferito sopra l'altro</p>
+      <nav class="dock">
+        <span class="on"><svg class="i"><use href="#paw"/></svg>Duelli</span>
+        <span><svg class="i"><use href="#flag"/></svg>Sfide</span>
+        <span class="big"><svg class="i"><use href="#camera"/></svg></span>
+        <span><svg class="i"><use href="#podium"/></svg>Classifica</span>
+        <span><svg class="i"><use href="#face"/></svg>Profilo</span>
+      </nav>
+    </div>
+  </section>
+
+  <!-- C -->
+  <section class="dir">
+    <header>
+      <span class="letter">Direzione C</span>
+      <h2>Album</h2>
+      <ul>
+        <li>Carta da pacchi, polaroid con lo scotch colorato, nomi scritti a mano</li>
+        <li>Timbro a zampa sulle foto e "VS" come timbro postale</li>
+        <li>Note scarabocchiate: "votami!"</li>
+      </ul>
+    </header>
+    <div class="phone d3">
+      <div class="top"><span class="logo">PetDuel</span><span class="me">@giulia</span></div>
+      <h3>Chi è più <u>carino</u>?</h3>
+      <div class="chips"><span class="on">Tutti</span><span>Cani</span><span>Gatti</span><span>Conigli</span></div>
+      <div class="arena">
+        <figure class="pc">
+          <span class="tape"></span>
+          <div class="photo p-dog"></div>
+          <svg class="stamp"><use href="#pawstamp"/></svg>
+          <b>Fiocco</b><small>Bergamo</small>
+        </figure>
+        <div class="vs"><b>VS</b></div>
+        <figure class="pc">
+          <span class="tape"></span>
+          <div class="photo p-cat"></div>
+          <b>Zar</b><small>Udine</small>
+        </figure>
+        <span class="note">votami!<svg viewBox="0 0 54 40" fill="none" stroke="#24356e" stroke-width="2.4" stroke-linecap="round"><path d="M4 8c14-6 34 0 40 22"/><path d="M36 24l8 8 4-10"/></svg></span>
+      </div>
+      <p class="hint">trascina il tuo preferito sopra l'altro</p>
+      <nav class="dock">
+        <span class="on"><svg class="i"><use href="#paw"/></svg>duelli</span>
+        <span><svg class="i"><use href="#flag"/></svg>sfide</span>
+        <span><svg class="i"><use href="#podium"/></svg>classifica</span>
+        <span><svg class="i"><use href="#camera"/></svg>carica</span>
+        <span><svg class="i"><use href="#face"/></svg>profilo</span>
+      </nav>
+    </div>
+  </section>
+</main>

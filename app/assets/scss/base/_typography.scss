@@ -1,0 +1,18 @@
+@use "../abstracts" as *;
+
+// Macchie pastello ferme sullo sfondo, come nel mockup "Cuccioli"
+body {
+  background:
+    radial-gradient(circle at 6% 10%, var(--blob-1) 0 130px, transparent 131px),
+    radial-gradient(circle at 98% 44%, var(--blob-2) 0 170px, transparent 171px),
+    radial-gradient(circle at 4% 92%, var(--blob-3) 0 150px, transparent 151px),
+    var(--bg);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--body);
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; text-wrap: balance; }
+
+h1 { font-weight: 700; }

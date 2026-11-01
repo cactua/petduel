@@ -1,0 +1,77 @@
+@use "tokens" as *;
+
+/// Scheda bianca con angoli morbidi: la superficie base del sito
+@mixin card($padding: $space-7, $radius: $radius-xl) {
+  background: var(--surface);
+  border-radius: $radius;
+  padding: $padding;
+  box-shadow: $shadow-card;
+}
+
+/// Pillola (badge, chip, bottoni arrotondati)
+@mixin pill($py: 4px, $px: 12px) {
+  border-radius: $radius-pill;
+  padding: $py $px;
+}
+
+/// Colonna con spazio uniforme tra i figli
+@mixin stack($gap: $space-6) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+/// Riga che va a capo
+@mixin cluster($gap: $space-3) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap;
+}
+
+/// Etichetta piccola maiuscola
+@mixin eyebrow($size: 10px) {
+  font-size: $size;
+  font-weight: 900;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/// Testo lungo leggibile
+@mixin prose {
+  line-height: 1.55;
+  max-width: 65ch;
+  overflow-wrap: anywhere;
+}
+
+/// Taglia con i puntini dopo N righe
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/// Nascosto alla vista ma letto dagli screen reader
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/// Link senza sottolineatura, colore del testo ereditato o dato
+@mixin plain-link($color: inherit) {
+  color: $color;
+  text-decoration: none;
+}
+
+/// Scorrimento orizzontale senza barra (file di chip, indici)
+@mixin scroll-row {
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar { display: none; }
+}

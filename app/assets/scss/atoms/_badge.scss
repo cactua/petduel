@@ -1,0 +1,22 @@
+@use "../abstracts" as *;
+
+// Atomo: etichetta a pillola (stato, verifica, conteggi)
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  @include pill(3px, 10px);
+  font-size: 12px;
+  font-weight: 900;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--line);
+
+  &--ok { background: color-mix(in srgb, var(--mint) 82%, #000); color: #fff; border: 0; }
+
+  &--wait { background: var(--sun); color: var(--sun-ink); border: 0; }
+
+  &--soft { background: var(--coral-soft); border: 0; }
+
+  &--action { background: var(--action); color: #fff; border: 0; }
+}

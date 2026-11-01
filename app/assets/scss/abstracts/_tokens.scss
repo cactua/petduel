@@ -1,0 +1,86 @@
+// Colori del tema "cuccioli": pastelli morbidi, corallo per le azioni, giallo medaglietta per premi
+// e sfide, rosa cuore per i voti. Una mappa per tema: le variabili CSS si generano da qui (base/_themes).
+$theme-light: (
+  bg: #fff8f1,
+  surface: #fff,
+  ink: #4a2d1e,
+  muted: #87604b,
+  coral: #ff6f61,
+  coral-deep: #e85a4c,
+  coral-soft: #ffe3dc,
+  // Corallo più deciso per i pulsanti con testo bianco: contrasto almeno 4.5:1
+  action: #d2412f,
+  sun: #ffc83d,
+  sun-deep: #e9a400,
+  sun-ink: #4a2d1e,
+  heart: #ff4f6d,
+  heart-soft: #ffe6ea,
+  mint: #1f9e7a,
+  line: #f6e3d4,
+  shadow: rgba(74, 45, 30, .2),
+  glow: rgba(255, 111, 97, .55),
+  blob-1: #ffd9e6,
+  blob-2: #d7f2ff,
+  blob-3: #fff1b8,
+  t-cane: #ffe3b8,
+  t-gatto: #e8ddff,
+  t-coniglio: #ffdce8,
+  t-roditore: #ffe6cf,
+  t-uccello: #d6f5df,
+  t-rettile: #e6f6c6,
+  t-altro: #dceeff,
+);
+
+$theme-dark: (
+  bg: #21171a,
+  surface: #2f2226,
+  ink: #fff0e8,
+  muted: #c8a99a,
+  coral: #ff7f72,
+  coral-deep: #c94c40,
+  coral-soft: #4a2a27,
+  action: #c94c40,
+  sun: #ffd15c,
+  sun-deep: #b98500,
+  heart: #ff6f88,
+  heart-soft: #4a2531,
+  mint: #45c79f,
+  line: #45333a,
+  shadow: rgba(0, 0, 0, .5),
+  glow: rgba(0, 0, 0, .55),
+  blob-1: #3b2431,
+  blob-2: #1f3040,
+  blob-3: #393121,
+  t-cane: #4a3520,
+  t-gatto: #3a3150,
+  t-coniglio: #4a2a36,
+  t-roditore: #4a3424,
+  t-uccello: #213f2c,
+  t-rettile: #34401f,
+  t-altro: #22374a,
+);
+
+$font-display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+$font-body: "Nunito", "Segoe UI", system-ui, sans-serif;
+
+// Raggi e ombre ricorrenti
+$radius-pill: 999px;
+$radius-sm: 14px;
+$radius-md: 18px;
+$radius-lg: 22px;
+$radius-xl: 26px;
+$shadow-card: 0 10px 24px -16px var(--shadow);
+$shadow-flat: 0 2px 0 var(--line);
+
+// Spaziature (multipli di 2)
+$space-1: 4px;
+$space-2: 6px;
+$space-3: 8px;
+$space-4: 10px;
+$space-5: 12px;
+$space-6: 14px;
+$space-7: 18px;
+
+$z-dock: 5;
+$z-header: 30;
+$z-overlay: 100;

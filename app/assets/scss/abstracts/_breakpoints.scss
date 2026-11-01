@@ -1,0 +1,18 @@
+@use "sass:map";
+
+// Punti di rottura: telefono di default, poi tablet/desktop
+$breakpoints: (
+  sm: 520px,
+  md: 760px,
+  lg: 900px,
+);
+
+/// Da questa larghezza in su: @include mq(md) { ... }
+@mixin mq($name) {
+  @media (min-width: map.get($breakpoints, $name)) { @content; }
+}
+
+/// Sotto questa larghezza: @include mq-down(sm) { ... }
+@mixin mq-down($name) {
+  @media (max-width: (map.get($breakpoints, $name) - 1px)) { @content; }
+}

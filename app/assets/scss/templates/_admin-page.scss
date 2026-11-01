@@ -1,0 +1,25 @@
+@use "../abstracts" as *;
+
+// Template condiviso dalle pagine del pannello admin: intestazione, testo introduttivo,
+// griglia di schede da rivedere e messaggi. Ogni pagina aggiunge il proprio blocco BEM.
+.admin-page {
+  @include stack($space-4);
+
+  &__header { display: flex; flex-wrap: wrap; align-items: center; gap: $space-4; }
+
+  &__title { font-size: 24px; margin-right: auto; }
+
+  &__heading { font-size: 18px; margin-top: $space-2; }
+
+  &__lead { margin: 0; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+  &__list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: $space-5; }
+
+  &__item { @include card(16px, 24px); @include stack($space-3); min-width: 0; }
+
+  &__actions { display: flex; gap: $space-2; margin-top: auto; }
+
+  &__empty { color: var(--muted); margin: 0; }
+
+  &__notice { color: var(--mint); font-weight: 800; margin: 0; }
+}

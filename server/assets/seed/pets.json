@@ -1,0 +1,935 @@
+[
+  {
+    "name": "Biscotto",
+    "species": "cane",
+    "breed": "Meticcio",
+    "city": "Torino",
+    "photos": [
+      {
+        "file": "commons-1.webp",
+        "credit": "Jakub Hałun · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:20160327_pies_nierasowy_3693.jpg"
+      },
+      {
+        "file": "commons-2.webp",
+        "credit": "Jakub Hałun · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:20160327_pies_nierasowy_3691.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Nala",
+    "species": "cane",
+    "breed": "Incrocio husky",
+    "city": "Trento",
+    "photos": [
+      {
+        "file": "commons-3.webp",
+        "credit": "Richard Bartz, Munich aka Makro Freak · CC BY-SA 2.5 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Keeshond_Siberian_Husky_crossbreed_puppy.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Bruno",
+    "species": "cane",
+    "breed": "Labrador",
+    "city": "Verona",
+    "photos": [
+      {
+        "file": "commons-4.webp",
+        "credit": "Dktue · CC0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Portrait_of_a_labrador_retriever.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Sole",
+    "species": "cane",
+    "breed": "Golden retriever",
+    "city": "Bologna",
+    "photos": [
+      {
+        "file": "commons-5.webp",
+        "credit": "Dietmar Rabich · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:D%C3%BClmen,_Hausd%C3%BClmen,_Golden_Retriever_--_2022_--_5530.jpg"
+      },
+      {
+        "file": "commons-6.webp",
+        "credit": "Dietmar Rabich · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:D%C3%BClmen,_Hausd%C3%BClmen,_Golden_Retriever_--_2022_--_6055.jpg"
+      },
+      {
+        "file": "commons-7.webp",
+        "credit": "Dietmar Rabich · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:D%C3%BClmen,_Hausd%C3%BClmen,_Golden_Retriever_--_2022_--_5767.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Milù",
+    "species": "cane",
+    "breed": "Maltipoo",
+    "city": "Roma",
+    "photos": [
+      {
+        "file": "commons-8.webp",
+        "credit": "Rhododendrites · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Maltipoo_(95574).jpg"
+      }
+    ]
+  },
+  {
+    "name": "Fiocco",
+    "species": "cane",
+    "breed": "West Highland terrier",
+    "city": "Bergamo",
+    "photos": [
+      {
+        "file": "commons-9.webp",
+        "credit": "Dominic Nelson · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:West_Highland_White_Terrier_face_portrait_May_2023.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Riccio",
+    "species": "cane",
+    "breed": "Barboncino",
+    "city": "Firenze",
+    "photos": [
+      {
+        "file": "commons-10.webp",
+        "credit": "This Photo was taken by Timothy A. Gonsalves. Feel free to use my photos, but please mention me as the author. I would m · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Tapsi_Portrait_Balamuri_Coorg_Feb24_D72_25969.jpg"
+      },
+      {
+        "file": "commons-11.webp",
+        "credit": "This Photo was taken by Timothy A. Gonsalves. Feel free to use my photos, but please mention me as the author. I would m · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Head_Miniature_Poodle_Mysore_May24_A7CR_00091.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Neve",
+    "species": "cane",
+    "breed": "Pastore svizzero",
+    "city": "Aosta",
+    "photos": [
+      {
+        "file": "commons-12.webp",
+        "credit": "Ildar Sagdejev (Specious) · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:2008-07-11_White_German_Shepherd_pup_chilling_at_the_Coker_Arboretum.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Ambra",
+    "species": "cane",
+    "breed": "Golden retriever",
+    "city": "Padova",
+    "photos": [
+      {
+        "file": "commons-13.webp",
+        "credit": "MichaelMcPhee · CC BY 3.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Callie_the_golden_retriever_puppy.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Barbarella",
+    "species": "cane",
+    "breed": "Cane nudo cinese",
+    "city": "Milano",
+    "photos": [
+      {
+        "file": "commons-14.webp",
+        "credit": "Rhododendrites · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Barbarella_the_Chinese_crested_puppy_(12929).jpg"
+      }
+    ]
+  },
+  {
+    "name": "Pongo",
+    "species": "cane",
+    "breed": "Meticcio",
+    "city": "Lecce",
+    "photos": [
+      {
+        "file": "commons-15.webp",
+        "credit": "Rhododendrites · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Puppy_with_a_blow-up_collar_(53254).jpg"
+      }
+    ]
+  },
+  {
+    "name": "Tramonto",
+    "species": "cane",
+    "breed": "Meticcio",
+    "city": "Cagliari",
+    "photos": [
+      {
+        "file": "commons-16.webp",
+        "credit": "Basile Morin · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Contre-jour_photograph_of_a_standing_puppy_at_sunset_with_colorful_sky_in_Don_Det_Laos.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Grigio",
+    "species": "gatto",
+    "breed": "Certosino",
+    "city": "Genova",
+    "photos": [
+      {
+        "file": "commons-17.webp",
+        "credit": "Stephanemartin · CC BY-SA 3.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Chartreux-cat-edouard-marie.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Tigro",
+    "species": "gatto",
+    "breed": "Europeo tigrato",
+    "city": "Bari",
+    "photos": [
+      {
+        "file": "commons-18.webp",
+        "credit": "Alvesgaspar · CC BY-SA 3.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Cat_March_2010-1.jpg"
+      },
+      {
+        "file": "commons-19.webp",
+        "credit": "Alvesgaspar · CC BY-SA 3.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Cat_August_2010-2.jpg"
+      },
+      {
+        "file": "commons-20.webp",
+        "credit": "Alvesgaspar · CC BY-SA 3.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Cat_August_2010-3.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Pepe",
+    "species": "gatto",
+    "breed": "Bianco e nero",
+    "city": "Napoli",
+    "photos": [
+      {
+        "file": "commons-21.webp",
+        "credit": "George Chernilevsky · Public domain · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Domestic_cat_2011_G02.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Mascherina",
+    "species": "gatto",
+    "breed": "Bianco e nero",
+    "city": "Palermo",
+    "photos": [
+      {
+        "file": "commons-22.webp",
+        "credit": "Carlos Valenzuela · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Cat_front2017.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Naro",
+    "species": "gatto",
+    "breed": "Incrocio siamese",
+    "city": "Pisa",
+    "photos": [
+      {
+        "file": "commons-23.webp",
+        "credit": "Amélie Tsaag Valren · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Naro,_blue-eyed_cross-siamese_cat,_at_Josselin_04.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Zar",
+    "species": "gatto",
+    "breed": "Siberiano",
+    "city": "Udine",
+    "photos": [
+      {
+        "file": "commons-24.webp",
+        "credit": "Tadeáš Bednarz · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Siberian_black_tabby_blotched_cat_04.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Dobby",
+    "species": "gatto",
+    "breed": "Sphynx",
+    "city": "Milano",
+    "photos": [
+      {
+        "file": "commons-25.webp",
+        "credit": "Dmitry Makeev · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Sphynx_-_studio_portrait_photographs_of_cats.jpg"
+      },
+      {
+        "file": "commons-26.webp",
+        "credit": "Dmitry Makeev · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:1_adult_cat_Sphynx._img_047.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Zucca",
+    "species": "gatto",
+    "breed": "Rosso tigrato",
+    "city": "Modena",
+    "photos": [
+      {
+        "file": "commons-27.webp",
+        "credit": "Etaped · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Cautious_Tabby_Red_Cat.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Luna",
+    "species": "gatto",
+    "breed": "Europeo grigio",
+    "city": "Parma",
+    "photos": [
+      {
+        "file": "commons-28.webp",
+        "credit": "Jules Verne Times Two · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Cat,_Chora,_Naxos,_Greece_(approx._GPS_location)_julesvernex2.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Oreo",
+    "species": "gatto",
+    "breed": "Bianco e nero",
+    "city": "Ancona",
+    "photos": [
+      {
+        "file": "commons-29.webp",
+        "credit": "Kızıl · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Black_and_white_cat%E2%80%93IMG_6332_02.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Cuoricino",
+    "species": "gatto",
+    "breed": "Bianco e nero",
+    "city": "Siracusa",
+    "photos": [
+      {
+        "file": "commons-30.webp",
+        "credit": "Petro Stelte · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:BLACK-WHITE-CAT-SITIA-CRETE-GREECE.jpg"
+      },
+      {
+        "file": "commons-31.webp",
+        "credit": "Petro Stelte · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Black-White-Cat-Sitia-Crete-5.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Macchia",
+    "species": "coniglio",
+    "breed": "Coniglio pezzato",
+    "city": "Vicenza",
+    "photos": [
+      {
+        "file": "commons-32.webp",
+        "credit": "Paul Korecky · CC BY-SA 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:2017-08-19_AT_Wien_13_Hietzing,_Tiergarten_Sch%C3%B6nbrunn,_Oryctolagus_cuniculus_f._domesticus_(48250983416).jpg"
+      }
+    ]
+  },
+  {
+    "name": "Caramella",
+    "species": "coniglio",
+    "breed": "Coniglio fulvo",
+    "city": "Rimini",
+    "photos": [
+      {
+        "file": "commons-33.webp",
+        "credit": "Paul Korecky · CC BY-SA 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:2017-08-19_AT_Wien_13_Hietzing,_Tiergarten_Sch%C3%B6nbrunn,_Oryctolagus_cuniculus_f._domesticus_(48197613676).jpg"
+      }
+    ]
+  },
+  {
+    "name": "Nuvola",
+    "species": "coniglio",
+    "breed": "Coniglio grigio",
+    "city": "Brescia",
+    "photos": [
+      {
+        "file": "commons-34.webp",
+        "credit": "Paul Korecky · CC BY-SA 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:2018-06-22_AT_Wien_13_Hietzing,_Tiergarten_Sch%C3%B6nbrunn,_Oryctolagus_cuniculus_f._domesticus_(49019471113).jpg"
+      }
+    ]
+  },
+  {
+    "name": "Batuffolo",
+    "species": "coniglio",
+    "breed": "Testa di leone",
+    "city": "Como",
+    "photos": [
+      {
+        "file": "commons-35.webp",
+        "credit": "Kiraface · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Lionhead_Rabbit_with_black_nose.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Cocco",
+    "species": "coniglio",
+    "breed": "Coniglio nano",
+    "city": "Roma",
+    "photos": [
+      {
+        "file": "commons-36.webp",
+        "credit": "KittensMittens2 · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Coconut_the_rabbit_09.jpg"
+      },
+      {
+        "file": "commons-37.webp",
+        "credit": "KittensMittens2 · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Coconut_the_rabbit_07.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Ombra",
+    "species": "coniglio",
+    "breed": "Orecchie lunghe",
+    "city": "Livorno",
+    "photos": [
+      {
+        "file": "commons-38.webp",
+        "credit": "Sunandshade · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Domestic_rabbit_with_large_ears.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Pallino",
+    "species": "coniglio",
+    "breed": "Coniglio pezzato",
+    "city": "Treviso",
+    "photos": [
+      {
+        "file": "commons-39.webp",
+        "credit": "Friedrich Haag · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Heimtier_004_2023_08_26.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Domino",
+    "species": "coniglio",
+    "breed": "Bianco e nero",
+    "city": "Salerno",
+    "photos": [
+      {
+        "file": "commons-40.webp",
+        "credit": "Paul Korecky · CC BY-SA 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:2017-08-19_AT_Wien_13_Hietzing,_Tiergarten_Sch%C3%B6nbrunn,_Oryctolagus_cuniculus_f._domesticus_(48301649691).jpg"
+      }
+    ]
+  },
+  {
+    "name": "Biscottina",
+    "species": "coniglio",
+    "breed": "Coniglio rosso",
+    "city": "Pescara",
+    "photos": [
+      {
+        "file": "commons-41.webp",
+        "credit": "KittensMittens2 · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Trix_the_rabbit.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Cioccolata",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Torino",
+    "photos": [
+      {
+        "file": "commons-42.webp",
+        "credit": "Rex tremendae majestatis · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Cavia_porcellus_on_bed.jpg"
+      },
+      {
+        "file": "commons-43.webp",
+        "credit": "Rex tremendae majestatis · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Cavia_porcellus_eating_parsley.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Pirata",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Milano",
+    "photos": [
+      {
+        "file": "commons-44.webp",
+        "credit": "Rex tremendae majestatis · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Guinea_pig_pet_3.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Arancino",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Catania",
+    "photos": [
+      {
+        "file": "commons-45.webp",
+        "credit": "Gzen92 · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Cochon_d%27Inde_(Cavia_porcellus)_(2).jpg"
+      }
+    ]
+  },
+  {
+    "name": "Arya",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Bologna",
+    "photos": [
+      {
+        "file": "commons-46.webp",
+        "credit": "Aris riyanto · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:%22%2Barya%2B%22_Cavia_porcellus_-_tikus_belanda_01.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Tricolore",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Reggio Emilia",
+    "photos": [
+      {
+        "file": "commons-47.webp",
+        "credit": "Gzen92 · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Cochon_d%27Inde_(Cavia_porcellus)_(3).jpg"
+      }
+    ]
+  },
+  {
+    "name": "Rossella",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Lucca",
+    "photos": [
+      {
+        "file": "commons-48.webp",
+        "credit": "NasserHalaweh · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Caviidae_Cavia_porcellus_1.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Gemelli",
+    "species": "roditore",
+    "breed": "Porcellini d'India",
+    "city": "Verona",
+    "photos": [
+      {
+        "file": "commons-49.webp",
+        "credit": "Greyzxq · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Two_guinea_pigs_eating_dandelion_leaves.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Panna",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Trieste",
+    "photos": [
+      {
+        "file": "commons-50.webp",
+        "credit": "ArtemisiaGentileschiFan · CC0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Guinea_pig_with_a_tonsure.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Celeste",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Venezia",
+    "photos": [
+      {
+        "file": "commons-51.webp",
+        "credit": "Alana Elliott · CC BY 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Budgerigar_(Melopsittacus_undulatus)_-4.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Azzurro",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Ferrara",
+    "photos": [
+      {
+        "file": "commons-52.webp",
+        "credit": "Anne Hornyak from USA · CC BY-SA 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Melopsittacus_undulatus_-blue_-pet-8.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Limone",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Sorrento",
+    "photos": [
+      {
+        "file": "commons-53.webp",
+        "credit": "Paul Cochrum · CC BY 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Melopsittacus_undulatus_-_pet_female_recessive_pied_mutation_1.jpg"
+      },
+      {
+        "file": "commons-54.webp",
+        "credit": "Paul Cochrum · CC BY 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Melopsittacus_undulatus_-_pet_female_recessive_pied_mutation_2.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Trio",
+    "species": "uccello",
+    "breed": "Pappagallini ondulati",
+    "city": "Mantova",
+    "photos": [
+      {
+        "file": "commons-55.webp",
+        "credit": "mary bernadette de vera · CC BY 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Melopsittacus_undulatus_-a_family_of_five_pet_Budgerigars-8a.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Blu",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Novara",
+    "photos": [
+      {
+        "file": "commons-56.webp",
+        "credit": "Anne Hornyak from Griffith, IN, USA · CC BY-SA 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Melopsittacus_undulatus_-pet_in_cage_-male-8a.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Kiwi",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Napoli",
+    "photos": [
+      {
+        "file": "commons-57.webp",
+        "credit": "Noshin R from 405 · CC BY 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Melopsittacus_undulatus_-pet_perching_on_finger-8a.jpg"
+      },
+      {
+        "file": "commons-58.webp",
+        "credit": "Noshin R from 405 · CC BY 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Melopsittacus_undulatus_-pet_perching_on_finger-8a_(1).jpg"
+      }
+    ]
+  },
+  {
+    "name": "Banana",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Taranto",
+    "photos": [
+      {
+        "file": "commons-59.webp",
+        "credit": "BudgieGuy16 · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:My_pet_budgerigar_sitting_on_my_shoulder.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Cielo",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Imperia",
+    "photos": [
+      {
+        "file": "commons-60.webp",
+        "credit": "Shrawani.31 · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Pet_lovebirds.png"
+      }
+    ]
+  },
+  {
+    "name": "Mirtillo",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Matera",
+    "photos": [
+      {
+        "file": "commons-61.webp",
+        "credit": "Akash Khan78 · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Budgerigar_Cute_Birds.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Perla",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Siena",
+    "photos": [
+      {
+        "file": "commons-62.webp",
+        "credit": "Chihiroxx3 · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Male_blue_recessive_pied_budgerigar_perched_on_hand.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Ciuffo",
+    "species": "uccello",
+    "breed": "Calopsite",
+    "city": "Pisa",
+    "photos": [
+      {
+        "file": "commons-63.webp",
+        "credit": "Jonrev at English Wikipedia · Public domain · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Nymphicus_hollandicus_-_pet_ADMpied.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Tigrotto",
+    "species": "rettile",
+    "breed": "Geco leopardino",
+    "city": "Lecce",
+    "photos": [
+      {
+        "file": "commons-64.webp",
+        "credit": "Psyon · CC BY 3.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Juvenile-leopard-gecko-2.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Leopoldo",
+    "species": "rettile",
+    "breed": "Geco leopardino",
+    "city": "Varese",
+    "photos": [
+      {
+        "file": "commons-65.webp",
+        "credit": "Christian von Faber-Castell · CC BY 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:EUBLEPHARIS-MACULARIUS_Leopard-Gecko_Leopardgecko_201705276007.jpg"
+      },
+      {
+        "file": "commons-66.webp",
+        "credit": "Christian von Faber-Castell · CC BY 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:EUBLEPHARIS-MACULARIUS_Leopard-Gecko_Leopardgecko_201705276003.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Occhione",
+    "species": "rettile",
+    "breed": "Geco leopardino",
+    "city": "Prato",
+    "photos": [
+      {
+        "file": "commons-67.webp",
+        "credit": "ProtoBit · CC0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Leopard_gecko_wink.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Mango",
+    "species": "rettile",
+    "breed": "Geco leopardino",
+    "city": "Arezzo",
+    "photos": [
+      {
+        "file": "commons-68.webp",
+        "credit": "Fungus Guy · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Leopard_gecko_(Eublepharis_macularius),_Entomica_2.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Gelato",
+    "species": "rettile",
+    "breed": "Geco leopardino",
+    "city": "Rovigo",
+    "photos": [
+      {
+        "file": "commons-69.webp",
+        "credit": "Swaggyswimmer · CC0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Leopard_Gecko.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Drago",
+    "species": "rettile",
+    "breed": "Pogona",
+    "city": "Latina",
+    "photos": [
+      {
+        "file": "commons-70.webp",
+        "credit": "McSpuddles · CC BY-SA 3.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Pet_Bearded_Dragon.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Spike",
+    "species": "rettile",
+    "breed": "Pogona",
+    "city": "Londra",
+    "photos": [
+      {
+        "file": "commons-71.webp",
+        "credit": "Emőke Dénes · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Pogona_vitticeps_-_London_1.jpg"
+      },
+      {
+        "file": "commons-72.webp",
+        "credit": "Emőke Dénes · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Pogona_vitticeps_-_London_2.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Sabbia",
+    "species": "rettile",
+    "breed": "Pogona",
+    "city": "Cagliari",
+    "photos": [
+      {
+        "file": "commons-73.webp",
+        "credit": "Emőke Dénes · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Pogona_vitticeps_-_London_3.jpg"
+      },
+      {
+        "file": "commons-74.webp",
+        "credit": "Emőke Dénes · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Pogona_vitticeps_-_London_4.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Furetto",
+    "species": "altro",
+    "breed": "Furetto",
+    "city": "Torino",
+    "photos": [
+      {
+        "file": "commons-75.webp",
+        "credit": "KoS · CC BY-SA 3.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Salon_agriculture_2009_-_furet_recentre.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Birba",
+    "species": "altro",
+    "breed": "Furetto",
+    "city": "Milano",
+    "photos": [
+      {
+        "file": "commons-76.webp",
+        "credit": "roy maloon · CC BY 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:A_ferret.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Fantasma",
+    "species": "altro",
+    "breed": "Furetto albino",
+    "city": "Bolzano",
+    "photos": [
+      {
+        "file": "commons-77.webp",
+        "credit": "Electo84 · CC0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:White_Ferret_with_pink_snout.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Zorro",
+    "species": "altro",
+    "breed": "Furetto",
+    "city": "Cremona",
+    "photos": [
+      {
+        "file": "commons-78.webp",
+        "credit": "Anthony O'Neil · CC BY-SA 2.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Pet_ferret_-_geograph.org.uk_-_8007550.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Spillo",
+    "species": "altro",
+    "breed": "Riccio africano",
+    "city": "Trento",
+    "photos": [
+      {
+        "file": "commons-79.webp",
+        "credit": "CainieB · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Hedgehog_in_Snow.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Pungolo",
+    "species": "altro",
+    "breed": "Riccio africano",
+    "city": "Granada",
+    "photos": [
+      {
+        "file": "commons-80.webp",
+        "credit": "Nacaru · CC BY-SA 4.0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Atelerix_albiventris_in_Spain.jpg"
+      }
+    ]
+  },
+  {
+    "name": "Castagna",
+    "species": "altro",
+    "breed": "Riccio africano",
+    "city": "Avellino",
+    "photos": [
+      {
+        "file": "commons-81.webp",
+        "credit": "Jason Graham · CC0 · Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Atelerix_albiventris_316800096.jpg"
+      }
+    ]
+  }
+]

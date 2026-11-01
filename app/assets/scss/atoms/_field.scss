@@ -1,0 +1,30 @@
+@use "../abstracts" as *;
+
+// Atomi dei moduli: etichetta, campo, aiuto ed errore
+.label {
+  font-weight: 700;
+  font-size: 14px;
+
+  small { font-weight: 400; color: var(--muted); }
+}
+
+.input {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 16px;
+  border: 2px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+
+  @at-root textarea#{&} { resize: vertical; }
+}
+
+.field {
+  @include stack($space-2);
+  min-width: 0;
+}
+
+.hint { margin: 0; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+.error { margin: 0; color: var(--coral-deep); font-weight: 700; }

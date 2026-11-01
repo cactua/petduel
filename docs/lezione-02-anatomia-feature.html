@@ -1,0 +1,386 @@
+<title>PetDuel · Lezione 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: una colonna di lettura da manuale, con capitoli numerati (sono davvero una sequenza) e "schede file" in stile PetDuel */
+:root {
+  --bg: #fff8f1;
+  --surface: #ffffff;
+  --ink: #4a2d1e;
+  --muted: #87604b;
+  --line: #f1dccb;
+  --coral: #d2412f;
+  --coral-soft: #ffe3dc;
+  --sun: #ffe9a8;
+  --sun-ink: #4a2d1e;
+  --mint: #17785c;
+  --mint-soft: #dcf3ea;
+  --code-bg: #fdf1e6;
+  --code-ink: #5b3422;
+  --display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Nunito", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #21171a; --surface: #2f2226; --ink: #fff0e8; --muted: #cdb0a1; --line: #45333a;
+    --coral: #ff8a7d; --coral-soft: #4a2a27; --sun: #4a3d1c; --sun-ink: #ffe9b0;
+    --mint: #5fd3ad; --mint-soft: #1d3a31; --code-bg: #2a1d21; --code-ink: #ffd9c7;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #21171a; --surface: #2f2226; --ink: #fff0e8; --muted: #cdb0a1; --line: #45333a;
+  --coral: #ff8a7d; --coral-soft: #4a2a27; --sun: #4a3d1c; --sun-ink: #ffe9b0;
+  --mint: #5fd3ad; --mint-soft: #1d3a31; --code-bg: #2a1d21; --code-ink: #ffd9c7;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.62;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+}
+.wrap { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 600; line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(34px, 7vw, 48px); font-weight: 700; }
+h2 { font-size: 28px; padding-top: 18px; display: flex; gap: 12px; align-items: baseline; }
+h2 .n { font-size: 15px; font-family: var(--mono); color: var(--coral); background: var(--coral-soft); padding: 3px 9px; border-radius: 999px; flex-shrink: 0; position: relative; top: -4px; }
+h3 { font-size: 21px; padding-top: 6px; }
+p { margin: 0; max-width: 66ch; }
+a { color: var(--coral); font-weight: 700; }
+code { font-family: var(--mono); font-size: .86em; background: var(--code-bg); color: var(--code-ink); padding: 1px 6px; border-radius: 6px; overflow-wrap: anywhere; }
+pre { margin: 0; background: var(--code-bg); color: var(--code-ink); border-radius: 16px; padding: 14px 16px; overflow-x: auto; font-family: var(--mono); font-size: 13.5px; line-height: 1.55; border: 1px solid var(--line); }
+pre code { background: none; padding: 0; font-size: inherit; overflow-wrap: normal; }
+pre .c { color: var(--muted); }
+ul, ol { margin: 0; padding-left: 22px; max-width: 66ch; display: flex; flex-direction: column; gap: 4px; }
+strong { font-weight: 800; }
+
+.lead { font-size: 19px; color: var(--muted); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 13px; font-weight: 800; padding: 4px 11px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+
+/* Indice */
+.toc { background: var(--surface); border-radius: 24px; padding: 18px 20px; border: 1px solid var(--line); }
+.toc h4 { font-size: 15px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; font-family: var(--body); font-weight: 800; }
+.toc ol { gap: 2px; }
+.toc a { text-decoration: none; color: var(--ink); font-weight: 700; }
+.toc a:hover, .toc a:focus-visible { color: var(--coral); }
+
+/* Scheda di un file: percorso in mono, poi la spiegazione */
+.file { background: var(--surface); border-radius: 20px; border: 1px solid var(--line); padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.file > .path { font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--coral); overflow-wrap: anywhere; }
+.file > .path .kind { font-family: var(--body); font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-left: 6px; }
+.fn { border-top: 1px dashed var(--line); padding-top: 9px; display: flex; flex-direction: column; gap: 4px; }
+.fn > code:first-child { align-self: flex-start; font-weight: 600; }
+
+/* Box didattici */
+.note { border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+.note b.t { font-family: var(--display); font-weight: 600; font-size: 17px; }
+.nuxt { background: var(--mint-soft); }
+.nuxt b.t { color: var(--mint); }
+.vue { background: var(--sun); color: var(--sun-ink); }
+.why { background: var(--coral-soft); }
+
+/* Tabelle (rotte, cartelle) */
+.table { overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); font-weight: 800; }
+tr:last-child td { border-bottom: 0; }
+td code { white-space: nowrap; }
+
+.tree { font-size: 13px; }
+.mermaid { background: var(--surface); border-radius: 16px; border: 1px solid var(--line); padding: 12px; overflow-x: auto; }
+.steps { counter-reset: s; list-style: none; padding: 0; gap: 10px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 30px 1fr; gap: 10px; }
+.steps li::before { content: counter(s); width: 28px; height: 28px; border-radius: 50%; background: var(--coral); color: #fff; font-weight: 800; font-size: 14px; display: grid; place-items: center; margin-top: 2px; }
+.steps li > div { min-width: 0; }
+footer { color: var(--muted); font-size: 14px; padding-top: 20px; border-top: 1px solid var(--line); }
+:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; border-radius: 4px; }
+/* Quiz: la risposta si apre al tocco */
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px 16px; }
+details summary { cursor: pointer; font-weight: 800; }
+details[open] summary { margin-bottom: 8px; }
+details p + p { margin-top: 6px; }
+.check { list-style: none; padding: 0; }
+.check li::before { content: "☐ "; color: var(--coral); font-weight: 800; }
+</style>
+
+<div class="wrap">
+
+<header style="display:flex;flex-direction:column;gap:12px">
+  <div class="meta"><span class="chip">Lezione 2</span><span class="chip">Caso reale</span><span class="chip">~25 minuti</span></div>
+  <h1>Anatomia di una feature</h1>
+  <p class="lead">Nella lezione 1 abbiamo visto i pezzi uno per uno. Ora li vediamo lavorare insieme. Seguiamo una sola checkbox, "Tienilo fuori da classifiche e sfide", dal clic nel browser fino al database e ritorno. È la feature che abbiamo appena aggiunto, quindi tutto il codice che vedi qui è vero.</p>
+</header>
+
+<nav class="toc" aria-label="Indice">
+  <h4>Indice</h4>
+  <ol>
+    <li><a href="#viaggio">Il viaggio in una figura</a></li>
+    <li><a href="#db">Passo 1 · Il database</a></li>
+    <li><a href="#contratto">Passo 2 · Il contratto in shared/</a></li>
+    <li><a href="#form">Passo 3 · Il form nel componente</a></li>
+    <li><a href="#endpoint">Passo 4 · L'endpoint</a></li>
+    <li><a href="#filtro">Passo 5 · Un filtro riusabile</a></li>
+    <li><a href="#difesa">Passo 6 · Difesa su due livelli</a></li>
+    <li><a href="#ritorno">Passo 7 · Il ritorno in pagina</a></li>
+    <li><a href="#bordi">I casi limite</a></li>
+    <li><a href="#errori">Due errori di TypeScript, spiegati</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#esercizio">Esercizio: rifallo tu</a></li>
+  </ol>
+</nav>
+
+<!-- 1 -->
+<h2 id="viaggio"><span class="n">1</span>Il viaggio in una figura</h2>
+<p>Una feature "completa" in un'app Nuxt attraversa quasi sempre gli stessi strati. Quando ne aggiungi una, conviene percorrerli in quest'ordine: dal basso (dove vivono i dati) verso l'alto (dove li vede l'utente).</p>
+<pre class="mermaid">
+flowchart TD
+  A["☑ Checkbox<br/>AdoptionCard.vue"] -->|v-model| B["form reattivo"]
+  B -->|"Zod safeParse (browser)"| C["$fetch PUT<br/>/api/pets/133/adoption"]
+  C --> D["adoption.put.ts<br/>(Nitro)"]
+  D -->|"requireShelter + Zod (server)"| E["Drizzle update"]
+  E --> F[("PGlite<br/>pets.hide_from_rankings")]
+  D -->|"{ ok: true }"| G["emit('changed')"]
+  G --> H["refresh() di useFetch"]
+  H --> I["GET /api/pets/133"]
+  I --> J["loadAdoptions()<br/>adoptionInfo.hideFromRankings"]
+  J --> A
+</pre>
+<div class="note nuxt"><b class="t">L'idea chiave</b><p>In Nuxt client e server stanno nello stesso progetto, ma restano <strong>due programmi diversi</strong> che si parlano solo via HTTP. La cartella <code>shared/</code> è il "contratto" che entrambi leggono, così non possono disallinearsi.</p></div>
+
+<!-- 2 -->
+<h2 id="db"><span class="n">2</span>Passo 1 · Il database</h2>
+<p>Prima di tutto la colonna. In PetDuel una colonna nuova si scrive in <strong>due posti</strong> dello stesso file:</p>
+<div class="file">
+  <div class="path">server/db/schema.ts <span class="kind">Drizzle</span></div>
+<pre><code><span class="c">// 1. La descrizione per TypeScript e per le query di Drizzle</span>
+hideFromRankings: boolean('hide_from_rankings').notNull().default(false),
+
+<span class="c">// 2. L'SQL che crea davvero la colonna, dentro CREATE_TABLES_SQL</span>
+ALTER TABLE pets ADD COLUMN IF NOT EXISTS hide_from_rankings boolean NOT NULL DEFAULT false;</code></pre>
+  <div class="fn"><p><strong>Perché due volte?</strong> La riga 1 non tocca il database: dice solo a Drizzle "esiste questa colonna, è un booleano". Così <code>pets.hideFromRankings</code> ha il tipo giusto in tutto il codice. La riga 2 è quella che la crea.</p></div>
+  <div class="fn"><p><strong>Perché <code>IF NOT EXISTS</code>?</strong> <code>useDb()</code> in <code>server/utils/db.ts</code> esegue tutto <code>CREATE_TABLES_SQL</code> a ogni avvio del server. Il database esistente ha già i tuoi pet. <code>IF NOT EXISTS</code> rende l'istruzione "idempotente": la prima volta aggiunge la colonna, le volte dopo non fa nulla. È una migrazione fatta a mano, semplice ma efficace per un progetto piccolo.</p></div>
+  <div class="fn"><p><strong>Perché <code>DEFAULT false</code>?</strong> I pet già presenti ricevono subito un valore. Senza default, <code>NOT NULL</code> fallirebbe sulle righe esistenti.</p></div>
+  <div class="fn"><p><strong>Due nomi:</strong> nel database si usa <code>hide_from_rankings</code> (snake_case, la convenzione SQL), in TypeScript <code>hideFromRankings</code> (camelCase). Drizzle traduce. Nelle query SQL scritte a mano vedrai il primo, in quelle Drizzle il secondo.</p></div>
+</div>
+<pre><code><span class="c">// server/utils/db.ts: il trucco del "una volta sola"</span>
+export async function useDb() {
+  ready ??= (async () => {
+    await client.exec(schema.CREATE_TABLES_SQL)
+    ...
+  })()
+  await ready
+  return db
+}</code></pre>
+<p><code>??=</code> assegna solo se <code>ready</code> è ancora vuoto. La prima chiamata avvia la preparazione; le altre, anche se arrivano nello stesso istante, aspettano la stessa Promise invece di rifarla.</p>
+
+<!-- 3 -->
+<h2 id="contratto"><span class="n">3</span>Passo 2 · Il contratto in shared/</h2>
+<div class="file">
+  <div class="path">shared/models.ts <span class="kind">Zod</span></div>
+<pre><code>export const adoptionFieldsSchema = z.object({
+  status: z.enum(ADOPTION_STATUS).nullable(),
+  sex: z.enum(PET_SEX).nullable().default(null),
+  ...
+  hideFromRankings: z.boolean().default(false),
+})
+export type AdoptionFields = z.infer&lt;typeof adoptionFieldsSchema&gt;</code></pre>
+  <div class="fn"><p><strong>Uno schema, tre usi.</strong> Il componente lo usa per controllare il form prima di inviarlo. L'endpoint lo usa per rifiutare dati sbagliati. <code>z.infer</code> ne ricava il tipo TypeScript <code>AdoptionFields</code>, così il form reattivo è tipizzato senza scrivere un'interfaccia a parte.</p></div>
+  <div class="fn"><p><strong><code>.default(false)</code></strong> rende il campo facoltativo in ingresso. Una vecchia versione della pagina, ancora aperta in qualche browser, che non manda <code>hideFromRankings</code> continua a funzionare. Aggiungere campi con un default è il modo di cambiare un'API senza rompere chi la usa.</p></div>
+</div>
+<div class="note vue"><b class="t">Da Vue a Nuxt</b><p>In un progetto Vue classico questo file lo dovresti duplicare nel backend, o pubblicarlo come pacchetto. Nuxt 4 dà alla cartella <code>shared/</code> l'alias <code>#shared</code>, importabile sia da <code>app/</code> sia da <code>server/</code>. Unica regola: lì dentro niente codice che funziona solo nel browser o solo su Node.</p></div>
+
+<!-- 4 -->
+<h2 id="form"><span class="n">4</span>Passo 3 · Il form nel componente</h2>
+<div class="file">
+  <div class="path">app/components/AdoptionCard.vue <span class="kind">componente</span></div>
+<pre><code>const form = reactive&lt;AdoptionFields&gt;({ status: null, ..., hideFromRankings: false })
+
+function startEdit() {
+  const a = info.value
+  Object.assign(form, a
+    ? { status: a.status, ..., hideFromRankings: a.hideFromRankings }
+    : { status: 'available', ..., hideFromRankings: false })
+  editing.value = true
+}</code></pre>
+<pre><code>&lt;label v-if="form.status" class="check"&gt;
+  &lt;input v-model="form.hideFromRankings" type="checkbox"&gt;
+  &lt;span&gt;&lt;b&gt;Tienilo fuori da classifiche e sfide&lt;/b&gt;...&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+  <div class="fn"><p><strong>Il form è una copia.</strong> <code>startEdit</code> copia i dati salvati dentro <code>form</code>. Se modificassi direttamente <code>props.pet</code>, cliccare "Annulla" non annullerebbe nulla, e Vue ti avviserebbe che le props non si modificano. La copia si butta via con "Annulla" o si invia con "Salva".</p></div>
+  <div class="fn"><p><strong><code>Object.assign</code> e non <code>form = {...}</code>:</strong> <code>form</code> è un <code>reactive</code>. Se lo riassegni, il template resta collegato all'oggetto vecchio. Sovrascrivere le proprietà mantiene lo stesso oggetto reattivo.</p></div>
+  <div class="fn"><p><strong><code>v-if="form.status"</code>:</strong> se lo stato è "Nessuna scheda", l'opzione non ha senso e la casella sparisce. È solo un aiuto per l'utente: la regola vera la impone il server (passo 4).</p></div>
+</div>
+
+<!-- 5 -->
+<h2 id="endpoint"><span class="n">5</span>Passo 4 · L'endpoint</h2>
+<div class="file">
+  <div class="path">server/api/pets/[id]/adoption.put.ts <span class="kind">Nitro</span></div>
+<pre><code>const paramsSchema = z.object({ id: z.coerce.number().int().positive() })
+
+export default defineEventHandler(async (event) =&gt; {
+  const { user } = await requireShelter(event)
+  const { id } = await getValidatedRouterParams(event, paramsSchema.parse)
+  const parsed = adoptionFieldsSchema.safeParse(await readBody(event))
+  if (!parsed.success) throw createError({ statusCode: 400, statusMessage: ... })
+
+  const db = await useDb()
+  const { status, ...fields } = parsed.data
+  <span class="c">// Senza scheda di adozione l'opzione non ha senso: il pet torna in gara</span>
+  const [pet] = await db.update(pets)
+    .set({ adoption: status, ...fields, hideFromRankings: status !== null &amp;&amp; fields.hideFromRankings })
+    .where(and(eq(pets.id, id), eq(pets.ownerId, user.id)))
+    .returning({ id: pets.id })
+  if (!pet) throw createError({ statusCode: 404, statusMessage: 'Pet non trovato' })
+  return { ok: true }
+})</code></pre>
+  <div class="fn"><p><strong>Il nome del file è l'indirizzo.</strong> <code>server/api/</code> + <code>pets/[id]/adoption</code> + <code>.put</code> diventa <code>PUT /api/pets/:id/adoption</code>. Le parentesi quadre sono un parametro, come nelle pagine. Il suffisso <code>.put</code> fa rispondere il file solo a quel metodo HTTP; con un <code>GET</code> Nitro risponde 405.</p></div>
+  <div class="fn"><p><strong>Da dove arrivano <code>requireShelter</code>, <code>useDb</code>, <code>createError</code>?</strong> Nessun import. Nitro importa da solo tutto ciò che esporti in <code>server/utils/</code> e le sue funzioni (<code>defineEventHandler</code>, <code>readBody</code>, …). Gli import espliciti servono solo per librerie esterne (<code>drizzle-orm</code>, <code>zod</code>) e per lo schema.</p></div>
+  <div class="fn"><p><strong>Ordine dei controlli:</strong> prima <em>chi sei</em> (<code>requireShelter</code>: 401 se non loggato, 403 se non sei un rifugio approvato), poi <em>cosa mandi</em> (Zod). Così uno sconosciuto non scopre nemmeno quali campi esistono.</p></div>
+  <div class="fn"><p><strong>Rivalidare sul server è obbligatorio.</strong> Il controllo nel browser si scavalca con una riga in console: io l'ho fatto apposta nei test, con <code>fetch('/api/pets/133/adoption', { method: 'PUT', ... })</code>. Il server non si fida mai del client.</p></div>
+  <div class="fn"><p><strong>La sicurezza è nel <code>where</code>.</strong> <code>eq(pets.ownerId, user.id)</code> fa sì che un rifugio possa modificare solo i <em>suoi</em> pet. Se il pet è di un altro, l'update non tocca nessuna riga, <code>returning</code> restituisce una lista vuota e rispondiamo 404. Rispondere "non trovato" invece di "non è tuo" non rivela che quel pet esiste.</p></div>
+  <div class="fn"><p><strong><code>status !== null &amp;&amp; fields.hideFromRankings</code>:</strong> la regola di business vive qui, non nel form. Se il rifugio toglie la scheda, il flag si azzera da solo, qualunque cosa abbia mandato il browser.</p></div>
+</div>
+
+<!-- 6 -->
+<h2 id="filtro"><span class="n">6</span>Passo 5 · Un filtro riusabile</h2>
+<p>Salvare il flag è metà del lavoro. L'altra metà è <strong>rispettarlo ovunque</strong>: ogni query che produce una classifica o una sfida deve escludere quei pet. Per non ripetere la condizione, è diventata una variabile:</p>
+<div class="file">
+  <div class="path">server/utils/pets.ts</div>
+<pre><code><span class="c">// In classifiche e sfide entrano tutti, tranne i pet che un rifugio ha scelto di tenere fuori</span>
+export const inRankings = sql`not ${pets.hideFromRankings}`</code></pre>
+  <div class="fn"><p>È un <strong>frammento SQL</strong> di Drizzle: non un risultato, ma un pezzo di query da incastrare in altre query. <code>${pets.hideFromRankings}</code> diventa il nome della colonna giusto. Essendo in <code>server/utils/</code>, è disponibile ovunque nel server senza import, come <code>hasApprovedPhoto</code> lì accanto.</p></div>
+</div>
+<p>Ecco dove l'ho dovuto infilare. Trovare questa lista è il vero lavoro: l'ho fatta cercando nel progetto ogni query su <code>pets</code> che ordina per Elo o legge le iscrizioni.</p>
+<div class="table"><table>
+  <thead><tr><th>File</th><th>Cosa protegge</th></tr></thead>
+  <tbody>
+    <tr><td><code>api/leaderboard.get.ts</code></td><td>Le classifiche (sempre, mese, settimana)</td></tr>
+    <tr><td><code>api/pets/[id].get.ts</code></td><td>"3° tra i gatti" nella pagina del pet</td></tr>
+    <tr><td><code>utils/cards.ts</code></td><td>La posizione stampata sulla card da condividere</td></tr>
+    <tr><td><code>utils/challenges.ts</code></td><td>Classifica della sfida e conteggio partecipanti</td></tr>
+    <tr><td><code>api/challenges/[slug]/duel.get.ts</code></td><td>Le coppie da votare dentro una sfida</td></tr>
+    <tr><td><code>api/challenges/[slug]/entries.post.ts</code></td><td>L'iscrizione a una sfida</td></tr>
+    <tr><td><code>api/adoptables.get.ts</code></td><td>Il badge "#1 più amato" in Cerca casa</td></tr>
+  </tbody>
+</table></div>
+<div class="note why"><b class="t">Due stili di query, stessa idea</b><p>Dove la query è scritta con Drizzle (<code>.where(and(..., inRankings))</code>) si usa il frammento. In <code>leaderboard.get.ts</code> la query è SQL scritto a mano con l'alias <code>p</code>, quindi la condizione è scritta per esteso: <code>and not p.hide_from_rankings</code>. Il frammento produrrebbe <code>"pets"."hide_from_rankings"</code>, che lì non esiste perché la tabella si chiama <code>p</code>.</p></div>
+<p>Nota cosa <strong>non</strong> ha il filtro: i duelli normali in home. Era una scelta precisa: il pet resta votabile e visibile, perché la visibilità aiuta l'adozione. Esce solo dalle gare.</p>
+
+<!-- 7 -->
+<h2 id="difesa"><span class="n">7</span>Passo 6 · Difesa su due livelli</h2>
+<p>L'iscrizione alle sfide è protetta due volte, e non è un doppione:</p>
+<div class="file">
+  <div class="path">app/components/ChallengeJoin.vue <span class="kind">livello 1 · comodità</span></div>
+<pre><code>const eligible = computed(() =&gt; {
+  const entered = new Set(props.challenge.myEntries.map(e =&gt; e.petId))
+  return (profile.value?.pets ?? []).filter(p =&gt;
+    !entered.has(p.id) &amp;&amp; !p.adoptionInfo?.hideFromRankings &amp;&amp; ...)
+})</code></pre>
+  <div class="fn"><p>Il pet non compare proprio nella tendina. L'utente non può sbagliare e non vede un errore inutile.</p></div>
+</div>
+<div class="file">
+  <div class="path">server/api/challenges/[slug]/entries.post.ts <span class="kind">livello 2 · regola</span></div>
+<pre><code>if (pet.hideFromRankings) {
+  throw createError({ statusCode: 400, statusMessage: 'Hai scelto di tenere questo pet fuori da classifiche e sfide' })
+}</code></pre>
+  <div class="fn"><p>Il server rifiuta comunque. Serve per chi chiama l'API direttamente, ma anche per una pagina rimasta aperta da prima che il rifugio cambiasse l'opzione.</p></div>
+</div>
+<div class="note nuxt"><b class="t">Regola d'oro</b><p>Il client <em>nasconde</em>, il server <em>impedisce</em>. Se devi scegliere dove mettere un controllo, mettilo sempre sul server; quello nel client è un regalo all'esperienza utente.</p></div>
+
+<!-- 8 -->
+<h2 id="ritorno"><span class="n">8</span>Passo 7 · Il ritorno in pagina</h2>
+<p>Il rifugio clicca "Salva", l'API risponde <code>{ ok: true }</code>. Come fa la pagina a mostrare il dato nuovo?</p>
+<pre><code><span class="c">// AdoptionCard.vue: avvisa il genitore e basta</span>
+await $fetch(`/api/pets/${props.pet.id}/adoption`, { method: 'PUT', body: check.data })
+editing.value = false
+emit('changed')
+
+<span class="c">// pages/pet/[id].vue: il genitore ricarica</span>
+const { data: pet, refresh } = await useFetch(...)
+&lt;AdoptionCard :pet="pet" :manage="manage" @changed="refresh()" /&gt;</code></pre>
+<ol class="steps">
+  <li><div>Il componente non aggiorna i dati da solo: non è lui il proprietario di <code>pet</code>. Emette <code>changed</code>, il classico pattern Vue "props giù, eventi su".</div></li>
+  <li><div>La pagina chiama <code>refresh()</code>, la funzione che <code>useFetch</code> restituisce per ripetere la stessa richiesta. <code>pet.value</code> viene sostituito.</div></li>
+  <li><div>Sul server, <code>GET /api/pets/133</code> passa da <code>loadAdoptions()</code> in <code>server/utils/shelters.ts</code>, che ora copia anche <code>hideFromRankings</code> dentro <code>adoptionInfo</code>.</div></li>
+  <li><div>Tutto ciò che dipende da <code>pet</code> si ricalcola: la nota "Fuori da classifiche e sfide", la posizione che sparisce, la tendina di <code>ChallengeJoin</code>.</div></li>
+</ol>
+<div class="note why"><b class="t">Perché non restituire il pet dalla PUT?</b><p>Si poteva, e si risparmia una richiesta. Ma la pagina del pet calcola molte cose (posizione, foto, trofei) in <code>[id].get.ts</code>. Ricaricare da lì garantisce che tutto sia coerente, senza duplicare quella logica nella PUT. Per un'azione rara come questa la richiesta in più non costa nulla.</p></div>
+
+<!-- 9 -->
+<h2 id="bordi"><span class="n">9</span>I casi limite</h2>
+<p>Una feature non è finita quando funziona il caso felice. Le domande che mi sono fatto:</p>
+<ul>
+  <li><strong>E se il rifugio chiude, o l'admin lo revoca?</strong> I suoi pet tornano privati normali. In <code>shelters/me.delete.ts</code> e <code>admin/shelters/[id].post.ts</code> l'update azzera anche il flag: <code>.set({ adoption: null, hideFromRankings: false })</code>. Altrimenti un pet resterebbe invisibile per sempre, senza più nessun modo di cambiare l'opzione dall'interfaccia.</li>
+  <li><strong>E la card da condividere?</strong> Prima compariva solo se il pet aveva una posizione. Un pet fuori classifica non ce l'ha, ma il rifugio vuole condividerlo più di tutti. Ora la condizione è "ha almeno una foto approvata" (<code>isPublic</code> in <code>pages/pet/[id].vue</code>).</li>
+  <li><strong>E il "#1 più amato" in Cerca casa?</strong> In <code>adoptables.get.ts</code> la posizione si calcola con una <em>window function</em>: <code>row_number() over (partition by p.hide_from_rankings order by p.elo desc)</code>. <code>partition by</code> fa ripartire la numerazione da 1 in ogni gruppo, così i pet nascosti non rubano posizioni agli altri. Poi un <code>case when</code> li mette a <code>null</code>.</li>
+  <li><strong>E i duelli già votati?</strong> I voti restano e l'Elo continua a muoversi. Se il rifugio toglie la spunta, il pet rientra con il punteggio aggiornato.</li>
+</ul>
+
+<!-- 10 -->
+<h2 id="errori"><span class="n">10</span>Due errori di TypeScript, spiegati</h2>
+<p>Il typecheck me ne ha dati due. Sono istruttivi perché sono trappole comuni.</p>
+<div class="file">
+  <div class="path">server/utils/cards.ts <span class="kind">errore 1</span></div>
+<pre><code><span class="c">// Prima: Type '0' is not assignable to type 'string | false | Node | null'</span>
+d.speciesRank &amp;&amp; pill(`${d.speciesRank}° ...`)
+<span class="c">// Dopo</span>
+!!d.speciesRank &amp;&amp; pill(`${d.speciesRank}° ...`)</code></pre>
+  <div class="fn"><p>In JavaScript <code>a &amp;&amp; b</code> non restituisce <code>true</code> o <code>false</code>: restituisce <code>a</code> se è "falsy", altrimenti <code>b</code>. <code>speciesRank</code> ora è <code>number | null</code>, e un numero può essere <code>0</code>. TypeScript se ne accorge: l'espressione potrebbe valere <code>0</code>, e satori disegnerebbe un "0" sulla card. <code>!!</code> trasforma prima in booleano, quindi il risultato è <code>false</code> o il nodo.</p></div>
+  <div class="fn"><p>Lo stesso bug esiste nei template Vue: <code>&lt;span&gt;{{ count &amp;&amp; 'nuovi' }}&lt;/span&gt;</code> mostra "0". Lì si usa <code>v-if</code>.</p></div>
+</div>
+<div class="file">
+  <div class="path">app/pages/pet/[id].vue <span class="kind">errore 2</span></div>
+<pre><code><span class="c">// Prima: 'pet.value' is possibly 'undefined'</span>
+ogImage: () =&gt; (isPublic.value ? `${origin}/card/${pet.value.id}.png` : undefined)
+<span class="c">// Dopo</span>
+ogImage: () =&gt; (isPublic.value &amp;&amp; pet.value ? `${origin}/card/${pet.value.id}.png` : undefined)</code></pre>
+  <div class="fn"><p>Noi sappiamo che se <code>isPublic</code> è vero allora <code>pet</code> esiste: <code>isPublic</code> lo controlla dentro. TypeScript no: il <em>narrowing</em> (restringere un tipo dopo un controllo) funziona solo sul controllo che vede in quella stessa espressione, non attraverso un'altra <code>computed</code>. Aggiungere <code>&amp;&amp; pet.value</code> glielo dice esplicitamente.</p></div>
+</div>
+
+<!-- 11 -->
+<h2 id="quiz"><span class="n">11</span>Quiz</h2>
+<p>Prova a rispondere prima di aprire.</p>
+<details>
+  <summary>1. Togli <code>IF NOT EXISTS</code> dall'ALTER TABLE e riavvia due volte il server. Cosa succede?</summary>
+  <p>Il primo avvio aggiunge la colonna. Al secondo Postgres risponde "column already exists", <code>useDb()</code> fallisce e ogni richiesta all'API va in errore 500. Le istruzioni in <code>CREATE_TABLES_SQL</code> devono poter girare infinite volte.</p>
+</details>
+<details>
+  <summary>2. Perché <code>adoption.put.ts</code> non ha <code>import { requireShelter } from '../../../utils/shelters'</code>?</summary>
+  <p>Nitro importa da solo tutti gli export di <code>server/utils/</code> dentro il codice del server. Nel codice di <code>app/</code> invece non sono disponibili: lì gli auto-import sono quelli di <code>app/composables/</code> e <code>app/utils/</code>.</p>
+</details>
+<details>
+  <summary>3. Un rifugio prova a nascondere il pet di un altro rifugio mandando il suo id. Quale riga lo ferma, e cosa riceve?</summary>
+  <p><code>.where(and(eq(pets.id, id), eq(pets.ownerId, user.id)))</code>: nessuna riga corrisponde, <code>returning</code> è vuoto e riceve 404 "Pet non trovato".</p>
+</details>
+<details>
+  <summary>4. Se togliessi il filtro da <code>ChallengeJoin.vue</code>, la feature sarebbe ancora sicura?</summary>
+  <p>Sì: <code>entries.post.ts</code> rifiuta comunque. Peggiorerebbe solo l'esperienza: l'utente vedrebbe il pet nella tendina e riceverebbe un errore dopo aver scelto la foto.</p>
+</details>
+<details>
+  <summary>5. Perché <code>AdoptionCard</code> emette <code>changed</code> invece di modificare <code>props.pet.adoptionInfo</code>?</summary>
+  <p>Le props sono in sola lettura: i dati appartengono alla pagina, che li ha caricati con <code>useFetch</code>. Il figlio avvisa, il genitore ricarica dalla fonte, cioè il server, e ottiene anche i valori calcolati lì.</p>
+</details>
+
+<!-- 12 -->
+<h2 id="esercizio"><span class="n">12</span>Esercizio: rifallo tu</h2>
+<p>Ora tocca a te seguire gli stessi strati. Obiettivo: <strong>un proprietario può nascondere la città del suo pet</strong>. Molti preferiscono non dire dove vivono.</p>
+<ul class="check">
+  <li><strong>Database:</strong> colonna <code>hide_city</code> in <code>schema.ts</code>, in entrambi i posti.</li>
+  <li><strong>Contratto:</strong> il campo nello schema Zod che usa la modifica del pet in <code>shared/models.ts</code> (cercalo partendo da <code>server/api/pets/[id].patch.ts</code>).</li>
+  <li><strong>Form:</strong> una checkbox nel form di modifica in <code>PetGallery.vue</code>.</li>
+  <li><strong>Endpoint:</strong> <code>[id].patch.ts</code> salva il valore. Controlla che la condizione sul proprietario ci sia già.</li>
+  <li><strong>Filtro:</strong> dove esce la città? Cercala con la ricerca del tuo editor (<code>city</code> in <code>server/</code>) e decidi dove svuotarla. Suggerimento: <code>toPublicPet</code> in <code>server/utils/db.ts</code> è un buon punto unico.</li>
+  <li><strong>Caso limite:</strong> il filtro città di Cerca casa deve continuare a funzionare per i pet dei rifugi? Decidi tu e scrivi un commento che spiega perché.</li>
+  <li><strong>Verifica:</strong> <code>npx nuxi typecheck</code>, poi apri la classifica e la pagina del pet.</li>
+</ul>
+<div class="note nuxt"><b class="t">Quando hai finito</b><p>Scrivimi "ho fatto l'esercizio": leggo il tuo codice e te lo commento come una correzione, punto per punto. Se ti blocchi, dimmi a quale passo sei.</p></div>
+
+<footer>Lezione 2 del corso PetDuel, scritta sul codice del 30 ottobre 2026. La lezione 1 è la guida a tutte le cartelle e i file.</footer>
+</div>

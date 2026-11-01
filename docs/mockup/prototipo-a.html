@@ -1,0 +1,230 @@
+<title>PetDuel Prototipo A</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap">
+<style>
+  /* Layout: app a una schermata, due card impilate (affiancate su desktop); si trascina il preferito SOPRA l'altro, verso il centro */
+  :root{
+    --bg:#fff6ef; --surface:#ffffff; --ink:#2a1d17; --muted:#8a7468;
+    --coral:#ff5d4a; --coral-soft:#ffe1da; --mint:#1f9e7a; --line:#f0e1d6;
+    --pet1a:#ffd6a5; --pet1b:#ffad8f; --pet2a:#cfe8d9; --pet2b:#9fd3c1;
+    --display:"Fredoka","Trebuchet MS",system-ui,sans-serif;
+    --body:"Nunito","Segoe UI",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --bg:#1b1412; --surface:#2a201c; --ink:#fbeee6; --muted:#b59d90;
+    --coral:#ff7a68; --coral-soft:#4a2620; --mint:#45c79f; --line:#3a2d27;
+    --pet1a:#8a5a3a; --pet1b:#a4523f; --pet2a:#2e5a4c; --pet2b:#3f7a68; color-scheme:dark}}
+  :root[data-theme="dark"]{
+    --bg:#1b1412; --surface:#2a201c; --ink:#fbeee6; --muted:#b59d90;
+    --coral:#ff7a68; --coral-soft:#4a2620; --mint:#45c79f; --line:#3a2d27;
+    --pet1a:#8a5a3a; --pet1b:#a4523f; --pet2a:#2e5a4c; --pet2b:#3f7a68; color-scheme:dark}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);overflow:hidden;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .app{height:100%;max-width:920px;margin:0 auto;display:flex;flex-direction:column;gap:10px;padding-block:12px}
+  header{display:flex;align-items:center;justify-content:space-between}
+  .logo{font-family:var(--display);font-weight:700;font-size:24px;color:var(--coral);letter-spacing:.2px}
+  .streak{font-weight:700;font-size:13px;background:var(--coral-soft);color:var(--coral);padding:5px 11px;border-radius:999px;font-variant-numeric:tabular-nums}
+  h1{font-family:var(--display);font-weight:600;font-size:21px;text-align:center;text-wrap:balance}
+  .arena{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;position:relative}
+  @media (min-width:760px){.arena{flex-direction:row}}
+
+  .card{flex:1;min-height:0;position:relative;border-radius:24px;overflow:hidden;cursor:grab;touch-action:none;user-select:none;z-index:1;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .45s,filter .45s;box-shadow:0 8px 22px rgba(80,40,20,.12)}
+  .card.dragging{transition:none;cursor:grabbing;z-index:4;box-shadow:0 20px 40px rgba(80,40,20,.3)}
+  .card.win{z-index:4;box-shadow:0 0 0 4px var(--coral),0 22px 44px rgba(255,93,74,.35)}
+  .card.lose{transform:scale(.82)!important;opacity:.35;filter:grayscale(.7)}
+  .card:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
+  .card[data-i="0"]{background:linear-gradient(140deg,var(--pet1a),var(--pet1b))}
+  .card[data-i="1"]{background:linear-gradient(140deg,var(--pet2a),var(--pet2b))}
+  .emoji{font-size:min(28vw,20vh,170px);line-height:1;pointer-events:none;filter:drop-shadow(0 6px 10px rgba(0,0,0,.15))}
+
+  /* Nome: in verticale sta sul bordo esterno, così il bordo verso il centro resta libero per le frecce */
+  .meta{position:absolute;left:0;right:0;bottom:0;padding:26px 16px 12px;background:linear-gradient(transparent,rgba(20,10,5,.62));color:#fff;pointer-events:none}
+  .card[data-i="0"] .meta{top:0;bottom:auto;padding:12px 16px 26px;background:linear-gradient(rgba(20,10,5,.62),transparent)}
+  @media (min-width:760px){.card[data-i="0"] .meta{top:auto;bottom:0;padding:26px 16px 12px;background:linear-gradient(transparent,rgba(20,10,5,.62))}}
+  .meta b{font-family:var(--display);font-weight:600;font-size:21px;display:block}
+  .meta span{font-size:13px;opacity:.92;font-variant-numeric:tabular-nums}
+
+  .stamp{position:absolute;right:14px;top:50%;margin-top:-18px;background:var(--coral);color:#fff;font-family:var(--display);font-weight:700;font-size:16px;padding:6px 13px;border-radius:12px;transform:rotate(-8deg);opacity:0;pointer-events:none;white-space:nowrap}
+
+  /* Frecce animate che puntano verso l'avversario */
+  .arrows{position:absolute;left:50%;width:36px;height:54px;margin-left:-18px;pointer-events:none;color:#fff;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));transition:opacity .2s}
+  .card[data-i="0"] .arrows{bottom:6px}
+  .card[data-i="1"] .arrows{top:6px;transform:rotate(180deg)}
+  @media (min-width:760px){
+    .arrows{top:32%!important;bottom:auto!important;left:auto;margin-left:0}
+    .card[data-i="0"] .arrows{right:12px;transform:rotate(-90deg)}
+    .card[data-i="1"] .arrows{left:12px;transform:rotate(90deg)}
+  }
+  .arrows path{fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;animation:chev 1.3s infinite}
+  .arrows path:nth-child(2){animation-delay:.18s}
+  .arrows path:nth-child(3){animation-delay:.36s}
+  @keyframes chev{0%,100%{opacity:.15}40%{opacity:1}}
+  .card.dragging .arrows,.card.win .arrows,.card.lose .arrows{opacity:0}
+
+  .vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;width:50px;height:50px;border-radius:50%;
+    background:var(--ink);color:var(--bg);border:4px solid var(--bg);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:16px;pointer-events:none;transition:opacity .2s}
+  .hint{text-align:center;color:var(--muted);font-size:13px;min-height:18px;text-wrap:balance}
+  .hint b{color:var(--ink)}
+  .toast{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.9);z-index:6;background:var(--surface);color:var(--ink);border-radius:16px;padding:12px 18px;
+    box-shadow:0 12px 30px rgba(0,0,0,.2);font-weight:700;text-align:center;opacity:0;transition:.25s;pointer-events:none;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  .toast .up{color:var(--mint)} .toast .down{color:var(--coral)}
+  nav{display:flex;gap:8px}
+  nav button{flex:1;font:inherit;font-weight:700;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:14px;padding:11px 8px;cursor:pointer}
+  nav button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  nav button:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+  .sheet{position:absolute;inset:0;z-index:7;background:var(--bg);display:flex;flex-direction:column;gap:6px;overflow:auto;border-radius:20px}
+  .row{display:flex;align-items:center;gap:12px;padding:9px 12px;background:var(--surface);border-radius:14px}
+  .row .n{width:22px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+  .row .e{font-size:26px}
+  .row .s{margin-left:auto;font-weight:800;color:var(--coral);font-variant-numeric:tabular-nums}
+  .row small{color:var(--muted);display:block}
+  @media (prefers-reduced-motion:reduce){.card,.toast{transition:none}.arrows path{animation:none;opacity:.8}}
+</style>
+
+<div class="app">
+  <header><span class="logo">PetDuel</span><span class="streak" id="streak">Voti: 0</span></header>
+  <h1>Chi è più carino?</h1>
+  <div class="arena" id="arena">
+    <div class="card" data-i="0" tabindex="0"></div>
+    <div class="card" data-i="1" tabindex="0"></div>
+    <div class="vs" id="vs">VS</div>
+    <div class="toast" id="toast"></div>
+    <div class="sheet" id="sheet" hidden></div>
+  </div>
+  <div class="hint" id="hint"></div>
+  <nav>
+    <button id="tabDuel" class="on">Duelli</button>
+    <button id="tabRank">Classifica</button>
+  </nav>
+</div>
+
+<script>
+// Animali di esempio (foto segnaposto). Elo iniziale 1500, i "nuovi" hanno pochi voti.
+const pets = [
+  ["Biscotto","🐶","Beagle","Torino","cane"],["Rocky","🐕","Corgi","Milano","cane"],
+  ["Lola","🐩","Barboncino","Roma","cane"],["Thor","🦮","Labrador","Verona","cane"],
+  ["Nuvola","🐱","Europeo","Bari","gatto"],["Mochi","🐈","Siamese","Bologna","gatto"],
+  ["Ombra","🐈‍⬛","Nero","Palermo","gatto"],["Pallina","🐰","Coniglio nano","Firenze","altro"],
+  ["Kiwi","🦜","Pappagallo","Napoli","altro"],["Pippo","🐹","Criceto","Genova","altro"],
+  ["Speedy","🐢","Tartaruga","Cagliari","altro"],["Fiocco","🐇","Ariete","Trento","altro"]
+].map(([name,emoji,breed,city,species],id)=>({id,name,emoji,breed,city,species,elo:1500,votes:0}));
+
+const recent=[], seenPairs=new Set();
+let pair=[], votes=0, busy=false;
+const HINT="Trascina il tuo preferito <b>sopra l'altro</b> per farlo vincere";
+const isRow=()=>matchMedia("(min-width:760px)").matches;
+
+// Scelta "quasi casuale": stessa specie, Elo vicino, spinta a chi ha pochi voti, niente ripetizioni recenti
+function pickPair(){
+  const weight=p=>(recent.includes(p.id)?0.05:1)*(1+3/(1+p.votes));
+  const pool=pets.filter(p=>pets.some(q=>q!==p&&q.species===p.species));
+  const a=weighted(pool,weight);
+  const rivals=pets.filter(q=>q.id!==a.id&&q.species===a.species&&!seenPairs.has(key(a,q)));
+  const list=rivals.length?rivals:pets.filter(q=>q.id!==a.id&&q.species===a.species);
+  const b=weighted(list,q=>weight(q)/(1+Math.abs(q.elo-a.elo)/100));
+  return Math.random()<.5?[a,b]:[b,a];
+}
+function weighted(arr,w){let t=arr.reduce((s,x)=>s+w(x),0),r=Math.random()*t;for(const x of arr){r-=w(x);if(r<=0)return x}return arr[arr.length-1]}
+const key=(a,b)=>[a.id,b.id].sort().join("-");
+
+const cards=[...document.querySelectorAll(".card")], vsEl=document.getElementById("vs"), hint=document.getElementById("hint");
+const ARROWS=`<svg class="arrows" viewBox="0 0 36 54" aria-hidden="true"><path d="M6 6l12 10 12-10"/><path d="M6 20l12 10 12-10"/><path d="M6 34l12 10 12-10"/></svg>`;
+
+function render(){
+  pair=pickPair();
+  cards.forEach((c,i)=>{
+    const p=pair[i];
+    c.className="card";c.style.transform="";
+    c.setAttribute("aria-label",`Fai vincere ${p.name}`);
+    c.innerHTML=`<span class="stamp">VINCE! 👑</span><span class="emoji">${p.emoji}</span>${ARROWS}<div class="meta"><b>${p.name}</b><span>${p.breed} · ${p.city} · Elo ${Math.round(p.elo)}</span></div>`;
+  });
+  cards[1].style.opacity="";vsEl.style.opacity="";cards[0].style.opacity="";
+  hint.innerHTML=HINT;
+}
+
+// Direzione verso l'avversario e distanza per coprirlo completamente
+function geometry(i){
+  const row=isRow(), sign=i===0?1:-1, r=cards[i].getBoundingClientRect(), o=cards[1-i].getBoundingClientRect();
+  const dist=row?Math.abs(o.left-r.left):Math.abs(o.top-r.top);
+  return {row,sign,dist};
+}
+const move=(g,d,perp=0)=>g.row?`translate(${g.sign*d}px,${perp}px)`:`translate(${perp}px,${g.sign*d}px)`;
+
+function vote(i){
+  if(busy)return; busy=true; stopCoach();
+  const w=pair[i], l=pair[1-i], g=geometry(i);
+  const exp=1/(1+10**((l.elo-w.elo)/400)), d=Math.round(32*(1-exp));
+  w.elo+=d; l.elo-=d; w.votes++; l.votes++;
+  seenPairs.add(key(w,l)); recent.push(w.id,l.id); while(recent.length>6)recent.shift();
+  votes++; document.getElementById("streak").textContent=`Voti: ${votes}`;
+  const c=cards[i];
+  c.classList.remove("dragging"); c.classList.add("win");
+  c.style.transform=move(g,g.dist)+" scale(1.02)";
+  c.querySelector(".stamp").style.opacity=1;
+  cards[1-i].classList.add("lose"); vsEl.style.opacity=0;
+  hint.innerHTML=`<b>${w.name}</b> ha battuto ${l.name}!`;
+  const t=document.getElementById("toast");
+  t.innerHTML=`${w.name} <span class="up">+${d}</span> · ${l.name} <span class="down">−${d}</span>`;
+  setTimeout(()=>t.classList.add("show"),300);
+  setTimeout(()=>{t.classList.remove("show");render();busy=false},1250);
+}
+
+// Gesto: trascina verso il centro; oltre ~40% della distanza la card "atterra" sull'altra e vince. Tap = voto.
+cards.forEach((c,i)=>{
+  let x0=0,y0=0,g=null,prog=0,moved=0,down=false;
+  c.addEventListener("pointerdown",e=>{
+    if(busy)return; stopCoach(); down=true; x0=e.clientX; y0=e.clientY; moved=0; prog=0;
+    g=geometry(i); c.setPointerCapture(e.pointerId); c.classList.add("dragging");
+  });
+  c.addEventListener("pointermove",e=>{
+    if(!down)return;
+    const dx=e.clientX-x0, dy=e.clientY-y0; moved=Math.max(moved,Math.hypot(dx,dy));
+    let along=(g.row?dx:dy)*g.sign; const perp=(g.row?dy:dx)*.15;
+    if(along<0)along*=.25; // resistenza nella direzione sbagliata
+    along=Math.min(along,g.dist);
+    prog=Math.max(0,along/(g.dist*.4));
+    c.style.transform=move(g,along,perp)+` scale(${1+Math.min(prog,1)*.03})`;
+    c.querySelector(".stamp").style.opacity=Math.min(1,prog);
+    cards[1-i].style.opacity=1-Math.min(prog,1)*.35;
+    vsEl.style.opacity=1-Math.min(prog,1);
+  });
+  const end=()=>{
+    if(!down)return; down=false;
+    if(prog>=1||moved<6){cards[1-i].style.opacity="";vote(i)}
+    else{c.classList.remove("dragging");c.style.transform="";c.querySelector(".stamp").style.opacity=0;cards[1-i].style.opacity="";vsEl.style.opacity=""}
+  };
+  c.addEventListener("pointerup",end); c.addEventListener("pointercancel",end);
+  c.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();vote(i)}});
+});
+addEventListener("keydown",e=>{
+  if(!document.getElementById("sheet").hidden)return;
+  if(e.key==="ArrowLeft"||e.key==="ArrowUp")vote(0);
+  if(e.key==="ArrowRight"||e.key==="ArrowDown")vote(1);
+});
+
+// Demo iniziale: la card in alto "accenna" il gesto finché l'utente non tocca qualcosa
+let coach=null;
+function startCoach(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const g=geometry(0), d=Math.min(70,g.dist*.3);
+  coach=cards[0].animate([{transform:"none"},{transform:move(g,d)+" scale(1.02)",offset:.45},{transform:"none"}],
+    {duration:1100,iterations:3,delay:700,easing:"ease-in-out"});
+}
+function stopCoach(){if(coach){coach.cancel();coach=null}}
+
+// Classifica
+const sheet=document.getElementById("sheet"),tD=document.getElementById("tabDuel"),tR=document.getElementById("tabRank");
+tR.onclick=()=>{
+  sheet.innerHTML=[...pets].sort((a,b)=>b.elo-a.elo).map((p,n)=>`<div class="row"><span class="n">${n+1}</span><span class="e">${p.emoji}</span><div><b>${p.name}</b><small>${p.breed} · ${p.votes} duelli</small></div><span class="s">${Math.round(p.elo)}</span></div>`).join("");
+  sheet.hidden=false;tR.classList.add("on");tD.classList.remove("on");
+  hint.textContent="Classifica Elo di questa sessione";
+};
+tD.onclick=()=>{sheet.hidden=true;tD.classList.add("on");tR.classList.remove("on");hint.innerHTML=HINT};
+
+render();
+startCoach();
+</script>

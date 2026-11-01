@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>PetDuel – varianti mobile</title>
+<style>
+  :root{--bg:#fff7f0;--ink:#1f1a2e;--muted:#7a6f86;--pink:#ff5a7a;--violet:#7c5cff;--card:#fff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);font-family:"Segoe UI",system-ui,sans-serif;color:var(--ink);padding:40px 40px 50px;width:1260px}
+  h1{font-size:30px;margin-bottom:6px}
+  .sub{color:var(--muted);font-size:17px;margin-bottom:30px}
+  .row{display:flex;gap:40px;justify-content:space-between}
+  .col{width:370px}
+  .label{font-weight:700;font-size:22px;margin-bottom:4px}
+  .label span{display:inline-block;background:var(--violet);color:#fff;border-radius:8px;padding:0 9px;margin-right:6px}
+  .desc{color:var(--muted);font-size:15px;height:44px;margin-bottom:14px}
+  .phone{width:370px;height:760px;border-radius:44px;background:#111;padding:12px;box-shadow:0 20px 50px rgba(60,30,80,.25)}
+  .screen{width:100%;height:100%;border-radius:34px;background:#fdfbff;overflow:hidden;position:relative;display:flex;flex-direction:column}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 8px;font-weight:800;font-size:20px}
+  .top .logo{color:var(--pink)}
+  .top .pill{font-size:12px;font-weight:600;background:#f1ecff;color:var(--violet);padding:5px 10px;border-radius:20px}
+  .q{text-align:center;font-weight:700;font-size:17px;padding:2px 0 10px}
+  .tabbar{margin-top:auto;display:flex;justify-content:space-around;padding:12px 0 18px;border-top:1px solid #eee;font-size:22px;color:#b3abc0}
+  .tabbar .on{color:var(--pink)}
+  .pet{position:relative;border-radius:22px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:120px}
+  .pet .meta{position:absolute;left:0;right:0;bottom:0;padding:14px 16px;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;font-size:13px}
+  .pet .meta b{font-size:19px;display:block}
+  .g1{background:linear-gradient(135deg,#ffd29d,#ff9a8b)}
+  .g2{background:linear-gradient(135deg,#a1c4fd,#c2e9fb)}
+  .vs{position:absolute;z-index:3;width:54px;height:54px;border-radius:50%;background:var(--ink);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;border:4px solid #fff;font-size:17px}
+  .hint{text-align:center;color:var(--muted);font-size:13px;padding:8px 0 0}
+  .heart{position:absolute;top:16px;right:16px;background:var(--pink);color:#fff;font-weight:800;font-size:14px;padding:6px 12px;border-radius:20px;transform:rotate(8deg)}
+  .arrow{position:absolute;font-size:34px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4);font-weight:900}
+  /* V1 */
+  .v1 .stack{flex:1;display:flex;flex-direction:column;gap:12px;padding:0 16px;position:relative}
+  .v1 .stack .pet{flex:1}
+  .v1 .stack .pet.drag{transform:translateX(38px) rotate(4deg);box-shadow:0 18px 30px rgba(255,90,122,.35)}
+  .v1 .vs{left:50%;top:50%;transform:translate(-50%,-50%)}
+  /* V2 */
+  .v2 .side{flex:1;display:flex;gap:10px;padding:0 14px;position:relative}
+  .v2 .side .pet{flex:1;font-size:80px}
+  .v2 .vs{left:50%;top:45%;transform:translate(-50%,-50%)}
+  .v2 .bar{display:flex;justify-content:space-between;padding:12px 30px 0}
+  .v2 .btn{width:64px;height:64px;border-radius:50%;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:26px}
+  /* V3 */
+  .v3 .screen{background:#000}
+  .v3 .split{position:absolute;inset:0;display:flex;flex-direction:column}
+  .v3 .split .pet{flex:1;border-radius:0;font-size:130px}
+  .v3 .vs{left:50%;top:50%;transform:translate(-50%,-50%)}
+  .v3 .overlay{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:20px;color:#fff;font-weight:800;font-size:20px;z-index:4;text-shadow:0 2px 6px rgba(0,0,0,.4)}
+  .v3 .pet.win{box-shadow:inset 0 0 0 6px var(--pink)}
+  .v3 .pet .meta.topmeta{top:56px;bottom:auto;background:none}
+</style>
+</head>
+<body>
+<h1>🐾 PetDuel — 3 idee per lo swipe su mobile</h1>
+<div class="sub">Foto segnaposto (emoji). Su desktop lo stesso gesto diventa click / frecce ← → / drag col mouse.</div>
+<div class="row">
+
+  <!-- V1 -->
+  <div class="col v1">
+    <div class="label"><span>A</span>Duello impilato</div>
+    <div class="desc">Due card una sopra l'altra. Swipe → sulla card che preferisci (o tap). Foto grandi, 1 mano.</div>
+    <div class="phone"><div class="screen">
+      <div class="top"><span class="logo">PetDuel</span><span class="pill">🔥 serie: 12</span></div>
+      <div class="q">Chi è più carino?</div>
+      <div class="stack">
+        <div class="pet g1 drag">🐶<div class="heart">❤️ VOTO!</div><div class="meta"><b>Biscotto</b>Beagle · 2 anni · Torino</div></div>
+        <div class="pet g2">🐱<div class="meta"><b>Nuvola</b>Europeo · 4 anni · Bari</div></div>
+        <div class="vs">VS</div>
+      </div>
+      <div class="hint">Trascina a destra la card che vince →</div>
+      <div class="tabbar"><span class="on">⚔️</span><span>🏆</span><span>➕</span><span>🐾</span><span>👤</span></div>
+    </div></div>
+  </div>
+
+  <!-- V2 -->
+  <div class="col v2">
+    <div class="label"><span>B</span>Affiancati + swipe ← →</div>
+    <div class="desc">Stesso layout di desktop. Swipe a sinistra = vince sinistra, a destra = vince destra. Bottoni come fallback.</div>
+    <div class="phone"><div class="screen">
+      <div class="top"><span class="logo">PetDuel</span><span class="pill">🐶 vs 🐶 · Cani</span></div>
+      <div class="q">Chi è più carino?</div>
+      <div class="side">
+        <div class="pet g1">🐕<div class="meta"><b>Rocky</b>Corgi · Milano</div></div>
+        <div class="pet g2">🐩<div class="meta"><b>Lola</b>Barboncino · Roma</div></div>
+        <div class="vs">VS</div>
+      </div>
+      <div class="bar"><div class="btn">👈</div><div class="btn" style="font-size:18px">⏭️</div><div class="btn">👉</div></div>
+      <div class="hint">⟵ swipe verso il tuo preferito ⟶</div>
+      <div class="tabbar"><span class="on">⚔️</span><span>🏆</span><span>➕</span><span>🐾</span><span>👤</span></div>
+    </div></div>
+  </div>
+
+  <!-- V3 -->
+  <div class="col v3">
+    <div class="label"><span>C</span>Split a tutto schermo</div>
+    <div class="desc">Immersivo stile "stories". Swipe ↓ = vince quella sopra, ↑ = vince quella sotto (la spingi verso il centro).</div>
+    <div class="phone"><div class="screen">
+      <div class="split">
+        <div class="pet g1 win">🐰<div class="arrow" style="bottom:20px;left:50%;transform:translateX(-50%)">⬇</div><div class="meta topmeta"><b>Pallina</b>Coniglio nano · Firenze</div></div>
+        <div class="pet g2">🦜<div class="meta"><b>Kiwi</b>Pappagallo · Napoli</div></div>
+      </div>
+      <div class="overlay"><span>PetDuel</span><span>🏆</span></div>
+      <div class="vs">VS</div>
+    </div></div>
+  </div>
+
+</div>
+</body>
+</html>

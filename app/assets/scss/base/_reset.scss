@@ -1,0 +1,20 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+// Scorre la pagina, con la barra del browser. Solo le schermate dei duelli (.u-fit-screen) restano a tutto schermo.
+html, body { margin: 0; }
+
+body, #__nuxt { min-height: 100dvh; }
+
+img { max-width: 100%; display: block; }
+
+// <picture> non deve cambiare l'impaginazione: conta solo l'<img> dentro
+picture { display: contents; }
+
+// Chrome mostra <source> come blocco vuoto: in un flex/grid conterebbe come elemento e aggiungerebbe gap
+picture > source { display: none; }
+
+button, input, select { font: inherit; color: inherit; }
+
+:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; }
+
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--coral) !important; }

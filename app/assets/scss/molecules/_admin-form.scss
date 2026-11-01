@@ -1,0 +1,66 @@
+@use "../abstracts" as *;
+
+// Molecola condivisa: moduli del pannello admin (campagne e campi collegati).
+// Le etichette contengono il campo; i gruppi raccolgono una domanda con le sue scelte.
+.admin-form {
+  @include stack($space-7);
+
+  label { display: flex; flex-direction: column; gap: $space-1; font-weight: 800; font-size: 13px; min-width: 0; }
+
+  label em, &__label em { font-style: normal; font-weight: 600; color: var(--muted); }
+
+  :is(input:not([type="checkbox"], [type="radio"]), select, textarea) {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    border-radius: $radius-sm;
+    border: 2px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 600;
+
+    &:focus { outline: none; border-color: var(--coral); }
+  }
+
+  input[type="checkbox"] { width: 22px; height: 22px; margin: 0; accent-color: var(--coral); flex-shrink: 0; }
+
+  &--tight { gap: $space-5; }
+
+  &__group { @include stack($space-3); min-width: 0; }
+
+  &__label { font-weight: 800; font-size: 13px; }
+
+  &__hint { font-size: 12px; color: var(--muted); }
+
+  &__error { margin: 0; font-size: 13px; font-weight: 700; color: var(--coral-deep); }
+
+  &__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: $space-4; }
+
+  // Casella con il testo accanto
+  & &__check { flex-direction: row; align-items: center; gap: $space-4; font-size: 14px; }
+
+  &__options { @include cluster($space-2); }
+
+  // Scelta a pillola: radio nascosto dentro un'etichetta, oppure bottone
+  & &__option {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $space-2;
+    @include pill(8px, 14px);
+    cursor: pointer;
+    border: 2px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    font-weight: 800;
+    font-size: 13px;
+
+    input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+
+    &:has(input:focus-visible) { outline: 2px solid var(--coral); outline-offset: 2px; }
+
+    &.is-active { border-color: var(--coral); background: color-mix(in srgb, var(--coral) 14%, var(--bg)); }
+  }
+}

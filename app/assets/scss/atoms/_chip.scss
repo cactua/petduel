@@ -1,0 +1,44 @@
+@use "../abstracts" as *;
+
+// Atomo: pillola selezionabile (filtri, scelte rapide). Attiva con aria-pressed/aria-checked o .is-active
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  border: 2px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  @include pill(6px, 12px);
+  font-weight: 800;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &[aria-pressed="true"], &[aria-checked="true"], &.is-active {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+}
+
+// Atomo: gruppo di chip a interruttore dentro una pillola (es. Aperte/Chiuse)
+.segmented {
+  display: flex;
+  background: var(--surface);
+  border-radius: $radius-pill;
+  padding: $space-1;
+  box-shadow: $shadow-flat;
+
+  &__option {
+    border: 0;
+    background: none;
+    padding: 6px 14px;
+    border-radius: $radius-pill;
+    font-weight: 800;
+    color: var(--muted);
+    cursor: pointer;
+
+    &[aria-pressed="true"], &[aria-checked="true"], &.is-active { background: var(--ink); color: var(--bg); }
+  }
+}

@@ -1,0 +1,780 @@
+{
+  "common": {
+    "yours": "deins",
+    "loading": "Lädt…",
+    "save": "Speichern",
+    "saving": "Speichert…",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "back": "Zurück",
+    "retry": "Erneut versuchen",
+    "yes": "Ja",
+    "no": "Nein",
+    "optional": "optional",
+    "sending": "Sendet…",
+    "confirm": "Bestätigen"
+  },
+  "nav": {
+    "challenges": "Challenges",
+    "ranking": "Rangliste",
+    "adopt": "Adoptieren",
+    "upload": "Hochladen",
+    "uploadPhoto": "Foto hochladen",
+    "logout": "Abmelden",
+    "login": "Anmelden",
+    "profile": "Profil",
+    "sections": "Bereiche",
+    "language": "Sprache"
+  },
+  "species": {
+    "filter": "Nach Tierart filtern",
+    "all": "Alle",
+    "cane": {
+      "one": "Hund",
+      "many": "Hunde",
+      "among": "unter den Hunden"
+    },
+    "gatto": {
+      "one": "Katze",
+      "many": "Katzen",
+      "among": "unter den Katzen"
+    },
+    "coniglio": {
+      "one": "Kaninchen",
+      "many": "Kaninchen",
+      "among": "unter den Kaninchen"
+    },
+    "roditore": {
+      "one": "Nagetier",
+      "many": "Nagetiere",
+      "among": "unter den Nagetieren"
+    },
+    "uccello": {
+      "one": "Vogel",
+      "many": "Vögel",
+      "among": "unter den Vögeln"
+    },
+    "rettile": {
+      "one": "Reptil",
+      "many": "Reptilien",
+      "among": "unter den Reptilien"
+    },
+    "altro": {
+      "one": "Andere",
+      "many": "Andere",
+      "among": "unter den anderen Tieren"
+    }
+  },
+  "challenge": {
+    "ofTheWeek": "Challenge der Woche",
+    "join": "Mitmachen",
+    "endsIn": "Endet in {time}",
+    "ends": "Endet {time}",
+    "starts": "Beginnt am {date}",
+    "adoptionTag": "Suchen ein Zuhause",
+    "onlySpecies": "Nur {species}",
+    "entries": "{n} im Rennen",
+    "leading": "Vorne:",
+    "vote": "Abstimmen",
+    "ended": "Challenge beendet",
+    "notFound": "Challenge nicht gefunden.",
+    "seeAll": "Alle Challenges ansehen",
+    "sections": "Bereiche der Challenge",
+    "needTwo": "Für die Duelle braucht es mindestens zwei Teilnehmer.",
+    "allVoted": "Du hast über alle Paare dieser Challenge abgestimmt. Schau später wieder vorbei: Es kommen neue Teilnehmer dazu.",
+    "enterYours": "Melde dein Tier an",
+    "winner": "Gewinner",
+    "notStarted": "Die Challenge hat noch nicht begonnen: Anmeldungen ab {date}.",
+    "noEntries": "Noch keine freigegebenen Teilnehmer."
+  },
+  "notif": {
+    "title": "Benachrichtigungen",
+    "unread": "Benachrichtigungen, {n} ungelesen",
+    "empty": "Noch nichts. Hier findest du freigegebene Fotos, Challenge-Ergebnisse und Aufstiege in der Rangliste.",
+    "photoApproved": "Das Foto von {name} wurde freigegeben",
+    "photoApprovedChallenge": "Das Foto von {name} für die Challenge „{challenge}“ wurde freigegeben",
+    "photoRemoved": "Das Foto von {name} wurde entfernt: {reason}",
+    "photoRemovedChallenge": "Das Foto von {name} für die Challenge „{challenge}“ wurde entfernt: {reason}",
+    "photoRejected": "Das Foto von {name} wurde nicht freigegeben: {reason}",
+    "photoRejectedChallenge": "Das Foto von {name} für die Challenge „{challenge}“ wurde nicht freigegeben: {reason}",
+    "challengeWon": "{name} hat die Challenge „{challenge}“ gewonnen!",
+    "challengePlace": "{name}: Platz {rank} von {total} in der Challenge „{challenge}“",
+    "rankFirst": "{name} ist diese Woche auf Platz 1 der Rangliste {species}!",
+    "rankTop": "{name} ist diese Woche in den Top {tier} der Rangliste {species}",
+    "weeklyHearts": "Letzte Woche haben deine Tiere {n} Herz bekommen. Am beliebtesten: {name} | Letzte Woche haben deine Tiere {n} Herzen bekommen. Am beliebtesten: {name}"
+  },
+  "time": {
+    "now": "jetzt",
+    "inMinutes": "in wenigen Minuten",
+    "days": "{n}T"
+  },
+  "reasons": [
+    "Kein Tier zu sehen",
+    "Unangemessener Inhalt",
+    "Foto von schlechter Qualität",
+    "Nicht dein Foto oder urheberrechtlich geschützt",
+    "Persönliche Daten sichtbar",
+    "Passt nicht zur Challenge"
+  ],
+  "validation": {
+    "email": "Ungültige E-Mail",
+    "username": "Benutzername: 3 bis 20 Zeichen aus Buchstaben, Zahlen und _",
+    "passwordMin": "Das Passwort muss mindestens 10 Zeichen lang sein",
+    "passwordMax": "Das Passwort darf höchstens 128 Zeichen lang sein",
+    "petName": "Gib deinem Tier einen Namen",
+    "website": "Ungültige Website-Adresse",
+    "shelterName": "Gib den Namen des Tierheims ein",
+    "city": "Gib die Stadt ein",
+    "shelterDescription": "Beschreibe das Tierheim in mindestens 20 Zeichen",
+    "taxCode": "Ungültige Steuer- oder USt-IdNr.",
+    "adoptionMessage": "Erzähl etwas über dich und dein Zuhause (mindestens 30 Zeichen)",
+    "phone": "Ungültige Telefonnummer",
+    "check": "Überprüfe die Felder",
+    "iban": "Ungültige IBAN: prüfe Buchstaben und Zahlen."
+  },
+  "errors": {
+    "generic": "Etwas ist schiefgelaufen, bitte versuch es erneut",
+    "loginRequired": "Du musst dich anmelden",
+    "adNotFound": "Kampagne nicht gefunden",
+    "invalidDate": "Ungültiges Datum",
+    "duelExpired": "Duell abgelaufen oder ungültig",
+    "emailTaken": "E-Mail bereits registriert",
+    "emailTakenLogin": "E-Mail bereits registriert: versuch dich anzumelden",
+    "emailOrUsernameTaken": "E-Mail oder Benutzername bereits vergeben",
+    "challengeExists": "Es gibt bereits eine Challenge mit diesem Titel und Datum",
+    "photoAlreadyModerated": "Foto nicht gefunden oder bereits moderiert",
+    "photoNotFound": "Foto nicht gefunden",
+    "tooManyRequests": "Du hast heute schon viele Anfragen gesendet, versuch es morgen wieder",
+    "alreadyRequested": "Du hast dem Tierheim wegen dieses Tiers bereits geschrieben",
+    "alreadyVoted": "Du hast über dieses Paar bereits abgestimmt",
+    "petHidden": "Du hast dieses Tier aus Ranglisten und Challenges herausgenommen",
+    "shelterAlreadyVerified": "Dein Tierheim ist bereits verifiziert",
+    "originalMissing": "Originalbild nicht gefunden: lade es erneut hoch",
+    "photoTooBig": "Das Foto ist größer als 10 MB",
+    "passwordContainsName": "Das Passwort darf weder Benutzername noch E-Mail enthalten",
+    "shelterPending": "Die Anfrage wird bereits geprüft",
+    "challengeInPast": "Die Challenge würde in der Vergangenheit enden",
+    "challengeHasEntries": "Die Challenge hat bereits Teilnehmer",
+    "challengeNotActive": "Die Challenge läuft nicht",
+    "challengeEnded": "Die Challenge ist beendet",
+    "photoMissing": "Das Foto fehlt",
+    "emptyForm": "Leeres Formular",
+    "noShelter": "Kein Tierheim zum Schließen",
+    "cannotDeleteSelf": "Du kannst dein eigenes Konto hier nicht löschen",
+    "cannotSelf": "Das geht nicht mit deinem eigenen Konto",
+    "entryNotFound": "Teilnahme nicht gefunden",
+    "petNotFound": "Tier nicht gefunden",
+    "wrongSpecies": "Diese Challenge ist nicht für die Tierart deines Tiers",
+    "adoptionOnly": "Diese Challenge ist nur für Tierheimtiere, die ein Zuhause suchen",
+    "banned": "Dieses Konto wurde gesperrt",
+    "notAdoptable": "Dieses Tier sucht im Moment kein Zuhause",
+    "alreadyEntered": "Dieses Tier nimmt bereits an der Challenge teil",
+    "usernameUnavailable": "Dieser Benutzername ist nicht verfügbar",
+    "forbidden": "Anfrage nicht erlaubt",
+    "requestNotFound": "Anfrage nicht gefunden",
+    "shelterAlreadyReviewed": "Tierheim nicht gefunden oder bereits geprüft",
+    "shelterNotFound": "Tierheim nicht gefunden",
+    "invalidCrops": "Ungültige Zuschnitte",
+    "invalidCrop": "Ungültiger Zuschnitt",
+    "pickPet": "Wähle das Tier",
+    "sessionExpired": "Sitzung abgelaufen, bitte melde dich erneut an",
+    "challengeNotFound": "Challenge nicht gefunden",
+    "joinOnlyActive": "Mitmachen geht nur bei laufenden Challenges",
+    "adminOnly": "Nur für Moderatoren",
+    "verifiedOnly": "Nur für verifizierte Tierheime",
+    "usernameTaken": "Benutzername bereits vergeben",
+    "userNotFound": "Benutzer nicht gefunden",
+    "voteTooFast": "Zu schnell abgestimmt",
+    "ownShelterPet": "Das ist ein Tier aus deinem Tierheim",
+    "invalidData": "Ungültige Daten",
+    "wrongCredentials": "E-Mail oder Passwort falsch",
+    "tooManyPending": "Du hast bereits {n} Fotos, die auf Freigabe warten",
+    "invalidImage": "Die Datei ist kein gültiges Bild",
+    "wrongPassword": "Falsches Passwort",
+    "lastAdmin": "Du bist der einzige Admin: Ernenne zuerst einen anderen Admin, bevor du dein Konto löschst",
+    "geocode": "Die Adresssuche antwortet gerade nicht. Versuch es gleich nochmal oder tippe auf die Karte."
+  },
+  "themes": {
+    "dormiglione": {
+      "title": "Die größte Schlafmütze",
+      "description": "Das süßeste Nickerchen-Foto: im Bett, auf dem Sofa oder an den unwahrscheinlichsten Orten."
+    },
+    "linguaccia": {
+      "title": "Zunge raus!",
+      "description": "Zunge raus, ganz ohne Scham."
+    },
+    "agguato": {
+      "title": "Katzen-Hinterhalt",
+      "description": "Die Katze kurz vor dem Sprung: starrer Blick und zuckender Schwanz."
+    },
+    "scatola": {
+      "title": "König der Kiste",
+      "description": "In einer Kiste, einem Korb, einem Topf oder einem viel zu kleinen Platz."
+    },
+    "faccia-colpevole": {
+      "title": "Schuldiger Blick",
+      "description": "Der Moment direkt nach dem Unglück."
+    },
+    "riporto": {
+      "title": "Apportier-König",
+      "description": "Ball, Stock oder Hausschuh: der Hund in Aktion."
+    },
+    "sguardo": {
+      "title": "Unwiderstehlicher Blick",
+      "description": "Die süßesten (oder intensivsten) Augen im Netz."
+    },
+    "migliori-amici": {
+      "title": "Beste Freunde",
+      "description": "Mit dem Lieblingsspielzeug, Kuscheltier oder tierischen Freund."
+    },
+    "esploratore": {
+      "title": "Kleiner Entdecker",
+      "description": "Abenteuer an der frischen Luft: Wiesen, Strände, Berge oder der heimische Balkon."
+    },
+    "musetto-goloso": {
+      "title": "Kleines Leckermaul",
+      "description": "Beim Fressen erwischt: Karotten, Körner, Trockenfutter oder dein Brötchen."
+    },
+    "pose-impossibili": {
+      "title": "Unmögliche Posen",
+      "description": "Geborene Schlangenmenschen: die absurdesten Positionen."
+    },
+    "bagnetto": {
+      "title": "Nach dem Bad",
+      "description": "Nasses Fell, verlorene Würde."
+    }
+  },
+  "auth": {
+    "registerTitle": "Erstelle dein Konto",
+    "loginTitle": "Willkommen zurück!",
+    "registerLead": "Damit kannst du deine Tiere hochladen und ihre Galerie haben.",
+    "loginLead": "Melde dich an, um Fotos hochzuladen und dein Profil zu sehen.",
+    "usernamePlaceholder": "z. B. keks_fan",
+    "usernameHelp": "Für alle sichtbar. Buchstaben, Zahlen und _ (3-20 Zeichen).",
+    "passwordHelp": "Mindestens 10 Zeichen. Lieber ein Satz als ein Wort.",
+    "wait": "Einen Moment…",
+    "register": "Registrieren",
+    "haveAccount": "Schon ein Konto?",
+    "noAccount": "Noch kein Konto?",
+    "password": "Passwort",
+    "email": "E-Mail",
+    "username": "Benutzername",
+    "legal": "Mit der Registrierung akzeptierst du die {terms} und bestätigst, die Hinweise zum {privacy} gelesen zu haben. Du musst mindestens 14 Jahre alt sein."
+  },
+  "ad": {
+    "label": "Werbung",
+    "sponsored": "Gesponsert",
+    "continue": "Weiter abstimmen",
+    "thanks": "Danke: Werbung hält PetDuel kostenlos"
+  },
+  "share": {
+    "text": "Schau dir {name} auf PetDuel an: Wer ist süßer?",
+    "textChallenge": "Stimm für {name} in der PetDuel-Challenge ab!",
+    "prepareFailed": "Das Bild konnte nicht vorbereitet werden",
+    "failed": "Teilen fehlgeschlagen",
+    "copied": "Link kopiert!",
+    "share": "Teilen",
+    "title": "{name} teilen",
+    "cardAlt": "Karte von {name}",
+    "shareImage": "Bild teilen",
+    "shareLink": "Link teilen",
+    "download": "Bild herunterladen",
+    "copy": "Link kopieren",
+    "hint": "Perfekt für Instagram- und WhatsApp-Storys: Wer sie sieht, kann für {name} abstimmen."
+  },
+  "photo": {
+    "prev": "Vorheriges Foto",
+    "next": "Nächstes Foto",
+    "credit": "Foto: {text}",
+    "creditInfo": "Urheber und Lizenz des Fotos"
+  },
+  "duel": {
+    "allVoted": "Du hast über alle verfügbaren Paare abgestimmt",
+    "loadFailed": "Das Duell konnte nicht geladen werden.",
+    "loading": "Duell wird geladen",
+    "nudge": "Mit einem Konto zählen deine Stimmen {times} so viel",
+    "nudgeTimes": "{n}-mal",
+    "signUp": "Registrieren",
+    "hint": "Zieh deinen Favoriten {over}, damit er gewinnt",
+    "hintOver": "auf den anderen",
+    "hintHold": "gedrückt halten zum Vergrößern",
+    "makeWin": "{name} gewinnen lassen",
+    "wins": "Gewinnt!",
+    "beat": "{winner} hat {loser} geschlagen!",
+    "votesMilestone": "{n} Stimmen!",
+    "voteFailed": "Stimme nicht gespeichert",
+    "question": "Wer ist süßer?",
+    "votedTimes": "Du hast {n}-mal abgestimmt",
+    "uploadYours": "Lade dein Tier hoch"
+  },
+  "adoption": {
+    "status": {
+      "available": "Sucht ein Zuhause",
+      "fostered": "In Pflege",
+      "adopted": "Adoptiert!"
+    },
+    "sex": {
+      "m": "Männlich",
+      "f": "Weiblich"
+    },
+    "size": {
+      "piccola": "klein",
+      "media": "mittel",
+      "grande": "groß"
+    },
+    "sizeOf": "Größe: {size}",
+    "neuteredM": "Kastriert",
+    "neuteredF": "Kastriert",
+    "notNeutered": "Nicht kastriert",
+    "card": "Adoptionsprofil",
+    "statusLabel": "Status",
+    "noCard": "Kein Profil (Tierheimtier)",
+    "sexLabel": "Geschlecht",
+    "notSet": "Keine Angabe",
+    "age": "Alter",
+    "agePlaceholder": "2 Jahre",
+    "sizeLabel": "Größe",
+    "neuteredLabel": "Kastriert",
+    "about": "Charakter und Geschichte",
+    "aboutPlaceholder": "Sehr lieb zu Menschen, verträgt sich mit anderen Hunden, sucht ein Zuhause mit Garten…",
+    "hide": "Aus Ranglisten und Challenges heraushalten",
+    "hideHelp": "Bleibt in den Duellen und unter „Suchen ein Zuhause“, ohne Platzierung und Wettbewerbe.",
+    "noCardHint": "Dieses Tier hat kein Adoptionsprofil: Füge eins hinzu, damit es unter „Suchen ein Zuhause“ erscheint.",
+    "hidden": "Aus Ranglisten und Challenges herausgenommen, wie du es gewählt hast.",
+    "adopted": "{name} hat ein Zuhause gefunden! Danke an alle, die abgestimmt und geteilt haben.",
+    "fostered": "In Pflege: Im Moment keine Anfragen, aber du kannst es verfolgen und für es abstimmen.",
+    "editCard": "Profil bearbeiten",
+    "addCard": "Adoptionsprofil hinzufügen",
+    "sent": "Anfrage gesendet! Das Tierheim antwortet dir an die E-Mail deines Kontos.",
+    "loginToAdopt": "Melde dich an, um {name} zu adoptieren",
+    "want": "Möchtest du {name} adoptieren?",
+    "writeShelter": "Schreib dem Tierheim",
+    "messagePlaceholder": "Wer du bist, wie dein Zuhause ist, ob du andere Tiere hast, wie viel Zeit du ihm widmen kannst…",
+    "phone": "Telefon",
+    "note": "Das Tierheim erhält deine Nachricht und die E-Mail deines Kontos, um dir zu antworten. Niemand bezahlt etwas: Hier wird adoptiert, nicht gekauft.",
+    "send": "Anfrage senden"
+  },
+  "upload": {
+    "noClipboardPhoto": "In der Zwischenablage ist kein Foto: Kopiere eins und versuch es erneut",
+    "clipboardDenied": "Der Browser hat das Lesen der Zwischenablage nicht erlaubt",
+    "change": "Foto ändern",
+    "paste": "Foto einfügen",
+    "failed": "Hochladen fehlgeschlagen, bitte versuch es erneut",
+    "sent": "Foto gesendet!",
+    "sentHelp": "Ein Moderator prüft es vor der Veröffentlichung: Das geht meistens schnell. Bis dahin siehst du es in deinem Profil als „Ausstehend“.",
+    "toProfile": "Zu deinem Profil",
+    "another": "Noch ein Foto hochladen",
+    "forWhich": "Für welches Tier?",
+    "newPet": "Ein neues Tier",
+    "pick": "Tippe, um ein Foto auszuwählen",
+    "pickHelp": "oder füge es ein (Strg+V) oder zieh es hierher. Dann wähle den Zuschnitt",
+    "cityPlaceholder": "Berlin",
+    "rules": "Nur eigene Fotos, auf denen das Tier gut zu sehen ist. Keine erkennbaren Personen, Kennzeichen oder Adressen.",
+    "uploading": "Lädt hoch…",
+    "submit": "Zur Freigabe senden",
+    "intro": "Ein Foto nach dem anderen: Ein Moderator prüft es, bevor es in die Duelle kommt.",
+    "stepPhoto": "Das Foto",
+    "stepDetails": "Das Tier",
+    "drop": "Foto hierher ziehen",
+    "dropHelp": "oder mit Strg+V einfügen. JPG, PNG, WebP oder HEIC: danach wählst du den Ausschnitt.",
+    "browse": "Foto auswählen",
+    "remove": "Foto entfernen",
+    "addTo": "Das Foto kommt in die Galerie von {name}."
+  },
+  "join": {
+    "pickPhoto": "Wähle ein Foto",
+    "needAccount": "Um dein Tier anzumelden, brauchst du ein Konto.",
+    "loginOrRegister": "Anmelden oder registrieren",
+    "yourEntries": "Deine Teilnehmer",
+    "status": {
+      "pending": "Wartet auf Freigabe",
+      "approved": "Im Rennen",
+      "rejected": "Abgelehnt"
+    },
+    "askVotes": "Um Stimmen bitten",
+    "title": "Tier anmelden",
+    "pet": "Tier",
+    "whichPhoto": "Welches Foto",
+    "fromGallery": "Aus der Galerie",
+    "newPhoto": "Neues Foto",
+    "galleryPhoto": "Foto aus der Galerie",
+    "pickThemed": "Tippe, um ein Foto zum Thema auszuwählen",
+    "pickThemedHelp": "oder füge es ein (Strg+V) oder zieh es hierher. Es wird moderiert, bevor es ins Rennen geht",
+    "submit": "An der Challenge teilnehmen",
+    "onlyShelters": "Diese Challenge ist nur für Tiere aus verifizierten Tierheimen, die ein Zuhause suchen.",
+    "onlySpecies": "Diese Challenge ist nur für eine Tierart und du hast kein passendes Tier.",
+    "uploadFirst": "Lade zuerst dein Tier hoch und komm dann hierher zurück, um es anzumelden.",
+    "uploadPet": "Tier hochladen",
+    "allIn": "Alle deine passenden Tiere sind schon im Rennen. Viel Glück!"
+  },
+  "pet": {
+    "photoOf": "Foto von {name}",
+    "openGallery": "Galerie öffnen",
+    "trophies": "Gewonnene Challenges",
+    "zoomPhoto": "Foto vergrößern",
+    "photoStatus": {
+      "pending": "Ausstehend",
+      "approved": "Öffentlich",
+      "rejected": "Abgelehnt"
+    },
+    "addPhoto": "Foto hinzufügen",
+    "name": "Name",
+    "species": "Tierart",
+    "breed": "Rasse",
+    "city": "Stadt",
+    "editData": "Daten bearbeiten",
+    "confirmDelete": "Ja, {name} und alle Fotos löschen",
+    "delete": "Tier löschen",
+    "ogDescription": "{name} ist auf PetDuel: Wer ist süßer? Stimm auch ab!",
+    "notFound": "Tier nicht gefunden.",
+    "inChallenge": "{name} nimmt an einer Challenge teil: zur Challenge",
+    "rank": "Platz {rank} {among}",
+    "hearts": "Herzen"
+  },
+  "crop": {
+    "failed": "Der Browser kann dieses Foto nicht anzeigen: Wir schneiden es selbst zu, mittig.",
+    "shapes": "Fotoformate",
+    "variant": {
+      "v": {
+        "label": "Hochformat",
+        "uses": "Duelle am Computer, Galerie, Podium"
+      },
+      "h": {
+        "label": "Querformat",
+        "uses": "Duelle am Handy"
+      },
+      "s": {
+        "label": "Quadratisch",
+        "uses": "Profil, Ranglisten, Karten zum Teilen"
+      }
+    },
+    "alt": "Fotozuschnitt",
+    "zoom": "Zoom",
+    "center": "Zentrieren",
+    "help": "Zieh das Foto, um es zu verschieben, nutze den Regler (oder zwei Finger) zum Vergrößern."
+  },
+  "profile": {
+    "notFound": "Dieses Profil existiert nicht.",
+    "since": "Auf PetDuel seit {date}",
+    "pets": "{n} Tiere",
+    "admin": "Admin-Bereich",
+    "becomeShelter": "Du leitest ein Tierheim? Lass dich verifizieren",
+    "pending": "{n} Foto wartet auf Freigabe: Nur du siehst es, bis ein Moderator es prüft. | {n} Fotos warten auf Freigabe: Nur du siehst sie, bis ein Moderator sie prüft.",
+    "noPetsMine": "Du hast noch kein Tier hochgeladen.",
+    "noPets": "Noch keine öffentlichen Tiere.",
+    "uploadFirst": "Lade dein erstes Tier hoch",
+    "newPet": "Neues Tier",
+    "statPets": "Tiere",
+    "statVotes": "Abgegebene Stimmen",
+    "statWins": "Herzen",
+    "statTrophies": "Gewonnene Challenges",
+    "petsTitle": "Tiere · {n}",
+    "filter": "Tiere anzeigen",
+    "all": "Alle",
+    "jump": "Zu einem Tier springen",
+    "groups": {
+      "available": "Suchen ein Zuhause",
+      "fostered": "In Pflege",
+      "adopted": "Adoptiert",
+      "other": "Weitere Tiere"
+    },
+    "statGuests": "Tiere",
+    "visitShelter": "Unser Tierheim",
+    "seeGuests": "Tiere ansehen",
+    "manageTitle": "Tierheim verwalten",
+    "noNewRequests": "Keine neuen",
+    "customize": "Seite gestalten",
+    "customizeHint": "Titelbild, Karte, Zeiten, Spenden",
+    "addGuest": "Tier hinzufügen",
+    "addGuestHint": "Fotos eines neuen Tiers hochladen",
+    "publicPage": "Seite ansehen",
+    "publicPageHint": "So sehen sie andere",
+    "adoptionHint": "Um ein Tier unter „Suchen ein Zuhause“ zu zeigen, öffne unten seine Karte und füll die Adoptionsdaten aus.",
+    "pendingShelter": "Wir prüfen deine Angaben: tippe, um den Stand zu sehen.",
+    "rejectedShelter": "Die Prüfung hat nicht geklappt: tippe, um den Grund zu sehen und es erneut zu versuchen.",
+    "guestsTitle": "Unsere Tiere · {n}"
+  },
+  "shelter": {
+    "verified": "Verifiziertes Tierheim"
+  },
+  "challenges": {
+    "title": "Wöchentliche Challenges",
+    "lead": "Jeden Montag ein neues Thema. Melde dein Tier mit dem passenden Foto an, stimm für die anderen ab und hol dir die Trophäe.",
+    "upcoming": "Demnächst",
+    "past": "Ruhmeshalle"
+  },
+  "credits": {
+    "title": "Fotonachweise",
+    "lead": "Die Beispieltiere verwenden frei lizenzierte Fotos von Wikimedia Commons. Danke an alle, die sie aufgenommen und geteilt haben."
+  },
+  "ranking": {
+    "notFound": "Rangliste nicht gefunden",
+    "species": "Rangliste {species}",
+    "general": "Gesamtrangliste",
+    "this": {
+      "settimana": "diese Woche",
+      "mese": "diesen Monat"
+    },
+    "period": "Zeitraum",
+    "periods": {
+      "settimana": "Woche",
+      "mese": "Monat",
+      "sempre": "Allzeit"
+    },
+    "rollingNote": "Erhaltene Herzen {period}: Jede Stimme ist ein Herz. Zurück auf null am {date}.",
+    "totalNote": "Alle erhaltenen Herzen: Jede Stimme ist ein Herz, und Herzen gehen nie verloren.",
+    "adoptLink": "die beliebtesten Tierheimtiere, bereit zur Adoption",
+    "noDuels": "Noch keine Duelle {period}",
+    "empty": "Noch keine Tiere in dieser Rangliste.",
+    "goVote": "Jetzt abstimmen",
+    "yourPets": "Deine Tiere",
+    "bySpecies": "Top {n} nach Tierart",
+    "toTop": "Noch {n} Herz bis zu den Top {top} {among} | Noch {n} Herzen bis zu den Top {top} {among}",
+    "yourPetsNote": "Tiere außerhalb der Top {n} erscheinen nicht in der Rangliste: Diese siehst nur du.",
+    "city": "Stadt",
+    "allCities": "Alle Städte",
+    "inCity": "in {city}",
+    "nearYou": "📍 {city}, deine Stadt",
+    "cityTitle": "{title} in {city}",
+    "celebrate": "{name} ist Platz {place} {among}: feier es!",
+    "celebrateShare": "Karte teilen"
+  },
+  "shelters": {
+    "title": "Suchen ein Zuhause",
+    "seo": "Hunde, Katzen und andere Tiere aus verifizierten Tierheimen, die eine Familie suchen. Stimm für sie ab, teile sie, adoptiere sie.",
+    "lead": "Die Tiere aus verifizierten Tierheimen, die auf eine Familie warten, sortiert nach Beliebtheit in den Duellen. Jede Stimme und jedes Teilen bringt sie zu mehr Menschen.",
+    "near": "In der Nähe von",
+    "everywhere": "Überall",
+    "alt": "{name}, {species} sucht ein Zuhause",
+    "mostLoved": "Platz {n} der Beliebtesten",
+    "noneFiltered": "Mit diesen Filtern sucht gerade kein Tier ein Zuhause.",
+    "none": "Noch hat kein Tierheim seine Tiere veröffentlicht. Schau bald wieder vorbei!",
+    "verified": "Verifizierte Tierheime",
+    "available": "{n} suchen ein Zuhause",
+    "adopted": "{n} adoptiert",
+    "joinTitle": "Du leitest ein Tierheim oder einen Tierschutzverein?",
+    "joinText": "Lass dich verifizieren: Deine Tiere kommen mit der Schleife „Sucht ein Zuhause“ in die Duelle und du erhältst die Adoptionsanfragen hier, ohne deine Kontaktdaten zu veröffentlichen.",
+    "joinCta": "Verifizierung beantragen",
+    "notFound": "Tierheim nicht gefunden.",
+    "website": "Website des Tierheims",
+    "looking": "Suchen ein Zuhause",
+    "noneLooking": "Im Moment sucht kein Tier ein Zuhause.",
+    "adoptedTitle": "Adoptiert"
+  },
+  "area": {
+    "title": "Tierheim-Bereich",
+    "updated": "Daten aktualisiert.",
+    "verified": "Verifiziert",
+    "publicPage": "Öffentliche Seite",
+    "step1": "Lade deine Tiere über {upload} hoch, wie jedes andere Tier.",
+    "yourProfile": "deinem Profil",
+    "adoptionCard": "Adoptionsprofil",
+    "step2": "Ist das Foto freigegeben, öffne die Seite des Tiers in {profile} und füge das {card} hinzu.",
+    "step3": "Das Tier erscheint unter „Suchen ein Zuhause“ und in den Duellen mit der Schleife. Anfragen kommen hier unten an.",
+    "description": "Vorstellung",
+    "website": "Website",
+    "modEmail": "E-Mail für Moderatoren",
+    "private": "privat",
+    "edit": "Tierheimseite gestalten",
+    "requests": "Adoptionsanfragen",
+    "newCount": "{n} neu",
+    "whichRequests": "Welche Anfragen",
+    "open": "Offen",
+    "closed": "Geschlossen",
+    "noneOpen": "Keine offenen Anfragen.",
+    "noneClosed": "Keine geschlossenen Anfragen.",
+    "status": {
+      "new": "Neu",
+      "contacted": "Kontaktiert",
+      "closed": "Geschlossen"
+    },
+    "for": "Für",
+    "mailSubject": "Adoption von {name}",
+    "markContacted": "Als kontaktiert markieren",
+    "reopen": "Wieder öffnen",
+    "confirmClose": "Ja, Tierheim schließen und alle Adoptionsprofile entfernen",
+    "closeShelter": "Tierheim schließen",
+    "pending": "In Prüfung",
+    "pendingText": "Danke! Ein Moderator prüft die Daten (meist innerhalb weniger Tage). Falls nötig, schreiben wir dir an {email}.",
+    "pendingHint": "Du kannst deine Tiere schon hochladen: Die Schleife „Sucht ein Zuhause“ wird nach der Verifizierung aktiv.",
+    "confirmWithdraw": "Ja, Anfrage zurückziehen",
+    "withdraw": "Anfrage zurückziehen",
+    "rejected": "Die Anfrage wurde nicht freigegeben: {reason}. Korrigiere die Daten und sende sie erneut.",
+    "applyTitle": "Als Tierheim verifizieren lassen",
+    "applyText": "Für Tierheime, Katzenhäuser und Vereine, die Tiere vermitteln. Wir prüfen, ob der Verein existiert: Steuernummer, E-Mail und Telefon sehen nur die Moderatoren. Auf PetDuel wird nur adoptiert: kein Verkauf, keine Preise.",
+    "name": "Name des Tierheims",
+    "public": "öffentlich",
+    "descriptionPlaceholder": "Wer ihr seid, wie viele Tiere ihr betreut, wie Adoptionen und Vorkontrollen ablaufen…",
+    "websiteSocial": "Website oder Social-Media-Seite",
+    "optionalPublic": "optional, öffentlich",
+    "taxCode": "Steuernummer oder USt-IdNr. des Vereins",
+    "email": "E-Mail des Vereins",
+    "submit": "Zur Verifizierung senden"
+  },
+  "menu": {
+    "open": "Kontomenü",
+    "seeProfile": "Dein Profil ansehen",
+    "shelter": "Tierheim-Bereich",
+    "guest": "Melde dich an, um deine Tiere hochzuladen, bei Challenges mitzumachen und Benachrichtigungen zu erhalten.",
+    "theme": "Design",
+    "themes": {
+      "system": "Automatisch",
+      "light": "Hell",
+      "dark": "Dunkel"
+    },
+    "becomeShelter": "Leitest du ein Tierheim?"
+  },
+  "gallery": {
+    "manage": "Verwalten",
+    "done": "Fertig",
+    "showAll": "Alle {n} Fotos",
+    "showLess": "Weniger Fotos"
+  },
+  "consent": {
+    "title": "Cookies und Werbung",
+    "text": "Die Seite verwendet nur die Cookies, die sie zum Funktionieren braucht: Anmeldung, Sprache und Design. Google-Anzeigen verwenden Cookies, um Werbung zu messen und zu personalisieren – wir laden sie nur, wenn du zustimmst. Du kannst deine Wahl jederzeit im Menü ändern.",
+    "accept": "Akzeptieren",
+    "reject": "Ablehnen",
+    "now": {
+      "ads": "Aktuell: Google-Anzeigen akzeptiert.",
+      "none": "Aktuell: Google-Anzeigen abgelehnt."
+    },
+    "more": "Cookie-Richtlinie"
+  },
+  "legal": {
+    "title": "Rechtliches",
+    "privacy": "Datenschutz",
+    "cookie": "Cookies",
+    "terms": "Nutzungsbedingungen"
+  },
+  "account": {
+    "title": "Dein Konto",
+    "exportTitle": "Deine Daten",
+    "exportText": "Lade eine Datei mit allem herunter, was PetDuel über dich weiß: Konto, Tiere, Fotos, abgegebene Stimmen, Adoptionsanfragen und Hinweise.",
+    "exportButton": "Meine Daten herunterladen",
+    "consentText": "Wähle, ob Google-Anzeigen mit Cookies gezeigt werden.",
+    "consentButton": "Auswahl ändern",
+    "deleteTitle": "Konto löschen",
+    "deleteText": "Wir löschen sofort Profil, Tiere, Fotos, Tierheim, Adoptionsanfragen und Hinweise. Deine abgegebenen Stimmen bleiben, aber anonym. Das lässt sich nicht rückgängig machen.",
+    "deleteButton": "Konto löschen",
+    "passwordLabel": "Zur Sicherheit: Gib dein Passwort ein",
+    "understood": "Ich verstehe: Meine Tiere und ihre Fotos verschwinden für immer",
+    "deleteConfirm": "Endgültig löschen"
+  },
+  "badges": {
+    "title": "Erfolge",
+    "next": "Nächstes Ziel: {emoji} {name}, noch {n} Herz | Nächstes Ziel: {emoji} {name}, noch {n} Herzen",
+    "firstWin": {
+      "name": "Erster Sieg",
+      "desc": "Hat sein erstes Duell gewonnen"
+    },
+    "loved": {
+      "name": "Geliebt",
+      "desc": "Mindestens 25 Herzen erhalten"
+    },
+    "adored": {
+      "name": "Vergöttert",
+      "desc": "Mindestens 100 Herzen erhalten"
+    },
+    "star": {
+      "name": "Star",
+      "desc": "Mindestens 250 Herzen erhalten"
+    },
+    "legend": {
+      "name": "Legende",
+      "desc": "Mindestens 1000 Herzen erhalten"
+    },
+    "petOfWeek": {
+      "name": "Tier der Woche",
+      "desc": "Hat eine Woche als Erstes seiner Art beendet"
+    },
+    "photogenic": {
+      "name": "Fotogen",
+      "desc": "Mindestens 5 freigegebene Fotos"
+    },
+    "challenger": {
+      "name": "Herausforderer",
+      "desc": "Hat an mindestens 3 Challenges teilgenommen"
+    },
+    "adopted": {
+      "name": "Zuhause gefunden",
+      "desc": "Über ein Tierheim auf PetDuel adoptiert"
+    }
+  },
+  "shelterEdit": {
+    "look": "Aussehen",
+    "banner": "Titelbild",
+    "bannerHint": "(breit, oben auf der Seite)",
+    "logo": "Logo",
+    "accent": "Farbe der Seite",
+    "accents": {
+      "coral": "Koralle",
+      "sky": "Himmel",
+      "mint": "Minze",
+      "sun": "Sonne",
+      "lilac": "Flieder",
+      "forest": "Wald"
+    },
+    "tagline": "Satz unter dem Namen",
+    "taglinePlaceholder": "Seit 1998 finden sie bei uns ein Zuhause",
+    "story": "Wer ihr seid und wie man helfen kann",
+    "help": "So kannst du helfen",
+    "helpPlaceholder": "Ehrenamt, Pflegestelle, Gassi gehen, Spendenaktionen…",
+    "needs": "Was ihr braucht",
+    "needsPlaceholder": "Welpenfutter",
+    "add": "Hinzufügen",
+    "removeItem": "{item} entfernen",
+    "donateUrl": "Spendenlink",
+    "where": "Wo ihr seid",
+    "address": "Adresse",
+    "addressPlaceholder": "Rosenstraße 12",
+    "findOnMap": "Auf der Karte finden",
+    "addressFirst": "Gib zuerst die Adresse ein.",
+    "noResults": "Adresse nicht gefunden: schreib sie anders oder tippe auf die Karte.",
+    "mapLabel": "Karte: tippen, um die Markierung zu setzen",
+    "mapHint": "Nicht an der richtigen Stelle? Zieh die Markierung oder tippe auf die Karte.",
+    "mapEmpty": "Ohne Markierung zeigt die Seite keine Karte.",
+    "pinByHand": "Von Hand setzen",
+    "hideMap": "Karte entfernen",
+    "hours": "Besuchszeiten",
+    "hoursPlaceholder": "Mo–Sa 10–12 und 15–18 Uhr\nSonntag nach Vereinbarung",
+    "contacts": "Kontakte und Social Media",
+    "publicEmail": "Öffentliche E-Mail",
+    "publicPhone": "Öffentliches Telefon",
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "tiktok": "TikTok",
+      "youtube": "YouTube"
+    },
+    "privateHint": "Diese beiden bleiben privat: nur die Moderatoren nutzen sie.",
+    "dragHint": "Zieh das Foto, um den sichtbaren Ausschnitt zu wählen.",
+    "useImage": "Dieses nehmen",
+    "change": "Ändern",
+    "choose": "Foto wählen",
+    "remove": "Entfernen"
+  },
+  "shelterPage": {
+    "logoAlt": "Logo von {name}",
+    "waiting": "warten auf ein Zuhause",
+    "foundHome": "haben ein Zuhause gefunden",
+    "actions": "Schnellkontakt",
+    "meet": "Lerne unsere Tiere kennen",
+    "donate": "Spenden",
+    "site": "Website",
+    "call": "Anrufen",
+    "write": "Schreiben",
+    "directions": "Route",
+    "about": "Über uns",
+    "help": "So kannst du helfen",
+    "needs": "Wir brauchen",
+    "copy": "Kopieren",
+    "copied": "Kopiert ✓",
+    "where": "Hier findest du uns",
+    "mapOf": "Karte von {name}",
+    "hours": "Besuchszeiten",
+    "follow": "Folge uns und schreib uns"
+  }
+}

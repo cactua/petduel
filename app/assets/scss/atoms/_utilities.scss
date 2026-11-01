@@ -1,0 +1,9 @@
+@use "../abstracts" as *;
+
+// Utility singole, prefisso u-
+.u-muted { color: var(--muted); }
+
+.u-visually-hidden { @include visually-hidden; }
+
+// Segnaposto: le schermate dei duelli devono stare in uno schermo (vedi layouts/default)
+.u-fit-screen { min-height: 0; }

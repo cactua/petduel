@@ -1,0 +1,611 @@
+[
+  {
+    "name": "Biscotto",
+    "species": "cane",
+    "breed": "Meticcio",
+    "city": "Torino",
+    "photos": [
+      "File:20160327 pies nierasowy 3693.jpg",
+      "File:20160327 pies nierasowy 3691.jpg"
+    ]
+  },
+  {
+    "name": "Nala",
+    "species": "cane",
+    "breed": "Incrocio husky",
+    "city": "Trento",
+    "photos": [
+      "File:Keeshond Siberian Husky crossbreed puppy.jpg"
+    ]
+  },
+  {
+    "name": "Bruno",
+    "species": "cane",
+    "breed": "Labrador",
+    "city": "Verona",
+    "photos": [
+      "File:Portrait of a labrador retriever.jpg"
+    ]
+  },
+  {
+    "name": "Sole",
+    "species": "cane",
+    "breed": "Golden retriever",
+    "city": "Bologna",
+    "photos": [
+      "File:Dülmen, Hausdülmen, Golden Retriever -- 2022 -- 5530.jpg",
+      "File:Dülmen, Hausdülmen, Golden Retriever -- 2022 -- 6055.jpg",
+      "File:Dülmen, Hausdülmen, Golden Retriever -- 2022 -- 5767.jpg"
+    ]
+  },
+  {
+    "name": "Milù",
+    "species": "cane",
+    "breed": "Maltipoo",
+    "city": "Roma",
+    "photos": [
+      "File:Maltipoo (95574).jpg"
+    ]
+  },
+  {
+    "name": "Fiocco",
+    "species": "cane",
+    "breed": "West Highland terrier",
+    "city": "Bergamo",
+    "photos": [
+      "File:West Highland White Terrier face portrait May 2023.jpg"
+    ]
+  },
+  {
+    "name": "Riccio",
+    "species": "cane",
+    "breed": "Barboncino",
+    "city": "Firenze",
+    "photos": [
+      "File:Tapsi Portrait Balamuri Coorg Feb24 D72 25969.jpg",
+      "File:Head Miniature Poodle Mysore May24 A7CR 00091.jpg"
+    ]
+  },
+  {
+    "name": "Neve",
+    "species": "cane",
+    "breed": "Pastore svizzero",
+    "city": "Aosta",
+    "photos": [
+      "File:2008-07-11 White German Shepherd pup chilling at the Coker Arboretum.jpg"
+    ]
+  },
+  {
+    "name": "Ambra",
+    "species": "cane",
+    "breed": "Golden retriever",
+    "city": "Padova",
+    "photos": [
+      "File:Callie the golden retriever puppy.jpg"
+    ]
+  },
+  {
+    "name": "Barbarella",
+    "species": "cane",
+    "breed": "Cane nudo cinese",
+    "city": "Milano",
+    "photos": [
+      "File:Barbarella the Chinese crested puppy (12929).jpg"
+    ]
+  },
+  {
+    "name": "Pongo",
+    "species": "cane",
+    "breed": "Meticcio",
+    "city": "Lecce",
+    "photos": [
+      "File:Puppy with a blow-up collar (53254).jpg"
+    ]
+  },
+  {
+    "name": "Tramonto",
+    "species": "cane",
+    "breed": "Meticcio",
+    "city": "Cagliari",
+    "photos": [
+      "File:Contre-jour photograph of a standing puppy at sunset with colorful sky in Don Det Laos.jpg"
+    ]
+  },
+  {
+    "name": "Grigio",
+    "species": "gatto",
+    "breed": "Certosino",
+    "city": "Genova",
+    "photos": [
+      "File:Chartreux-cat-edouard-marie.jpg"
+    ]
+  },
+  {
+    "name": "Tigro",
+    "species": "gatto",
+    "breed": "Europeo tigrato",
+    "city": "Bari",
+    "photos": [
+      "File:Cat March 2010-1.jpg",
+      "File:Cat August 2010-2.jpg",
+      "File:Cat August 2010-3.jpg"
+    ]
+  },
+  {
+    "name": "Pepe",
+    "species": "gatto",
+    "breed": "Bianco e nero",
+    "city": "Napoli",
+    "photos": [
+      "File:Domestic cat 2011 G02.jpg"
+    ]
+  },
+  {
+    "name": "Mascherina",
+    "species": "gatto",
+    "breed": "Bianco e nero",
+    "city": "Palermo",
+    "photos": [
+      "File:Cat front2017.jpg"
+    ]
+  },
+  {
+    "name": "Naro",
+    "species": "gatto",
+    "breed": "Incrocio siamese",
+    "city": "Pisa",
+    "photos": [
+      "File:Naro, blue-eyed cross-siamese cat, at Josselin 04.jpg"
+    ]
+  },
+  {
+    "name": "Zar",
+    "species": "gatto",
+    "breed": "Siberiano",
+    "city": "Udine",
+    "photos": [
+      "File:Siberian black tabby blotched cat 04.jpg"
+    ]
+  },
+  {
+    "name": "Dobby",
+    "species": "gatto",
+    "breed": "Sphynx",
+    "city": "Milano",
+    "photos": [
+      "File:Sphynx - studio portrait photographs of cats.jpg",
+      "File:1 adult cat Sphynx. img 047.jpg"
+    ]
+  },
+  {
+    "name": "Zucca",
+    "species": "gatto",
+    "breed": "Rosso tigrato",
+    "city": "Modena",
+    "photos": [
+      "File:Cautious Tabby Red Cat.jpg"
+    ]
+  },
+  {
+    "name": "Luna",
+    "species": "gatto",
+    "breed": "Europeo grigio",
+    "city": "Parma",
+    "photos": [
+      "File:Cat, Chora, Naxos, Greece (approx. GPS location) julesvernex2.jpg"
+    ]
+  },
+  {
+    "name": "Oreo",
+    "species": "gatto",
+    "breed": "Bianco e nero",
+    "city": "Ancona",
+    "photos": [
+      "File:Black and white cat–IMG 6332 02.jpg"
+    ]
+  },
+  {
+    "name": "Cuoricino",
+    "species": "gatto",
+    "breed": "Bianco e nero",
+    "city": "Siracusa",
+    "photos": [
+      "File:BLACK-WHITE-CAT-SITIA-CRETE-GREECE.jpg",
+      "File:Black-White-Cat-Sitia-Crete-5.jpg"
+    ]
+  },
+  {
+    "name": "Macchia",
+    "species": "coniglio",
+    "breed": "Coniglio pezzato",
+    "city": "Vicenza",
+    "photos": [
+      "File:2017-08-19 AT Wien 13 Hietzing, Tiergarten Schönbrunn, Oryctolagus cuniculus f. domesticus (48250983416).jpg"
+    ]
+  },
+  {
+    "name": "Caramella",
+    "species": "coniglio",
+    "breed": "Coniglio fulvo",
+    "city": "Rimini",
+    "photos": [
+      "File:2017-08-19 AT Wien 13 Hietzing, Tiergarten Schönbrunn, Oryctolagus cuniculus f. domesticus (48197613676).jpg"
+    ]
+  },
+  {
+    "name": "Nuvola",
+    "species": "coniglio",
+    "breed": "Coniglio grigio",
+    "city": "Brescia",
+    "photos": [
+      "File:2018-06-22 AT Wien 13 Hietzing, Tiergarten Schönbrunn, Oryctolagus cuniculus f. domesticus (49019471113).jpg"
+    ]
+  },
+  {
+    "name": "Batuffolo",
+    "species": "coniglio",
+    "breed": "Testa di leone",
+    "city": "Como",
+    "photos": [
+      "File:Lionhead Rabbit with black nose.jpg"
+    ]
+  },
+  {
+    "name": "Cocco",
+    "species": "coniglio",
+    "breed": "Coniglio nano",
+    "city": "Roma",
+    "photos": [
+      "File:Coconut the rabbit 09.jpg",
+      "File:Coconut the rabbit 07.jpg"
+    ]
+  },
+  {
+    "name": "Ombra",
+    "species": "coniglio",
+    "breed": "Orecchie lunghe",
+    "city": "Livorno",
+    "photos": [
+      "File:Domestic rabbit with large ears.jpg"
+    ]
+  },
+  {
+    "name": "Pallino",
+    "species": "coniglio",
+    "breed": "Coniglio pezzato",
+    "city": "Treviso",
+    "photos": [
+      "File:Heimtier 004 2023 08 26.jpg"
+    ]
+  },
+  {
+    "name": "Domino",
+    "species": "coniglio",
+    "breed": "Bianco e nero",
+    "city": "Salerno",
+    "photos": [
+      "File:2017-08-19 AT Wien 13 Hietzing, Tiergarten Schönbrunn, Oryctolagus cuniculus f. domesticus (48301649691).jpg"
+    ]
+  },
+  {
+    "name": "Biscottina",
+    "species": "coniglio",
+    "breed": "Coniglio rosso",
+    "city": "Pescara",
+    "photos": [
+      "File:Trix the rabbit.jpg"
+    ]
+  },
+  {
+    "name": "Cioccolata",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Torino",
+    "photos": [
+      "File:Cavia porcellus on bed.jpg",
+      "File:Cavia porcellus eating parsley.jpg"
+    ]
+  },
+  {
+    "name": "Pirata",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Milano",
+    "photos": [
+      "File:Guinea pig pet 3.jpg"
+    ]
+  },
+  {
+    "name": "Arancino",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Catania",
+    "photos": [
+      "File:Cochon d'Inde (Cavia porcellus) (2).jpg"
+    ]
+  },
+  {
+    "name": "Arya",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Bologna",
+    "photos": [
+      "File:\"+arya+\" Cavia porcellus - tikus belanda 01.jpg"
+    ]
+  },
+  {
+    "name": "Tricolore",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Reggio Emilia",
+    "photos": [
+      "File:Cochon d'Inde (Cavia porcellus) (3).jpg"
+    ]
+  },
+  {
+    "name": "Rossella",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Lucca",
+    "photos": [
+      "File:Caviidae Cavia porcellus 1.jpg"
+    ]
+  },
+  {
+    "name": "Gemelli",
+    "species": "roditore",
+    "breed": "Porcellini d'India",
+    "city": "Verona",
+    "photos": [
+      "File:Two guinea pigs eating dandelion leaves.jpg"
+    ]
+  },
+  {
+    "name": "Panna",
+    "species": "roditore",
+    "breed": "Porcellino d'India",
+    "city": "Trieste",
+    "photos": [
+      "File:Guinea pig with a tonsure.jpg"
+    ]
+  },
+  {
+    "name": "Celeste",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Venezia",
+    "photos": [
+      "File:Budgerigar (Melopsittacus undulatus) -4.jpg"
+    ]
+  },
+  {
+    "name": "Azzurro",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Ferrara",
+    "photos": [
+      "File:Melopsittacus undulatus -blue -pet-8.jpg"
+    ]
+  },
+  {
+    "name": "Limone",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Sorrento",
+    "photos": [
+      "File:Melopsittacus undulatus - pet female recessive pied mutation 1.jpg",
+      "File:Melopsittacus undulatus - pet female recessive pied mutation 2.jpg"
+    ]
+  },
+  {
+    "name": "Trio",
+    "species": "uccello",
+    "breed": "Pappagallini ondulati",
+    "city": "Mantova",
+    "photos": [
+      "File:Melopsittacus undulatus -a family of five pet Budgerigars-8a.jpg"
+    ]
+  },
+  {
+    "name": "Blu",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Novara",
+    "photos": [
+      "File:Melopsittacus undulatus -pet in cage -male-8a.jpg"
+    ]
+  },
+  {
+    "name": "Kiwi",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Napoli",
+    "photos": [
+      "File:Melopsittacus undulatus -pet perching on finger-8a.jpg",
+      "File:Melopsittacus undulatus -pet perching on finger-8a (1).jpg"
+    ]
+  },
+  {
+    "name": "Banana",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Taranto",
+    "photos": [
+      "File:My pet budgerigar sitting on my shoulder.jpg"
+    ]
+  },
+  {
+    "name": "Cielo",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Imperia",
+    "photos": [
+      "File:Pet lovebirds.png"
+    ]
+  },
+  {
+    "name": "Mirtillo",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Matera",
+    "photos": [
+      "File:Budgerigar Cute Birds.jpg"
+    ]
+  },
+  {
+    "name": "Perla",
+    "species": "uccello",
+    "breed": "Pappagallino ondulato",
+    "city": "Siena",
+    "photos": [
+      "File:Male blue recessive pied budgerigar perched on hand.jpg"
+    ]
+  },
+  {
+    "name": "Ciuffo",
+    "species": "uccello",
+    "breed": "Calopsite",
+    "city": "Pisa",
+    "photos": [
+      "File:Nymphicus hollandicus - pet ADMpied.jpg"
+    ]
+  },
+  {
+    "name": "Tigrotto",
+    "species": "rettile",
+    "breed": "Geco leopardino",
+    "city": "Lecce",
+    "photos": [
+      "File:Juvenile-leopard-gecko-2.jpg"
+    ]
+  },
+  {
+    "name": "Leopoldo",
+    "species": "rettile",
+    "breed": "Geco leopardino",
+    "city": "Varese",
+    "photos": [
+      "File:EUBLEPHARIS-MACULARIUS Leopard-Gecko Leopardgecko 201705276007.jpg",
+      "File:EUBLEPHARIS-MACULARIUS Leopard-Gecko Leopardgecko 201705276003.jpg"
+    ]
+  },
+  {
+    "name": "Occhione",
+    "species": "rettile",
+    "breed": "Geco leopardino",
+    "city": "Prato",
+    "photos": [
+      "File:Leopard gecko wink.jpg"
+    ]
+  },
+  {
+    "name": "Mango",
+    "species": "rettile",
+    "breed": "Geco leopardino",
+    "city": "Arezzo",
+    "photos": [
+      "File:Leopard gecko (Eublepharis macularius), Entomica 2.jpg"
+    ]
+  },
+  {
+    "name": "Gelato",
+    "species": "rettile",
+    "breed": "Geco leopardino",
+    "city": "Rovigo",
+    "photos": [
+      "File:Leopard Gecko.jpg"
+    ]
+  },
+  {
+    "name": "Drago",
+    "species": "rettile",
+    "breed": "Pogona",
+    "city": "Latina",
+    "photos": [
+      "File:Pet Bearded Dragon.jpg"
+    ]
+  },
+  {
+    "name": "Spike",
+    "species": "rettile",
+    "breed": "Pogona",
+    "city": "Londra",
+    "photos": [
+      "File:Pogona vitticeps - London 1.jpg",
+      "File:Pogona vitticeps - London 2.jpg"
+    ]
+  },
+  {
+    "name": "Sabbia",
+    "species": "rettile",
+    "breed": "Pogona",
+    "city": "Cagliari",
+    "photos": [
+      "File:Pogona vitticeps - London 3.jpg",
+      "File:Pogona vitticeps - London 4.jpg"
+    ]
+  },
+  {
+    "name": "Furetto",
+    "species": "altro",
+    "breed": "Furetto",
+    "city": "Torino",
+    "photos": [
+      "File:Salon agriculture 2009 - furet recentre.jpg"
+    ]
+  },
+  {
+    "name": "Birba",
+    "species": "altro",
+    "breed": "Furetto",
+    "city": "Milano",
+    "photos": [
+      "File:A ferret.jpg"
+    ]
+  },
+  {
+    "name": "Fantasma",
+    "species": "altro",
+    "breed": "Furetto albino",
+    "city": "Bolzano",
+    "photos": [
+      "File:White Ferret with pink snout.jpg"
+    ]
+  },
+  {
+    "name": "Zorro",
+    "species": "altro",
+    "breed": "Furetto",
+    "city": "Cremona",
+    "photos": [
+      "File:Pet ferret - geograph.org.uk - 8007550.jpg"
+    ]
+  },
+  {
+    "name": "Spillo",
+    "species": "altro",
+    "breed": "Riccio africano",
+    "city": "Trento",
+    "photos": [
+      "File:Hedgehog in Snow.jpg"
+    ]
+  },
+  {
+    "name": "Pungolo",
+    "species": "altro",
+    "breed": "Riccio africano",
+    "city": "Granada",
+    "photos": [
+      "File:Atelerix albiventris in Spain.jpg"
+    ]
+  },
+  {
+    "name": "Castagna",
+    "species": "altro",
+    "breed": "Riccio africano",
+    "city": "Avellino",
+    "photos": [
+      "File:Atelerix albiventris 316800096.jpg"
+    ]
+  }
+]
