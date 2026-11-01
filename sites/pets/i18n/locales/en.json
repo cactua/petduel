@@ -29,7 +29,8 @@
     "forWhich": "Which pet?",
     "newPet": "A new pet",
     "rules": "Only your own photos where the animal is clearly visible. No recognisable people, licence plates or addresses.",
-    "stepDetails": "The pet"
+    "stepDetails": "The pet",
+    "namePlaceholder": "Biscotto"
   },
   "join": {
     "needAccount": "You need an account to enter your pet.",
@@ -175,5 +176,13 @@
       "title": "After the bath",
       "description": "Wet fur, lost dignity."
     }
-  }
+  },
+  "reasons": [
+    "No animal visible",
+    "Inappropriate content",
+    "Low-quality photo",
+    "Not your photo or copyrighted",
+    "Personal data visible",
+    "Off-topic for the challenge"
+  ]
 }

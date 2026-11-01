@@ -3,7 +3,14 @@
     "enterYours": "Inscribe a tu personaje"
   },
   "notif": {
-    "weeklyHearts": "La semana pasada tus personajes recibieron {n} corazón. El más querido: {name} | La semana pasada tus personajes recibieron {n} corazones. El más querido: {name}"
+    "weeklyHearts": "La semana pasada tus personajes recibieron {n} corazón. El más querido: {name} | La semana pasada tus personajes recibieron {n} corazones. El más querido: {name}",
+    "empty": "Nada todavía. Aquí verás imágenes aprobadas, resultados de retos y subidas en el ranking.",
+    "photoApproved": "La imagen de {name} ha sido aprobada",
+    "photoApprovedChallenge": "La imagen de {name} para el reto \"{challenge}\" ha sido aprobada",
+    "photoRemoved": "La imagen de {name} ha sido eliminada: {reason}",
+    "photoRemovedChallenge": "La imagen de {name} para el reto \"{challenge}\" ha sido eliminada: {reason}",
+    "photoRejected": "La imagen de {name} no ha sido aprobada: {reason}",
+    "photoRejectedChallenge": "La imagen de {name} para el reto \"{challenge}\" no ha sido aprobada: {reason}"
   },
   "validation": {
     "petName": "Ponle un nombre a tu personaje"
@@ -12,10 +19,16 @@
     "petHidden": "Elegiste mantener este personaje fuera de rankings y retos",
     "petNotFound": "Personaje no encontrado",
     "alreadyEntered": "Este personaje ya participa en el reto",
-    "pickPet": "Elige el personaje"
+    "pickPet": "Elige el personaje",
+    "photoAlreadyModerated": "Imagen no encontrada o ya moderada",
+    "photoNotFound": "Imagen no encontrada",
+    "photoTooBig": "La imagen supera los 10 MB",
+    "photoMissing": "Falta la imagen",
+    "tooManyPending": "Ya tienes {n} imágenes pendientes de aprobación"
   },
   "auth": {
-    "registerLead": "La necesitas para subir tus personajes y tener su galería."
+    "registerLead": "La necesitas para subir tus personajes y tener su galería.",
+    "loginLead": "Entra para subir tus personajes y ver tu perfil."
   },
   "share": {
     "text": "Mira a {name} en @:{'site.name'}: ¿cuál te gusta más?"
@@ -28,7 +41,24 @@
     "forWhich": "¿Para qué personaje?",
     "newPet": "Un personaje nuevo",
     "rules": "Solo dibujos tuyos o publicados con permiso del artista. Nada de contenido explícito o para adultos.",
-    "stepDetails": "El personaje"
+    "stepDetails": "El personaje",
+    "noClipboardPhoto": "No hay ninguna imagen en el portapapeles: cópiala y vuelve a intentarlo",
+    "change": "Cambiar imagen",
+    "paste": "Pegar imagen",
+    "sent": "¡Imagen enviada!",
+    "another": "Subir otra imagen",
+    "pick": "Toca para elegir una imagen",
+    "intro": "Una imagen cada vez: un moderador la revisa antes de que entre en los duelos.",
+    "stepPhoto": "La imagen",
+    "drop": "Arrastra una imagen aquí",
+    "browse": "Elegir una imagen",
+    "remove": "Quitar imagen",
+    "addTo": "La imagen se añadirá a la galería de {name}.",
+    "credit": "Artista",
+    "creditPlaceholder": "Nombre o apodo del artista",
+    "creditUrl": "Página del artista",
+    "creditHelp": "Si no has hecho tú el dibujo, escribe quién lo dibujó: su nombre aparece debajo de la imagen.",
+    "namePlaceholder": "Ember"
   },
   "join": {
     "needAccount": "Necesitas una cuenta para inscribir a tu personaje.",
@@ -36,13 +66,22 @@
     "pet": "Personaje",
     "uploadFirst": "Primero sube a tu personaje y luego vuelve aquí para inscribirlo.",
     "uploadPet": "Sube un personaje",
-    "allIn": "Todos tus personajes ya están compitiendo. ¡Mucha suerte!"
+    "allIn": "Todos tus personajes ya están compitiendo. ¡Mucha suerte!",
+    "pickPhoto": "Elige una imagen",
+    "whichPhoto": "Qué imagen",
+    "newPhoto": "Imagen nueva",
+    "galleryPhoto": "Imagen de la galería",
+    "pickThemed": "Toca para elegir una imagen del tema"
   },
   "pet": {
     "breed": "Especie",
     "delete": "Eliminar personaje",
     "ogDescription": "{name} está en @:{'site.name'}: ¿cuál te gusta más? ¡Vota tú también!",
-    "notFound": "Personaje no encontrado."
+    "notFound": "Personaje no encontrado.",
+    "photoOf": "Imagen de {name}",
+    "zoomPhoto": "Ampliar la imagen",
+    "addPhoto": "Añadir imagen",
+    "confirmDelete": "Sí, eliminar a {name} y todas sus imágenes"
   },
   "profile": {
     "pets": "{n} personajes",
@@ -57,7 +96,8 @@
     "groups": {
       "other": "Otros personajes"
     },
-    "addGuestHint": "Sube los dibujos de un nuevo personaje"
+    "addGuestHint": "Sube los dibujos de un nuevo personaje",
+    "pending": "{n} imagen está pendiente de aprobación: solo la ves tú hasta que un moderador la revise. | {n} imágenes están pendientes de aprobación: solo las ves tú hasta que un moderador las revise."
   },
   "challenges": {
     "lead": "Retos temáticos: inscribe a tu personaje con el dibujo adecuado, vota a los demás y gana el trofeo."
@@ -79,6 +119,41 @@
     "petOfWeek": {
       "name": "Personaje de la semana",
       "desc": "Terminó una semana en primer lugar"
+    },
+    "photogenic": {
+      "name": "Estrella de la galería",
+      "desc": "Al menos 5 imágenes aprobadas"
     }
+  },
+  "nav": {
+    "uploadPhoto": "Sube una imagen"
+  },
+  "reasons": [
+    "No es el dibujo de un personaje",
+    "Contenido inapropiado",
+    "Imagen de baja calidad",
+    "Dibujo que no es tuyo o publicado sin permiso del artista",
+    "Datos personales visibles",
+    "No encaja con el reto"
+  ],
+  "photo": {
+    "prev": "Imagen anterior",
+    "next": "Imagen siguiente",
+    "credit": "Arte: {text}",
+    "creditInfo": "Artista y licencia de la imagen"
+  },
+  "crop": {
+    "failed": "El navegador no puede mostrar esta imagen: la recortaremos nosotros, por el centro.",
+    "shapes": "Formatos de la imagen",
+    "alt": "Recorte de la imagen",
+    "help": "Arrastra la imagen para moverla, usa la barra (o dos dedos) para ampliar."
+  },
+  "credits": {
+    "title": "Créditos de las imágenes",
+    "lead": "Los artistas de los dibujos publicados. Gracias a quienes los han creado y compartido."
+  },
+  "gallery": {
+    "showAll": "Las {n} imágenes",
+    "showLess": "Mostrar menos imágenes"
   }
 }

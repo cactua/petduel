@@ -55,13 +55,13 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
       @vote="emit('vote', $event)"
     />
     <div v-else-if="duel" class="duel-panel__empty">
-      <PetMascot class="duel-panel__mascot" />
+      <SiteMascot class="duel-panel__mascot" />
       <slot name="empty">
         <p>{{ emptyText ?? `${$t('duel.allVoted')} 🎉` }}</p>
       </slot>
     </div>
     <div v-else-if="failed" class="duel-panel__empty">
-      <PetMascot still class="duel-panel__mascot" />
+      <SiteMascot still class="duel-panel__mascot" />
       <p>{{ $t('duel.loadFailed') }}</p>
       <button type="button" class="btn btn--primary" @click="emit('retry')">{{ $t('common.retry') }}</button>
     </div>

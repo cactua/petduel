@@ -3,6 +3,8 @@ import satori from 'satori'
 import sharp from 'sharp'
 import { Resvg } from '@resvg/resvg-js'
 import site from '#site'
+import siteIt from '#site-it'
+import { siteBrand } from '#shared/site'
 import { TOP_RANK, type Species } from '#shared/models'
 import { speciesName } from '#shared/speciesNames'
 import { pets, users } from '../db/schema'
@@ -16,15 +18,18 @@ export const CARD_FORMATS = {
 } as const
 export type CardFormat = keyof typeof CARD_FORMATS
 
-// Stessi colori dell'app (main.css, tema chiaro "cuccioli")
-const C = { coral: '#ff6f61', cream: '#fff8f1', ink: '#4a2d1e', muted: '#a27e68', sun: '#ffc83d', white: '#ffffff', glow: 'rgba(255,111,97,.55)' }
+// Colori e mascotte del sito (site.config.ts, o quelli del nucleo se il sito non li cambia)
+const brand = siteBrand(site)
+const C = { coral: brand.accent, cream: brand.background, ink: brand.ink, muted: brand.muted, sun: '#ffc83d', white: '#ffffff', glow: brand.glow }
+const [BLOB_1, BLOB_2, BLOB_3] = brand.blobs
 
 const svgUri = (svg: string) => `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`
 
 const PAW_ICON = (fill: string) => svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="${fill}"><ellipse cx="12" cy="15.5" rx="5" ry="4.2"/><circle cx="6" cy="9.5" r="2.2"/><circle cx="9.8" cy="6" r="2.2"/><circle cx="14.2" cy="6" r="2.2"/><circle cx="18" cy="9.5" r="2.2"/></g></svg>`)
 
-// Biscotto, la mascotte (come PetMascot.vue)
-const MASCOT = svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84 76"><ellipse cx="15" cy="34" rx="11" ry="20" fill="#b9814f" transform="rotate(20 15 34)"/><ellipse cx="69" cy="34" rx="11" ry="20" fill="#b9814f" transform="rotate(-20 69 34)"/><ellipse cx="42" cy="42" rx="28" ry="26" fill="#f6d7ae"/><ellipse cx="54" cy="35" rx="9" ry="8" fill="#e8b98a"/><circle cx="32" cy="40" r="4.2" fill="#3d2416"/><circle cx="52" cy="40" r="4.2" fill="#3d2416"/><circle cx="33.4" cy="38.5" r="1.4" fill="#fff"/><circle cx="53.4" cy="38.5" r="1.4" fill="#fff"/><ellipse cx="42" cy="50" rx="5" ry="3.6" fill="#3d2416"/><path d="M35 55q7 6 14 0" fill="none" stroke="#3d2416" stroke-width="2" stroke-linecap="round"/><ellipse cx="42" cy="60" rx="3.6" ry="4.6" fill="#ff7b8a"/><ellipse cx="25" cy="51" rx="5" ry="3" fill="#ffb3b3" opacity=".75"/><ellipse cx="59" cy="51" rx="5" ry="3" fill="#ffb3b3" opacity=".75"/><ellipse cx="28" cy="72" rx="9" ry="5" fill="#f6d7ae"/><ellipse cx="56" cy="72" rx="9" ry="5" fill="#f6d7ae"/></svg>`)
+const MASCOT = brand.mascotSvg ? svgUri(brand.mascotSvg) : null
+// La domanda dei duelli del sito (le card sono in italiano)
+const QUESTION: string = siteIt.duel.question
 
 // Orecchie della specie (come PetEars.vue): forma, proporzioni e posizione rispetto alla cornice, in unità di "s"
 interface Ear { svg: string, w: number, h: number, top: number, inset: number, rot: number, pair: boolean }
@@ -219,13 +224,13 @@ function facts(d: CardData, size: number, align: 'center' | 'flex-start') {
 const logo = (size: number) => box({ alignItems: 'center', gap: size * 0.2, fontFamily: 'Fredoka', fontSize: size, color: C.coral },
   img(PAW_ICON(C.coral), { width: size * 0.9, height: size * 0.9, transform: 'rotate(-14deg)' }), site.name)
 
-// Biscotto che fa la domanda in un fumetto
+// La mascotte che fa la domanda in un fumetto; senza mascotte resta il fumetto, senza punta
 const ask = (size: number) => box({ alignItems: 'flex-end', gap: size * 0.2 },
-  img(MASCOT, { width: size * 2.6, height: size * 2.35 }),
+  !!MASCOT && img(MASCOT, { width: size * 2.6, height: size * 2.35 }),
   box({
-    marginBottom: size * 0.5, background: C.white, padding: `${size * 0.3}px ${size * 0.65}px`, fontFamily: 'Fredoka', fontSize: size,
-    borderRadius: `${size}px ${size}px ${size}px ${size * 0.2}px`, boxShadow: `0 ${size * 0.3}px ${size * 0.7}px -${size * 0.45}px rgba(74,45,30,.5)`,
-  }, 'Chi è più carino?'))
+    marginBottom: MASCOT ? size * 0.5 : 0, background: C.white, padding: `${size * 0.3}px ${size * 0.65}px`, fontFamily: 'Fredoka', fontSize: size,
+    borderRadius: MASCOT ? `${size}px ${size}px ${size}px ${size * 0.2}px` : size, boxShadow: `0 ${size * 0.3}px ${size * 0.7}px -${size * 0.45}px rgba(74,45,30,.5)`,
+  }, QUESTION))
 
 const cta = (text: string, size: number) => box({
   background: C.coral, color: C.white, fontFamily: 'Fredoka', fontSize: size, padding: `${size * 0.38}px ${size * 0.9}px`,
@@ -239,7 +244,7 @@ const blob = (x: number, y: number, r: number, color: string) =>
 // Con il badge la foto della storia cede un po' di spazio ai bigliettini
 const storyPhoto = (d: CardData) => ({ width: 856, height: d.badge ? 880 : 960 })
 
-// Sfondo crema con macchie pastello; il contenuto sta in un livello sopra (in satori gli elementi posizionati coprono gli altri)
+// Sfondo chiaro con macchie pastello; il contenuto sta in un livello sopra (in satori gli elementi posizionati coprono gli altri)
 function page(blobs: Node[], content: Record<string, unknown>, ...children: (Node | string | null | false)[]): Node {
   return box({ position: 'relative', width: '100%', height: '100%', background: C.cream, fontFamily: 'Nunito', color: C.ink },
     ...blobs,
@@ -248,7 +253,7 @@ function page(blobs: Node[], content: Record<string, unknown>, ...children: (Nod
 
 function storyLayout(d: CardData, photo: string, host: string): Node {
   return page(
-    [blob(70, 90, 250, '#ffd9e6'), blob(1060, 980, 300, '#d7f2ff'), blob(40, 1800, 280, '#fff1b8')],
+    [blob(70, 90, 250, BLOB_1), blob(1060, 980, 300, BLOB_2), blob(40, 1800, 280, BLOB_3)],
     { flexDirection: 'column', alignItems: 'center', gap: 36, padding: '76px 80px 90px' },
     box({ alignSelf: 'stretch', justifyContent: 'space-between', alignItems: 'center' },
       logo(64),
@@ -262,7 +267,7 @@ function storyLayout(d: CardData, photo: string, host: string): Node {
 
 function ogLayout(d: CardData, photo: string, host: string): Node {
   return page(
-    [blob(40, 40, 170, '#ffd9e6'), blob(1180, 330, 200, '#d7f2ff'), blob(560, 660, 150, '#fff1b8')],
+    [blob(40, 40, 170, BLOB_1), blob(1180, 330, 200, BLOB_2), blob(560, 660, 150, BLOB_3)],
     { alignItems: 'center', gap: 56, padding: '40px 56px 20px 80px' },
     framed(d, photo, { width: 360, height: 380 }, 10, 64),
     box({ flex: 1, flexDirection: 'column', alignItems: 'flex-start', gap: 22 },

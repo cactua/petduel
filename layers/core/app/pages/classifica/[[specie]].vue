@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  PERIODS, SPECIES_EMOJI, SPECIES_SLUG, TOP_RANK, speciesFromSlug,
+  HAS_BREED_CITY, PERIODS, SPECIES_EMOJI, SPECIES_SLUG, TOP_RANK, speciesFromSlug,
   type Leaderboard, type Period, type RankedPet, type Species,
 } from '#shared/models'
 
@@ -20,12 +20,12 @@ const speciesModel = computed({
   get: () => species.value,
   set: (s: Species | undefined) => navigateTo({ path: s ? `/classifica/${SPECIES_SLUG[s]}` : '/classifica', query: route.query }),
 })
-// Città nella query (?citta=Torino): con la specie fa "Top 5 cani a Torino"
-const city = computed(() => (typeof route.query.citta === 'string' && route.query.citta.trim()) || undefined)
+// Città nella query (?citta=Torino): con la specie fa "Top 5 cani a Torino". Solo sui siti che chiedono la città
+const city = computed(() => (HAS_BREED_CITY && typeof route.query.citta === 'string' && route.query.citta.trim()) || undefined)
 const cityQuery = computed(() => (city.value ? { citta: city.value } : {}))
 const periodLink = (p: Period) => ({ path: route.path, query: { ...cityQuery.value, ...(p === 'settimana' ? {} : { periodo: p }) } })
 const setCity = (c: string) => navigateTo({ path: route.path, query: { ...route.query, citta: c || undefined } })
-const { data: cityList } = useLazyFetch('/api/leaderboard/cities', { server: false })
+const { data: cityList } = useLazyFetch('/api/leaderboard/cities', { server: false, immediate: HAS_BREED_CITY })
 
 const { data, status } = await useFetch<Leaderboard>('/api/leaderboard', {
   query: { species, period, city },

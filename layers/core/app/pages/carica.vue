@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { NO_SPECIES, SPECIES, SPECIES_EMOJI, petFieldsSchema, type PetGallery, type Profile, type Species } from '#shared/models'
+import site from '#site'
+import { HAS_BREED_CITY, NO_SPECIES, SPECIES, SPECIES_EMOJI, petFieldsSchema, photoCreditSchema, type PetGallery, type Profile, type Species } from '#shared/models'
 import type { Crops } from '#shared/images'
 
 definePageMeta({ middleware: 'auth' })
@@ -17,6 +18,8 @@ const form = reactive(blankForm())
 const photo = ref<File | null>(null)
 const preview = ref('')
 const crops = ref<Crops | null>(null)
+// Artista dell'immagine, sui siti che lo chiedono
+const credit = reactive({ credit: '', creditUrl: '' })
 const sending = ref(false)
 const error = ref('')
 const done = ref(false)
@@ -63,6 +66,15 @@ async function submit() {
     }
     Object.entries(check.data).forEach(([k, v]) => body.append(k, v))
   }
+  if (site.askCredit) {
+    const check = photoCreditSchema.safeParse(credit)
+    if (!check.success) {
+      error.value = tr(check.error.issues[0]?.message ?? 'validation.check')
+      return
+    }
+    body.append('credit', check.data.credit)
+    body.append('creditUrl', check.data.creditUrl)
+  }
   body.append('photo', photo.value)
   if (crops.value) body.append('crops', JSON.stringify(crops.value))
 
@@ -85,6 +97,7 @@ function again() {
   setPhoto(null)
   crops.value = null
   Object.assign(form, blankForm())
+  Object.assign(credit, { credit: '', creditUrl: '' })
   refreshProfile()
 }
 </script>
@@ -158,7 +171,7 @@ function again() {
           <h2 class="upload-page__step-title"><span class="upload-page__step" /> {{ $t('upload.stepDetails') }}</h2>
           <div class="field">
             <label for="name" class="label">{{ $t('pet.name') }}</label>
-            <input id="name" v-model="form.name" required maxlength="40" placeholder="Biscotto" class="input upload-page__input">
+            <input id="name" v-model="form.name" required maxlength="40" :placeholder="$t('upload.namePlaceholder')" class="input upload-page__input">
           </div>
 
           <fieldset v-if="SPECIES.length" class="upload-page__species">
@@ -169,7 +182,7 @@ function again() {
             </label>
           </fieldset>
 
-          <div class="upload-page__two">
+          <div v-if="HAS_BREED_CITY" class="upload-page__two">
             <div class="field">
               <label for="breed" class="label">{{ $t('pet.breed') }} <small>({{ $t('common.optional') }})</small></label>
               <input id="breed" v-model="form.breed" maxlength="40" placeholder="Beagle" class="input upload-page__input">
@@ -181,6 +194,7 @@ function again() {
           </div>
         </template>
         <p v-else-if="targetPet" class="upload-page__adding">{{ $t('upload.addTo', { name: targetPet.name }) }}</p>
+        <CreditFields v-if="site.askCredit" v-model="credit" />
 
         <p class="upload-page__rules">{{ $t('upload.rules') }}</p>
         <p v-if="error" class="error" role="alert">{{ error }}</p>

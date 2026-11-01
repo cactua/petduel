@@ -29,7 +29,8 @@
     "forWhich": "Per quale pet?",
     "newPet": "Un nuovo pet",
     "rules": "Solo foto tue in cui si vede bene l'animale. Niente persone riconoscibili, targhe o indirizzi.",
-    "stepDetails": "Il pet"
+    "stepDetails": "Il pet",
+    "namePlaceholder": "Biscotto"
   },
   "join": {
     "needAccount": "Per iscrivere il tuo pet devi avere un account.",
@@ -175,5 +176,13 @@
       "title": "Dopo il bagnetto",
       "description": "Pelo bagnato, dignità perduta."
     }
-  }
+  },
+  "reasons": [
+    "Non si vede un animale",
+    "Contenuto inappropriato",
+    "Foto di bassa qualità",
+    "Foto non tua o protetta da copyright",
+    "Dati personali visibili",
+    "Non in tema con la sfida"
+  ]
 }

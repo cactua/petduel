@@ -36,7 +36,7 @@ async function submit() {
 <template>
   <section class="auth-form">
     <form class="auth-form__form" novalidate @submit.prevent="submit">
-      <PetMascot class="auth-form__mascot" />
+      <SiteMascot class="auth-form__mascot" />
       <h1 class="auth-form__title">{{ isRegister ? $t('auth.registerTitle') : $t('auth.loginTitle') }}</h1>
       <p class="auth-form__lead">
         {{ isRegister ? $t('auth.registerLead') : $t('auth.loginLead') }}

@@ -29,7 +29,8 @@
     "forWhich": "¿Para qué mascota?",
     "newPet": "Una mascota nueva",
     "rules": "Solo fotos tuyas en las que se vea bien al animal. Nada de personas reconocibles, matrículas o direcciones.",
-    "stepDetails": "La mascota"
+    "stepDetails": "La mascota",
+    "namePlaceholder": "Biscotto"
   },
   "join": {
     "needAccount": "Necesitas una cuenta para inscribir a tu mascota.",
@@ -175,5 +176,13 @@
       "title": "Después del baño",
       "description": "Pelo mojado, dignidad perdida."
     }
-  }
+  },
+  "reasons": [
+    "No se ve ningún animal",
+    "Contenido inapropiado",
+    "Foto de baja calidad",
+    "La foto no es tuya o tiene copyright",
+    "Datos personales visibles",
+    "No encaja con el reto"
+  ]
 }

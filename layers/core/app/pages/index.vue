@@ -17,7 +17,7 @@ onMounted(load)
     <ChallengeBanner />
     <div class="home__head">
       <div class="home__ask">
-        <PetMascot class="home__mascot" />
+        <SiteMascot class="home__mascot" />
         <h1 class="home__question">{{ $t('duel.question') }}</h1>
       </div>
       <span class="home__count" :title="$t('duel.votedTimes', { n: votes })">♥ {{ votes }}</span>
@@ -53,7 +53,7 @@ onMounted(load)
     @include mq-down(md) { @include visually-hidden; }
   }
 
-  // Biscotto fa la domanda dentro un fumetto
+  // La mascotte fa la domanda dentro un fumetto (se il sito non ne ha, resta il fumetto senza punta)
   &__ask { display: flex; align-items: flex-end; gap: $space-1; min-width: 0; }
 
   &__mascot {
@@ -73,6 +73,8 @@ onMounted(load)
     box-shadow: 0 8px 18px -12px var(--shadow);
 
     @include mq(md) { font-size: 24px; margin-bottom: 14px; }
+
+    &:first-child { border-radius: 20px; }
   }
 
   &__count {

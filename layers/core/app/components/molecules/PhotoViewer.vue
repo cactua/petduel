@@ -79,7 +79,7 @@ onBeforeUnmount(() => {
           </template>
           <div class="photo-viewer__foot">
             <span v-if="many">{{ index! + 1 }} / {{ photos.length }}</span>
-            <a v-if="photo.credit" :href="photo.credit.url ?? undefined" target="_blank" rel="noopener noreferrer" class="photo-viewer__credit">{{ $t('photo.credit', { text: photo.credit.text }) }}</a>
+            <a v-if="photo.credit" :href="photo.credit.url ?? undefined" target="_blank" rel="noopener noreferrer nofollow ugc" class="photo-viewer__credit">{{ $t('photo.credit', { text: photo.credit.text }) }}</a>
           </div>
         </template>
       </div>

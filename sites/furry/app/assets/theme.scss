@@ -1,0 +1,61 @@
+// Palette del sito furry: viola al posto del corallo, sfondo lavanda; giallo dei premi e rosa dei cuori restano.
+// Ridefinisce le variabili del nucleo (layers/core/app/assets/scss/abstracts/_tokens.scss). "html:root" pesa più
+// di ":root", così vince qualunque sia l'ordine dei fogli di stile
+$furry-light: (
+  bg: #f8f5ff,
+  surface: #fff,
+  ink: #2a2140,
+  muted: #6b5f86,
+  coral: #8b5cf6,
+  coral-deep: #7c3aed,
+  coral-soft: #ece4ff,
+  action: #6d28d9,
+  sun-ink: #2a2140,
+  line: #e6def6,
+  shadow: rgba(42, 33, 64, 0.18),
+  glow: rgba(139, 92, 246, 0.5),
+  blob-1: #e7dcff,
+  blob-2: #d2f4ee,
+  blob-3: #ffe0ef,
+);
+
+$furry-dark: (
+  bg: #16121f,
+  surface: #211b2e,
+  ink: #f2ecff,
+  muted: #b2a5cc,
+  coral: #a78bfa,
+  coral-deep: #7c3aed,
+  coral-soft: #2f2545,
+  action: #7c3aed,
+  line: #342a48,
+  shadow: rgba(0, 0, 0, 0.5),
+  glow: rgba(0, 0, 0, 0.55),
+  blob-1: #2d2245,
+  blob-2: #173233,
+  blob-3: #3a2034,
+);
+
+@mixin furry-vars($theme) {
+  @each $name, $value in $theme {
+    --#{"" + $name}: #{$value};
+  }
+}
+
+html:root {
+  @include furry-vars($furry-light);
+
+  .duel-arena {
+    padding-top: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html:root:not([data-theme="light"]) {
+    @include furry-vars($furry-dark);
+  }
+}
+
+html:root[data-theme="dark"] {
+  @include furry-vars($furry-dark);
+}

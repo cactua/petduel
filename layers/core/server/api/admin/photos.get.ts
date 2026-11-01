@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, isNull, sql } from 'drizzle-orm'
+import { and, asc, desc, eq, isNotNull, isNull, or, sql } from 'drizzle-orm'
 import { z } from 'zod'
 import type { ModerationItem } from '#shared/models'
 import { photos, pets, users } from '../../db/schema'
@@ -19,13 +19,17 @@ export default defineEventHandler(async (event): Promise<ModerationItem[]> => {
     species: pets.species,
     approvedPhotos: sql<number>`(select count(*)::int from ${photos} p2 where p2.pet_id = ${pets.id} and p2.status = 'approved')`,
     owner: users.username,
+    credit: photos.credit,
+    creditUrl: photos.creditUrl,
     challenge: sql<string | null>`(select c.title from challenge_entries e join challenges c on c.id = e.challenge_id where e.photo_id = ${photos.id} limit 1)`,
   })
     .from(photos)
     .innerJoin(pets, eq(pets.id, photos.petId))
     .innerJoin(users, eq(users.id, pets.ownerId))
-    // Le foto di esempio (con autore citato) non sono degli utenti: fuori dalle approvate
-    .where(status === 'pending' ? eq(photos.status, 'pending') : and(eq(photos.status, 'approved'), isNull(photos.credit)))
+    // Le foto di esempio (con autore citato e mai passate da un moderatore) non sono degli utenti: fuori dalle approvate
+    .where(status === 'pending'
+      ? eq(photos.status, 'pending')
+      : and(eq(photos.status, 'approved'), or(isNull(photos.credit), isNotNull(photos.reviewedBy))))
     .orderBy(status === 'pending' ? asc(photos.createdAt) : desc(photos.reviewedAt))
     .limit(status === 'pending' ? 100 : 60)
 
@@ -36,5 +40,6 @@ export default defineEventHandler(async (event): Promise<ModerationItem[]> => {
     pet: { id: r.petId, name: r.petName, species: r.species, approvedPhotos: r.approvedPhotos },
     owner: r.owner,
     challenge: r.challenge,
+    credit: photoCredit(r.credit, r.creditUrl),
   }))
 })

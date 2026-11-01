@@ -74,7 +74,7 @@
     "days": "{n}T"
   },
   "reasons": [
-    "Kein Tier zu sehen",
+    "Das Motiv ist nicht zu sehen",
     "Unangemessener Inhalt",
     "Foto von schlechter Qualität",
     "Nicht dein Foto oder urheberrechtlich geschützt",
@@ -233,7 +233,12 @@
     "dropHelp": "oder mit Strg+V einfügen. JPG, PNG, WebP oder HEIC: danach wählst du den Ausschnitt.",
     "browse": "Foto auswählen",
     "remove": "Foto entfernen",
-    "addTo": "Das Foto kommt in die Galerie von {name}."
+    "addTo": "Das Foto kommt in die Galerie von {name}.",
+    "credit": "Urheber",
+    "creditPlaceholder": "Name oder Spitzname",
+    "creditUrl": "Link zum Urheber",
+    "creditHelp": "Wenn du das Bild nicht selbst gemacht hast, gib an, wer es war: Der Name erscheint unter dem Bild.",
+    "namePlaceholder": "Luna"
   },
   "join": {
     "pickPhoto": "Wähle ein Foto",

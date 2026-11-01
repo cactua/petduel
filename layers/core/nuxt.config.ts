@@ -1,11 +1,22 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // Nucleo condiviso da tutti i siti: ogni sito in sites/<nome> lo estende e cambia solo ciò che serve.
 // I percorsi qui partono da questa cartella: "~" e "~~" indicano invece la cartella del sito
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { addTemplate, updateTemplates } from "@nuxt/kit";
 import { fileURLToPath } from "node:url";
 import { LANGUAGES } from "./i18n/languages";
 
 const coreDir = (path: string) => fileURLToPath(new URL(path, import.meta.url));
+
+// Testi del sito sopra quelli del nucleo: gli oggetti si uniscono, liste e testi si sostituiscono
+type Messages = Record<string, unknown>;
+const isObject = (v: unknown): v is Messages => typeof v === "object" && v !== null && !Array.isArray(v);
+function mergeMessages(base: Messages, over: Messages): Messages {
+  const out: Messages = { ...base };
+  for (const [k, v] of Object.entries(over)) out[k] = isObject(v) && isObject(out[k]) ? mergeMessages(out[k] as Messages, v) : v;
+  return out;
+}
 const isDev = process.env.NODE_ENV === "development";
 
 // Domini da cui Google AdSense carica immagini e pixel di misurazione
@@ -33,10 +44,28 @@ export default defineNuxtConfig({
   },
   modules: [
     // "#site" è il site.config.ts del sito che si sta avviando (categorie, temi delle sfide…),
-    // "#site-it" i suoi testi in italiano (nomi delle categorie per admin e card da condividere)
+    // "#site-it" i testi in italiano del nucleo con sopra quelli del sito (motivi di rifiuto e categorie
+    // per l'admin, domanda e categorie per le card). È un modulo generato e non il file JSON: i file in
+    // i18n/locales importati nel browser vengono compilati dal modulo i18n e non sono più testo semplice
     (_options, nuxt) => {
       nuxt.options.alias["#site"] = join(nuxt.options.rootDir, "site.config.ts");
-      nuxt.options.alias["#site-it"] = join(nuxt.options.rootDir, "i18n/locales/it.json");
+      const files = [coreDir("./i18n/locales/it.json"), join(nuxt.options.rootDir, "i18n/locales/it.json")];
+      const template = addTemplate({
+        filename: "site-it.ts",
+        write: true,
+        getContents: () => {
+          const messages = files.map(f => JSON.parse(readFileSync(f, "utf8"))).reduce(mergeMessages, {});
+          return `const messages: Record<string, any> = ${JSON.stringify(messages, null, 2)}
+export default messages
+`;
+        },
+      });
+      nuxt.options.alias["#site-it"] = template.dst;
+      nuxt.hook("builder:watch", (_event, path) => {
+        if (files.some(f => f.replaceAll("\\", "/").endsWith(path.replaceAll("\\", "/")))) {
+          return updateTemplates({ filter: t => t.filename === "site-it.ts" });
+        }
+      });
     },
     "nuxt-auth-utils",
     "nuxt-security",
@@ -77,7 +106,6 @@ export default defineNuxtConfig({
           name: "viewport",
           content: "width=device-width, initial-scale=1, viewport-fit=cover",
         },
-        { name: "theme-color", content: "#fff6ef" },
       ],
       link: [
         { rel: "preconnect", href: "https://fonts.googleapis.com" },

@@ -37,7 +37,7 @@ function decide(i: number) {
 const PEEK_MS = 420
 const PEEK_SLOP = 8 // px di tremolio tollerati prima di considerarlo un trascinamento
 const peek = ref<number | null>(null)
-const peekPhotos = computed(() => props.pets.map(p => ({ image: p.image, alt: `${p.name}, ${p.breed}` })))
+const peekPhotos = computed(() => props.pets.map(p => ({ image: p.image, alt: [p.name, p.breed].filter(Boolean).join(', ') })))
 let peekTimer: ReturnType<typeof setTimeout> | undefined
 const cancelPeek = () => clearTimeout(peekTimer)
 
@@ -160,7 +160,7 @@ onBeforeUnmount(() => {
           <!-- Autore e licenza dietro una "i": la scritta fissa copriva la foto -->
           <span v-if="pet.credit" class="duel-arena__credit" @pointerdown.stop @keydown.stop>
             <a
-              v-if="creditOpen === i" :href="pet.credit.url ?? undefined" target="_blank" rel="noopener noreferrer"
+              v-if="creditOpen === i" :href="pet.credit.url ?? undefined" target="_blank" rel="noopener noreferrer nofollow ugc"
               class="duel-arena__credit-link"
             >{{ $t('photo.credit', { text: pet.credit.text }) }}</a>
             <button

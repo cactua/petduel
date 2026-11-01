@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import site from '#site'
+import siteIt from '#site-it'
 import type { Badge } from './badges'
 
 // Categorie del sito (per PetDuel le specie). Se il sito non ne ha, ogni contenuto ha categoria "" e competono tutti insieme
@@ -40,14 +41,10 @@ export const ANON_VOTE_WEIGHT = 0.25
 export const PHOTO_STATUS =['pending', 'approved', 'rejected'] as const
 export type PhotoStatus = (typeof PHOTO_STATUS)[number]
 
-export const REJECT_REASONS = [
-  'Non si vede un animale',
-  'Contenuto inappropriato',
-  'Foto di bassa qualità',
-  'Foto non tua o protetta da copyright',
-  'Dati personali visibili',
-  'Non in tema con la sfida',
-] as const
+// Motivi di rifiuto di un'immagine, in italiano come li sceglie il moderatore e come restano nel database.
+// Ogni sito può avere i suoi ("reasons" nel suo i18n/locales/it.json); l'ultimo è sempre quello delle sfide
+export const REJECT_REASONS = siteIt.reasons as [string, ...string[]]
+export const CHALLENGE_REJECT_REASON = REJECT_REASONS[REJECT_REASONS.length - 1]!
 
 // Regole condivise tra form (client) e API (server), così i messaggi coincidono
 const text = (max: number) => z.string().trim().max(max)
@@ -69,11 +66,16 @@ export const loginSchema = z.object({
   email: emailSchema,
   password: z.string().min(1).max(128),
 })
+/** Razza e città si chiedono solo se il sito le usa (breedAndCity in site.config.ts) */
+export const HAS_BREED_CITY = site.breedAndCity !== false
+// Dove non si usano restano sempre vuote, qualunque cosa arrivi
+const breedCity = HAS_BREED_CITY ? text(40).default('') : z.unknown().transform(() => '')
+
 export const petFieldsSchema = z.object({
   name: text(40).min(1, 'validation.petName'),
   species: speciesSchema,
-  breed: text(40).default(''),
-  city: text(40).default(''),
+  breed: breedCity,
+  city: breedCity,
 })
 
 /** Autore e licenza di una foto non scattata dal proprietario (es. Wikimedia Commons) */
@@ -235,6 +237,8 @@ export interface ModerationItem {
   owner: string
   // Titolo della sfida se la foto è stata inviata per una sfida (va controllato che sia in tema)
   challenge: string | null
+  // Artista indicato da chi carica (siti con askCredit): va controllato che il link sia pulito
+  credit: PhotoCredit | null
 }
 
 // --- Avvisi per il proprietario ---
@@ -276,6 +280,12 @@ export type ShelterStatus = (typeof SHELTER_STATUS)[number]
 const optionalUrl = z.string().trim().max(200)
   .refine(v => !v || /^https?:\/\/[^\s/$.?#].[^\s]*$/i.test(v), 'validation.website')
   .default('')
+
+/** Artista di un'immagine caricata, sui siti che lo chiedono (askCredit in site.config.ts): nome e, se c'è, la sua pagina */
+export const photoCreditSchema = z.object({
+  credit: text(60).default(''),
+  creditUrl: optionalUrl,
+})
 
 const phoneSchema = z.string().trim().max(30).regex(/^[+\d\s./-]*$/, 'validation.phone').default('')
 

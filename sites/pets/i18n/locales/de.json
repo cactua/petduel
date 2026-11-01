@@ -29,7 +29,8 @@
     "forWhich": "Für welches Tier?",
     "newPet": "Ein neues Tier",
     "rules": "Nur eigene Fotos, auf denen das Tier gut zu sehen ist. Keine erkennbaren Personen, Kennzeichen oder Adressen.",
-    "stepDetails": "Das Tier"
+    "stepDetails": "Das Tier",
+    "namePlaceholder": "Biscotto"
   },
   "join": {
     "needAccount": "Um dein Tier anzumelden, brauchst du ein Konto.",
@@ -175,5 +176,13 @@
       "title": "Nach dem Bad",
       "description": "Nasses Fell, verlorene Würde."
     }
-  }
+  },
+  "reasons": [
+    "Kein Tier zu sehen",
+    "Unangemessener Inhalt",
+    "Foto von schlechter Qualität",
+    "Nicht dein Foto oder urheberrechtlich geschützt",
+    "Persönliche Daten sichtbar",
+    "Passt nicht zur Challenge"
+  ]
 }

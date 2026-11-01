@@ -54,7 +54,7 @@ const { loggedIn } = useUserSession()
       </li>
     </ol>
     <div v-else-if="data" class="shelters-page__empty">
-      <PetMascot class="shelters-page__mascot" />
+      <SiteMascot class="shelters-page__mascot" />
       <p class="shelters-page__empty-text">{{ city || species ? $t('shelters.noneFiltered') : $t('shelters.none') }}</p>
     </div>
 

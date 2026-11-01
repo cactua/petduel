@@ -1,5 +1,6 @@
 <script setup lang="ts">
-// Biscotto, la mascotte di PetDuel: fa le domande e consola quando non c'è niente da vedere
+// Biscotto, la mascotte di PetDuel: fa le domande e consola quando non c'è niente da vedere.
+// Un sito può avere la sua (o nessuna): un SiteMascot.vue in sites/<nome>/app/components, e lo stesso disegno in brand.mascotSvg del site.config.ts per le card
 defineProps<{ still?: boolean }>()
 </script>
 

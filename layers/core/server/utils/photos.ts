@@ -7,6 +7,8 @@ import {
   IMAGE_FORMATS, IMAGE_VARIANTS, VARIANT_KEYS, centeredCrop, cropsSchema, variantName,
   type Crop, type Crops, type ImageFormat, type ImageVariant,
 } from '#shared/images'
+import { photoCreditSchema } from '#shared/models'
+import site from '#site'
 
 const MAX_PHOTO_BYTES = 10 * 1024 * 1024
 const MAX_INPUT_PIXELS = 50_000_000
@@ -64,7 +66,7 @@ async function writeVariants(image: string, source: Source, crops: Crops) {
  * Legge un upload multipart: restituisce i campi testuali e salva la foto con i ritagli scelti
  * (campo "crops", JSON) in tutte le varianti. La ricodifica scarta qualsiasi contenuto nascosto
  * nel file originale (EXIF, GPS, payload) e rifiuta ciò che non è un'immagine. Senza ritagli
- * si usano quelli centrati.
+ * si usano quelli centrati. Se il sito lo chiede legge anche l'artista (campi "credit" e "creditUrl").
  */
 export async function readPhotoUpload(event: H3Event) {
   const parts = await readMultipartFormData(event)
@@ -90,6 +92,17 @@ export async function readPhotoUpload(event: H3Event) {
   }
   delete fields.crops
 
+  // Artista, solo sui siti che lo chiedono; controllato prima di salvare l'immagine
+  let credit: { credit: string | null, creditUrl: string | null } = { credit: null, creditUrl: null }
+  if (site.askCredit) {
+    const parsed = photoCreditSchema.safeParse({ credit: fields.credit ?? '', creditUrl: fields.creditUrl ?? '' })
+    if (!parsed.success) throw createError({ statusCode: 400, statusMessage: parsed.error.issues[0]?.message ?? 'validation.check' })
+    // Il link senza un nome non si mostrerebbe da nessuna parte
+    if (parsed.data.credit) credit = { credit: parsed.data.credit, creditUrl: parsed.data.creditUrl || null }
+  }
+  delete fields.credit
+  delete fields.creditUrl
+
   // Foto raddrizzata secondo l'EXIF: i ritagli sono calcolati su questa
   let oriented: Source
   try {
@@ -110,7 +123,7 @@ export async function readPhotoUpload(event: H3Event) {
     await removeImage(image)
     throw e
   }
-  return { fields, image }
+  return { fields, image, credit }
 }
 
 /**

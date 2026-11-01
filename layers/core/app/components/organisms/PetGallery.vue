@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SPECIES, petFieldsSchema, type PetGallery } from '#shared/models'
+import { HAS_BREED_CITY, SPECIES, petFieldsSchema, type PetGallery } from '#shared/models'
 import { HEART_TIERS } from '#shared/badges'
 
 const props = defineProps<{ pet: PetGallery, editable?: boolean, linkTitle?: boolean, hero?: boolean }>()
@@ -155,7 +155,7 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
         <div v-else class="pet-gallery__gone">{{ photo.rejectReason ? rejectReason(photo.rejectReason) : '' }}</div>
         <a
           v-if="photo.credit && !editable" class="pet-gallery__credit" :href="photo.credit.url ?? undefined"
-          target="_blank" rel="noopener noreferrer"
+          target="_blank" rel="noopener noreferrer nofollow ugc"
         >{{ $t('photo.credit', { text: photo.credit.text }) }}</a>
         <figcaption v-if="editable && (managing || photo.status !== 'approved')" class="pet-gallery__caption">
           <span class="pet-gallery__status">{{ photo.status !== 'approved' ? $t(`pet.photoStatus.${photo.status}`) : '' }}</span>
@@ -177,8 +177,10 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
             <option v-for="s in SPECIES" :key="s" :value="s">{{ speciesText(s, 'one') }}</option>
           </select>
         </label>
-        <label class="pet-gallery__field">{{ $t('pet.breed') }}<input v-model="form.breed" maxlength="40" class="input"></label>
-        <label class="pet-gallery__field">{{ $t('pet.city') }}<input v-model="form.city" maxlength="40" class="input"></label>
+        <template v-if="HAS_BREED_CITY">
+          <label class="pet-gallery__field">{{ $t('pet.breed') }}<input v-model="form.breed" maxlength="40" class="input"></label>
+          <label class="pet-gallery__field">{{ $t('pet.city') }}<input v-model="form.city" maxlength="40" class="input"></label>
+        </template>
       </div>
       <div class="pet-gallery__tools">
         <button type="button" class="btn btn--ghost btn--sm" @click="editing = false">{{ $t('common.cancel') }}</button>

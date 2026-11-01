@@ -29,7 +29,8 @@
     "forWhich": "Pour quel animal ?",
     "newPet": "Un nouvel animal",
     "rules": "Uniquement tes propres photos où l'on voit bien l'animal. Pas de personnes reconnaissables, de plaques d'immatriculation ni d'adresses.",
-    "stepDetails": "L'animal"
+    "stepDetails": "L'animal",
+    "namePlaceholder": "Biscotto"
   },
   "join": {
     "needAccount": "Il te faut un compte pour inscrire ton animal.",
@@ -175,5 +176,13 @@
       "title": "Après le bain",
       "description": "Poils mouillés, dignité perdue."
     }
-  }
+  },
+  "reasons": [
+    "Aucun animal visible",
+    "Contenu inapproprié",
+    "Photo de mauvaise qualité",
+    "Photo qui n'est pas la tienne ou protégée par le droit d'auteur",
+    "Données personnelles visibles",
+    "Hors sujet pour le défi"
+  ]
 }

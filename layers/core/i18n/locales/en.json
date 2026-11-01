@@ -74,7 +74,7 @@
     "days": "{n}d"
   },
   "reasons": [
-    "No animal visible",
+    "The subject isn't visible",
     "Inappropriate content",
     "Low-quality photo",
     "Not your photo or copyrighted",
@@ -233,7 +233,12 @@
     "dropHelp": "or paste it with Ctrl+V. JPG, PNG, WebP or HEIC: then choose how to crop it.",
     "browse": "Choose a photo",
     "remove": "Remove photo",
-    "addTo": "The photo will be added to {name}'s gallery."
+    "addTo": "The photo will be added to {name}'s gallery.",
+    "credit": "Creator",
+    "creditPlaceholder": "Name or nickname",
+    "creditUrl": "Link to the creator",
+    "creditHelp": "If you didn't make this image yourself, say who did: their name appears under the image.",
+    "namePlaceholder": "Luna"
   },
   "join": {
     "pickPhoto": "Choose a photo",

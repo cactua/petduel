@@ -3,7 +3,14 @@
     "enterYours": "Melde deinen Charakter an"
   },
   "notif": {
-    "weeklyHearts": "Letzte Woche haben deine Charaktere {n} Herz bekommen. Am beliebtesten: {name} | Letzte Woche haben deine Charaktere {n} Herzen bekommen. Am beliebtesten: {name}"
+    "weeklyHearts": "Letzte Woche haben deine Charaktere {n} Herz bekommen. Am beliebtesten: {name} | Letzte Woche haben deine Charaktere {n} Herzen bekommen. Am beliebtesten: {name}",
+    "empty": "Noch nichts. Hier findest du freigegebene Bilder, Challenge-Ergebnisse und Aufstiege in der Rangliste.",
+    "photoApproved": "Das Bild von {name} wurde freigegeben",
+    "photoApprovedChallenge": "Das Bild von {name} für die Challenge „{challenge}“ wurde freigegeben",
+    "photoRemoved": "Das Bild von {name} wurde entfernt: {reason}",
+    "photoRemovedChallenge": "Das Bild von {name} für die Challenge „{challenge}“ wurde entfernt: {reason}",
+    "photoRejected": "Das Bild von {name} wurde nicht freigegeben: {reason}",
+    "photoRejectedChallenge": "Das Bild von {name} für die Challenge „{challenge}“ wurde nicht freigegeben: {reason}"
   },
   "validation": {
     "petName": "Gib deinem Charakter einen Namen"
@@ -12,10 +19,16 @@
     "petHidden": "Du hast diesen Charakter aus Ranglisten und Challenges herausgenommen",
     "petNotFound": "Charakter nicht gefunden",
     "alreadyEntered": "Dieser Charakter nimmt bereits an der Challenge teil",
-    "pickPet": "Wähle den Charakter"
+    "pickPet": "Wähle den Charakter",
+    "photoAlreadyModerated": "Bild nicht gefunden oder bereits moderiert",
+    "photoNotFound": "Bild nicht gefunden",
+    "photoTooBig": "Das Bild ist größer als 10 MB",
+    "photoMissing": "Das Bild fehlt",
+    "tooManyPending": "Du hast bereits {n} Bilder, die auf Freigabe warten"
   },
   "auth": {
-    "registerLead": "Damit kannst du deine Charaktere hochladen und ihre Galerie haben."
+    "registerLead": "Damit kannst du deine Charaktere hochladen und ihre Galerie haben.",
+    "loginLead": "Melde dich an, um deine Charaktere hochzuladen und dein Profil zu sehen."
   },
   "share": {
     "text": "Schau dir {name} auf @:{'site.name'} an: Wer gefällt dir besser?"
@@ -28,7 +41,24 @@
     "forWhich": "Für welchen Charakter?",
     "newPet": "Ein neuer Charakter",
     "rules": "Nur eigene Zeichnungen oder solche mit Erlaubnis der Künstlerin oder des Künstlers. Keine expliziten Inhalte oder Inhalte für Erwachsene.",
-    "stepDetails": "Der Charakter"
+    "stepDetails": "Der Charakter",
+    "noClipboardPhoto": "In der Zwischenablage ist kein Bild: Kopiere eins und versuch es erneut",
+    "change": "Bild ändern",
+    "paste": "Bild einfügen",
+    "sent": "Bild gesendet!",
+    "another": "Noch ein Bild hochladen",
+    "pick": "Tippe, um ein Bild auszuwählen",
+    "intro": "Ein Bild nach dem anderen: Ein Moderator prüft es, bevor es in die Duelle kommt.",
+    "stepPhoto": "Das Bild",
+    "drop": "Bild hierher ziehen",
+    "browse": "Bild auswählen",
+    "remove": "Bild entfernen",
+    "addTo": "Das Bild kommt in die Galerie von {name}.",
+    "credit": "Künstler*in",
+    "creditPlaceholder": "Name oder Spitzname der Künstler*in",
+    "creditUrl": "Seite der Künstler*in",
+    "creditHelp": "Wenn du die Zeichnung nicht selbst gemacht hast, gib an, wer sie gezeichnet hat: Der Name erscheint unter dem Bild.",
+    "namePlaceholder": "Ember"
   },
   "join": {
     "needAccount": "Um deinen Charakter anzumelden, brauchst du ein Konto.",
@@ -36,13 +66,22 @@
     "pet": "Charakter",
     "uploadFirst": "Lade zuerst deinen Charakter hoch und komm dann hierher zurück, um ihn anzumelden.",
     "uploadPet": "Charakter hochladen",
-    "allIn": "Alle deine Charaktere sind schon im Rennen. Viel Glück!"
+    "allIn": "Alle deine Charaktere sind schon im Rennen. Viel Glück!",
+    "pickPhoto": "Wähle ein Bild",
+    "whichPhoto": "Welches Bild",
+    "newPhoto": "Neues Bild",
+    "galleryPhoto": "Bild aus der Galerie",
+    "pickThemed": "Tippe, um ein Bild zum Thema auszuwählen"
   },
   "pet": {
     "breed": "Spezies",
     "delete": "Charakter löschen",
     "ogDescription": "{name} ist auf @:{'site.name'}: Wer gefällt dir besser? Stimm auch ab!",
-    "notFound": "Charakter nicht gefunden."
+    "notFound": "Charakter nicht gefunden.",
+    "photoOf": "Bild von {name}",
+    "zoomPhoto": "Bild vergrößern",
+    "addPhoto": "Bild hinzufügen",
+    "confirmDelete": "Ja, {name} und alle Bilder löschen"
   },
   "profile": {
     "pets": "{n} Charaktere",
@@ -57,7 +96,8 @@
     "groups": {
       "other": "Weitere Charaktere"
     },
-    "addGuestHint": "Zeichnungen eines neuen Charakters hochladen"
+    "addGuestHint": "Zeichnungen eines neuen Charakters hochladen",
+    "pending": "{n} Bild wartet auf Freigabe: Nur du siehst es, bis ein Moderator es prüft. | {n} Bilder warten auf Freigabe: Nur du siehst sie, bis ein Moderator sie prüft."
   },
   "challenges": {
     "lead": "Challenges mit Thema: Melde deinen Charakter mit der passenden Zeichnung an, stimm für die anderen ab und hol dir die Trophäe."
@@ -79,6 +119,41 @@
     "petOfWeek": {
       "name": "Charakter der Woche",
       "desc": "Hat eine Woche auf Platz 1 beendet"
+    },
+    "photogenic": {
+      "name": "Galerie-Star",
+      "desc": "Mindestens 5 freigegebene Bilder"
     }
+  },
+  "nav": {
+    "uploadPhoto": "Bild hochladen"
+  },
+  "reasons": [
+    "Keine Zeichnung eines Charakters",
+    "Unangemessener Inhalt",
+    "Bild in schlechter Qualität",
+    "Nicht deine Zeichnung oder ohne Erlaubnis der Künstlerin oder des Künstlers veröffentlicht",
+    "Persönliche Daten sichtbar",
+    "Passt nicht zur Challenge"
+  ],
+  "photo": {
+    "prev": "Vorheriges Bild",
+    "next": "Nächstes Bild",
+    "credit": "Kunst: {text}",
+    "creditInfo": "Künstler:in und Lizenz des Bildes"
+  },
+  "crop": {
+    "failed": "Der Browser kann dieses Bild nicht anzeigen: Wir schneiden es selbst zu, mittig.",
+    "shapes": "Bildformate",
+    "alt": "Bildzuschnitt",
+    "help": "Zieh das Bild, um es zu verschieben, nutze den Regler (oder zwei Finger) zum Vergrößern."
+  },
+  "credits": {
+    "title": "Bildnachweise",
+    "lead": "Die Künstler*innen der veröffentlichten Zeichnungen. Danke an alle, die sie erstellt und geteilt haben."
+  },
+  "gallery": {
+    "showAll": "Alle {n} Bilder",
+    "showLess": "Weniger Bilder"
   }
 }

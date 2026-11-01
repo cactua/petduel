@@ -3,7 +3,14 @@
     "enterYours": "Enter your character"
   },
   "notif": {
-    "weeklyHearts": "Last week your characters received {n} heart. Most loved: {name} | Last week your characters received {n} hearts. Most loved: {name}"
+    "weeklyHearts": "Last week your characters received {n} heart. Most loved: {name} | Last week your characters received {n} hearts. Most loved: {name}",
+    "empty": "Nothing yet. This is where you'll find approved images, challenge results and leaderboard climbs.",
+    "photoApproved": "{name}'s image has been approved",
+    "photoApprovedChallenge": "{name}'s image for the \"{challenge}\" challenge has been approved",
+    "photoRemoved": "{name}'s image has been removed: {reason}",
+    "photoRemovedChallenge": "{name}'s image for the \"{challenge}\" challenge has been removed: {reason}",
+    "photoRejected": "{name}'s image wasn't approved: {reason}",
+    "photoRejectedChallenge": "{name}'s image for the \"{challenge}\" challenge wasn't approved: {reason}"
   },
   "validation": {
     "petName": "Give your character a name"
@@ -12,10 +19,16 @@
     "petHidden": "You chose to keep this character out of leaderboards and challenges",
     "petNotFound": "Character not found",
     "alreadyEntered": "This character is already in the challenge",
-    "pickPet": "Choose the character"
+    "pickPet": "Choose the character",
+    "photoAlreadyModerated": "Image not found or already moderated",
+    "photoNotFound": "Image not found",
+    "photoTooBig": "The image is larger than 10 MB",
+    "photoMissing": "The image is missing",
+    "tooManyPending": "You already have {n} images awaiting approval"
   },
   "auth": {
-    "registerLead": "You need it to upload your characters and get their gallery."
+    "registerLead": "You need it to upload your characters and get their gallery.",
+    "loginLead": "Log in to upload your characters and see your profile."
   },
   "share": {
     "text": "Check out {name} on @:{'site.name'}: which one do you like more?"
@@ -28,7 +41,24 @@
     "forWhich": "Which character?",
     "newPet": "A new character",
     "rules": "Only your own drawings or ones posted with the artist's permission. No explicit or adult content.",
-    "stepDetails": "The character"
+    "stepDetails": "The character",
+    "noClipboardPhoto": "There's no image on the clipboard: copy one and try again",
+    "change": "Change image",
+    "paste": "Paste image",
+    "sent": "Image sent!",
+    "another": "Upload another image",
+    "pick": "Tap to choose an image",
+    "intro": "One image at a time: a moderator checks it before it enters the duels.",
+    "stepPhoto": "The image",
+    "drop": "Drag an image here",
+    "browse": "Choose an image",
+    "remove": "Remove image",
+    "addTo": "The image will be added to {name}'s gallery.",
+    "credit": "Artist",
+    "creditPlaceholder": "Artist's name or nickname",
+    "creditUrl": "Artist's page",
+    "creditHelp": "If you didn't draw it yourself, say who did: their name appears under the image.",
+    "namePlaceholder": "Ember"
   },
   "join": {
     "needAccount": "You need an account to enter your character.",
@@ -36,13 +66,22 @@
     "pet": "Character",
     "uploadFirst": "Upload your character first, then come back here to enter it.",
     "uploadPet": "Upload a character",
-    "allIn": "All your characters are already competing. Good luck!"
+    "allIn": "All your characters are already competing. Good luck!",
+    "pickPhoto": "Choose an image",
+    "whichPhoto": "Which image",
+    "newPhoto": "New image",
+    "galleryPhoto": "Gallery image",
+    "pickThemed": "Tap to choose an on-theme image"
   },
   "pet": {
     "breed": "Species",
     "delete": "Delete character",
     "ogDescription": "{name} is on @:{'site.name'}: which one do you like more? Vote too!",
-    "notFound": "Character not found."
+    "notFound": "Character not found.",
+    "photoOf": "Image of {name}",
+    "zoomPhoto": "Enlarge image",
+    "addPhoto": "Add image",
+    "confirmDelete": "Yes, delete {name} and all images"
   },
   "profile": {
     "pets": "{n} characters",
@@ -57,7 +96,8 @@
     "groups": {
       "other": "Other characters"
     },
-    "addGuestHint": "Upload drawings of a new character"
+    "addGuestHint": "Upload drawings of a new character",
+    "pending": "{n} image is awaiting approval: only you can see it until a moderator checks it. | {n} images are awaiting approval: only you can see them until a moderator checks them."
   },
   "challenges": {
     "lead": "Themed challenges: enter your character with the right drawing, vote for the others and win the trophy."
@@ -79,6 +119,41 @@
     "petOfWeek": {
       "name": "Character of the week",
       "desc": "Finished a week in first place"
+    },
+    "photogenic": {
+      "name": "Gallery star",
+      "desc": "At least 5 approved images"
     }
+  },
+  "nav": {
+    "uploadPhoto": "Upload an image"
+  },
+  "reasons": [
+    "Not a drawing of a character",
+    "Inappropriate content",
+    "Low-quality image",
+    "Not your drawing, or posted without the artist's permission",
+    "Personal data visible",
+    "Off-topic for the challenge"
+  ],
+  "photo": {
+    "prev": "Previous image",
+    "next": "Next image",
+    "credit": "Art: {text}",
+    "creditInfo": "Artist and image license"
+  },
+  "crop": {
+    "failed": "The browser can't display this image: we'll crop it ourselves, centred.",
+    "shapes": "Image shapes",
+    "alt": "Image crop",
+    "help": "Drag the image to move it, use the slider (or two fingers) to zoom."
+  },
+  "credits": {
+    "title": "Image credits",
+    "lead": "The artists behind the published drawings. Thanks to everyone who made and shared them."
+  },
+  "gallery": {
+    "showAll": "All {n} images",
+    "showLess": "Show fewer images"
   }
 }

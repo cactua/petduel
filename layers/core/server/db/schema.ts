@@ -91,7 +91,7 @@ export const photos = pgTable('photos', {
   rejectReason: text('reject_reason'),
   reviewedBy: integer('reviewed_by').references(() => users.id, { onDelete: 'set null' }),
   reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
-  // Foto di esempio da Wikimedia Commons: autore e licenza da citare
+  // Autore e licenza da citare: foto di esempio (Wikimedia Commons) o artista indicato da chi carica (askCredit)
   credit: text('credit'),
   creditUrl: text('credit_url'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),

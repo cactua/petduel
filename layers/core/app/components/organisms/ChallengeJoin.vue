@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { ChallengeDetail, Profile } from '#shared/models'
+import site from '#site'
+import { photoCreditSchema, type ChallengeDetail, type Profile } from '#shared/models'
 import type { Crops } from '#shared/images'
 
 const props = defineProps<{ challenge: ChallengeDetail }>()
@@ -28,6 +29,8 @@ const photoId = ref<number | null>(null)
 const file = ref<File | null>(null)
 const preview = ref('')
 const crops = ref<Crops | null>(null)
+// Artista dell'immagine nuova, sui siti che lo chiedono
+const credit = reactive({ credit: '', creditUrl: '' })
 const sending = ref(false)
 const error = ref('')
 
@@ -78,6 +81,15 @@ async function submit() {
     }
     body = new FormData()
     body.append('petId', String(petId.value))
+    if (site.askCredit) {
+      const check = photoCreditSchema.safeParse(credit)
+      if (!check.success) {
+        error.value = tr(check.error.issues[0]?.message ?? 'validation.check')
+        return
+      }
+      body.append('credit', check.data.credit)
+      body.append('creditUrl', check.data.creditUrl)
+    }
     body.append('photo', file.value)
     if (crops.value) body.append('crops', JSON.stringify(crops.value))
   }
@@ -88,6 +100,7 @@ async function submit() {
     // Si riparte puliti per iscrivere un altro pet
     setFile(null)
     crops.value = null
+    Object.assign(credit, { credit: '', creditUrl: '' })
     photoId.value = null
     emit('joined')
   }
@@ -153,6 +166,7 @@ async function submit() {
             </label>
             <button v-if="canRead" type="button" class="btn btn--ghost" @click="pasteButton">📋 {{ $t('upload.paste') }}</button>
           </div>
+          <CreditFields v-if="site.askCredit" v-model="credit" />
         </template>
 
         <p v-if="error" class="error" role="alert">{{ error }}</p>

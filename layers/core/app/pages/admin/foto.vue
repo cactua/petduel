@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { REJECT_REASONS, type ModerationItem } from '#shared/models'
+import { CHALLENGE_REJECT_REASON, REJECT_REASONS, type ModerationItem } from '#shared/models'
 import { speciesName } from '#shared/speciesNames'
 
-type Reason = (typeof REJECT_REASONS)[number]
+type Reason = string
 
 definePageMeta({ middleware: 'admin' })
 useHead({ title: 'Foto · Admin' })
@@ -14,7 +14,7 @@ const { data: queue, refresh, error: loadError } = await useFetch<ModerationItem
 })
 
 // "Non in tema" solo per le foto inviate a una sfida
-const reasonsFor = (item: ModerationItem) => REJECT_REASONS.filter(r => item.challenge || r !== 'Non in tema con la sfida')
+const reasonsFor = (item: ModerationItem) => REJECT_REASONS.filter(r => item.challenge || r !== CHALLENGE_REJECT_REASON)
 
 // Motivo scelto per ogni foto: il pulsante Rifiuta si attiva solo dopo averlo scelto
 const reason = reactive<Record<number, Reason | undefined>>({})
@@ -108,6 +108,9 @@ const viewerPhotos = computed(() => (queue.value ?? []).map(q => ({ image: q.ima
           <p class="photo-review__line"><template v-if="item.pet.species">{{ speciesName(item.pet.species, 'one') }} · </template><NuxtLink :to="`/admin/utenti?q=${item.owner}`" class="photo-review__link">@{{ item.owner }}</NuxtLink></p>
           <p class="photo-review__line photo-review__line--small">
             {{ timeAgo(item.createdAt) }} · {{ item.pet.approvedPhotos ? `${item.pet.approvedPhotos} foto già approvate` : 'pet nuovo' }}
+          </p>
+          <p v-if="item.credit" class="photo-review__line">
+            🎨 Artista: <a v-if="item.credit.url" :href="item.credit.url" target="_blank" rel="noopener noreferrer nofollow">{{ item.credit.text }}</a><template v-else>{{ item.credit.text }}</template>
           </p>
           <p v-if="item.challenge" class="photo-review__line photo-review__line--challenge">🏁 Per «{{ item.challenge }}»: è in tema?</p>
         </div>

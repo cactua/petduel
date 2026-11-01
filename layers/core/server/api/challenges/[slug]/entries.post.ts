@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
 
   if (getRequestHeader(event, 'content-type')?.startsWith('multipart/form-data')) {
     await assertPendingQuota(user.id)
-    const { fields, image } = await readPhotoUpload(event)
+    const { fields, image, credit } = await readPhotoUpload(event)
     try {
       petId = idSchema.parse(fields.petId)
       await checkPet(petId)
@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
       await removeImage(image)
       throw e instanceof z.ZodError ? createError({ statusCode: 400, statusMessage: 'errors.pickPet' }) : e
     }
-    const [photo] = await db.insert(photos).values({ petId, image }).returning({ id: photos.id })
+    const [photo] = await db.insert(photos).values({ petId, image, ...credit }).returning({ id: photos.id })
     photoId = photo!.id
   }
   else {

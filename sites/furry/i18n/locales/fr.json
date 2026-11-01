@@ -3,7 +3,14 @@
     "enterYours": "Inscris ton personnage"
   },
   "notif": {
-    "weeklyHearts": "La semaine dernière, tes personnages ont reçu {n} cœur. Le plus aimé : {name} | La semaine dernière, tes personnages ont reçu {n} cœurs. Le plus aimé : {name}"
+    "weeklyHearts": "La semaine dernière, tes personnages ont reçu {n} cœur. Le plus aimé : {name} | La semaine dernière, tes personnages ont reçu {n} cœurs. Le plus aimé : {name}",
+    "empty": "Rien pour l'instant. Tu trouveras ici les images approuvées, les résultats des défis et les progrès au classement.",
+    "photoApproved": "L'image de {name} a été approuvée",
+    "photoApprovedChallenge": "L'image de {name} pour le défi « {challenge} » a été approuvée",
+    "photoRemoved": "L'image de {name} a été retirée : {reason}",
+    "photoRemovedChallenge": "L'image de {name} pour le défi « {challenge} » a été retirée : {reason}",
+    "photoRejected": "L'image de {name} n'a pas été approuvée : {reason}",
+    "photoRejectedChallenge": "L'image de {name} pour le défi « {challenge} » n'a pas été approuvée : {reason}"
   },
   "validation": {
     "petName": "Donne un nom à ton personnage"
@@ -12,10 +19,16 @@
     "petHidden": "Tu as choisi de garder ce personnage hors des classements et des défis",
     "petNotFound": "Personnage introuvable",
     "alreadyEntered": "Ce personnage participe déjà au défi",
-    "pickPet": "Choisis le personnage"
+    "pickPet": "Choisis le personnage",
+    "photoAlreadyModerated": "Image introuvable ou déjà modérée",
+    "photoNotFound": "Image introuvable",
+    "photoTooBig": "L'image dépasse 10 Mo",
+    "photoMissing": "L'image manque",
+    "tooManyPending": "Tu as déjà {n} images en attente d'approbation"
   },
   "auth": {
-    "registerLead": "Il te permet de publier tes personnages et d'avoir leur galerie."
+    "registerLead": "Il te permet de publier tes personnages et d'avoir leur galerie.",
+    "loginLead": "Connecte-toi pour publier tes personnages et voir ton profil."
   },
   "share": {
     "text": "Regarde {name} sur @:{'site.name'} : lequel tu préfères ?"
@@ -28,7 +41,24 @@
     "forWhich": "Pour quel personnage ?",
     "newPet": "Un nouveau personnage",
     "rules": "Uniquement tes propres dessins ou ceux publiés avec l'accord de l'artiste. Pas de contenu explicite ou pour adultes.",
-    "stepDetails": "Le personnage"
+    "stepDetails": "Le personnage",
+    "noClipboardPhoto": "Il n'y a pas d'image dans le presse-papiers : copie-la et réessaie",
+    "change": "Changer d'image",
+    "paste": "Coller l'image",
+    "sent": "Image envoyée !",
+    "another": "Publier une autre image",
+    "pick": "Touche pour choisir une image",
+    "intro": "Une image à la fois : un modérateur la vérifie avant qu'elle n'entre dans les duels.",
+    "stepPhoto": "L'image",
+    "drop": "Glisse une image ici",
+    "browse": "Choisir une image",
+    "remove": "Retirer l'image",
+    "addTo": "L'image sera ajoutée à la galerie de {name}.",
+    "credit": "Artiste",
+    "creditPlaceholder": "Nom ou pseudo de l'artiste",
+    "creditUrl": "Page de l'artiste",
+    "creditHelp": "Si tu n'as pas fait le dessin toi-même, indique qui l'a dessiné : son nom s'affiche sous l'image.",
+    "namePlaceholder": "Ember"
   },
   "join": {
     "needAccount": "Il te faut un compte pour inscrire ton personnage.",
@@ -36,13 +66,22 @@
     "pet": "Personnage",
     "uploadFirst": "Publie d'abord ton personnage, puis reviens ici pour l'inscrire.",
     "uploadPet": "Publier un personnage",
-    "allIn": "Tous tes personnages sont déjà en lice. Bonne chance !"
+    "allIn": "Tous tes personnages sont déjà en lice. Bonne chance !",
+    "pickPhoto": "Choisis une image",
+    "whichPhoto": "Quelle image",
+    "newPhoto": "Nouvelle image",
+    "galleryPhoto": "Image de la galerie",
+    "pickThemed": "Touche pour choisir une image sur le thème"
   },
   "pet": {
     "breed": "Espèce",
     "delete": "Supprimer le personnage",
     "ogDescription": "{name} est sur @:{'site.name'} : lequel tu préfères ? Vote toi aussi !",
-    "notFound": "Personnage introuvable."
+    "notFound": "Personnage introuvable.",
+    "photoOf": "Image de {name}",
+    "zoomPhoto": "Agrandir l'image",
+    "addPhoto": "Ajouter une image",
+    "confirmDelete": "Oui, supprimer {name} et toutes ses images"
   },
   "profile": {
     "pets": "{n} personnages",
@@ -57,7 +96,8 @@
     "groups": {
       "other": "Autres personnages"
     },
-    "addGuestHint": "Charge les dessins d'un nouveau personnage"
+    "addGuestHint": "Charge les dessins d'un nouveau personnage",
+    "pending": "{n} image est en attente d'approbation : toi seul la vois jusqu'à ce qu'un modérateur la vérifie. | {n} images sont en attente d'approbation : toi seul les vois jusqu'à ce qu'un modérateur les vérifie."
   },
   "challenges": {
     "lead": "Des défis à thème : inscris ton personnage avec le bon dessin, vote pour les autres et remporte le trophée."
@@ -79,6 +119,41 @@
     "petOfWeek": {
       "name": "Personnage de la semaine",
       "desc": "A terminé une semaine à la première place"
+    },
+    "photogenic": {
+      "name": "Star de la galerie",
+      "desc": "Au moins 5 images approuvées"
     }
+  },
+  "nav": {
+    "uploadPhoto": "Publier une image"
+  },
+  "reasons": [
+    "Ce n'est pas un dessin de personnage",
+    "Contenu inapproprié",
+    "Image de mauvaise qualité",
+    "Dessin qui n'est pas à toi ou publié sans l'accord de l'artiste",
+    "Données personnelles visibles",
+    "Hors sujet pour le défi"
+  ],
+  "photo": {
+    "prev": "Image précédente",
+    "next": "Image suivante",
+    "credit": "Art : {text}",
+    "creditInfo": "Artiste et licence de l'image"
+  },
+  "crop": {
+    "failed": "Le navigateur ne peut pas afficher cette image : nous la recadrerons nous-mêmes, au centre.",
+    "shapes": "Formats de l'image",
+    "alt": "Recadrage de l'image",
+    "help": "Fais glisser l'image pour la déplacer, utilise le curseur (ou deux doigts) pour agrandir."
+  },
+  "credits": {
+    "title": "Crédits des images",
+    "lead": "Les artistes des dessins publiés. Merci à toutes les personnes qui les ont créés et partagés."
+  },
+  "gallery": {
+    "showAll": "Les {n} images",
+    "showLess": "Moins d'images"
   }
 }

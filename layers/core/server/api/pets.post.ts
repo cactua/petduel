@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const user = await requireUser(event)
   await assertPendingQuota(user.id)
 
-  const { fields, image } = await readPhotoUpload(event)
+  const { fields, image, credit } = await readPhotoUpload(event)
   const parsed = petFieldsSchema.safeParse(fields)
   if (!parsed.success) {
     await removeImage(image)
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   const db = await useDb()
   const pet = await db.transaction(async (tx) => {
     const [row] = await tx.insert(pets).values({ ...parsed.data, ownerId: user.id }).returning({ id: pets.id })
-    await tx.insert(photos).values({ petId: row!.id, image })
+    await tx.insert(photos).values({ petId: row!.id, image, ...credit })
     return row!
   })
   return { petId: pet.id }

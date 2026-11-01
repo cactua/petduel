@@ -74,7 +74,7 @@
     "days": "{n}d"
   },
   "reasons": [
-    "No se ve ningún animal",
+    "No se ve el sujeto",
     "Contenido inapropiado",
     "Foto de baja calidad",
     "La foto no es tuya o tiene copyright",
@@ -233,7 +233,12 @@
     "dropHelp": "o pégala con Ctrl+V. JPG, PNG, WebP o HEIC: luego eliges cómo recortarla.",
     "browse": "Elegir una foto",
     "remove": "Quitar foto",
-    "addTo": "La foto se añadirá a la galería de {name}."
+    "addTo": "La foto se añadirá a la galería de {name}.",
+    "credit": "Autor",
+    "creditPlaceholder": "Nombre o apodo",
+    "creditUrl": "Enlace al autor",
+    "creditHelp": "Si no has creado tú la imagen, escribe quién la hizo: su nombre aparece debajo de la imagen.",
+    "namePlaceholder": "Luna"
   },
   "join": {
     "pickPhoto": "Elige una foto",
