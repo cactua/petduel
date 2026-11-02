@@ -19,7 +19,7 @@ const photo = ref<File | null>(null)
 const preview = ref('')
 const crops = ref<Crops | null>(null)
 // Artista dell'immagine, sui siti che lo chiedono
-const credit = reactive({ credit: '', creditUrl: '' })
+const credit = reactive({ credit: '', creditUrl: '', artist: '' })
 const sending = ref(false)
 const error = ref('')
 const done = ref(false)
@@ -74,6 +74,7 @@ async function submit() {
     }
     body.append('credit', check.data.credit)
     body.append('creditUrl', check.data.creditUrl)
+    body.append('artist', check.data.artist)
   }
   body.append('photo', photo.value)
   if (crops.value) body.append('crops', JSON.stringify(crops.value))
@@ -97,7 +98,7 @@ function again() {
   setPhoto(null)
   crops.value = null
   Object.assign(form, blankForm())
-  Object.assign(credit, { credit: '', creditUrl: '' })
+  Object.assign(credit, { credit: '', creditUrl: '', artist: '' })
   refreshProfile()
 }
 </script>

@@ -13,6 +13,7 @@ const cover = computed(() =>
 const { t } = useI18n()
 const viewerPhotos = computed(() => props.pet.photos.filter(p => p.image).map(p => ({
   image: p.image!, alt: t('pet.photoOf', { name: props.pet.name }), credit: p.credit,
+  id: !props.editable && p.status === 'approved' ? p.id : undefined,
 })))
 const viewing = ref<number | null>(null)
 const openPhoto = (image: string) => (viewing.value = Math.max(0, viewerPhotos.value.findIndex(p => p.image === image)))
@@ -153,10 +154,9 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
           <picture><source v-for="s in photoSources(photo.image, 'v', '(min-width: 760px) 170px, 31vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="photo.image" :alt="$t('pet.photoOf', { name: pet.name })" loading="lazy" class="pet-gallery__photo-img"></picture>
         </button>
         <div v-else class="pet-gallery__gone">{{ photo.rejectReason ? rejectReason(photo.rejectReason) : '' }}</div>
-        <a
-          v-if="photo.credit && !editable" class="pet-gallery__credit" :href="photo.credit.url ?? undefined"
-          target="_blank" rel="noopener noreferrer nofollow ugc"
-        >{{ $t('photo.credit', { text: photo.credit.text }) }}</a>
+        <CreditLink
+          v-if="photo.credit && !editable" class="pet-gallery__credit" :url="photo.credit.url"
+        >{{ $t('photo.credit', { text: photo.credit.text }) }}</CreditLink>
         <figcaption v-if="editable && (managing || photo.status !== 'approved')" class="pet-gallery__caption">
           <span class="pet-gallery__status">{{ photo.status !== 'approved' ? $t(`pet.photoStatus.${photo.status}`) : '' }}</span>
           <button v-if="managing" type="button" class="pet-gallery__remove" @click="remove(photo.id)">{{ confirming === photo.id ? $t('common.confirm') : $t('common.delete') }}</button>

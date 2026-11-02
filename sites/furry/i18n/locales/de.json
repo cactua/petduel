@@ -10,7 +10,8 @@
     "photoRemoved": "Das Bild von {name} wurde entfernt: {reason}",
     "photoRemovedChallenge": "Das Bild von {name} für die Challenge „{challenge}“ wurde entfernt: {reason}",
     "photoRejected": "Das Bild von {name} wurde nicht freigegeben: {reason}",
-    "photoRejectedChallenge": "Das Bild von {name} für die Challenge „{challenge}“ wurde nicht freigegeben: {reason}"
+    "photoRejectedChallenge": "Das Bild von {name} für die Challenge „{challenge}“ wurde nicht freigegeben: {reason}",
+    "artistTagged": "Du wurdest als Künstler*in einer Zeichnung von {name} angegeben"
   },
   "validation": {
     "petName": "Gib deinem Charakter einen Namen"
@@ -57,7 +58,7 @@
     "credit": "Künstler*in",
     "creditPlaceholder": "Name oder Spitzname der Künstler*in",
     "creditUrl": "Seite der Künstler*in",
-    "creditHelp": "Wenn du die Zeichnung nicht selbst gemacht hast, gib an, wer sie gezeichnet hat: Der Name erscheint unter dem Bild.",
+    "creditHelp": "Wenn du die Zeichnung nicht selbst gemacht hast, gib an, wer sie gezeichnet hat: Ist die Person registriert, wähle sie aus der Liste, dann führt der Name zu ihrem Profil.",
     "namePlaceholder": "Ember"
   },
   "join": {
@@ -155,5 +156,15 @@
   "gallery": {
     "showAll": "Alle {n} Bilder",
     "showLess": "Weniger Bilder"
+  },
+  "report": {
+    "titlePhoto": "Zeichnung melden",
+    "reason": {
+      "stolen": "Ohne Erlaubnis der Künstler*in veröffentlicht"
+    }
+  },
+  "artist": {
+    "works": "Eine zugeordnete Zeichnung | {n} zugeordnete Zeichnungen",
+    "worksHelp": "Von anderen hochgeladene Zeichnungen, die dich als Künstler*in angeben. Wenn du es nicht bist, entferne deinen Namen; wenn sie von dir ist, du es aber nicht erlaubt hast, melde sie."
   }
 }

@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto'
 import { and, eq, sql } from 'drizzle-orm'
 import sharp, { type OutputInfo, type Sharp } from 'sharp'
 import type { H3Event } from 'h3'
-import { photos, pets } from '../db/schema'
+import { photos, pets, users } from '../db/schema'
 import {
   IMAGE_FORMATS, IMAGE_VARIANTS, VARIANT_KEYS, centeredCrop, cropsSchema, variantName,
   type Crop, type Crops, type ImageFormat, type ImageVariant,
@@ -66,7 +66,8 @@ async function writeVariants(image: string, source: Source, crops: Crops) {
  * Legge un upload multipart: restituisce i campi testuali e salva la foto con i ritagli scelti
  * (campo "crops", JSON) in tutte le varianti. La ricodifica scarta qualsiasi contenuto nascosto
  * nel file originale (EXIF, GPS, payload) e rifiuta ciò che non è un'immagine. Senza ritagli
- * si usano quelli centrati. Se il sito lo chiede legge anche l'artista (campi "credit" e "creditUrl").
+ * si usano quelli centrati. Se il sito lo chiede legge anche l'artista: uno registrato (campo "artist", il suo username)
+ * oppure nome e link scritti a mano ("credit" e "creditUrl").
  */
 export async function readPhotoUpload(event: H3Event) {
   const parts = await readMultipartFormData(event)
@@ -93,15 +94,24 @@ export async function readPhotoUpload(event: H3Event) {
   delete fields.crops
 
   // Artista, solo sui siti che lo chiedono; controllato prima di salvare l'immagine
-  let credit: { credit: string | null, creditUrl: string | null } = { credit: null, creditUrl: null }
+  let credit: { credit: string | null, creditUrl: string | null, artistId: number | null } = { credit: null, creditUrl: null, artistId: null }
   if (site.askCredit) {
-    const parsed = photoCreditSchema.safeParse({ credit: fields.credit ?? '', creditUrl: fields.creditUrl ?? '' })
+    const parsed = photoCreditSchema.safeParse({ credit: fields.credit ?? '', creditUrl: fields.creditUrl ?? '', artist: fields.artist ?? '' })
     if (!parsed.success) throw createError({ statusCode: 400, statusMessage: parsed.error.issues[0]?.message ?? 'validation.check' })
+    if (parsed.data.artist) {
+      const db = await useDb()
+      const [artist] = await db.select({ id: users.id, username: users.username }).from(users)
+        .where(and(eq(users.username, parsed.data.artist.toLowerCase()), eq(users.isArtist, true), sql`${users.bannedAt} is null`))
+      if (!artist) throw createError({ statusCode: 400, statusMessage: 'errors.artistNotFound' })
+      // Nome e link copiati qui: tutte le liste degli autori li leggono già da queste due colonne
+      credit = { credit: artist.username, creditUrl: `/u/${artist.username}`, artistId: artist.id }
+    }
     // Il link senza un nome non si mostrerebbe da nessuna parte
-    if (parsed.data.credit) credit = { credit: parsed.data.credit, creditUrl: parsed.data.creditUrl || null }
+    else if (parsed.data.credit) credit = { credit: parsed.data.credit, creditUrl: parsed.data.creditUrl || null, artistId: null }
   }
   delete fields.credit
   delete fields.creditUrl
+  delete fields.artist
 
   // Foto raddrizzata secondo l'EXIF: i ritagli sono calcolati su questa
   let oriented: Source

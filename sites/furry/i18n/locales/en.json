@@ -10,7 +10,8 @@
     "photoRemoved": "{name}'s image has been removed: {reason}",
     "photoRemovedChallenge": "{name}'s image for the \"{challenge}\" challenge has been removed: {reason}",
     "photoRejected": "{name}'s image wasn't approved: {reason}",
-    "photoRejectedChallenge": "{name}'s image for the \"{challenge}\" challenge wasn't approved: {reason}"
+    "photoRejectedChallenge": "{name}'s image for the \"{challenge}\" challenge wasn't approved: {reason}",
+    "artistTagged": "You were credited as the artist of a drawing of {name}"
   },
   "validation": {
     "petName": "Give your character a name"
@@ -57,7 +58,7 @@
     "credit": "Artist",
     "creditPlaceholder": "Artist's name or nickname",
     "creditUrl": "Artist's page",
-    "creditHelp": "If you didn't draw it yourself, say who did: their name appears under the image.",
+    "creditHelp": "If you didn't draw it yourself, say who did: if they're registered, pick them from the list so their name links to their profile.",
     "namePlaceholder": "Ember"
   },
   "join": {
@@ -155,5 +156,15 @@
   "gallery": {
     "showAll": "All {n} images",
     "showLess": "Show fewer images"
+  },
+  "report": {
+    "titlePhoto": "Report drawing",
+    "reason": {
+      "stolen": "Posted without the artist's permission"
+    }
+  },
+  "artist": {
+    "works": "One credited drawing | {n} credited drawings",
+    "worksHelp": "Drawings uploaded by others that credit you as the artist. If it isn't you, remove your name; if it's yours but you didn't give permission, report it."
   }
 }

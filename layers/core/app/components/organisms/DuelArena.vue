@@ -159,10 +159,10 @@ onBeforeUnmount(() => {
           </svg>
           <!-- Autore e licenza dietro una "i": la scritta fissa copriva la foto -->
           <span v-if="pet.credit" class="duel-arena__credit" @pointerdown.stop @keydown.stop>
-            <a
-              v-if="creditOpen === i" :href="pet.credit.url ?? undefined" target="_blank" rel="noopener noreferrer nofollow ugc"
+            <CreditLink
+              v-if="creditOpen === i" :url="pet.credit.url"
               class="duel-arena__credit-link"
-            >{{ $t('photo.credit', { text: pet.credit.text }) }}</a>
+            >{{ $t('photo.credit', { text: pet.credit.text }) }}</CreditLink>
             <button
               type="button" class="duel-arena__credit-info" :class="{ 'is-open': creditOpen === i }" :aria-expanded="creditOpen === i" :aria-label="$t('photo.creditInfo')"
               @click.stop="creditOpen = creditOpen === i ? null : i"

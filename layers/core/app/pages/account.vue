@@ -1,5 +1,7 @@
 <script setup lang="ts">
-// Il proprio account: scaricare i dati ed eliminare tutto (diritti di accesso e cancellazione)
+import { HAS_ARTISTS } from '#shared/models'
+
+// Il proprio account: profilo da artista (dove c'è), scaricare i dati ed eliminare tutto (diritti di accesso e cancellazione)
 definePageMeta({ middleware: 'auth' })
 const { t } = useI18n()
 useHead({ title: () => `${t('account.title')}` })
@@ -36,6 +38,11 @@ async function remove() {
       <h1 class="account-page__title">{{ $t('account.title') }}</h1>
       <p class="account-page__user">@{{ user?.username }}</p>
     </header>
+
+    <article v-if="HAS_ARTISTS" class="account-page__card">
+      <h2 class="account-page__card-title">🎨 {{ $t('artist.title') }}</h2>
+      <ArtistSettings />
+    </article>
 
     <article class="account-page__card">
       <h2 class="account-page__card-title">📦 {{ $t('account.exportTitle') }}</h2>

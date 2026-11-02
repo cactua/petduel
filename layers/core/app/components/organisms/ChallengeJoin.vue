@@ -30,7 +30,7 @@ const file = ref<File | null>(null)
 const preview = ref('')
 const crops = ref<Crops | null>(null)
 // Artista dell'immagine nuova, sui siti che lo chiedono
-const credit = reactive({ credit: '', creditUrl: '' })
+const credit = reactive({ credit: '', creditUrl: '', artist: '' })
 const sending = ref(false)
 const error = ref('')
 
@@ -89,6 +89,7 @@ async function submit() {
       }
       body.append('credit', check.data.credit)
       body.append('creditUrl', check.data.creditUrl)
+      body.append('artist', check.data.artist)
     }
     body.append('photo', file.value)
     if (crops.value) body.append('crops', JSON.stringify(crops.value))
@@ -100,7 +101,7 @@ async function submit() {
     // Si riparte puliti per iscrivere un altro pet
     setFile(null)
     crops.value = null
-    Object.assign(credit, { credit: '', creditUrl: '' })
+    Object.assign(credit, { credit: '', creditUrl: '', artist: '' })
     photoId.value = null
     emit('joined')
   }

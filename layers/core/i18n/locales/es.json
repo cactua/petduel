@@ -66,7 +66,10 @@
     "challengePlace": "{name}: puesto {rank} de {total} en el reto \"{challenge}\"",
     "rankFirst": "¡{name} es el número 1 del ranking de {species} de esta semana!",
     "rankTop": "{name} está en el top {tier} del ranking de {species} de esta semana",
-    "weeklyHearts": "La semana pasada tus participantes recibieron {n} corazón. El más querido: {name} | La semana pasada tus participantes recibieron {n} corazones. El más querido: {name}"
+    "weeklyHearts": "La semana pasada tus participantes recibieron {n} corazón. El más querido: {name} | La semana pasada tus participantes recibieron {n} corazones. El más querido: {name}",
+    "artistTagged": "Te han indicado como autor de una imagen de {name}",
+    "reportResolved": "Hemos revisado tu denuncia y hemos actuado. ¡Gracias!",
+    "reportDismissed": "Hemos revisado tu denuncia: por ahora no va contra las normas. ¡Gracias de todos modos!"
   },
   "time": {
     "now": "ahora",
@@ -143,7 +146,10 @@
     "invalidImage": "El archivo no es una imagen válida",
     "wrongPassword": "Contraseña incorrecta",
     "lastAdmin": "Eres el único administrador: nombra a otro antes de eliminar la cuenta",
-    "geocode": "La búsqueda de direcciones no responde ahora. Inténtalo pronto o toca el mapa."
+    "geocode": "La búsqueda de direcciones no responde ahora. Inténtalo pronto o toca el mapa.",
+    "artistNotFound": "Este artista no está registrado",
+    "tooManyReports": "Has enviado muchas denuncias hoy: inténtalo mañana",
+    "reportOwn": "No puedes denunciar tus propias cosas"
   },
   "auth": {
     "registerTitle": "Crea tu cuenta",
@@ -238,7 +244,9 @@
     "creditPlaceholder": "Nombre o apodo",
     "creditUrl": "Enlace al autor",
     "creditHelp": "Si no has creado tú la imagen, escribe quién la hizo: su nombre aparece debajo de la imagen.",
-    "namePlaceholder": "Luna"
+    "namePlaceholder": "Luna",
+    "artistRemove": "Quitar el artista",
+    "artistMatches": "Artistas registrados"
   },
   "join": {
     "pickPhoto": "Elige una foto",
@@ -463,5 +471,42 @@
       "name": "Retador",
       "desc": "Participó en al menos 3 retos"
     }
+  },
+  "artist": {
+    "title": "Perfil de artista",
+    "toggle": "Soy artista",
+    "toggleHelp": "Quien suba un dibujo tuyo podrá buscarte e indicarte como autor: tu nombre llevará a tu perfil, con los enlaces de abajo.",
+    "links": "Tus páginas",
+    "linkN": "Enlace {n}",
+    "addLink": "Añadir un enlace",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "badge": "Artista",
+    "edit": "Editar perfil de artista",
+    "become": "¿Eres artista?",
+    "works": "Una imagen atribuida | {n} imágenes atribuidas",
+    "worksHelp": "Imágenes subidas por otros que te indican como autor. Si no eres tú, quita tu nombre; si es tuya pero no diste permiso, denúnciala.",
+    "notMe": "No soy yo",
+    "notAllowed": "Sin permiso"
+  },
+  "report": {
+    "open": "Denunciar",
+    "titlePhoto": "Denunciar la imagen",
+    "titleUser": "Denunciar el perfil",
+    "why": "¿Qué pasa?",
+    "reason": {
+      "stolen": "Publicada sin permiso",
+      "explicit": "Explícita o inapropiada",
+      "hateful": "Ofensiva o de odio",
+      "personal": "Muestra datos personales",
+      "spam": "Spam o publicidad",
+      "impersonation": "Se hace pasar por otra persona",
+      "other": "Otra cosa"
+    },
+    "note": "Detalles",
+    "notePlaceholder": "Por ejemplo: dónde está el original",
+    "hint": "Solo los moderadores leen las denuncias: quien la publicó no sabrá que fuiste tú.",
+    "send": "Enviar denuncia",
+    "thanks": "¡Gracias! Un moderador la revisará pronto y recibirás un aviso."
   }
 }

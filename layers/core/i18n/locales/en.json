@@ -66,7 +66,10 @@
     "challengePlace": "{name}: #{rank} of {total} in the \"{challenge}\" challenge",
     "rankFirst": "{name} is #1 on this week's {species} leaderboard!",
     "rankTop": "{name} is in the top {tier} of this week's {species} leaderboard",
-    "weeklyHearts": "Last week your entries received {n} heart. Most loved: {name} | Last week your entries received {n} hearts. Most loved: {name}"
+    "weeklyHearts": "Last week your entries received {n} heart. Most loved: {name} | Last week your entries received {n} hearts. Most loved: {name}",
+    "artistTagged": "You were credited as the creator of an image of {name}",
+    "reportResolved": "We reviewed your report and took action. Thank you!",
+    "reportDismissed": "We reviewed your report: for now it doesn't break the rules. Thanks anyway!"
   },
   "time": {
     "now": "now",
@@ -143,7 +146,10 @@
     "invalidImage": "The file isn't a valid image",
     "wrongPassword": "Wrong password",
     "lastAdmin": "You are the only admin: appoint another admin before deleting your account",
-    "geocode": "Address search isn't responding right now. Try again soon or tap the map."
+    "geocode": "Address search isn't responding right now. Try again soon or tap the map.",
+    "artistNotFound": "This artist isn't registered",
+    "tooManyReports": "You've sent a lot of reports today: try again tomorrow",
+    "reportOwn": "You can't report your own things"
   },
   "auth": {
     "registerTitle": "Create your account",
@@ -238,7 +244,9 @@
     "creditPlaceholder": "Name or nickname",
     "creditUrl": "Link to the creator",
     "creditHelp": "If you didn't make this image yourself, say who did: their name appears under the image.",
-    "namePlaceholder": "Luna"
+    "namePlaceholder": "Luna",
+    "artistRemove": "Remove the artist",
+    "artistMatches": "Registered artists"
   },
   "join": {
     "pickPhoto": "Choose a photo",
@@ -463,5 +471,42 @@
       "name": "Challenger",
       "desc": "Joined at least 3 challenges"
     }
+  },
+  "artist": {
+    "title": "Artist profile",
+    "toggle": "I'm an artist",
+    "toggleHelp": "People who upload your work can find you and credit you as the artist: your name will link to your profile, with the links below.",
+    "links": "Your pages",
+    "linkN": "Link {n}",
+    "addLink": "Add a link",
+    "save": "Save",
+    "saved": "Saved",
+    "badge": "Artist",
+    "edit": "Edit artist profile",
+    "become": "Are you an artist?",
+    "works": "One credited image | {n} credited images",
+    "worksHelp": "Images uploaded by others that credit you as the creator. If it isn't you, remove your name; if it's yours but you didn't give permission, report it.",
+    "notMe": "Not me",
+    "notAllowed": "No permission"
+  },
+  "report": {
+    "open": "Report",
+    "titlePhoto": "Report image",
+    "titleUser": "Report profile",
+    "why": "What's wrong?",
+    "reason": {
+      "stolen": "Posted without permission",
+      "explicit": "Explicit or inappropriate",
+      "hateful": "Offensive or hateful",
+      "personal": "Shows personal information",
+      "spam": "Spam or advertising",
+      "impersonation": "Pretending to be someone else",
+      "other": "Something else"
+    },
+    "note": "Details",
+    "notePlaceholder": "For example: where the original is",
+    "hint": "Only moderators read reports: the person who posted it won't know it was you.",
+    "send": "Send report",
+    "thanks": "Thanks! A moderator will look at it soon and you'll get a notification."
   }
 }

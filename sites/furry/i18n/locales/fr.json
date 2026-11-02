@@ -10,7 +10,8 @@
     "photoRemoved": "L'image de {name} a été retirée : {reason}",
     "photoRemovedChallenge": "L'image de {name} pour le défi « {challenge} » a été retirée : {reason}",
     "photoRejected": "L'image de {name} n'a pas été approuvée : {reason}",
-    "photoRejectedChallenge": "L'image de {name} pour le défi « {challenge} » n'a pas été approuvée : {reason}"
+    "photoRejectedChallenge": "L'image de {name} pour le défi « {challenge} » n'a pas été approuvée : {reason}",
+    "artistTagged": "On t'a indiqué comme artiste d'un dessin de {name}"
   },
   "validation": {
     "petName": "Donne un nom à ton personnage"
@@ -57,7 +58,7 @@
     "credit": "Artiste",
     "creditPlaceholder": "Nom ou pseudo de l'artiste",
     "creditUrl": "Page de l'artiste",
-    "creditHelp": "Si tu n'as pas fait le dessin toi-même, indique qui l'a dessiné : son nom s'affiche sous l'image.",
+    "creditHelp": "Si tu n'as pas fait le dessin toi-même, indique qui l'a dessiné : s'il est inscrit, choisis-le dans la liste pour que son nom mène à son profil.",
     "namePlaceholder": "Ember"
   },
   "join": {
@@ -155,5 +156,15 @@
   "gallery": {
     "showAll": "Les {n} images",
     "showLess": "Moins d'images"
+  },
+  "report": {
+    "titlePhoto": "Signaler le dessin",
+    "reason": {
+      "stolen": "Publié sans l'accord de l'artiste"
+    }
+  },
+  "artist": {
+    "works": "Un dessin attribué | {n} dessins attribués",
+    "worksHelp": "Des dessins publiés par d'autres qui t'indiquent comme artiste. Si ce n'est pas toi, retire ton nom ; si c'est à toi mais sans ton accord, signale-le."
   }
 }

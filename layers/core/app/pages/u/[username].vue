@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { shelterImageSources } from '#shared/images'
-import type { AdoptionStatus, PetGallery as Gallery, Profile } from '#shared/models'
+import { HAS_ARTISTS, type AdoptionStatus, type PetGallery as Gallery, type Profile } from '#shared/models'
 
 const { features } = useAppConfig()
 
@@ -76,23 +76,33 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
           <NuxtLink :to="`/rifugi/${shelter.slug}`" class="btn btn--ghost">🏠 {{ $t('profile.visitShelter') }}</NuxtLink>
           <a v-if="pets.length" href="#pets" class="btn btn--ghost">🐾 {{ $t('profile.seeGuests') }}</a>
         </nav>
+        <ReportButton v-if="!profile.isMe" :username="profile.username" class="profile__report" />
       </header>
 
       <header v-else class="profile__card profile__hero">
         <div class="profile__id">
           <span class="profile__avatar" aria-hidden="true">{{ profile.username[0]?.toUpperCase() }}</span>
           <div class="profile__names">
+            <span v-if="profile.artist" class="badge badge--soft">🎨 {{ $t('artist.badge') }}</span>
             <h1 class="profile__title">@{{ profile.username }}</h1>
             <p class="profile__sub">{{ $t('profile.since', { date: since }) }}</p>
           </div>
         </div>
+        <!-- Pagine social dell'artista: link scritti da lui, quindi niente "follow" -->
+        <ul v-if="profile.artist?.links.length" class="profile__links" :aria-label="$t('artist.links')">
+          <li v-for="link in profile.artist.links" :key="link">
+            <a :href="link" target="_blank" rel="noopener noreferrer nofollow ugc" class="btn btn--ghost profile__link">{{ linkLabel(link) }} ↗</a>
+          </li>
+        </ul>
         <dl class="profile__stats">
           <div v-for="s in stats" :key="s.label" class="profile__stat"><dt class="profile__stat-label">{{ s.label }}</dt><dd class="profile__stat-value">{{ s.value }}</dd></div>
         </dl>
         <nav v-if="profile.isMe" class="profile__actions">
           <NuxtLink to="/carica" class="btn btn--primary">+ {{ $t('profile.newPet') }}</NuxtLink>
           <NuxtLink v-if="user?.role === 'admin'" to="/admin" class="btn btn--ghost">{{ $t('profile.admin') }}</NuxtLink>
+          <NuxtLink v-if="HAS_ARTISTS" to="/account" class="btn btn--ghost">🎨 {{ profile.artist ? $t('artist.edit') : $t('artist.become') }}</NuxtLink>
         </nav>
+        <ReportButton v-else :username="profile.username" class="profile__report" />
       </header>
 
       <!-- Solo per chi gestisce il rifugio: tutto quello che serve, a un tocco -->
@@ -136,6 +146,8 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
       <p v-if="profile.isMe && pending" class="profile__notice">
         {{ $t('profile.pending', pending) }}
       </p>
+
+      <ArtistWorks v-if="profile.artworks.length" :artworks="profile.artworks" :is-me="profile.isMe" class="profile__card" @changed="refresh()" />
 
       <template v-if="pets.length">
         <div id="pets" class="profile__bar">
@@ -268,6 +280,17 @@ $adoption-dots: (
   &__stat-label { @include eyebrow; }
 
   &__actions { @include cluster($space-3); }
+
+  &__links {
+    @include cluster($space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__link { padding: 6px 12px; font-size: 13px; }
+
+  &__report { align-self: flex-end; color: var(--muted); }
 
   // Gestione del rifugio
   &__manage { @include stack($space-5); border: 2px solid var(--coral-soft); }

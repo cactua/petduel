@@ -5,6 +5,9 @@ definePageMeta({ middleware: 'admin' })
 useHead({ title: 'Admin' })
 
 const { data, refresh, error } = await useFetch<AdminOverview>('/api/admin/overview')
+// Segnalazioni aperte: dal conteggio del menu admin (pages/admin.vue)
+const todo = useNuxtData<{ reports: number }>('admin-todo').data
+const reports = computed(() => todo.value?.reports ?? 0)
 
 // Si aggiorna da sola ogni 20 secondi finché la scheda è visibile
 let timer: ReturnType<typeof setInterval> | undefined
@@ -39,7 +42,10 @@ const series = (key: 'votes' | 'signups' | 'uploads') => (data.value?.days ?? []
         <NuxtLink v-if="data.todo.shelters" to="/admin/rifugi" class="dashboard__task">
           <b class="dashboard__task-count">{{ data.todo.shelters }}</b> {{ data.todo.shelters === 1 ? 'rifugio da verificare' : 'rifugi da verificare' }} <span class="dashboard__arrow">→</span>
         </NuxtLink>
-        <p v-if="!data.todo.photos && !data.todo.shelters" class="dashboard__done">✅ Niente in attesa: tutto in ordine</p>
+        <NuxtLink v-if="reports" to="/admin/segnalazioni" class="dashboard__task">
+          <b class="dashboard__task-count">{{ reports }}</b> {{ reports === 1 ? 'segnalazione da guardare' : 'segnalazioni da guardare' }} <span class="dashboard__arrow">→</span>
+        </NuxtLink>
+        <p v-if="!data.todo.photos && !data.todo.shelters && !reports" class="dashboard__done">✅ Niente in attesa: tutto in ordine</p>
       </div>
 
       <h2 class="admin-page__heading">Oggi</h2>

@@ -23,6 +23,8 @@ export async function deleteAccount(userId: number) {
     await tx.update(challengeVotes).set({ voterId: anon }).where(eq(challengeVotes.voterId, was))
     await tx.update(adEvents).set({ voterId: anon }).where(eq(adEvents.voterId, was))
     await tx.update(adNetworkViews).set({ voterId: anon }).where(eq(adNetworkViews.voterId, was))
+    // Disegni di altri dove era indicato come artista: il disegno resta, il suo nome no
+    await tx.update(photos).set({ credit: null, creditUrl: null, artistId: null }).where(eq(photos.artistId, userId))
     // Il resto se ne va a cascata con l'utente (pet, foto, rifugio, richieste, avvisi)
     return tx.delete(users).where(eq(users.id, userId)).returning({ id: users.id })
   })
@@ -66,6 +68,7 @@ export async function exportAccount(userId: number) {
   return {
     exportedAt: new Date().toISOString(),
     account: { email: user.email, username: user.username, role: user.role, createdAt: user.createdAt },
+    artist: user.isArtist ? { links: user.artistLinks } : null,
     pets: myPets.map(p => ({
       id: p.id, name: p.name, species: p.species, breed: p.breed, city: p.city, hearts: p.wins, createdAt: p.createdAt,
       adoption: p.adoption ? { status: p.adoption, sex: p.sex, age: p.age, size: p.size, neutered: p.neutered, about: p.about } : null,

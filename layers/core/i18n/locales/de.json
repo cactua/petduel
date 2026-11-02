@@ -66,7 +66,10 @@
     "challengePlace": "{name}: Platz {rank} von {total} in der Challenge „{challenge}“",
     "rankFirst": "{name} ist diese Woche auf Platz 1 der Rangliste {species}!",
     "rankTop": "{name} ist diese Woche in den Top {tier} der Rangliste {species}",
-    "weeklyHearts": "Letzte Woche haben deine Teilnehmer {n} Herz bekommen. Am beliebtesten: {name} | Letzte Woche haben deine Teilnehmer {n} Herzen bekommen. Am beliebtesten: {name}"
+    "weeklyHearts": "Letzte Woche haben deine Teilnehmer {n} Herz bekommen. Am beliebtesten: {name} | Letzte Woche haben deine Teilnehmer {n} Herzen bekommen. Am beliebtesten: {name}",
+    "artistTagged": "Du wurdest als Urheber*in eines Bildes von {name} angegeben",
+    "reportResolved": "Wir haben deine Meldung geprüft und gehandelt. Danke!",
+    "reportDismissed": "Wir haben deine Meldung geprüft: Im Moment verstößt es nicht gegen die Regeln. Trotzdem danke!"
   },
   "time": {
     "now": "jetzt",
@@ -143,7 +146,10 @@
     "invalidImage": "Die Datei ist kein gültiges Bild",
     "wrongPassword": "Falsches Passwort",
     "lastAdmin": "Du bist der einzige Admin: Ernenne zuerst einen anderen Admin, bevor du dein Konto löschst",
-    "geocode": "Die Adresssuche antwortet gerade nicht. Versuch es gleich nochmal oder tippe auf die Karte."
+    "geocode": "Die Adresssuche antwortet gerade nicht. Versuch es gleich nochmal oder tippe auf die Karte.",
+    "artistNotFound": "Diese*r Künstler*in ist nicht registriert",
+    "tooManyReports": "Du hast heute viele Meldungen gesendet: versuch es morgen wieder",
+    "reportOwn": "Du kannst deine eigenen Inhalte nicht melden"
   },
   "auth": {
     "registerTitle": "Erstelle dein Konto",
@@ -238,7 +244,9 @@
     "creditPlaceholder": "Name oder Spitzname",
     "creditUrl": "Link zum Urheber",
     "creditHelp": "Wenn du das Bild nicht selbst gemacht hast, gib an, wer es war: Der Name erscheint unter dem Bild.",
-    "namePlaceholder": "Luna"
+    "namePlaceholder": "Luna",
+    "artistRemove": "Künstler*in entfernen",
+    "artistMatches": "Registrierte Künstler*innen"
   },
   "join": {
     "pickPhoto": "Wähle ein Foto",
@@ -463,5 +471,42 @@
       "name": "Herausforderer",
       "desc": "Hat an mindestens 3 Challenges teilgenommen"
     }
+  },
+  "artist": {
+    "title": "Künstlerprofil",
+    "toggle": "Ich bin Künstler*in",
+    "toggleHelp": "Wer eine Zeichnung von dir hochlädt, kann dich suchen und als Urheber*in angeben: Dein Name führt zu deinem Profil, mit den Links unten.",
+    "links": "Deine Seiten",
+    "linkN": "Link {n}",
+    "addLink": "Link hinzufügen",
+    "save": "Speichern",
+    "saved": "Gespeichert",
+    "badge": "Künstler*in",
+    "edit": "Künstlerprofil bearbeiten",
+    "become": "Bist du Künstler*in?",
+    "works": "Ein zugeordnetes Bild | {n} zugeordnete Bilder",
+    "worksHelp": "Von anderen hochgeladene Bilder, die dich als Urheber*in angeben. Wenn du es nicht bist, entferne deinen Namen; wenn es von dir ist, du es aber nicht erlaubt hast, melde es.",
+    "notMe": "Bin ich nicht",
+    "notAllowed": "Ohne Erlaubnis"
+  },
+  "report": {
+    "open": "Melden",
+    "titlePhoto": "Bild melden",
+    "titleUser": "Profil melden",
+    "why": "Was stimmt nicht?",
+    "reason": {
+      "stolen": "Ohne Erlaubnis veröffentlicht",
+      "explicit": "Explizit oder unangemessen",
+      "hateful": "Beleidigend oder hasserfüllt",
+      "personal": "Zeigt persönliche Daten",
+      "spam": "Spam oder Werbung",
+      "impersonation": "Gibt sich als jemand anderes aus",
+      "other": "Etwas anderes"
+    },
+    "note": "Details",
+    "notePlaceholder": "Zum Beispiel: wo das Original zu finden ist",
+    "hint": "Meldungen lesen nur die Moderator*innen: Wer es veröffentlicht hat, erfährt nicht, dass du es warst.",
+    "send": "Meldung senden",
+    "thanks": "Danke! Ein*e Moderator*in schaut es sich bald an, und du bekommst eine Benachrichtigung."
   }
 }

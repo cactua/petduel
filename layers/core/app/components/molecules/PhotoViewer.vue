@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { PhotoCredit } from '#shared/models'
 
-export interface ViewerPhoto { image: string, alt: string, credit?: PhotoCredit | null }
+// id: foto pubblicata che si può segnalare (non per le proprie)
+export interface ViewerPhoto { image: string, alt: string, credit?: PhotoCredit | null, id?: number }
 
 /**
  * Foto a tutto schermo, intera e senza ritagli. Con più foto si sfoglia con le frecce,
@@ -21,7 +22,8 @@ function go(step: number) {
 const close = () => (index.value = null)
 
 function onKey(e: KeyboardEvent) {
-  if (props.peek || index.value === null) return
+  // Con il foglio della segnalazione aperto i tasti sono suoi
+  if (props.peek || index.value === null || document.querySelector('dialog[open]')) return
   if (e.key === 'Escape') close()
   if (e.key === 'ArrowLeft') go(-1)
   if (e.key === 'ArrowRight') go(1)
@@ -79,7 +81,8 @@ onBeforeUnmount(() => {
           </template>
           <div class="photo-viewer__foot">
             <span v-if="many">{{ index! + 1 }} / {{ photos.length }}</span>
-            <a v-if="photo.credit" :href="photo.credit.url ?? undefined" target="_blank" rel="noopener noreferrer nofollow ugc" class="photo-viewer__credit">{{ $t('photo.credit', { text: photo.credit.text }) }}</a>
+            <CreditLink v-if="photo.credit" :url="photo.credit.url" class="photo-viewer__credit">{{ $t('photo.credit', { text: photo.credit.text }) }}</CreditLink>
+            <ReportButton v-if="photo.id" :key="photo.id" :photo-id="photo.id" />
           </div>
         </template>
       </div>

@@ -78,7 +78,10 @@ export const petFieldsSchema = z.object({
   city: breedCity,
 })
 
-/** Autore e licenza di una foto non scattata dal proprietario (es. Wikimedia Commons) */
+/**
+ * Autore e licenza di una foto non scattata dal proprietario (es. Wikimedia Commons).
+ * Per un artista registrato url è il suo profilo sul sito ("/u/…"): i link inseriti a mano sono sempre http/https
+ */
 export interface PhotoCredit {
   text: string
   url: string | null
@@ -219,6 +222,17 @@ export interface Profile {
   pets: PetGallery[]
   // Solo sul proprio profilo: il rifugio che si gestisce, in qualsiasi stato
   manage: ShelterManage | null
+  // Chi si è segnato come artista (siti con askCredit), con le sue pagine social
+  artist: { links: string[] } | null
+  // Immagini pubblicate da altri che lo indicano come artista, le più recenti
+  artworks: Artwork[]
+}
+
+export interface Artwork {
+  photoId: number
+  petId: number
+  name: string
+  image: string
 }
 
 /** Rifugio di chi è collegato, per le scorciatoie (profilo, menu) */
@@ -274,6 +288,31 @@ export const PET_SEX = ['m', 'f'] as const
 export const PET_SIZE = ['piccola', 'media', 'grande'] as const
 export type PetSize = (typeof PET_SIZE)[number]
 
+// --- Segnalazioni ---
+
+/** Motivi per segnalare un'immagine pubblicata; testi in report.reason.<id> */
+export const PHOTO_REPORT_REASONS = ['stolen', 'explicit', 'hateful', 'personal', 'other'] as const
+/** Motivi per segnalare un profilo (nome, link da artista) */
+export const USER_REPORT_REASONS = ['hateful', 'spam', 'impersonation', 'other'] as const
+export type ReportReason = (typeof PHOTO_REPORT_REASONS)[number] | (typeof USER_REPORT_REASONS)[number]
+export type ReportStatus = 'open' | 'resolved' | 'dismissed'
+
+export const reportSchema = z.discriminatedUnion('target', [
+  z.object({ target: z.literal('photo'), id: z.number().int().positive(), reason: z.enum(PHOTO_REPORT_REASONS), note: text(300).default('') }),
+  z.object({ target: z.literal('user'), username: z.string().trim().toLowerCase().max(30), reason: z.enum(USER_REPORT_REASONS), note: text(300).default('') }),
+])
+export type ReportInput = z.input<typeof reportSchema>
+
+/** Una cosa segnalata, con tutte le segnalazioni aperte su di lei (coda dei moderatori) */
+export interface ReportGroup {
+  target: 'photo' | 'user'
+  // Id della foto o dell'utente segnalato
+  id: number
+  photo: { image: string, petId: number, petName: string, owner: string, credit: PhotoCredit | null } | null
+  user: { username: string, banned: boolean, artistLinks: string[] } | null
+  reports: { reason: ReportReason, note: string, reporter: string, createdAt: string, byArtist: boolean }[]
+}
+
 export const SHELTER_STATUS = ['pending', 'approved', 'rejected'] as const
 export type ShelterStatus = (typeof SHELTER_STATUS)[number]
 
@@ -285,7 +324,19 @@ const optionalUrl = z.string().trim().max(200)
 export const photoCreditSchema = z.object({
   credit: text(60).default(''),
   creditUrl: optionalUrl,
+  // In alternativa: un artista registrato, scelto dalla ricerca (vince su nome e link)
+  artist: z.string().trim().max(30).default(''),
 })
+
+/** Profilo da artista: chi carica un disegno lo può cercare e indicare come autore. Solo dove c'è askCredit */
+export const HAS_ARTISTS = !!site.askCredit
+export const MAX_ARTIST_LINKS = 6
+
+export const artistSettingsSchema = z.object({
+  isArtist: z.boolean(),
+  links: z.array(optionalUrl.refine(v => !!v, 'validation.website')).max(MAX_ARTIST_LINKS),
+})
+export type ArtistSettings = z.infer<typeof artistSettingsSchema>
 
 const phoneSchema = z.string().trim().max(30).regex(/^[+\d\s./-]*$/, 'validation.phone').default('')
 

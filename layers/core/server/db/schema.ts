@@ -1,5 +1,5 @@
 import { boolean, integer, jsonb, pgTable, real, serial, text, timestamp, unique } from 'drizzle-orm/pg-core'
-import type { AdoptionStatus, PetSize, PhotoStatus, RequestStatus, ShelterAccent, ShelterSocials, ShelterStatus, Species } from '#shared/models'
+import type { AdoptionStatus, PetSize, PhotoStatus, ReportReason, ReportStatus, RequestStatus, ShelterAccent, ShelterSocials, ShelterStatus, Species } from '#shared/models'
 
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
@@ -9,6 +9,10 @@ export const users = pgTable('users', {
   role: text('role').$type<'user' | 'admin'>().notNull().default('user'),
   // Account sospeso da un admin: non può accedere né usare la sessione
   bannedAt: timestamp('banned_at', { withTimezone: true }),
+  // Siti con askCredit: chi si segna come artista si può indicare come autore dei disegni caricati da altri
+  isArtist: boolean('is_artist').notNull().default(false),
+  // Pagine social dell'artista (http/https), mostrate sul profilo
+  artistLinks: jsonb('artist_links').$type<string[]>().notNull().default([]),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
@@ -94,6 +98,8 @@ export const photos = pgTable('photos', {
   // Autore e licenza da citare: foto di esempio (Wikimedia Commons) o artista indicato da chi carica (askCredit)
   credit: text('credit'),
   creditUrl: text('credit_url'),
+  // Artista registrato scelto da chi carica: credit è il suo username e credit_url il suo profilo ("/u/…")
+  artistId: integer('artist_id').references(() => users.id, { onDelete: 'set null' }),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
@@ -161,6 +167,21 @@ export const notifications = pgTable('notifications', {
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 }, t => [unique().on(t.userId, t.key)])
 
+// Segnalazioni degli utenti su un'immagine pubblicata o su un profilo, per i moderatori.
+// Una persona segnala la stessa cosa una volta sola; chiusa da un admin (resolved: si è intervenuti, dismissed: niente da fare)
+export const reports = pgTable('reports', {
+  id: serial('id').primaryKey(),
+  reporterId: integer('reporter_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  photoId: integer('photo_id').references(() => photos.id, { onDelete: 'cascade' }),
+  userId: integer('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  reason: text('reason').$type<ReportReason>().notNull(),
+  note: text('note').notNull().default(''),
+  status: text('status').$type<ReportStatus>().notNull().default('open'),
+  resolvedBy: integer('resolved_by').references(() => users.id, { onDelete: 'set null' }),
+  resolvedAt: timestamp('resolved_at', { withTimezone: true }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, t => [unique().on(t.reporterId, t.photoId), unique().on(t.reporterId, t.userId)])
+
 // Pubblicità custom: card mostrata tra un duello e l'altro, ogni N voti
 export const ads = pgTable('ads', {
   id: serial('id').primaryKey(),
@@ -218,6 +239,7 @@ export type Challenge = typeof challenges.$inferSelect
 export type User = typeof users.$inferSelect
 export type Shelter = typeof shelters.$inferSelect
 export type Ad = typeof ads.$inferSelect
+export type Report = typeof reports.$inferSelect
 
 // Tenuto allineato a mano con le tabelle sopra finché non introduciamo drizzle-kit
 export const CREATE_TABLES_SQL = `
@@ -309,6 +331,8 @@ CREATE TABLE IF NOT EXISTS photos (
 );
 ALTER TABLE photos ADD COLUMN IF NOT EXISTS credit text;
 ALTER TABLE photos ADD COLUMN IF NOT EXISTS credit_url text;
+ALTER TABLE photos ADD COLUMN IF NOT EXISTS artist_id integer REFERENCES users (id) ON DELETE SET NULL;
+CREATE INDEX IF NOT EXISTS photos_artist ON photos (artist_id) WHERE artist_id IS NOT NULL;
 CREATE INDEX IF NOT EXISTS photos_pet_status ON photos (pet_id, status);
 CREATE INDEX IF NOT EXISTS photos_status_created ON photos (status, created_at);
 CREATE TABLE IF NOT EXISTS votes (
@@ -362,6 +386,22 @@ CREATE TABLE IF NOT EXISTS challenge_votes (
   created_at timestamptz NOT NULL DEFAULT now(),
   UNIQUE (challenge_id, voter_id, pair_key)
 );
+CREATE TABLE IF NOT EXISTS reports (
+  id serial PRIMARY KEY,
+  reporter_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  photo_id integer REFERENCES photos (id) ON DELETE CASCADE,
+  user_id integer REFERENCES users (id) ON DELETE CASCADE,
+  reason text NOT NULL,
+  note text NOT NULL DEFAULT '',
+  status text NOT NULL DEFAULT 'open',
+  resolved_by integer REFERENCES users (id) ON DELETE SET NULL,
+  resolved_at timestamptz,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (reporter_id, photo_id),
+  UNIQUE (reporter_id, user_id),
+  CHECK ((photo_id IS NULL) <> (user_id IS NULL))
+);
+CREATE INDEX IF NOT EXISTS reports_open ON reports (created_at) WHERE status = 'open';
 CREATE TABLE IF NOT EXISTS notifications (
   id serial PRIMARY KEY,
   user_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
@@ -376,6 +416,9 @@ CREATE TABLE IF NOT EXISTS notifications (
 ALTER TABLE notifications ADD COLUMN IF NOT EXISTS params TEXT;
 CREATE INDEX IF NOT EXISTS notifications_user_created ON notifications (user_id, created_at);
 ALTER TABLE users ADD COLUMN IF NOT EXISTS banned_at timestamptz;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS is_artist boolean NOT NULL DEFAULT false;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS artist_links jsonb NOT NULL DEFAULT '[]';
+CREATE INDEX IF NOT EXISTS users_artists ON users (username) WHERE is_artist;
 CREATE INDEX IF NOT EXISTS users_created ON users (created_at);
 CREATE INDEX IF NOT EXISTS challenge_votes_created ON challenge_votes (created_at);
 CREATE TABLE IF NOT EXISTS ads (
