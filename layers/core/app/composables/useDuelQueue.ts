@@ -44,7 +44,8 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
   let next: Promise<Duel> | null = null
   const fetchDuel = () => {
     const { duelUrl, query } = toValue(source)
-    return $fetch<Duel>(duelUrl, { query })
+    // Ogni duello è nuovo: senza no-store il browser mette in fila le richieste identiche dietro una rimasta appesa
+    return $fetch<Duel>(duelUrl, { query, cache: 'no-store' })
   }
 
   async function load() {
@@ -63,6 +64,13 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
   function reset() {
     next = null
     current.value = null
+    return load()
+  }
+
+  // Nessuno dei due convince, o piacciono uguale: si passa alla coppia dopo senza votare (la coppia può tornare più avanti)
+  // Non durante un voto: hint si riempie appena si sceglie
+  function skip() {
+    if (!current.value?.pets || result.value || hint.value) return
     return load()
   }
 
@@ -100,5 +108,5 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
     }, RESULT_MS)
   }
 
-  return { current, votes, toast, hint, failed, result, celebrate, ad, dismissAd, load, reset, vote }
+  return { current, votes, toast, hint, failed, result, celebrate, ad, dismissAd, load, reset, vote, skip }
 }

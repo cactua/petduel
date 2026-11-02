@@ -69,7 +69,8 @@
     "weeklyHearts": "La semaine dernière, tes participants ont reçu {n} cœur. Le plus aimé : {name} | La semaine dernière, tes participants ont reçu {n} cœurs. Le plus aimé : {name}",
     "artistTagged": "On t'a indiqué comme auteur d'une image de {name}",
     "reportResolved": "Nous avons examiné ton signalement et sommes intervenus. Merci !",
-    "reportDismissed": "Nous avons examiné ton signalement : pour l'instant ça ne va pas contre les règles. Merci quand même !"
+    "reportDismissed": "Nous avons examiné ton signalement : pour l'instant ça ne va pas contre les règles. Merci quand même !",
+    "compliment": "{name} a reçu de nouveaux compliments 💌"
   },
   "time": {
     "now": "maintenant",
@@ -82,6 +83,7 @@
     "Photo de mauvaise qualité",
     "Photo qui n'est pas la tienne ou protégée par le droit d'auteur",
     "Données personnelles visibles",
+    "Image générée par intelligence artificielle",
     "Hors sujet pour le défi"
   ],
   "validation": {
@@ -94,7 +96,8 @@
     "city": "Indique la ville",
     "taxCode": "Numéro SIRET ou de TVA non valide",
     "phone": "Téléphone non valide",
-    "check": "Vérifie les champs"
+    "check": "Vérifie les champs",
+    "rules": "Pour t'inscrire, accepte les règles de la communauté"
   },
   "errors": {
     "generic": "Une erreur s'est produite, réessaie",
@@ -149,7 +152,8 @@
     "geocode": "La recherche d'adresse ne répond pas pour l'instant. Réessaie bientôt ou touche la carte.",
     "artistNotFound": "Cet artiste n'est pas inscrit",
     "tooManyReports": "Tu as envoyé beaucoup de signalements aujourd'hui : réessaie demain",
-    "reportOwn": "Tu ne peux pas signaler tes propres contenus"
+    "reportOwn": "Tu ne peux pas signaler tes propres contenus",
+    "blocked": "Impossible pour cet utilisateur"
   },
   "auth": {
     "registerTitle": "Crée ton compte",
@@ -166,7 +170,8 @@
     "password": "Mot de passe",
     "email": "E-mail",
     "username": "Nom d'utilisateur",
-    "legal": "En t'inscrivant, tu acceptes les {terms} et confirmes avoir lu la politique de {privacy}. Tu dois avoir au moins 14 ans."
+    "legal": "En t'inscrivant, tu acceptes les {terms} et confirmes avoir lu la politique de {privacy}. Tu dois avoir au moins 14 ans.",
+    "rulesAccept": "J'ai lu et j'accepte les {rules}"
   },
   "ad": {
     "label": "Publicité",
@@ -207,12 +212,13 @@
     "hintHold": "appuie longuement pour agrandir",
     "makeWin": "Faire gagner {name}",
     "wins": "Gagne !",
-    "beat": "{winner} a battu {loser} !",
+    "beat": "Tu as choisi {winner} !",
     "votesMilestone": "{n} votes !",
     "voteFailed": "Vote non enregistré",
     "question": "Tu préfères lequel ?",
     "votedTimes": "Tu as voté {n} fois",
-    "uploadYours": "Publie ton participant"
+    "uploadYours": "Publie ton participant",
+    "skip": "Passer"
   },
   "upload": {
     "noClipboardPhoto": "Il n'y a pas de photo dans le presse-papiers : copie-la et réessaie",
@@ -369,7 +375,8 @@
     "periods": {
       "settimana": "Semaine",
       "mese": "Mois",
-      "sempre": "Depuis toujours"
+      "sempre": "Depuis toujours",
+      "nuovi": "Nouveaux"
     },
     "rollingNote": "Cœurs reçus {period} : chaque vote vaut un cœur. Retour à zéro le {date}.",
     "totalNote": "Tous les cœurs reçus : chaque vote vaut un cœur, et on n'en perd jamais.",
@@ -386,7 +393,8 @@
     "nearYou": "📍 {city}, ta ville",
     "cityTitle": "{title} à {city}",
     "celebrate": "{name} est n° {place} {among} : fête ça !",
-    "celebrateShare": "Partager la carte"
+    "celebrateShare": "Partager la carte",
+    "newNote": "Nouveaux talents : seulement ceux arrivés ces {n} derniers jours, avec tous les cœurs reçus."
   },
   "menu": {
     "open": "Menu du compte",
@@ -491,6 +499,7 @@
   },
   "report": {
     "open": "Signaler",
+    "openNamed": "Signaler {name}",
     "titlePhoto": "Signaler l'image",
     "titleUser": "Signaler le profil",
     "why": "Quel est le problème ?",
@@ -501,12 +510,81 @@
       "personal": "Montre des données personnelles",
       "spam": "Spam ou publicité",
       "impersonation": "Se fait passer pour quelqu'un d'autre",
-      "other": "Autre chose"
+      "other": "Autre chose",
+      "ai": "Générée par intelligence artificielle"
     },
     "note": "Détails",
     "notePlaceholder": "Par exemple : où se trouve l'original",
     "hint": "Seuls les modérateurs lisent les signalements : la personne qui l'a publiée ne saura pas que c'était toi.",
     "send": "Envoyer le signalement",
     "thanks": "Merci ! Un modérateur va bientôt regarder et tu recevras une notification."
+  },
+  "reasonTips": {
+    "0": "Essaie avec une image où le sujet se voit bien.",
+    "1": "Jette un œil aux règles de la communauté et réessaie avec une autre image.",
+    "2": "Essaie avec une image plus nette et plus lumineuse.",
+    "3": "Publie seulement tes images, ou demande l'accord de l'auteur et indique-le.",
+    "4": "Cache plaques, adresses ou visages d'autres personnes et republie-la.",
+    "5": "Ici on partage seulement des images faites par des humains : publie un vrai travail.",
+    "6": "Elle est parfaite hors du défi : tu peux l'ajouter à ta galerie."
+  },
+  "block": {
+    "block": "Bloquer",
+    "confirm": "Sûr ? Bloquer",
+    "unblock": "Débloquer",
+    "active": "Tu as bloqué cet utilisateur : tu ne verras plus ses participants dans les duels et il ne pourra ni t'indiquer ni te faire de compliments.",
+    "listTitle": "Utilisateurs bloqués",
+    "listText": "Tu ne les vois plus dans les duels et ils ne peuvent ni t'indiquer comme artiste ni te faire de compliments. Personne n'est prévenu."
+  },
+  "compliments": {
+    "received": "Compliments reçus",
+    "none": "Pas encore de compliments : ils arriveront !",
+    "private": "Toi seul les vois (et l'artiste, s'il est indiqué).",
+    "give": "Fais un compliment",
+    "giveHelp": "Seuls le propriétaire et l'artiste le verront.",
+    "login": "Connecte-toi pour faire un compliment.",
+    "love": "Trop mignon",
+    "style": "Quel style",
+    "colors": "Quelles couleurs",
+    "expression": "Quelle expression",
+    "idea": "Quelle idée"
+  },
+  "rules": {
+    "link": "Règles de la communauté",
+    "title": "Règles de la communauté",
+    "intro": "@:{'site.name'} est un endroit pour s'amuser et s'encourager. Quelques règles, pour que ça reste comme ça pour tout le monde.",
+    "items": {
+      "kind": {
+        "title": "La gentillesse d'abord",
+        "text": "On vote pour ce qu'on préfère et on ne se moque de personne. Pas d'insultes, de haine ou de provocations dans les noms et les liens."
+      },
+      "own": {
+        "title": "Seulement tes images, ou avec accord",
+        "text": "Publie tes propres photos ou créations. Si ce n'est pas toi qui l'as faite, il te faut l'accord de l'auteur et tu dois l'indiquer."
+      },
+      "ai": {
+        "title": "Pas d'images faites par IA",
+        "text": "Ici on célèbre de vraies personnes et de vraies créations : les images générées par intelligence artificielle sont retirées."
+      },
+      "safe": {
+        "title": "Du contenu pour tous",
+        "text": "Pas de contenu explicite, violent ou choquant : le site est aussi utilisé par des jeunes dès 14 ans."
+      },
+      "privacy": {
+        "title": "Respecte la vie privée",
+        "text": "Pas d'adresses, de plaques, de numéros de téléphone ni de visages de personnes qui ne sont pas d'accord."
+      },
+      "report": {
+        "title": "Si quelque chose ne va pas, signale-le",
+        "text": "Utilise « Signaler » sur une image ou un profil : seuls les modérateurs le lisent. Tu peux aussi bloquer qui te dérange."
+      }
+    },
+    "outro": "Ne pas respecter les règles peut faire retirer des images ou suspendre un compte. Merci de garder cet endroit sympa !"
+  },
+  "voted": {
+    "title": "Tes votes",
+    "lead": "Ceux que tu as choisis dans tes derniers duels : ouvre le profil de la personne qui les a publiés pour voir les autres, ou la page de l'artiste.",
+    "empty": "Tu n'as encore voté pour aucun duel.",
+    "goVote": "Aller voter →"
   }
 }

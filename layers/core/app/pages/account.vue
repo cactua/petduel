@@ -9,6 +9,12 @@ useHead({ title: () => `${t('account.title')}` })
 const { user, clear } = useUserSession()
 const { open: openConsent } = useConsent()
 
+const { data: blocked, refresh: refreshBlocked } = await useFetch<string[]>('/api/me/blocks')
+async function unblock(username: string) {
+  await $fetch(`/api/users/${username}/block`, { method: 'POST', body: { blocked: false } })
+  await refreshBlocked()
+}
+
 const confirming = ref(false)
 const password = ref('')
 const understood = ref(false)
@@ -42,6 +48,17 @@ async function remove() {
     <article v-if="HAS_ARTISTS" class="account-page__card">
       <h2 class="account-page__card-title">🎨 {{ $t('artist.title') }}</h2>
       <ArtistSettings />
+    </article>
+
+    <article v-if="blocked?.length" class="account-page__card">
+      <h2 class="account-page__card-title">🚫 {{ $t('block.listTitle') }}</h2>
+      <p class="account-page__text">{{ $t('block.listText') }}</p>
+      <ul class="account-page__blocked">
+        <li v-for="name in blocked" :key="name" class="account-page__blocked-row">
+          <NuxtLink :to="`/u/${name}`" class="account-page__link">@{{ name }}</NuxtLink>
+          <button type="button" class="btn btn--ghost" @click="unblock(name)">{{ $t('block.unblock') }}</button>
+        </li>
+      </ul>
     </article>
 
     <article class="account-page__card">
@@ -78,7 +95,8 @@ async function remove() {
     <p class="account-page__links">
       <NuxtLink to="/privacy" class="account-page__link">{{ $t('legal.privacy') }}</NuxtLink> ·
       <NuxtLink to="/cookie" class="account-page__link">{{ $t('legal.cookie') }}</NuxtLink> ·
-      <NuxtLink to="/termini" class="account-page__link">{{ $t('legal.terms') }}</NuxtLink>
+      <NuxtLink to="/termini" class="account-page__link">{{ $t('legal.terms') }}</NuxtLink> ·
+      <NuxtLink to="/regole" class="account-page__link">{{ $t('rules.link') }}</NuxtLink>
     </p>
   </section>
 </template>
@@ -134,6 +152,10 @@ async function remove() {
   &__checkbox { margin-top: 3px; }
 
   &__buttons { @include cluster($space-3); }
+
+  &__blocked { @include stack($space-2); margin: 0; padding: 0; list-style: none; }
+
+  &__blocked-row { display: flex; justify-content: space-between; align-items: center; gap: $space-3; }
 
   &__links { text-align: center; color: var(--muted); font-size: 13px; }
 

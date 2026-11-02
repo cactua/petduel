@@ -41,6 +41,20 @@ const groups = computed(() => GROUPS
 const filter = ref<Group | 'all'>('all')
 const visibleGroups = computed(() => groups.value.filter(g => filter.value === 'all' || g.id === filter.value))
 
+// Blocca: due tocchi, il secondo conferma. Sbloccare è immediato
+const confirmBlock = ref(false)
+async function toggleBlock() {
+  if (!profile.value) return
+  const blocked = !profile.value.blocked
+  if (blocked && !confirmBlock.value) {
+    confirmBlock.value = true
+    return
+  }
+  confirmBlock.value = false
+  await $fetch(`/api/users/${profile.value.username}/block`, { method: 'POST', body: { blocked } })
+  await refresh()
+}
+
 const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? p.photos.find(ph => ph.image))?.image ?? ''
 </script>
 
@@ -76,7 +90,12 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
           <NuxtLink :to="`/rifugi/${shelter.slug}`" class="btn btn--ghost">🏠 {{ $t('profile.visitShelter') }}</NuxtLink>
           <a v-if="pets.length" href="#pets" class="btn btn--ghost">🐾 {{ $t('profile.seeGuests') }}</a>
         </nav>
-        <ReportButton v-if="!profile.isMe" :username="profile.username" class="profile__report" />
+        <div v-if="!profile.isMe" class="profile__report">
+          <ReportButton :username="profile.username" />
+          <button v-if="user" type="button" class="profile__block" @click="toggleBlock">
+            {{ profile.blocked ? $t('block.unblock') : confirmBlock ? $t('block.confirm') : $t('block.block') }}
+          </button>
+        </div>
       </header>
 
       <header v-else class="profile__card profile__hero">
@@ -102,7 +121,13 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
           <NuxtLink v-if="user?.role === 'admin'" to="/admin" class="btn btn--ghost">{{ $t('profile.admin') }}</NuxtLink>
           <NuxtLink v-if="HAS_ARTISTS" to="/account" class="btn btn--ghost">🎨 {{ profile.artist ? $t('artist.edit') : $t('artist.become') }}</NuxtLink>
         </nav>
-        <ReportButton v-else :username="profile.username" class="profile__report" />
+        <div v-else class="profile__report">
+          <ReportButton :username="profile.username" />
+          <button v-if="user" type="button" class="profile__block" @click="toggleBlock">
+            {{ profile.blocked ? $t('block.unblock') : confirmBlock ? $t('block.confirm') : $t('block.block') }}
+          </button>
+        </div>
+        <p v-if="profile.blocked && !profile.isMe" class="profile__blocked" role="status">🚫 {{ $t('block.active') }}</p>
       </header>
 
       <!-- Solo per chi gestisce il rifugio: tutto quello che serve, a un tocco -->
@@ -290,7 +315,23 @@ $adoption-dots: (
 
   &__link { padding: 6px 12px; font-size: 13px; }
 
-  &__report { align-self: flex-end; color: var(--muted); }
+  &__report { align-self: flex-end; display: flex; flex-wrap: wrap; gap: $space-2; color: var(--muted); }
+
+  &__block {
+    border: 0;
+    padding: 4px 6px;
+    background: none;
+    color: inherit;
+    opacity: .75;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+
+    &:hover, &:focus-visible { opacity: 1; text-decoration: underline; }
+  }
+
+  &__blocked { margin: 0; color: var(--muted); font-size: 13px; font-weight: 700; }
 
   // Gestione del rifugio
   &__manage { @include stack($space-5); border: 2px solid var(--coral-soft); }

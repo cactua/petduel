@@ -183,6 +183,10 @@
     "Foto von schlechter Qualität",
     "Nicht dein Foto oder urheberrechtlich geschützt",
     "Persönliche Daten sichtbar",
+    "Mit KI erzeugtes oder verändertes Foto",
     "Passt nicht zur Challenge"
-  ]
+  ],
+  "reasonTips": {
+    "0": "Versuch es mit einem Foto, auf dem das Tier gut zu sehen ist."
+  }
 }

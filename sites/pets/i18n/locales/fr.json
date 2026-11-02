@@ -183,6 +183,10 @@
     "Photo de mauvaise qualité",
     "Photo qui n'est pas la tienne ou protégée par le droit d'auteur",
     "Données personnelles visibles",
+    "Photo générée ou modifiée par intelligence artificielle",
     "Hors sujet pour le défi"
-  ]
+  ],
+  "reasonTips": {
+    "0": "Essaie avec une photo où l'animal se voit bien."
+  }
 }

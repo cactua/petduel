@@ -135,6 +135,7 @@
     "Bild in schlechter Qualität",
     "Nicht deine Zeichnung oder ohne Erlaubnis der Künstlerin oder des Künstlers veröffentlicht",
     "Persönliche Daten sichtbar",
+    "Mit KI erzeugte Zeichnung",
     "Passt nicht zur Challenge"
   ],
   "photo": {
@@ -166,5 +167,25 @@
   "artist": {
     "works": "Eine zugeordnete Zeichnung | {n} zugeordnete Zeichnungen",
     "worksHelp": "Von anderen hochgeladene Zeichnungen, die dich als Künstler*in angeben. Wenn du es nicht bist, entferne deinen Namen; wenn sie von dir ist, du es aber nicht erlaubt hast, melde sie."
+  },
+  "reasonTips": {
+    "0": "Versuch es mit einer Zeichnung, auf der der Charakter gut zu sehen ist.",
+    "3": "Lade nur eigene Zeichnungen hoch, oder frag die Künstler*in um Erlaubnis und gib sie an.",
+    "5": "Hier feiern wir echte Künstler*innen: Lade handgemachte Kunst hoch (digital zählt)."
+  },
+  "rules": {
+    "items": {
+      "own": {
+        "title": "Nur eigene Kunst oder mit Erlaubnis der Künstler*in",
+        "text": "Lade eigene Zeichnungen hoch. Wenn sie von jemand anderem ist, frag um Erlaubnis und gib die Person an: Ist sie registriert, wähle sie aus der Liste."
+      },
+      "ai": {
+        "title": "Keine KI-Kunst",
+        "text": "Hier feiern wir echte Künstler*innen: Mit KI erzeugte Zeichnungen werden entfernt, auch wenn sie nachbearbeitet sind."
+      }
+    }
+  },
+  "voted": {
+    "lead": "Die Charaktere, die du in deinen letzten Duellen gewählt hast: Öffne das Profil der Person, die sie hochgeladen hat, oder die Seite der Künstler*in."
   }
 }

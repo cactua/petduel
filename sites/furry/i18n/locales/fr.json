@@ -135,6 +135,7 @@
     "Image de mauvaise qualité",
     "Dessin qui n'est pas à toi ou publié sans l'accord de l'artiste",
     "Données personnelles visibles",
+    "Dessin généré par intelligence artificielle",
     "Hors sujet pour le défi"
   ],
   "photo": {
@@ -166,5 +167,25 @@
   "artist": {
     "works": "Un dessin attribué | {n} dessins attribués",
     "worksHelp": "Des dessins publiés par d'autres qui t'indiquent comme artiste. Si ce n'est pas toi, retire ton nom ; si c'est à toi mais sans ton accord, signale-le."
+  },
+  "reasonTips": {
+    "0": "Essaie avec un dessin où le personnage se voit bien.",
+    "3": "Publie seulement tes dessins, ou demande l'accord de l'artiste et indique-le.",
+    "5": "Ici on célèbre les vrais artistes : publie un dessin fait main (le numérique compte)."
+  },
+  "rules": {
+    "items": {
+      "own": {
+        "title": "Seulement tes dessins, ou avec l'accord de l'artiste",
+        "text": "Publie tes propres dessins. Si un autre artiste l'a fait, demande son accord et indique-le : s'il est inscrit, choisis-le dans la liste."
+      },
+      "ai": {
+        "title": "Pas d'art fait par IA",
+        "text": "Ici on célèbre les vrais artistes : les dessins générés par intelligence artificielle sont retirés, même retouchés."
+      }
+    }
+  },
+  "voted": {
+    "lead": "Les personnages que tu as choisis dans tes derniers duels : ouvre le profil de la personne qui les a publiés pour voir les autres, ou la page de l'artiste."
   }
 }

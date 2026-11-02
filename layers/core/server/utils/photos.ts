@@ -102,7 +102,9 @@ export async function readPhotoUpload(event: H3Event) {
       const db = await useDb()
       const [artist] = await db.select({ id: users.id, username: users.username }).from(users)
         .where(and(eq(users.username, parsed.data.artist.toLowerCase()), eq(users.isArtist, true), sql`${users.bannedAt} is null`))
-      if (!artist) throw createError({ statusCode: 400, statusMessage: 'errors.artistNotFound' })
+      // Chi ha bloccato chi carica risulta "non trovato", come nella ricerca
+      const { user } = await getUserSession(event)
+      if (!artist || (user && await isBlockedBetween(artist.id, user.id))) throw createError({ statusCode: 400, statusMessage: 'errors.artistNotFound' })
       // Nome e link copiati qui: tutte le liste degli autori li leggono già da queste due colonne
       credit = { credit: artist.username, creditUrl: `/u/${artist.username}`, artistId: artist.id }
     }

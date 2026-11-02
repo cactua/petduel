@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { loginSchema, registerSchema } from '#shared/models'
+import { loginSchema, signupSchema } from '#shared/models'
 
 const props = defineProps<{ mode: 'login' | 'register' }>()
 
 const route = useRoute()
 const { fetch: refreshSession } = useUserSession()
-const form = reactive({ email: '', username: '', password: '' })
+const form = reactive({ email: '', username: '', password: '', rules: false })
 const error = ref('')
 const sending = ref(false)
 const isRegister = computed(() => props.mode === 'register')
 
 async function submit() {
   // Stesse regole del server, così l'errore arriva subito
-  const check = (isRegister.value ? registerSchema : loginSchema).safeParse(form)
+  const check = (isRegister.value ? signupSchema : loginSchema).safeParse(form)
   if (!check.success) {
     error.value = tr(check.error.issues[0]?.message ?? 'validation.check')
     return
@@ -58,6 +58,12 @@ async function submit() {
       >
       <small v-if="isRegister" class="auth-form__help">{{ $t('auth.passwordHelp') }}</small>
 
+      <label v-if="isRegister" class="auth-form__rules">
+        <input v-model="form.rules" type="checkbox" class="auth-form__rules-check">
+        <i18n-t keypath="auth.rulesAccept" tag="span" scope="global">
+          <template #rules><NuxtLink to="/regole" target="_blank">{{ $t('rules.link') }}</NuxtLink></template>
+        </i18n-t>
+      </label>
       <p v-if="error" class="error auth-form__error" role="alert">{{ error }}</p>
       <i18n-t v-if="isRegister" keypath="auth.legal" tag="p" class="auth-form__legal" scope="global">
         <template #terms><NuxtLink to="/termini" target="_blank">{{ $t('legal.terms') }}</NuxtLink></template>
@@ -119,5 +125,9 @@ async function submit() {
 
     a { color: var(--coral); font-weight: 700; }
   }
+
+  &__rules { display: flex; gap: $space-3; align-items: flex-start; font-size: 14px; font-weight: 700; line-height: 1.4; }
+
+  &__rules-check { margin-top: 3px; accent-color: var(--action); }
 }
 </style>

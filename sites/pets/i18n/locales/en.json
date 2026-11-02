@@ -183,6 +183,10 @@
     "Low-quality photo",
     "Not your photo or copyrighted",
     "Personal data visible",
+    "Photo generated or altered with AI",
     "Off-topic for the challenge"
-  ]
+  ],
+  "reasonTips": {
+    "0": "Try a photo where the animal is clearly visible."
+  }
 }

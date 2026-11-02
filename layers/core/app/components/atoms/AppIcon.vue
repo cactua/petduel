@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Icone disegnate a mano per PetDuel: tratto arrotondato, colore dal testo
-defineProps<{ name: 'paw' | 'flag' | 'podium' | 'camera' | 'face' | 'share' | 'login' | 'shield' | 'sun' | 'moon' | 'home' | 'bell' | 'auto' }>()
+defineProps<{ name: 'paw' | 'flag' | 'podium' | 'camera' | 'face' | 'share' | 'login' | 'shield' | 'sun' | 'moon' | 'home' | 'bell' | 'auto' | 'heart' }>()
 </script>
 
 <template>
@@ -9,6 +9,7 @@ defineProps<{ name: 'paw' | 'flag' | 'podium' | 'camera' | 'face' | 'share' | 'l
       <ellipse cx="12" cy="15.5" rx="5" ry="4.2" /><circle cx="6" cy="9.5" r="2.2" /><circle cx="9.8" cy="6" r="2.2" />
       <circle cx="14.2" cy="6" r="2.2" /><circle cx="18" cy="9.5" r="2.2" />
     </g>
+    <path v-else-if="name === 'heart'" d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" />
     <path v-else-if="name === 'flag'" d="M6 21V4m0 1h11l-2.5 4L17 13H6" />
     <path v-else-if="name === 'podium'" d="M9 20V8h6v12M3 20v-7h6M15 20v-5h6v5zM2 20h20" />
     <g v-else-if="name === 'camera'"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.4" /></g>

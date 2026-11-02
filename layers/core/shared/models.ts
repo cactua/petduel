@@ -26,17 +26,22 @@ export const speciesSchema = SPECIES.length
 export const speciesFilterSchema = z.enum(SPECIES as [Species, ...Species[]]).optional()
 
 // Classifica settimanale e mensile: si azzerano lunedì e il primo del mese (ora italiana)
-export const PERIODS = ['settimana', 'mese', 'sempre'] as const
+// "nuovi": tutti i cuori, ma solo dei partecipanti arrivati da NEW_TALENT_DAYS giorni
+export const PERIODS = ['settimana', 'mese', 'sempre', 'nuovi'] as const
+export const NEW_TALENT_DAYS = 30
 export type Period = (typeof PERIODS)[number]
 
 export const PERIOD_LABEL: Record<Period, string> = {
   settimana: 'Settimana',
   mese: 'Mese',
   sempre: 'Di sempre',
+  nuovi: 'Nuovi talenti',
 }
 
 // Peso del voto di chi non ha un account (il server lo applica, il sito lo racconta)
 export const ANON_VOTE_WEIGHT = 0.25
+/** Voto di un account creato da pochi giorni (server/utils/voter.ts) */
+export const NEW_ACCOUNT_VOTE_WEIGHT = 0.5
 
 export const PHOTO_STATUS =['pending', 'approved', 'rejected'] as const
 export type PhotoStatus = (typeof PHOTO_STATUS)[number]
@@ -61,6 +66,10 @@ export const registerSchema = z.object({
   email: emailSchema,
   username: usernameSchema,
   password: passwordSchema,
+})
+/** Iscrizione dal sito: in più va accettato il regolamento della community (/regole) */
+export const signupSchema = registerSchema.extend({
+  rules: z.boolean().refine(v => v, 'validation.rules'),
 })
 export const loginSchema = z.object({
   email: emailSchema,
@@ -95,6 +104,8 @@ export interface PublicPet {
   city: string
   image: string
   credit?: PhotoCredit | null
+  // Foto mostrata nel duello, per poterla segnalare
+  photoId?: number
   owner: string
   // Solo per i pet dei rifugi verificati
   adoption?: AdoptionStatus | null
@@ -226,6 +237,8 @@ export interface Profile {
   artist: { links: string[] } | null
   // Immagini pubblicate da altri che lo indicano come artista, le più recenti
   artworks: Artwork[]
+  // L'hai bloccato tu (solo per chi è collegato)
+  blocked: boolean
 }
 
 export interface Artwork {
@@ -288,10 +301,48 @@ export const PET_SEX = ['m', 'f'] as const
 export const PET_SIZE = ['piccola', 'media', 'grande'] as const
 export type PetSize = (typeof PET_SIZE)[number]
 
+/** Un partecipante che hai scelto in un duello (pagina "Votati da te"), il voto più recente prima */
+export interface VotedPet {
+  id: number
+  name: string
+  image: string
+  owner: string
+  credit: PhotoCredit | null
+  votedAt: string
+}
+
+// --- Complimenti ---
+
+/** Complimenti già pronti; testi in compliments.<id> (ogni sito li adatta) */
+export const COMPLIMENTS = ['love', 'style', 'colors', 'expression', 'idea'] as const
+export type ComplimentKind = (typeof COMPLIMENTS)[number]
+export const COMPLIMENT_EMOJI: Record<ComplimentKind, string> = { love: '😍', style: '✨', colors: '🎨', expression: '😊', idea: '💡' }
+
+/** Complimenti di un partecipante: i propri sempre, i conteggi solo per proprietario e artista */
+export interface PetCompliments {
+  mine: ComplimentKind[]
+  counts: Partial<Record<ComplimentKind, number>> | null
+  // Si possono fare (collegati, non il proprietario, non bloccati)
+  canGive: boolean
+}
+
 // --- Segnalazioni ---
 
+/** Raffica di voti dalla stessa rete per un partecipante (coda admin) */
+export interface VoteAlert {
+  id: number
+  petId: number
+  name: string
+  owner: string
+  image: string | null
+  // Voti di una sfida invece dei duelli generali
+  challenge: boolean
+  hits: number
+  day: string
+}
+
 /** Motivi per segnalare un'immagine pubblicata; testi in report.reason.<id> */
-export const PHOTO_REPORT_REASONS = ['stolen', 'explicit', 'hateful', 'personal', 'other'] as const
+export const PHOTO_REPORT_REASONS = ['stolen', 'ai', 'explicit', 'hateful', 'personal', 'other'] as const
 /** Motivi per segnalare un profilo (nome, link da artista) */
 export const USER_REPORT_REASONS = ['hateful', 'spam', 'impersonation', 'other'] as const
 export type ReportReason = (typeof PHOTO_REPORT_REASONS)[number] | (typeof USER_REPORT_REASONS)[number]

@@ -1,4 +1,4 @@
-import { and, eq, inArray, ne } from 'drizzle-orm'
+import { and, eq, inArray, ne, notInArray } from 'drizzle-orm'
 import { z } from 'zod'
 import { pets, users, votes } from '../db/schema'
 import { speciesFilterSchema, type Duel } from '#shared/models'
@@ -9,11 +9,14 @@ export default defineEventHandler(async (event): Promise<Duel> => {
   const { species } = await getValidatedQuery(event, querySchema.parse)
   const { voterId, recent, userId } = await getVoter(event)
   const db = await useDb()
+  // Chi hai bloccato non compare nei tuoi duelli
+  const blocked = userId ? await blockedBy(userId) : []
 
   const [candidates, voted] = await Promise.all([
     db.select().from(pets).where(and(
       species ? eq(pets.species, species) : undefined,
       userId ? ne(pets.ownerId, userId) : undefined, // i propri pet non si votano
+      blocked.length ? notInArray(pets.ownerId, blocked) : undefined,
       hasApprovedPhoto,
     )),
     db.select({ key: votes.pairKey }).from(votes).where(eq(votes.voterId, voterId)),
@@ -29,8 +32,8 @@ export default defineEventHandler(async (event): Promise<Duel> => {
   ])
   const owner = (id: number) => owners.find(o => o.id === id)?.username ?? ''
   const toPet = (p: typeof a) => {
-    const { image, credit } = images.get(p.id)!
-    return toPublicPet(p, image, owner(p.ownerId), credit)
+    const { photoId, image, credit } = images.get(p.id)!
+    return { ...toPublicPet(p, image, owner(p.ownerId), credit), photoId }
   }
 
   await rememberSeen(event, voterId, recent, [a.id, b.id])

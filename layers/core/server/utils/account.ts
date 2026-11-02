@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import { and, desc, eq, inArray, sql } from 'drizzle-orm'
-import { adEvents, adNetworkViews, adoptionRequests, challengeEntries, challengeVotes, challenges, notifications, pets, photos, shelters, users, votes } from '../db/schema'
+import { adEvents, adNetworkViews, adoptionRequests, blocks, challengeEntries, challengeVotes, challenges, compliments, notifications, pets, photos, reports, shelters, users, votes } from '../db/schema'
 import { imageUrl, useDb } from './db'
 import { removeImage } from './photos'
 import { removeShelterImage } from './shelterImages'
@@ -69,6 +69,13 @@ export async function exportAccount(userId: number) {
     exportedAt: new Date().toISOString(),
     account: { email: user.email, username: user.username, role: user.role, createdAt: user.createdAt },
     artist: user.isArtist ? { links: user.artistLinks } : null,
+    rulesAcceptedAt: user.rulesAcceptedAt,
+    blocked: (await db.select({ username: users.username }).from(blocks).innerJoin(users, eq(users.id, blocks.blockedId))
+      .where(eq(blocks.blockerId, userId))).map(b => b.username),
+    complimentsGiven: await db.select({ pet: pets.name, kind: compliments.kind, at: compliments.createdAt }).from(compliments)
+      .innerJoin(pets, eq(pets.id, compliments.petId)).where(eq(compliments.userId, userId)),
+    reportsSent: await db.select({ reason: reports.reason, note: reports.note, status: reports.status, at: reports.createdAt }).from(reports)
+      .where(eq(reports.reporterId, userId)),
     pets: myPets.map(p => ({
       id: p.id, name: p.name, species: p.species, breed: p.breed, city: p.city, hearts: p.wins, createdAt: p.createdAt,
       adoption: p.adoption ? { status: p.adoption, sex: p.sex, age: p.age, size: p.size, neutered: p.neutered, about: p.about } : null,

@@ -1,5 +1,5 @@
 import { boolean, integer, jsonb, pgTable, real, serial, text, timestamp, unique } from 'drizzle-orm/pg-core'
-import type { AdoptionStatus, PetSize, PhotoStatus, ReportReason, ReportStatus, RequestStatus, ShelterAccent, ShelterSocials, ShelterStatus, Species } from '#shared/models'
+import type { AdoptionStatus, ComplimentKind, PetSize, PhotoStatus, ReportReason, ReportStatus, RequestStatus, ShelterAccent, ShelterSocials, ShelterStatus, Species } from '#shared/models'
 
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
@@ -13,6 +13,8 @@ export const users = pgTable('users', {
   isArtist: boolean('is_artist').notNull().default(false),
   // Pagine social dell'artista (http/https), mostrate sul profilo
   artistLinks: jsonb('artist_links').$type<string[]>().notNull().default([]),
+  // Quando ha accettato le regole della community (/regole) iscrivendosi; vuoto per chi si è iscritto prima
+  rulesAcceptedAt: timestamp('rules_accepted_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
@@ -181,6 +183,36 @@ export const reports = pgTable('reports', {
   resolvedAt: timestamp('resolved_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 }, t => [unique().on(t.reporterId, t.photoId), unique().on(t.reporterId, t.userId)])
+
+// Chi blocca un utente non vede più i suoi partecipanti nei duelli, e lui non può indicarlo come artista né fargli complimenti
+export const blocks = pgTable('blocks', {
+  blockerId: integer('blocker_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  blockedId: integer('blocked_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, t => [unique().on(t.blockerId, t.blockedId)])
+
+// Complimenti già pronti a un partecipante: li vedono solo il proprietario e l'artista indicato
+export const compliments = pgTable('compliments', {
+  id: serial('id').primaryKey(),
+  petId: integer('pet_id').notNull().references(() => pets.id, { onDelete: 'cascade' }),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  kind: text('kind').$type<ComplimentKind>().notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, t => [unique().on(t.petId, t.userId, t.kind)])
+
+// Raffiche di voti per lo stesso partecipante dalla stessa rete (server/utils/voter.ts), una riga per rete e giorno.
+// network è un'impronta cifrata dell'IP, mai l'IP. Gli admin le vedono tra le segnalazioni
+export const voteAlerts = pgTable('vote_alerts', {
+  id: serial('id').primaryKey(),
+  petId: integer('pet_id').notNull().references(() => pets.id, { onDelete: 'cascade' }),
+  // "main" o "c:<id sfida>"
+  scope: text('scope').notNull(),
+  network: text('network').notNull(),
+  day: text('day').notNull(),
+  hits: integer('hits').notNull(),
+  seenAt: timestamp('seen_at', { withTimezone: true }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, t => [unique().on(t.petId, t.network, t.day)])
 
 // Pubblicità custom: card mostrata tra un duello e l'altro, ogni N voti
 export const ads = pgTable('ads', {
@@ -402,6 +434,32 @@ CREATE TABLE IF NOT EXISTS reports (
   CHECK ((photo_id IS NULL) <> (user_id IS NULL))
 );
 CREATE INDEX IF NOT EXISTS reports_open ON reports (created_at) WHERE status = 'open';
+CREATE TABLE IF NOT EXISTS blocks (
+  blocker_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  blocked_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (blocker_id, blocked_id)
+);
+CREATE INDEX IF NOT EXISTS blocks_blocked ON blocks (blocked_id);
+CREATE TABLE IF NOT EXISTS compliments (
+  id serial PRIMARY KEY,
+  pet_id integer NOT NULL REFERENCES pets (id) ON DELETE CASCADE,
+  user_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  kind text NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (pet_id, user_id, kind)
+);
+CREATE TABLE IF NOT EXISTS vote_alerts (
+  id serial PRIMARY KEY,
+  pet_id integer NOT NULL REFERENCES pets (id) ON DELETE CASCADE,
+  scope text NOT NULL,
+  network text NOT NULL,
+  day text NOT NULL,
+  hits integer NOT NULL,
+  seen_at timestamptz,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (pet_id, network, day)
+);
 CREATE TABLE IF NOT EXISTS notifications (
   id serial PRIMARY KEY,
   user_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
@@ -418,6 +476,7 @@ CREATE INDEX IF NOT EXISTS notifications_user_created ON notifications (user_id,
 ALTER TABLE users ADD COLUMN IF NOT EXISTS banned_at timestamptz;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS is_artist boolean NOT NULL DEFAULT false;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS artist_links jsonb NOT NULL DEFAULT '[]';
+ALTER TABLE users ADD COLUMN IF NOT EXISTS rules_accepted_at timestamptz;
 CREATE INDEX IF NOT EXISTS users_artists ON users (username) WHERE is_artist;
 CREATE INDEX IF NOT EXISTS users_created ON users (created_at);
 CREATE INDEX IF NOT EXISTS challenge_votes_created ON challenge_votes (created_at);

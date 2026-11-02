@@ -1,11 +1,11 @@
 import { eq, or } from 'drizzle-orm'
 import { users } from '../../db/schema'
-import { registerSchema } from '#shared/models'
+import { signupSchema } from '#shared/models'
 
 const RESERVED = new Set(['admin', 'administrator', 'moderatore', 'moderazione', 'petduel', 'support', 'staff', 'root'])
 
 export default defineEventHandler(async (event) => {
-  const parsed = registerSchema.safeParse(await readBody(event))
+  const parsed = signupSchema.safeParse(await readBody(event))
   if (!parsed.success) {
     throw createError({ statusCode: 400, statusMessage: parsed.error.issues[0]?.message ?? 'Dati non validi' })
   }
@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
   if (taken.length) throw createError({ statusCode: 409, statusMessage: 'errors.emailTakenLogin' })
 
   const [user] = await db.insert(users)
-    .values({ email, username, passwordHash: await hashPassword(password) })
+    .values({ email, username, passwordHash: await hashPassword(password), rulesAcceptedAt: new Date() })
     .onConflictDoNothing()
     .returning()
   if (!user) throw createError({ statusCode: 409, statusMessage: 'errors.emailOrUsernameTaken' })

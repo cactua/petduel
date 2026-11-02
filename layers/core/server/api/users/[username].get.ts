@@ -1,6 +1,6 @@
 import { and, count, desc, eq } from 'drizzle-orm'
 import { z } from 'zod'
-import { pets, photos, users, votes } from '../../db/schema'
+import { blocks, pets, photos, users, votes } from '../../db/schema'
 import { HAS_ARTISTS, usernameSchema, type Profile } from '#shared/models'
 
 const paramsSchema = z.object({ username: usernameSchema })
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event): Promise<Profile> => {
 
   const { user } = await getUserSession(event)
   const isMe = user?.id === profile.id
-  const [shelter, [voted], galleries, manage, artworks] = await Promise.all([
+  const [shelter, [voted], galleries, manage, artworks, [blocked]] = await Promise.all([
     shelterOfUser(profile.id),
     db.select({ n: count() }).from(votes).where(eq(votes.voterId, `u:${profile.id}`)),
     loadGalleries(eq(pets.ownerId, profile.id), isMe),
@@ -27,6 +27,9 @@ export default defineEventHandler(async (event): Promise<Profile> => {
           .innerJoin(pets, eq(pets.id, photos.petId))
           .where(and(eq(photos.artistId, profile.id), eq(photos.status, 'approved')))
           .orderBy(desc(photos.createdAt)).limit(60)
+      : [],
+    user && !isMe
+      ? db.select({ id: blocks.blockedId }).from(blocks).where(and(eq(blocks.blockerId, user.id), eq(blocks.blockedId, profile.id)))
       : [],
   ])
   return {
@@ -39,5 +42,6 @@ export default defineEventHandler(async (event): Promise<Profile> => {
     manage,
     artist: HAS_ARTISTS && profile.isArtist ? { links: profile.artistLinks } : null,
     artworks: artworks.map(a => ({ ...a, image: imageUrl(a.image) })),
+    blocked: !!blocked,
   }
 })

@@ -153,7 +153,10 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
         <button v-if="photo.image" type="button" class="pet-gallery__zoom" :aria-label="$t('pet.zoomPhoto')" @click="openPhoto(photo.image)">
           <picture><source v-for="s in photoSources(photo.image, 'v', '(min-width: 760px) 170px, 31vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="photo.image" :alt="$t('pet.photoOf', { name: pet.name })" loading="lazy" class="pet-gallery__photo-img"></picture>
         </button>
-        <div v-else class="pet-gallery__gone">{{ photo.rejectReason ? rejectReason(photo.rejectReason) : '' }}</div>
+        <div v-else class="pet-gallery__gone">
+          {{ photo.rejectReason ? rejectReason(photo.rejectReason) : '' }}
+          <small v-if="photo.rejectReason && reasonTip(photo.rejectReason)" class="pet-gallery__tip">{{ reasonTip(photo.rejectReason) }}</small>
+        </div>
         <CreditLink
           v-if="photo.credit && !editable" class="pet-gallery__credit" :url="photo.credit.url"
         >{{ $t('photo.credit', { text: photo.credit.text }) }}</CreditLink>
@@ -370,7 +373,9 @@ $scrim: rgba(30, 15, 5, .7);
     text-overflow: ellipsis;
   }
 
-  &__gone { height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; font-size: 12px; color: var(--muted); }
+  &__gone { height: 100%; display: flex; flex-direction: column; gap: $space-2; align-items: center; justify-content: center; text-align: center; padding: 10px; font-size: 12px; color: var(--muted); }
+
+  &__tip { font-size: 11px; line-height: 1.35; color: var(--ink); }
 
   &__caption { position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between; align-items: center; gap: $space-1; padding: 6px; background: linear-gradient(transparent, $scrim); }
 

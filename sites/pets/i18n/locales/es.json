@@ -183,6 +183,10 @@
     "Foto de baja calidad",
     "La foto no es tuya o tiene copyright",
     "Datos personales visibles",
+    "Foto generada o modificada con inteligencia artificial",
     "No encaja con el reto"
-  ]
+  ],
+  "reasonTips": {
+    "0": "Prueba con una foto en la que el animal se vea bien."
+  }
 }

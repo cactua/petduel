@@ -69,7 +69,8 @@
     "weeklyHearts": "Last week your entries received {n} heart. Most loved: {name} | Last week your entries received {n} hearts. Most loved: {name}",
     "artistTagged": "You were credited as the creator of an image of {name}",
     "reportResolved": "We reviewed your report and took action. Thank you!",
-    "reportDismissed": "We reviewed your report: for now it doesn't break the rules. Thanks anyway!"
+    "reportDismissed": "We reviewed your report: for now it doesn't break the rules. Thanks anyway!",
+    "compliment": "{name} got new compliments 💌"
   },
   "time": {
     "now": "now",
@@ -82,6 +83,7 @@
     "Low-quality photo",
     "Not your photo or copyrighted",
     "Personal data visible",
+    "AI-generated image",
     "Off-topic for the challenge"
   ],
   "validation": {
@@ -94,7 +96,8 @@
     "city": "Enter the city",
     "taxCode": "Invalid tax code or VAT number",
     "phone": "Invalid phone number",
-    "check": "Check the fields"
+    "check": "Check the fields",
+    "rules": "To sign up, accept the community rules"
   },
   "errors": {
     "generic": "Something went wrong, please try again",
@@ -149,7 +152,8 @@
     "geocode": "Address search isn't responding right now. Try again soon or tap the map.",
     "artistNotFound": "This artist isn't registered",
     "tooManyReports": "You've sent a lot of reports today: try again tomorrow",
-    "reportOwn": "You can't report your own things"
+    "reportOwn": "You can't report your own things",
+    "blocked": "Not possible for this user"
   },
   "auth": {
     "registerTitle": "Create your account",
@@ -166,7 +170,8 @@
     "password": "Password",
     "email": "Email",
     "username": "Username",
-    "legal": "By signing up you accept the {terms} and confirm you have read the {privacy} policy. You must be at least 14."
+    "legal": "By signing up you accept the {terms} and confirm you have read the {privacy} policy. You must be at least 14.",
+    "rulesAccept": "I've read and accept the {rules}"
   },
   "ad": {
     "label": "Advertisement",
@@ -207,12 +212,13 @@
     "hintHold": "press and hold to zoom",
     "makeWin": "Make {name} win",
     "wins": "Wins!",
-    "beat": "{winner} beat {loser}!",
+    "beat": "You picked {winner}!",
     "votesMilestone": "{n} votes!",
     "voteFailed": "Vote not recorded",
     "question": "Which one do you prefer?",
     "votedTimes": "You voted {n} times",
-    "uploadYours": "Upload your entry"
+    "uploadYours": "Upload your entry",
+    "skip": "Skip"
   },
   "upload": {
     "noClipboardPhoto": "There's no photo on the clipboard: copy one and try again",
@@ -369,7 +375,8 @@
     "periods": {
       "settimana": "Week",
       "mese": "Month",
-      "sempre": "All time"
+      "sempre": "All time",
+      "nuovi": "New"
     },
     "rollingNote": "Hearts received {period}: every vote is one heart. Back to zero on {date}.",
     "totalNote": "All hearts received: every vote is one heart, and hearts are never lost.",
@@ -386,7 +393,8 @@
     "nearYou": "📍 {city}, your city",
     "cityTitle": "{title} in {city}",
     "celebrate": "{name} is #{place} {among}: celebrate!",
-    "celebrateShare": "Share the card"
+    "celebrateShare": "Share the card",
+    "newNote": "New talent: only those who arrived in the last {n} days, with all the hearts they got."
   },
   "menu": {
     "open": "Account menu",
@@ -491,6 +499,7 @@
   },
   "report": {
     "open": "Report",
+    "openNamed": "Report {name}",
     "titlePhoto": "Report image",
     "titleUser": "Report profile",
     "why": "What's wrong?",
@@ -501,12 +510,81 @@
       "personal": "Shows personal information",
       "spam": "Spam or advertising",
       "impersonation": "Pretending to be someone else",
-      "other": "Something else"
+      "other": "Something else",
+      "ai": "Generated with artificial intelligence"
     },
     "note": "Details",
     "notePlaceholder": "For example: where the original is",
     "hint": "Only moderators read reports: the person who posted it won't know it was you.",
     "send": "Send report",
     "thanks": "Thanks! A moderator will look at it soon and you'll get a notification."
+  },
+  "reasonTips": {
+    "0": "Try an image where the subject is clearly visible.",
+    "1": "Have a look at the community rules and try again with another image.",
+    "2": "Try a sharper, brighter image.",
+    "3": "Only upload your own images, or ask the creator for permission and credit them.",
+    "4": "Hide plates, addresses or other people's faces and upload it again.",
+    "5": "Only human-made images are shared here: upload real work.",
+    "6": "It's perfectly fine outside the challenge: you can add it to your gallery."
+  },
+  "block": {
+    "block": "Block",
+    "confirm": "Sure? Block",
+    "unblock": "Unblock",
+    "active": "You blocked this user: you won't see their entries in duels and they can't credit you or send you compliments.",
+    "listTitle": "Blocked users",
+    "listText": "You don't see them in duels and they can't credit you as an artist or send you compliments. Nobody is notified."
+  },
+  "compliments": {
+    "received": "Compliments received",
+    "none": "No compliments yet: they'll come!",
+    "private": "Only you can see them (and the artist, if credited).",
+    "give": "Pay a compliment",
+    "giveHelp": "Only the owner and the artist will see it.",
+    "login": "Log in to pay a compliment.",
+    "love": "So lovely",
+    "style": "Great style",
+    "colors": "Great colors",
+    "expression": "What an expression",
+    "idea": "Great idea"
+  },
+  "rules": {
+    "link": "Community rules",
+    "title": "Community rules",
+    "intro": "@:{'site.name'} is a place to have fun and cheer each other on. A few rules keep it that way for everyone.",
+    "items": {
+      "kind": {
+        "title": "Kindness first",
+        "text": "Vote for what you like best and don't make fun of anyone. No insults, hate or provocation in names and links."
+      },
+      "own": {
+        "title": "Only your images, or with permission",
+        "text": "Upload your own photos or work. If you didn't make it, you need the creator's permission and must credit them."
+      },
+      "ai": {
+        "title": "No AI-made images",
+        "text": "We celebrate real people and real work here: AI-generated images are removed."
+      },
+      "safe": {
+        "title": "Content for everyone",
+        "text": "No explicit, violent or disturbing content: people from 14 years old use the site."
+      },
+      "privacy": {
+        "title": "Respect privacy",
+        "text": "No addresses, license plates, phone numbers or faces of people who didn't agree."
+      },
+      "report": {
+        "title": "If something's wrong, report it",
+        "text": "Use \"Report\" on an image or a profile: only moderators read it. You can also block anyone who bothers you."
+      }
+    },
+    "outro": "Breaking the rules can get images removed or an account suspended. Thanks for keeping this place nice!"
+  },
+  "voted": {
+    "title": "Your votes",
+    "lead": "The ones you picked in your latest duels: open the uploader's profile to see their others, or the artist's page.",
+    "empty": "You haven't voted in any duel yet.",
+    "goVote": "Go vote →"
   }
 }

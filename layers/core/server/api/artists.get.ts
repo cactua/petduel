@@ -1,6 +1,6 @@
-import { and, asc, eq, isNull, like } from 'drizzle-orm'
+import { and, asc, eq, isNull, like, notExists } from 'drizzle-orm'
 import { z } from 'zod'
-import { users } from '../db/schema'
+import { blocks, users } from '../db/schema'
 import { HAS_ARTISTS } from '#shared/models'
 
 const querySchema = z.object({ q: z.string().trim().toLowerCase().min(1).max(30) })
@@ -14,8 +14,14 @@ export default defineEventHandler(async (event) => {
   const q = query.data.q.replace(/[^a-z0-9_]/g, '')
   if (!q) return []
   const db = await useDb()
+  // Chi ti ha bloccato non si trova
+  const { user } = await getUserSession(event)
   const rows = await db.select({ username: users.username }).from(users)
-    .where(and(eq(users.isArtist, true), isNull(users.bannedAt), like(users.username, `${q.replaceAll('_', String.raw`\_`)}%`)))
+    .where(and(
+      eq(users.isArtist, true), isNull(users.bannedAt),
+      user ? notExists(db.select().from(blocks).where(and(eq(blocks.blockerId, users.id), eq(blocks.blockedId, user.id)))) : undefined,
+      like(users.username, `${q.replaceAll('_', String.raw`\_`)}%`),
+    ))
     .orderBy(asc(users.username)).limit(8)
   return rows.map(r => r.username)
 })

@@ -1,7 +1,10 @@
 import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto'
 import type { H3Event } from 'h3'
+import { eq, sql } from 'drizzle-orm'
 import { z } from 'zod'
-import { ANON_VOTE_WEIGHT } from '#shared/models'
+import { ANON_VOTE_WEIGHT, NEW_ACCOUNT_VOTE_WEIGHT } from '#shared/models'
+import { users, voteAlerts } from '../db/schema'
+import { useDb } from './db'
 
 const RECENT_SIZE = 8
 const DUEL_TTL_MS = 10 * 60 * 1000
@@ -64,15 +67,61 @@ const anonVotesByIp = new Map<string, number>()
 let anonVotesDay = ''
 
 function anonWeight(event: H3Event) {
-  const today = new Date().toISOString().slice(0, 10)
-  if (today !== anonVotesDay) {
-    anonVotesByIp.clear()
-    anonVotesDay = today
-  }
+  newDay()
   const ip = getRequestIP(event, { xForwardedFor: true }) ?? 'unknown'
   const count = (anonVotesByIp.get(ip) ?? 0) + 1
   anonVotesByIp.set(ip, count)
   return count > ANON_DAILY_CAP ? 0 : ANON_VOTE_WEIGHT
+}
+
+// Anche con l'account: oltre questo tetto giornaliero i voti restano registrati ma non spostano l'Elo
+const USER_DAILY_CAP = 400
+// Un account appena creato vota a metà peso per i primi giorni: crearne tanti per spingere qualcuno non conviene
+const NEW_ACCOUNT_DAYS = 3
+const userVotes = new Map<number, number>()
+
+async function userWeight(userId: number) {
+  newDay()
+  const count = (userVotes.get(userId) ?? 0) + 1
+  userVotes.set(userId, count)
+  if (count > USER_DAILY_CAP) return 0
+  const db = await useDb()
+  const [user] = await db.select({ createdAt: users.createdAt }).from(users).where(eq(users.id, userId))
+  const young = !user || Date.now() - user.createdAt.getTime() < NEW_ACCOUNT_DAYS * 86_400_000
+  return young ? NEW_ACCOUNT_VOTE_WEIGHT : 1
+}
+
+function newDay() {
+  const today = new Date().toISOString().slice(0, 10)
+  if (today === anonVotesDay) return
+  anonVotesByIp.clear()
+  userVotes.clear()
+  anonVotesDay = today
+}
+
+/**
+ * Raffiche: tanti voti per lo stesso partecipante dalla stessa rete in un'ora (cookie cancellati, più account).
+ * Oltre la soglia quei voti non contano più e gli admin trovano un avviso tra le segnalazioni.
+ * L'IP non si salva: solo un'impronta cifrata, che basta a distinguere le reti
+ */
+const BURST_WINDOW_MS = 60 * 60 * 1000
+const BURST_LIMIT = 10
+const bursts = new Map<string, number[]>()
+
+async function burstGuard(event: H3Event, scope: string, winnerId: number) {
+  const ip = getRequestIP(event, { xForwardedFor: true }) ?? 'unknown'
+  const network = sign(`ip:${ip}`).slice(0, 16)
+  const key = `${network}|${scope}|${winnerId}`
+  const now = Date.now()
+  const hits = [...(bursts.get(key) ?? []).filter(t => now - t < BURST_WINDOW_MS), now]
+  bursts.set(key, hits)
+  // Pulizia ogni tanto, perché la mappa non cresca all'infinito
+  if (bursts.size > 50_000) for (const [k, v] of bursts) if (now - v.at(-1)! > BURST_WINDOW_MS) bursts.delete(k)
+  if (hits.length <= BURST_LIMIT) return false
+  const db = await useDb()
+  await db.insert(voteAlerts).values({ petId: winnerId, scope, network, day: new Date().toISOString().slice(0, 10), hits: hits.length })
+    .onConflictDoUpdate({ target: [voteAlerts.petId, voteAlerts.network, voteAlerts.day], set: { hits: sql`greatest(${voteAlerts.hits}, ${hits.length})` } })
+  return true
 }
 
 /** Legge e verifica un voto: token valido, dello stesso votante, dello scope giusto, non troppo veloce. */
@@ -88,7 +137,9 @@ export async function readVote(event: H3Event, scope: string) {
     throw createError({ statusCode: 429, statusMessage: 'errors.voteTooFast' })
   }
   const loserId = duel.p[0] === winnerId ? duel.p[1] : duel.p[0]
-  return { voterId, winnerId, loserId, weight: userId ? 1 : anonWeight(event) }
+  const weight = userId ? await userWeight(userId) : anonWeight(event)
+  const burst = await burstGuard(event, scope, winnerId)
+  return { voterId, winnerId, loserId, weight: burst ? 0 : weight }
 }
 
 function sign(payload: string) {

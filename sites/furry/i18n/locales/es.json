@@ -135,6 +135,7 @@
     "Imagen de baja calidad",
     "Dibujo que no es tuyo o publicado sin permiso del artista",
     "Datos personales visibles",
+    "Dibujo generado con inteligencia artificial",
     "No encaja con el reto"
   ],
   "photo": {
@@ -166,5 +167,25 @@
   "artist": {
     "works": "Un dibujo atribuido | {n} dibujos atribuidos",
     "worksHelp": "Dibujos subidos por otros que te indican como artista. Si no eres tú, quita tu nombre; si es tuyo pero no diste permiso, denúncialo."
+  },
+  "reasonTips": {
+    "0": "Prueba con un dibujo en el que el personaje se vea bien.",
+    "3": "Sube solo dibujos tuyos, o pide permiso al artista e indícalo.",
+    "5": "Aquí celebramos a los artistas de verdad: sube arte hecho a mano (digital vale)."
+  },
+  "rules": {
+    "items": {
+      "own": {
+        "title": "Solo dibujos tuyos o con permiso del artista",
+        "text": "Sube dibujos tuyos. Si lo hizo otro artista, pide permiso e indícalo: si está registrado, elígelo de la lista."
+      },
+      "ai": {
+        "title": "Nada de arte hecho con IA",
+        "text": "Aquí celebramos a los artistas de verdad: los dibujos generados con inteligencia artificial se retiran, aunque estén retocados."
+      }
+    }
+  },
+  "voted": {
+    "lead": "Los personajes que elegiste en tus últimos duelos: abre el perfil de quien los subió para ver los demás, o la página del artista."
   }
 }

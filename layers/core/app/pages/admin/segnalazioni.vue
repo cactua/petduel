@@ -1,13 +1,27 @@
 <script setup lang="ts">
-import { REJECT_REASONS, type ReportGroup, type ReportReason } from '#shared/models'
+import { REJECT_REASONS, type ReportGroup, type ReportReason, type VoteAlert } from '#shared/models'
 
 definePageMeta({ middleware: 'admin' })
 useHead({ title: 'Segnalazioni · Admin' })
 
 const { data: queue, refresh, error: loadError } = await useFetch<ReportGroup[]>('/api/admin/reports')
+const { data: alerts } = await useFetch<VoteAlert[]>('/api/admin/vote-alerts')
+
+async function seen(alert: VoteAlert) {
+  error.value = ''
+  try {
+    await $fetch(`/api/admin/vote-alerts/${alert.id}`, { method: 'POST' })
+    alerts.value = alerts.value?.filter(a => a.id !== alert.id) ?? []
+    refreshNuxtData('admin-todo')
+  }
+  catch (e) {
+    error.value = errorMessage(e)
+  }
+}
 
 const REASON_LABEL: Record<ReportReason, string> = {
   stolen: 'Presa senza permesso',
+  ai: 'Generata con IA',
   explicit: 'Esplicita o inappropriata',
   hateful: 'Offensiva o d\'odio',
   personal: 'Dati personali',
@@ -16,7 +30,7 @@ const REASON_LABEL: Record<ReportReason, string> = {
   other: 'Altro',
 }
 // Motivo di rimozione proposto (quello che legge il proprietario), dal motivo della segnalazione
-const SUGGESTED: Partial<Record<ReportReason, number>> = { stolen: 3, explicit: 1, hateful: 1, personal: 4 }
+const SUGGESTED: Partial<Record<ReportReason, number>> = { stolen: 3, ai: 5, explicit: 1, hateful: 1, personal: 4 }
 
 const key = (g: ReportGroup) => `${g.target}${g.id}`
 const reason = reactive<Record<string, string | undefined>>({})
@@ -71,6 +85,23 @@ const viewerPhotos = computed(() => photoGroups.value.map(g => ({ image: g.photo
     </p>
     <p v-if="error || loadError" class="error" role="alert">{{ error || 'Non riesco a caricare le segnalazioni' }}</p>
     <p v-if="queue && !queue.length" class="admin-page__empty report-review__empty">Nessuna segnalazione aperta. 🎉</p>
+
+    <section v-if="alerts?.length" class="report-review__alerts" aria-labelledby="alerts-title">
+      <h2 id="alerts-title" class="report-review__alerts-title">🚨 Voti sospetti</h2>
+      <p class="admin-page__lead">
+        Più di 10 voti in un'ora per lo stesso partecipante dalla stessa rete (cookie cancellati o più account).
+        Quelli oltre la soglia non hanno contato: qui serve solo a sapere chi tenere d'occhio.
+      </p>
+      <article v-for="a in alerts" :key="a.id" class="report-review__alert">
+        <img v-if="a.image" :src="a.image" :alt="a.name" class="report-review__alert-img">
+        <div class="report-review__info">
+          <NuxtLink :to="`/pet/${a.petId}`" class="report-review__name-link"><b>{{ a.name }}</b></NuxtLink>
+          <span class="report-review__line">di <NuxtLink :to="`/admin/utenti?q=${a.owner}`" class="report-review__link">@{{ a.owner }}</NuxtLink></span>
+          <span class="report-review__line report-review__line--small">{{ a.hits }} voti · {{ a.day }}{{ a.challenge ? ' · in una sfida' : '' }}</span>
+        </div>
+        <button type="button" class="btn btn--ghost" @click="seen(a)">Visto</button>
+      </article>
+    </section>
 
     <div class="admin-page__list">
       <article v-for="g in queue" :key="key(g)" class="report-review__item" :class="{ 'report-review__item--artist': g.reports.some(r => r.byArtist) }">
@@ -196,5 +227,20 @@ const viewerPhotos = computed(() => photoGroups.value.map(g => ({ image: g.photo
   &__note { font-size: 14px; overflow-wrap: anywhere; }
 
   &__choice { @include stack($space-2); }
+
+  &__alerts { @include stack($space-3); }
+
+  &__alerts-title { font-size: 20px; }
+
+  &__alert {
+    display: flex;
+    gap: $space-4;
+    align-items: center;
+    @include card($space-4, 20px);
+  }
+
+  &__alert-img { width: 48px; height: 64px; object-fit: cover; border-radius: 10px; flex: none; }
+
+  .report-review__alert .report-review__info { flex: 1; }
 }
 </style>

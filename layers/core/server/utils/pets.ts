@@ -23,11 +23,11 @@ export const coverImage = sql<string>`(select ${photos.image} from ${photos} whe
 // Nei duelli ogni volta una foto approvata a caso, così tutta la gallery partecipa
 export async function randomApprovedImages(petIds: number[]) {
   const db = await useDb()
-  const rows = await db.execute<{ pet_id: number, image: string, credit: string | null, credit_url: string | null }>(sql`
-    select distinct on (pet_id) pet_id, image, credit, credit_url from ${photos}
+  const rows = await db.execute<{ id: number, pet_id: number, image: string, credit: string | null, credit_url: string | null }>(sql`
+    select distinct on (pet_id) id, pet_id, image, credit, credit_url from ${photos}
     where ${inArray(photos.petId, petIds)} and status = 'approved'
     order by pet_id, random()`)
-  return new Map(rows.rows.map(r => [r.pet_id, { image: r.image, credit: photoCredit(r.credit, r.credit_url) }]))
+  return new Map(rows.rows.map(r => [r.pet_id, { photoId: r.id, image: r.image, credit: photoCredit(r.credit, r.credit_url) }]))
 }
 
 /** Pet con gallery. `includePrivate`: anche foto in attesa o rifiutate (solo per il proprietario). */

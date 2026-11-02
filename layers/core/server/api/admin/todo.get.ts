@@ -9,7 +9,8 @@ export default defineEventHandler(async (event) => {
       (select count(*)::int from shelters where status = 'pending') as shelters,
       (select count(distinct coalesce('p' || r.photo_id, 'u' || r.user_id))::int from reports r
         left join photos p on p.id = r.photo_id
-        where r.status = 'open' and (r.user_id is not null or p.status = 'approved')) as reports
+        where r.status = 'open' and (r.user_id is not null or p.status = 'approved'))
+        + (select count(*)::int from vote_alerts where seen_at is null) as reports
   `)
   return r!
 })

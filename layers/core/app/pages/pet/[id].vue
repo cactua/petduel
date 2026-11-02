@@ -29,6 +29,8 @@ const shareNow = computed(() => route.query.condividi === '1' && !!pet.value?.is
 // Anteprima del link su WhatsApp, Telegram, Facebook, X…
 const origin = useRequestURL().origin
 const isPublic = computed(() => !!pet.value?.photos.some(p => p.status === 'approved'))
+// La copertina è la prima foto approvata: è quella che si segnala da qui (le altre dal visore)
+const coverId = computed(() => pet.value?.photos.find(p => p.status === 'approved')?.id)
 const { t } = useI18n()
 const title = () => pet.value?.name ?? ''
 useSeoMeta({
@@ -64,9 +66,11 @@ useSeoMeta({
               {{ $t('pet.rank', { rank: pet.speciesRank, among: speciesText(pet.species, 'among') }) }}
             </NuxtLink>
             <ShareCard v-if="isPublic" :pet-id="pet.id" :pet-name="pet.name" :sfida="sfida" :auto-open="shareNow" />
+            <ReportButton v-if="coverId && !pet.isMine" :photo-id="coverId" class="pet-page__report" />
           </div>
         </template>
       </PetGallery>
+      <PetCompliments v-if="isPublic" :pet-id="pet.id" />
       <AdoptionCard :pet="pet" :manage="manage" @changed="refresh()" />
     </template>
   </section>

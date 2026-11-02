@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  HAS_BREED_CITY, PERIODS, SPECIES_EMOJI, SPECIES_SLUG, TOP_RANK, speciesFromSlug,
+  HAS_BREED_CITY, NEW_TALENT_DAYS, PERIODS, SPECIES_EMOJI, SPECIES_SLUG, TOP_RANK, speciesFromSlug,
   type Leaderboard, type Period, type RankedPet, type Species,
 } from '#shared/models'
 
@@ -35,7 +35,7 @@ const baseTitle = computed(() => species.value ? t('ranking.species', { species:
 const title = computed(() => (city.value ? t('ranking.cityTitle', { title: baseTitle.value, city: city.value }) : baseTitle.value))
 useHead({ title: () => `${title.value}` })
 
-const isRolling = computed(() => period.value !== 'sempre')
+const isRolling = computed(() => period.value === 'settimana' || period.value === 'mese')
 const podium = computed(() => {
   const top = data.value?.top ?? []
   return top.length >= 3 ? [top[1]!, top[0]!, top[2]!] : []
@@ -45,7 +45,7 @@ const rest = computed(() => (podium.value.length ? data.value?.top.slice(3) : da
 const resets = computed(() => data.value?.resetsAt
   ? new Date(data.value.resetsAt).toLocaleDateString(intlLocale(), { weekday: 'long', day: 'numeric', month: 'long' })
   : '')
-const periodText = computed(() => (period.value === 'sempre' ? '' : t(`ranking.this.${period.value}`)))
+const periodText = computed(() => (isRolling.value ? t(`ranking.this.${period.value}`) : ''))
 
 // Il punteggio è in cuori: si vede solo per chi è in top (e per i propri pet)
 const score = (p: RankedPet) => `♥ ${p.score}`
@@ -95,6 +95,7 @@ const toTop = (p: RankedPet & { toTop: number }) =>
       </nav>
       <p class="ranking__note">
         <template v-if="isRolling">{{ $t('ranking.rollingNote', { period: periodText, date: resets }) }}</template>
+        <template v-else-if="period === 'nuovi'">{{ $t('ranking.newNote', { n: NEW_TALENT_DAYS }) }}</template>
         <template v-else>{{ $t('ranking.totalNote') }}</template>
       </p>
     </header>

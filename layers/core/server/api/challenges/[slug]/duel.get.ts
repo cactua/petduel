@@ -1,4 +1,4 @@
-import { and, eq, ne } from 'drizzle-orm'
+import { and, eq, ne, notInArray } from 'drizzle-orm'
 import type { Duel, PublicPet } from '#shared/models'
 import { challengeEntries, challengeVotes, photos, pets, users } from '../../../db/schema'
 
@@ -9,9 +9,11 @@ export default defineEventHandler(async (event): Promise<Duel> => {
 
   const { voterId, userId } = await getVoter(event)
   const db = await useDb()
+  // Chi hai bloccato non compare nei tuoi duelli
+  const blocked = userId ? await blockedBy(userId) : []
 
   const [entries, voted] = await Promise.all([
-    db.select({ entry: challengeEntries, pet: pets, image: photos.image, credit: photos.credit, creditUrl: photos.creditUrl, owner: users.username })
+    db.select({ entry: challengeEntries, pet: pets, photoId: photos.id, image: photos.image, credit: photos.credit, creditUrl: photos.creditUrl, owner: users.username })
       .from(challengeEntries)
       .innerJoin(photos, eq(photos.id, challengeEntries.photoId))
       .innerJoin(pets, eq(pets.id, challengeEntries.petId))
@@ -21,6 +23,7 @@ export default defineEventHandler(async (event): Promise<Duel> => {
         eq(photos.status, 'approved'),
         inRankings,
         userId ? ne(pets.ownerId, userId) : undefined,
+        blocked.length ? notInArray(pets.ownerId, blocked) : undefined,
       )),
     db.select({ key: challengeVotes.pairKey }).from(challengeVotes)
       .where(and(eq(challengeVotes.challengeId, challenge.id), eq(challengeVotes.voterId, voterId))),
@@ -38,6 +41,7 @@ export default defineEventHandler(async (event): Promise<Duel> => {
     breed: row.pet.breed,
     city: row.pet.city,
     image: imageUrl(row.image),
+    photoId: row.photoId,
     credit: photoCredit(row.credit, row.creditUrl),
     owner: row.owner,
   })

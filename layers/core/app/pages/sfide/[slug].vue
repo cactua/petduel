@@ -23,7 +23,7 @@ const tab = computed<Tab>(() => {
 })
 const tabLink = (t: Tab) => ({ path: route.path, query: t === 'vota' ? {} : { tab: t } })
 
-const { current, votes, toast, hint, failed, result, celebrate, ad, dismissAd, load, vote } = useDuelQueue(() => ({
+const { current, votes, toast, hint, failed, result, celebrate, ad, dismissAd, load, vote, skip } = useDuelQueue(() => ({
   duelUrl: `/api/challenges/${slug.value}/duel`,
   voteUrl: `/api/challenges/${slug.value}/vote`,
   challenge: true,
@@ -76,7 +76,7 @@ const winner = computed(() => challenge.value?.status === 'ended' ? challenge.va
       <DuelPanel
         v-if="tab === 'vota'"
         :duel="current" :failed="failed" :votes="votes" :hint="hint" :toast="toast" :result="result" :celebrate="celebrate" :ad="ad"
-        @vote="vote" @retry="load" @ad-continue="dismissAd"
+        @vote="vote" @skip="skip" @retry="load" @ad-continue="dismissAd"
       >
         <template #empty>
           <p v-if="challenge.entries < 2">{{ $t('challenge.needTwo') }}</p>

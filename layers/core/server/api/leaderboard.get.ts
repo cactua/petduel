@@ -1,10 +1,10 @@
 import { sql } from 'drizzle-orm'
 import { z } from 'zod'
-import { PERIODS, TOP_RANK, speciesFilterSchema, type Leaderboard, type Period, type RankedPet, type Species } from '#shared/models'
+import { NEW_TALENT_DAYS, PERIODS, TOP_RANK, speciesFilterSchema, type Leaderboard, type Period, type RankedPet, type Species } from '#shared/models'
 import { splitBoard } from '../utils/leaderboard'
 
 const TZ = 'Europe/Rome'
-const UNIT: Record<Exclude<Period, 'sempre'>, string> = { settimana: 'week', mese: 'month' }
+const UNIT: Partial<Record<Period, string>> = { settimana: 'week', mese: 'month' }
 
 const querySchema = z.object({
   species: speciesFilterSchema,
@@ -36,12 +36,13 @@ async function loadRows(species: Species | undefined, period: Period, city: stri
   const visible = sql`${species ? sql`p.species = ${species}` : sql`true`}
     and ${city ? sql`lower(trim(p.city)) = lower(${city})` : sql`true`}
     and not p.hide_from_rankings
+    and ${period === 'nuovi' ? sql`p.created_at >= now() - make_interval(days => ${NEW_TALENT_DAYS})` : sql`true`}
     and exists (select 1 from photos ph where ph.pet_id = p.id and ph.status = 'approved')`
 
   // Si conta in cuori: ogni voto contato vale uno e non se ne perdono mai. "sempre": tutti i cuori;
   // settimana e mese: quelli ricevuti nel periodo (ora italiana). L'Elo, nascosto, decide solo i pari merito.
   // Chi ha zero cuori resta fuori da ogni classifica.
-  const unit = period === 'sempre' ? null : sql.raw(`'${UNIT[period]}'`)
+  const unit = UNIT[period] ? sql.raw(`'${UNIT[period]}'`) : null
   const since = unit && sql`date_trunc(${unit}, now() at time zone ${TZ}) at time zone ${TZ}`
   const ranked = since
     ? sql`select p.id, p.elo, count(v.id)::int as score
@@ -81,7 +82,7 @@ export default defineEventHandler(async (event): Promise<Leaderboard> => {
   const { user } = await getUserSession(event)
   const db = await useDb()
 
-  const unit = period === 'sempre' ? null : sql.raw(`'${UNIT[period]}'`)
+  const unit = UNIT[period] ? sql.raw(`'${UNIT[period]}'`) : null
   const [top, mine] = await Promise.all([
     publicRows(species, period, city),
     user ? loadRows(species, period, city, user.id) : [],

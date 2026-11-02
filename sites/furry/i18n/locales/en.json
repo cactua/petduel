@@ -135,6 +135,7 @@
     "Low-quality image",
     "Not your drawing, or posted without the artist's permission",
     "Personal data visible",
+    "AI-generated drawing",
     "Off-topic for the challenge"
   ],
   "photo": {
@@ -166,5 +167,25 @@
   "artist": {
     "works": "One credited drawing | {n} credited drawings",
     "worksHelp": "Drawings uploaded by others that credit you as the artist. If it isn't you, remove your name; if it's yours but you didn't give permission, report it."
+  },
+  "reasonTips": {
+    "0": "Try a drawing where the character is clearly visible.",
+    "3": "Only upload your own drawings, or ask the artist for permission and credit them.",
+    "5": "We celebrate real artists here: upload hand-made art (digital is fine)."
+  },
+  "rules": {
+    "items": {
+      "own": {
+        "title": "Only your art, or with the artist's permission",
+        "text": "Upload your own drawings. If another artist made it, ask for permission and credit them: if they're registered, pick them from the list."
+      },
+      "ai": {
+        "title": "No AI art",
+        "text": "We celebrate real artists here: AI-generated drawings are removed, even if touched up."
+      }
+    }
+  },
+  "voted": {
+    "lead": "The characters you picked in your latest duels: open the uploader's profile to see their others, or the artist's page."
   }
 }

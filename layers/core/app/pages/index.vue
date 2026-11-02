@@ -2,7 +2,7 @@
 import type { Species } from '#shared/models'
 
 const species = ref<Species>()
-const { current, votes, toast, hint, failed, result, celebrate, ad, dismissAd, load, reset, vote } = useDuelQueue(() => ({
+const { current, votes, toast, hint, failed, result, celebrate, ad, dismissAd, load, reset, vote, skip } = useDuelQueue(() => ({
   duelUrl: '/api/duel',
   voteUrl: '/api/vote',
   query: { species: species.value },
@@ -20,14 +20,14 @@ onMounted(load)
         <SiteMascot class="home__mascot" />
         <h1 class="home__question">{{ $t('duel.question') }}</h1>
       </div>
-      <span class="home__count" :title="$t('duel.votedTimes', { n: votes })">♥ {{ votes }}</span>
+      <NuxtLink to="/votati" class="home__count" :title="$t('duel.votedTimes', { n: votes })">♥ {{ votes }}</NuxtLink>
     </div>
     <div class="home__filters">
       <SpeciesChips v-model="species" class="home__chips" />
-      <span class="home__count home__count--inline" :title="$t('duel.votedTimes', { n: votes })">♥ {{ votes }}</span>
+      <NuxtLink to="/votati" class="home__count home__count--inline" :title="$t('duel.votedTimes', { n: votes })">♥ {{ votes }}</NuxtLink>
     </div>
 
-    <DuelPanel :duel="current" :failed="failed" :votes="votes" :hint="hint" :toast="toast" :result="result" :celebrate="celebrate" :ad="ad" @vote="vote" @retry="load" @ad-continue="dismissAd">
+    <DuelPanel :duel="current" :failed="failed" :votes="votes" :hint="hint" :toast="toast" :result="result" :celebrate="celebrate" :ad="ad" @vote="vote" @skip="skip" @retry="load" @ad-continue="dismissAd">
       <template #empty>
         <p>{{ $t('duel.allVoted') }} 🎉</p>
         <NuxtLink to="/carica">{{ $t('duel.uploadYours') }}</NuxtLink>
@@ -85,6 +85,8 @@ onMounted(load)
     background: var(--heart-soft);
     color: var(--heart);
     font-variant-numeric: tabular-nums;
+    // Porta a "Votati da te"
+    text-decoration: none;
 
     &--inline {
       margin: 0;

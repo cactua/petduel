@@ -69,7 +69,7 @@ async function send() {
             <label :for="`${id}-note`" class="label">{{ $t('report.note') }} <small>({{ $t('common.optional') }})</small></label>
             <textarea :id="`${id}-note`" v-model="note" maxlength="300" rows="3" class="input" :placeholder="$t('report.notePlaceholder')" />
           </div>
-          <p class="report-button__hint">{{ $t('report.hint') }}</p>
+          <p class="report-button__hint">{{ $t('report.hint') }} <NuxtLink to="/regole" target="_blank">{{ $t('rules.link') }}</NuxtLink></p>
           <p v-if="error" class="error" role="alert">{{ error }}</p>
           <button type="submit" class="btn btn--primary" :disabled="!reason || sending">{{ sending ? $t('auth.wait') : $t('report.send') }}</button>
         </template>

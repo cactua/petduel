@@ -69,7 +69,8 @@
     "weeklyHearts": "La semana pasada tus participantes recibieron {n} corazón. El más querido: {name} | La semana pasada tus participantes recibieron {n} corazones. El más querido: {name}",
     "artistTagged": "Te han indicado como autor de una imagen de {name}",
     "reportResolved": "Hemos revisado tu denuncia y hemos actuado. ¡Gracias!",
-    "reportDismissed": "Hemos revisado tu denuncia: por ahora no va contra las normas. ¡Gracias de todos modos!"
+    "reportDismissed": "Hemos revisado tu denuncia: por ahora no va contra las normas. ¡Gracias de todos modos!",
+    "compliment": "{name} ha recibido nuevos cumplidos 💌"
   },
   "time": {
     "now": "ahora",
@@ -82,6 +83,7 @@
     "Foto de baja calidad",
     "La foto no es tuya o tiene copyright",
     "Datos personales visibles",
+    "Imagen generada con inteligencia artificial",
     "No encaja con el reto"
   ],
   "validation": {
@@ -94,7 +96,8 @@
     "city": "Escribe la ciudad",
     "taxCode": "NIF o CIF no válido",
     "phone": "Teléfono no válido",
-    "check": "Revisa los campos"
+    "check": "Revisa los campos",
+    "rules": "Para registrarte acepta las normas de la comunidad"
   },
   "errors": {
     "generic": "Algo ha salido mal, inténtalo de nuevo",
@@ -149,7 +152,8 @@
     "geocode": "La búsqueda de direcciones no responde ahora. Inténtalo pronto o toca el mapa.",
     "artistNotFound": "Este artista no está registrado",
     "tooManyReports": "Has enviado muchas denuncias hoy: inténtalo mañana",
-    "reportOwn": "No puedes denunciar tus propias cosas"
+    "reportOwn": "No puedes denunciar tus propias cosas",
+    "blocked": "No es posible para este usuario"
   },
   "auth": {
     "registerTitle": "Crea tu cuenta",
@@ -166,7 +170,8 @@
     "password": "Contraseña",
     "email": "Email",
     "username": "Usuario",
-    "legal": "Al registrarte aceptas las {terms} y confirmas haber leído la política de {privacy}. Debes tener al menos 14 años."
+    "legal": "Al registrarte aceptas las {terms} y confirmas haber leído la política de {privacy}. Debes tener al menos 14 años.",
+    "rulesAccept": "He leído y acepto las {rules}"
   },
   "ad": {
     "label": "Publicidad",
@@ -207,12 +212,13 @@
     "hintHold": "mantén pulsado para ampliar",
     "makeWin": "Haz ganar a {name}",
     "wins": "¡Gana!",
-    "beat": "¡{winner} ha ganado a {loser}!",
+    "beat": "¡Has elegido a {winner}!",
     "votesMilestone": "¡{n} votos!",
     "voteFailed": "Voto no registrado",
     "question": "¿Cuál prefieres?",
     "votedTimes": "Has votado {n} veces",
-    "uploadYours": "Sube a tu participante"
+    "uploadYours": "Sube a tu participante",
+    "skip": "Saltar"
   },
   "upload": {
     "noClipboardPhoto": "No hay ninguna foto en el portapapeles: cópiala y vuelve a intentarlo",
@@ -369,7 +375,8 @@
     "periods": {
       "settimana": "Semana",
       "mese": "Mes",
-      "sempre": "Histórico"
+      "sempre": "Histórico",
+      "nuovi": "Nuevos"
     },
     "rollingNote": "Corazones recibidos {period}: cada voto vale un corazón. Se vuelve a cero el {date}.",
     "totalNote": "Todos los corazones recibidos: cada voto vale un corazón y nunca se pierden.",
@@ -386,7 +393,8 @@
     "nearYou": "📍 {city}, tu ciudad",
     "cityTitle": "{title} en {city}",
     "celebrate": "¡{name} es el n.º {place} {among}: celébralo!",
-    "celebrateShare": "Comparte la tarjeta"
+    "celebrateShare": "Comparte la tarjeta",
+    "newNote": "Nuevos talentos: solo quien llegó en los últimos {n} días, con todos los corazones recibidos."
   },
   "menu": {
     "open": "Menú de la cuenta",
@@ -491,6 +499,7 @@
   },
   "report": {
     "open": "Denunciar",
+    "openNamed": "Denunciar a {name}",
     "titlePhoto": "Denunciar la imagen",
     "titleUser": "Denunciar el perfil",
     "why": "¿Qué pasa?",
@@ -501,12 +510,81 @@
       "personal": "Muestra datos personales",
       "spam": "Spam o publicidad",
       "impersonation": "Se hace pasar por otra persona",
-      "other": "Otra cosa"
+      "other": "Otra cosa",
+      "ai": "Generada con inteligencia artificial"
     },
     "note": "Detalles",
     "notePlaceholder": "Por ejemplo: dónde está el original",
     "hint": "Solo los moderadores leen las denuncias: quien la publicó no sabrá que fuiste tú.",
     "send": "Enviar denuncia",
     "thanks": "¡Gracias! Un moderador la revisará pronto y recibirás un aviso."
+  },
+  "reasonTips": {
+    "0": "Prueba con una imagen en la que el protagonista se vea bien.",
+    "1": "Echa un vistazo a las normas de la comunidad y prueba con otra imagen.",
+    "2": "Prueba con una imagen más nítida y luminosa.",
+    "3": "Sube solo imágenes tuyas, o pide permiso a quien las hizo e indícalo.",
+    "4": "Oculta matrículas, direcciones o caras de otras personas y vuelve a subirla.",
+    "5": "Aquí solo se comparten imágenes hechas por personas: sube un trabajo real.",
+    "6": "Fuera del reto está perfecta: puedes subirla a tu galería."
+  },
+  "block": {
+    "block": "Bloquear",
+    "confirm": "¿Seguro? Bloquear",
+    "unblock": "Desbloquear",
+    "active": "Has bloqueado a este usuario: no verás sus participantes en los duelos y no podrá indicarte ni hacerte cumplidos.",
+    "listTitle": "Usuarios bloqueados",
+    "listText": "No los ves en los duelos y no pueden indicarte como artista ni hacerte cumplidos. Nadie recibe aviso."
+  },
+  "compliments": {
+    "received": "Cumplidos recibidos",
+    "none": "Todavía ningún cumplido: ¡llegarán!",
+    "private": "Solo los ves tú (y el artista, si está indicado).",
+    "give": "Haz un cumplido",
+    "giveHelp": "Solo lo verán el dueño y el artista.",
+    "login": "Inicia sesión para hacer un cumplido.",
+    "love": "Qué amor",
+    "style": "Qué estilo",
+    "colors": "Qué colores",
+    "expression": "Qué expresión",
+    "idea": "Qué idea"
+  },
+  "rules": {
+    "link": "Normas de la comunidad",
+    "title": "Normas de la comunidad",
+    "intro": "@:{'site.name'} es un lugar para divertirse y animarse unos a otros. Pocas normas, para que siga así para todos.",
+    "items": {
+      "kind": {
+        "title": "Amabilidad ante todo",
+        "text": "Se vota lo que más gusta y no se burla de nadie. Nada de insultos, odio o provocaciones en nombres y enlaces."
+      },
+      "own": {
+        "title": "Solo imágenes tuyas o con permiso",
+        "text": "Sube fotos o trabajos tuyos. Si no lo hiciste tú, necesitas el permiso del autor y debes indicarlo."
+      },
+      "ai": {
+        "title": "Nada de imágenes hechas con IA",
+        "text": "Aquí celebramos personas y trabajos reales: las imágenes generadas con inteligencia artificial se retiran."
+      },
+      "safe": {
+        "title": "Contenido para todos",
+        "text": "Nada de contenido explícito, violento o perturbador: el sitio lo usan también chicos desde los 14 años."
+      },
+      "privacy": {
+        "title": "Respeta la privacidad",
+        "text": "Nada de direcciones, matrículas, teléfonos o caras de personas que no estén de acuerdo."
+      },
+      "report": {
+        "title": "Si algo va mal, denúncialo",
+        "text": "Usa \"Denunciar\" en una imagen o un perfil: solo lo leen los moderadores. También puedes bloquear a quien te moleste."
+      }
+    },
+    "outro": "Quien no respeta las normas puede perder sus imágenes o ver su cuenta suspendida. ¡Gracias por hacer de este un lugar bonito!"
+  },
+  "voted": {
+    "title": "Tus votos",
+    "lead": "Los que elegiste en tus últimos duelos: abre el perfil de quien los subió para ver los demás, o la página del artista.",
+    "empty": "Todavía no has votado ningún duelo.",
+    "goVote": "Ir a votar →"
   }
 }

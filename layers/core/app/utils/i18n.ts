@@ -34,14 +34,24 @@ export function rejectReason(reason: string) {
   return i < 0 ? reason : i18n().t(`reasons.${i}`)
 }
 
+/** Consiglio gentile su come rimediare a un rifiuto (reasonTips.<n>); vuoto per i motivi scritti a mano */
+export function reasonTip(reason: string) {
+  const i = (REJECT_REASONS as readonly string[]).indexOf(reason)
+  const { t, te } = i18n()
+  return i >= 0 && te(`reasonTips.${i}`) ? t(`reasonTips.${i}`) : ''
+}
+
 /** Gli avvisi salvano chiave e parametri: si traducono qui. I vecchi avvisi hanno già il testo */
 export function notificationText(n: AppNotification) {
   if (!n.params) return n.text
   const { t } = i18n()
   const p: Record<string, unknown> = { ...n.params }
   if (typeof p.challengeSlug === 'string' && typeof p.challenge === 'string') p.challenge = challengeText({ slug: p.challengeSlug, title: p.challenge }).title
+  // Dopo un rifiuto, un consiglio su come rimediare
+  const tip = typeof p.reason === 'string' && p.reason ? reasonTip(p.reason) : ''
   if (typeof p.reason === 'string') p.reason = rejectReason(p.reason)
   if (typeof p.species === 'string') p.species = speciesText(p.species, 'many')
   // {n} numerico: il testo può avere singolare e plurale
-  return typeof p.n === 'number' ? t(n.text, p, p.n) : t(n.text, p)
+  const text = typeof p.n === 'number' ? t(n.text, p, p.n) : t(n.text, p)
+  return tip ? `${text}. ${tip}` : text
 }

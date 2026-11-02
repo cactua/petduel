@@ -13,7 +13,7 @@ const props = defineProps<{
   ad?: ShownAd | null
   emptyText?: string
 }>()
-const emit = defineEmits<{ vote: [index: number], retry: [], adContinue: [] }>()
+const emit = defineEmits<{ vote: [index: number], skip: [], retry: [], adContinue: [] }>()
 
 // Chi vota senza account, dopo qualche voto, scopre che con l'account i voti contano di più
 const NUDGE_AFTER = 10
@@ -69,6 +69,13 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
     <div v-else class="duel-panel__skeleton" aria-busy="true" :aria-label="$t('duel.loading')">
       <div v-for="i in 2" :key="i" class="duel-panel__ghost"><span class="duel-panel__ghost-photo" /><span class="duel-panel__ghost-line" /></div>
     </div>
+    <!-- Fuori dalla catena v-if/v-else sopra: dentro, quando sparisce farebbe comparire il riquadro "hai votato tutto" -->
+    <!-- Segnala sotto ogni card (dalla parte della card), Salta in mezzo -->
+    <div v-if="!ad && duel?.pets && !result && !hint" class="duel-panel__extras">
+      <ReportButton v-if="duel.pets[0].photoId" :photo-id="duel.pets[0].photoId" :label="$t('report.openNamed', { name: duel.pets[0].name })" class="duel-panel__report" />
+      <button type="button" class="duel-panel__skip" @click="emit('skip')">{{ $t('duel.skip') }} →</button>
+      <ReportButton v-if="duel.pets[1].photoId" :photo-id="duel.pets[1].photoId" :label="$t('report.openNamed', { name: duel.pets[1].name })" class="duel-panel__report duel-panel__report--end" />
+    </div>
 
     <p v-if="showNudge" class="duel-panel__nudge">
       <i18n-t keypath="duel.nudge" tag="span" class="duel-panel__nudge-text"><template #times><b>{{ $t('duel.nudgeTimes', { n: weightTimes }) }}</b></template></i18n-t>
@@ -96,6 +103,31 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
   min-height: 0;
   @include stack($space-4);
   position: relative;
+
+  &__extras {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: $space-2;
+    color: var(--muted);
+  }
+
+  &__report { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  &__report--end { text-align: right; }
+
+  &__skip {
+    border: 0;
+    padding: 2px 10px;
+    background: none;
+    color: var(--muted);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+
+    &:hover, &:focus-visible { color: var(--ink); text-decoration: underline; }
+  }
 
   &__hint {
     margin: 0;

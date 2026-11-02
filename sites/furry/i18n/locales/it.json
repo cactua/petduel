@@ -135,6 +135,7 @@
     "Immagine di bassa qualità",
     "Disegno non tuo o pubblicato senza il permesso dell'artista",
     "Dati personali visibili",
+    "Disegno generato con l'intelligenza artificiale",
     "Non in tema con la sfida"
   ],
   "photo": {
@@ -166,5 +167,25 @@
   "artist": {
     "works": "Un disegno attribuito | {n} disegni attribuiti",
     "worksHelp": "Disegni caricati da altri che ti indicano come artista. Se non sei tu, togli il tuo nome; se è tuo ma non avevi dato il permesso, segnalalo."
+  },
+  "reasonTips": {
+    "0": "Prova con un disegno in cui il personaggio si vede bene.",
+    "3": "Carica solo disegni tuoi, oppure chiedi il permesso all'artista e indicalo.",
+    "5": "Qui si celebrano gli artisti veri: carica un disegno fatto a mano (anche digitale)."
+  },
+  "rules": {
+    "items": {
+      "own": {
+        "title": "Solo disegni tuoi o con il permesso dell'artista",
+        "text": "Carica disegni tuoi. Se l'ha fatto un altro artista, chiedi il permesso e indicalo: se è iscritto, sceglilo dalla lista."
+      },
+      "ai": {
+        "title": "Niente arte fatta con l'IA",
+        "text": "Qui si celebrano gli artisti veri: i disegni generati con l'intelligenza artificiale vengono tolti, anche se ritoccati."
+      }
+    }
+  },
+  "voted": {
+    "lead": "I personaggi che hai scelto negli ultimi duelli: apri il profilo di chi li ha caricati per vedere gli altri suoi, o la pagina dell'artista."
   }
 }
