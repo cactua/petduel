@@ -111,10 +111,10 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
       <div class="pet-gallery__info">
         <div class="pet-gallery__title">
           <component :is="hero ? 'h1' : 'h2'" class="pet-gallery__name">
-            <NuxtLink v-if="linkTitle" :to="`/pet/${pet.id}`" class="pet-gallery__name-link">{{ pet.name }}</NuxtLink>
+            <NuxtLink v-if="linkTitle" :to="entryUrl(pet.id)" class="pet-gallery__name-link">{{ pet.name }}</NuxtLink>
             <template v-else>{{ pet.name }}</template>
           </component>
-          <NuxtLink v-if="adoption && !hero" :to="`/pet/${pet.id}`" class="pet-gallery__adopt" :class="`pet-gallery__adopt--${adoption}`">{{ $t(`adoption.status.${adoption}`) }}</NuxtLink>
+          <NuxtLink v-if="adoption && !hero" :to="entryUrl(pet.id)" class="pet-gallery__adopt" :class="`pet-gallery__adopt--${adoption}`">{{ $t(`adoption.status.${adoption}`) }}</NuxtLink>
           <button
             v-if="editable && !hero" type="button" class="pet-gallery__manage" :class="{ 'is-active': managing }" :aria-pressed="managing"
             @click="managing = !managing; confirmingPet = false; confirming = null"
@@ -142,7 +142,7 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
         </p>
         <ul v-if="pet.trophies.length" class="pet-gallery__trophies" :aria-label="$t('pet.trophies')">
           <li v-for="trophy in pet.trophies" :key="trophy.slug">
-            <NuxtLink :to="`/sfide/${trophy.slug}`" class="pet-gallery__trophy"><PetRosette :place="1" class="pet-gallery__rosette" />{{ trophy.emoji }} {{ challengeText(trophy).title }}</NuxtLink>
+            <NuxtLink :to="`/challenges/${trophy.slug}`" class="pet-gallery__trophy"><PetRosette :place="1" class="pet-gallery__rosette" />{{ trophy.emoji }} {{ challengeText(trophy).title }}</NuxtLink>
           </li>
         </ul>
       </div>
@@ -168,7 +168,7 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
       <button v-if="hiddenCount > 0" type="button" class="pet-gallery__tile pet-gallery__tile--more" @click="expanded = true">
         <b>+{{ hiddenCount }}</b>{{ $t('gallery.showAll', { n: pet.photos.length }) }}
       </button>
-      <NuxtLink v-if="editable" :to="`/carica?pet=${pet.id}`" class="pet-gallery__tile pet-gallery__tile--add">+ {{ $t('pet.addPhoto') }}</NuxtLink>
+      <NuxtLink v-if="editable" :to="`/upload?pet=${pet.id}`" class="pet-gallery__tile pet-gallery__tile--add">+ {{ $t('pet.addPhoto') }}</NuxtLink>
     </div>
     <button v-if="expanded && !hero && pet.photos.length > tiles" type="button" class="pet-gallery__less" @click="expanded = false">{{ $t('gallery.showLess') }}</button>
 

@@ -102,10 +102,10 @@ const when = (iso: string) => new Date(iso).toLocaleString(intlLocale(), { dateS
             <h2 class="shelter-area__name">{{ shelter.name }}</h2>
             <p class="u-muted">📍 {{ shelter.city }} · {{ $t('shelters.available', { n: shelter.available }) }} · {{ $t('shelters.adopted', { n: shelter.adopted }) }}</p>
           </div>
-          <NuxtLink :to="`/rifugi/${shelter.slug}`" class="btn btn--ghost">{{ $t('area.publicPage') }}</NuxtLink>
+          <NuxtLink :to="`/shelters/${shelter.slug}`" class="btn btn--ghost">{{ $t('area.publicPage') }}</NuxtLink>
         </div>
         <ol class="shelter-area__steps">
-          <i18n-t keypath="area.step1" tag="li"><template #upload><NuxtLink to="/carica" class="shelter-area__link">{{ $t('nav.upload') }}</NuxtLink></template></i18n-t>
+          <i18n-t keypath="area.step1" tag="li"><template #upload><NuxtLink to="/upload" class="shelter-area__link">{{ $t('nav.upload') }}</NuxtLink></template></i18n-t>
           <i18n-t keypath="area.step2" tag="li"><template #profile><NuxtLink :to="`/u/${user!.username}`" class="shelter-area__link">{{ $t('area.yourProfile') }}</NuxtLink></template><template #card><b>{{ $t('area.adoptionCard') }}</b></template></i18n-t>
           <li>{{ $t('area.step3') }}</li>
         </ol>
@@ -125,7 +125,7 @@ const when = (iso: string) => new Date(iso).toLocaleString(intlLocale(), { dateS
       <article v-for="r in requests" :key="r.id" class="shelter-area__request" :class="`shelter-area__request--${r.status}`">
         <header class="shelter-area__request-head">
           <span class="badge">{{ $t(`area.status.${r.status}`) }}</span>
-          <b>{{ $t('area.for') }} <NuxtLink :to="`/pet/${r.pet.id}`" class="shelter-area__link">{{ r.pet.name }}</NuxtLink></b>
+          <b>{{ $t('area.for') }} <NuxtLink :to="entryUrl(r.pet.id)" class="shelter-area__link">{{ r.pet.name }}</NuxtLink></b>
           <small class="u-muted shelter-area__when">{{ when(r.createdAt) }}</small>
         </header>
         <p class="shelter-area__msg">{{ r.message }}</p>

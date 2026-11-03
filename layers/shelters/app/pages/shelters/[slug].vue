@@ -37,7 +37,7 @@ async function copyIban() {
   <section class="shelter-page">
     <p v-if="error" class="shelter-page__empty">{{ $t('shelters.notFound') }}</p>
     <article v-else-if="shelter" class="shelter-page__body" :style="accentStyle(shelter.accent)">
-      <NuxtLink to="/rifugi" class="shelter-page__back">← {{ $t('shelters.title') }}</NuxtLink>
+      <NuxtLink to="/shelters" class="shelter-page__back">← {{ $t('shelters.title') }}</NuxtLink>
 
       <header class="shelter-page__card shelter-page__hero">
         <div class="shelter-page__banner">

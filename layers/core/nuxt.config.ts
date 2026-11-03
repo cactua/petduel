@@ -4,6 +4,8 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { addTemplate, updateTemplates } from "@nuxt/kit";
+// jiti arriva con Nuxt: serve a leggere site.config.ts (TypeScript) mentre si costruiscono le rotte
+import { createJiti } from "jiti";
 import { fileURLToPath } from "node:url";
 import { LANGUAGES } from "./i18n/languages";
 
@@ -47,7 +49,7 @@ export default defineNuxtConfig({
     // "#site-it" i testi in italiano del nucleo con sopra quelli del sito (motivi di rifiuto e categorie
     // per l'admin, domanda e categorie per le card). È un modulo generato e non il file JSON: i file in
     // i18n/locales importati nel browser vengono compilati dal modulo i18n e non sono più testo semplice
-    (_options, nuxt) => {
+    async (_options, nuxt) => {
       nuxt.options.alias["#site"] = join(nuxt.options.rootDir, "site.config.ts");
       const files = [coreDir("./i18n/locales/it.json"), join(nuxt.options.rootDir, "i18n/locales/it.json")];
       const template = addTemplate({
@@ -61,6 +63,19 @@ export default messages
         },
       });
       nuxt.options.alias["#site-it"] = template.dst;
+
+      // La pagina di un partecipante si chiama come vuole il sito (site.entryPath): /pet/<id> diventa per esempio
+      // /character/<id>, e i vecchi /pet/<id> ci portano con un redirect
+      const { entryPath: entry } = (await createJiti(import.meta.url).import<{ default: { entryPath?: string } }>(nuxt.options.alias["#site"])).default;
+      if (entry && entry !== "pet") {
+        nuxt.options.routeRules ||= {};
+        nuxt.options.routeRules["/pet/**"] = { redirect: { to: `/${entry}/**`, statusCode: 301 } };
+        nuxt.hook("pages:extend", (pages) => {
+          for (const page of pages) {
+            if (page.path === "/pet/:id()") page.path = `/${entry}/:id()`;
+          }
+        });
+      }
       nuxt.hook("builder:watch", (_event, path) => {
         if (files.some(f => f.replaceAll("\\", "/").endsWith(path.replaceAll("\\", "/")))) {
           return updateTemplates({ filter: t => t.filename === "site-it.ts" });
@@ -187,7 +202,18 @@ export default messages
 
   routeRules: {
     // Vecchio indirizzo della coda di approvazione
-    "/admin/moderazione": { redirect: "/admin/foto" },
+    "/admin/moderation": { redirect: "/admin/photos" },
+    // Vecchi indirizzi in italiano: chi ha un link salvato arriva alla pagina nuova
+    ...Object.fromEntries(
+      Object.entries({
+        "/accedi": "/login", "/registrati": "/signup", "/carica": "/upload", "/crediti": "/credits",
+        "/preferiti": "/favorites", "/regole": "/rules", "/seguiti": "/following", "/termini": "/terms",
+        "/votati": "/voted", "/classifica": "/leaderboard", "/classifica/**": "/leaderboard", "/sfide": "/challenges",
+        "/sfide/**": "/challenges/**", "/admin/foto": "/admin/photos", "/admin/pubblicita": "/admin/ads",
+        "/admin/segnalazioni": "/admin/reports", "/admin/sfide": "/admin/challenges", "/admin/utenti": "/admin/users",
+        "/rifugi": "/shelters", "/rifugi/**": "/shelters/**", "/rifugio": "/my-shelter", "/admin/rifugi": "/admin/shelters",
+      }).map(([from, to]) => [from, { redirect: { to, statusCode: 301 } }]),
+    ),
     // Login e registrazione: pochi tentativi per IP contro brute force e spam di account
     "/api/auth/**": {
       security: {

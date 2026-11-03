@@ -128,51 +128,51 @@
     }
   },
   "themes": {
-    "dormiglione": {
+    "sleepyhead": {
       "title": "Die größte Schlafmütze",
       "description": "Das süßeste Nickerchen-Foto: im Bett, auf dem Sofa oder an den unwahrscheinlichsten Orten."
     },
-    "linguaccia": {
+    "tongue-out": {
       "title": "Zunge raus!",
       "description": "Zunge raus, ganz ohne Scham."
     },
-    "agguato": {
+    "pounce": {
       "title": "Katzen-Hinterhalt",
       "description": "Die Katze kurz vor dem Sprung: starrer Blick und zuckender Schwanz."
     },
-    "scatola": {
+    "box-king": {
       "title": "König der Kiste",
       "description": "In einer Kiste, einem Korb, einem Topf oder einem viel zu kleinen Platz."
     },
-    "faccia-colpevole": {
+    "guilty-face": {
       "title": "Schuldiger Blick",
       "description": "Der Moment direkt nach dem Unglück."
     },
-    "riporto": {
+    "fetch": {
       "title": "Apportier-König",
       "description": "Ball, Stock oder Hausschuh: der Hund in Aktion."
     },
-    "sguardo": {
+    "the-look": {
       "title": "Unwiderstehlicher Blick",
       "description": "Die süßesten (oder intensivsten) Augen im Netz."
     },
-    "migliori-amici": {
+    "best-friends": {
       "title": "Beste Freunde",
       "description": "Mit dem Lieblingsspielzeug, Kuscheltier oder tierischen Freund."
     },
-    "esploratore": {
+    "explorer": {
       "title": "Kleiner Entdecker",
       "description": "Abenteuer an der frischen Luft: Wiesen, Strände, Berge oder der heimische Balkon."
     },
-    "musetto-goloso": {
+    "foodie": {
       "title": "Kleines Leckermaul",
       "description": "Beim Fressen erwischt: Karotten, Körner, Trockenfutter oder dein Brötchen."
     },
-    "pose-impossibili": {
+    "impossible-poses": {
       "title": "Unmögliche Posen",
       "description": "Geborene Schlangenmenschen: die absurdesten Positionen."
     },
-    "bagnetto": {
+    "bath-time": {
       "title": "Nach dem Bad",
       "description": "Nasses Fell, verlorene Würde."
     }
@@ -188,5 +188,8 @@
   ],
   "reasonTips": {
     "0": "Versuch es mit einem Foto, auf dem das Tier gut zu sehen ist."
+  },
+  "follow": {
+    "lead": "Neues von den Leuten, denen du folgst: ihre neuen Tiere und frisch veröffentlichte Fotos."
   }
 }

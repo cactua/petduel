@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  HAS_BREED_CITY, NEW_TALENT_DAYS, PERIODS, SPECIES_EMOJI, SPECIES_SLUG, TOP_RANK, speciesFromSlug,
+  HAS_BREED_CITY, NEW_TALENT_DAYS, PERIODS, SPECIES_EMOJI, TOP_RANK, rankingPath, speciesFromSlug,
   type Leaderboard, type Period, type RankedPet, type Species,
 } from '#shared/models'
 
@@ -9,22 +9,22 @@ const { features } = useAppConfig()
 const { user } = useUserSession()
 const { t } = useI18n()
 
-const species = computed(() => speciesFromSlug(route.params.specie))
-if (route.params.specie && !species.value) {
+const species = computed(() => speciesFromSlug(route.params.category))
+if (route.params.category && !species.value) {
   throw createError({ statusCode: 404, statusMessage: t('ranking.notFound'), fatal: true })
 }
-const period = computed<Period>(() => PERIODS.find(p => p === route.query.periodo) ?? 'settimana')
+const period = computed<Period>(() => PERIODS.find(p => p === route.query.period) ?? 'week')
 
-// Specie nel percorso (/classifica/gatti), periodo nella query: link facili da condividere
+// Specie nel percorso (/leaderboard/gatti), periodo nella query: link facili da condividere
 const speciesModel = computed({
   get: () => species.value,
-  set: (s: Species | undefined) => navigateTo({ path: s ? `/classifica/${SPECIES_SLUG[s]}` : '/classifica', query: route.query }),
+  set: (s: Species | undefined) => navigateTo({ path: rankingPath(s), query: route.query }),
 })
-// Città nella query (?citta=Torino): con la specie fa "Top 5 cani a Torino". Solo sui siti che chiedono la città
-const city = computed(() => (HAS_BREED_CITY && typeof route.query.citta === 'string' && route.query.citta.trim()) || undefined)
-const cityQuery = computed(() => (city.value ? { citta: city.value } : {}))
-const periodLink = (p: Period) => ({ path: route.path, query: { ...cityQuery.value, ...(p === 'settimana' ? {} : { periodo: p }) } })
-const setCity = (c: string) => navigateTo({ path: route.path, query: { ...route.query, citta: c || undefined } })
+// Città nella query (?city=Torino): con la specie fa "Top 5 cani a Torino". Solo sui siti che chiedono la città
+const city = computed(() => (HAS_BREED_CITY && typeof route.query.city === 'string' && route.query.city.trim()) || undefined)
+const cityQuery = computed(() => (city.value ? { city: city.value } : {}))
+const periodLink = (p: Period) => ({ path: route.path, query: { ...cityQuery.value, ...(p === 'week' ? {} : { period: p }) } })
+const setCity = (c: string) => navigateTo({ path: route.path, query: { ...route.query, city: c || undefined } })
 const { data: cityList } = useLazyFetch('/api/leaderboard/cities', { server: false, immediate: HAS_BREED_CITY })
 
 const { data, status } = await useFetch<Leaderboard>('/api/leaderboard', {
@@ -35,7 +35,7 @@ const baseTitle = computed(() => species.value ? t('ranking.species', { species:
 const title = computed(() => (city.value ? t('ranking.cityTitle', { title: baseTitle.value, city: city.value }) : baseTitle.value))
 useHead({ title: () => `${title.value}` })
 
-const isRolling = computed(() => period.value === 'settimana' || period.value === 'mese')
+const isRolling = computed(() => period.value === 'week' || period.value === 'month')
 const podium = computed(() => {
   const top = data.value?.top ?? []
   return top.length >= 3 ? [top[1]!, top[0]!, top[2]!] : []
@@ -58,7 +58,7 @@ const celebrate = computed(() => {
   const best = shown.sort((a, b) => place(a) - place(b))[0]
   return best && { pet: best, place: place(best) }
 })
-const speciesLink = (s: Species) => ({ path: `/classifica/${SPECIES_SLUG[s]}`, query: route.query })
+const speciesLink = (s: Species) => ({ path: rankingPath(s), query: route.query })
 const toTop = (p: RankedPet & { toTop: number }) =>
   t('ranking.toTop', {
     n: p.toTop, top: TOP_RANK,
@@ -95,11 +95,11 @@ const toTop = (p: RankedPet & { toTop: number }) =>
       </nav>
       <p class="ranking__note">
         <template v-if="isRolling">{{ $t('ranking.rollingNote', { period: periodText, date: resets }) }}</template>
-        <template v-else-if="period === 'nuovi'">{{ $t('ranking.newNote', { n: NEW_TALENT_DAYS }) }}</template>
+        <template v-else-if="period === 'new'">{{ $t('ranking.newNote', { n: NEW_TALENT_DAYS }) }}</template>
         <template v-else>{{ $t('ranking.totalNote') }}</template>
       </p>
     </header>
-    <NuxtLink v-if="features.shelters" to="/rifugi" class="ranking__adopt">🏠 <b>{{ $t('shelters.title') }}</b>: {{ $t('ranking.adoptLink') }} →</NuxtLink>
+    <NuxtLink v-if="features.shelters" to="/shelters" class="ranking__adopt">🏠 <b>{{ $t('shelters.title') }}</b>: {{ $t('ranking.adoptLink') }} →</NuxtLink>
 
     <div v-if="celebrate" class="ranking__celebrate">
       <span class="ranking__party" aria-hidden="true">🎉</span>
@@ -115,7 +115,7 @@ const toTop = (p: RankedPet & { toTop: number }) =>
     <div class="ranking__results" :class="{ 'is-loading': status === 'pending' }">
       <ol v-if="podium.length" class="ranking__podium">
         <li v-for="p in podium" :key="p.id" class="ranking__place" :class="[`ranking__place--${p.rank}`, { 'is-mine': isMine(p) }]">
-          <NuxtLink :to="`/pet/${p.id}`" class="ranking__place-link">
+          <NuxtLink :to="entryUrl(p.id)" class="ranking__place-link">
             <span class="ranking__photo">
               <PetEars :species="p.species" />
               <picture><source v-for="s in photoSources(p.image, 'v', '(min-width: 760px) 300px, 34vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="p.image" :alt="p.name" class="ranking__img"></picture>

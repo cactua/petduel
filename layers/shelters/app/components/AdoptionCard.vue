@@ -155,7 +155,7 @@ const neuteredModel = computed({
     <template v-else>
       <div v-if="info" class="adoption-card__head">
         <span class="adoption-card__status">{{ info.status === 'adopted' ? '🎉' : '🏠' }} {{ $t(`adoption.status.${info.status}`) }}</span>
-        <NuxtLink :to="`/rifugi/${info.shelter.slug}`" class="adoption-card__shelter">{{ info.shelter.name }} · {{ info.shelter.city }}</NuxtLink>
+        <NuxtLink :to="`/shelters/${info.shelter.slug}`" class="adoption-card__shelter">{{ info.shelter.name }} · {{ info.shelter.city }}</NuxtLink>
       </div>
       <p v-else class="adoption-card__hint">{{ $t('adoption.noCardHint') }}</p>
 
@@ -172,7 +172,7 @@ const neuteredModel = computed({
       <!-- Richiesta di adozione, solo per chi non è il rifugio -->
       <template v-else-if="info?.status === 'available'">
         <p v-if="sent" class="adoption-card__sent" role="status">{{ $t('adoption.sent') }}</p>
-        <NuxtLink v-else-if="!loggedIn" :to="{ path: '/accedi', query: { redirect: route.fullPath } }" class="btn btn--primary btn--lg">{{ $t('adoption.loginToAdopt', { name: pet.name }) }}</NuxtLink>
+        <NuxtLink v-else-if="!loggedIn" :to="{ path: '/login', query: { redirect: route.fullPath } }" class="btn btn--primary btn--lg">{{ $t('adoption.loginToAdopt', { name: pet.name }) }}</NuxtLink>
         <form v-else class="adoption-card__form adoption-card__form--request" novalidate @submit.prevent="send">
           <h2 class="adoption-card__title">{{ $t('adoption.want', { name: pet.name }) }}</h2>
           <label for="r-msg" class="label">{{ $t('adoption.writeShelter') }}</label>

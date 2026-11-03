@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
     where c.created_by is null and c.starts_at < ${endsAt} and c.ends_at > ${startsAt}
       and not exists (select 1 from challenge_entries e where e.challenge_id = c.id)`)
 
-  const base = title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'sfida'
+  const base = title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'challenge'
   const [created] = await db.insert(challenges)
     .values({ slug: `${base}-${startDate}`, title, description, emoji, species, adoptionOnly, startsAt, endsAt, createdBy: admin.id })
     .onConflictDoNothing()

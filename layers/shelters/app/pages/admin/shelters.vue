@@ -76,7 +76,7 @@ const when = (iso: string) => new Date(iso).toLocaleDateString('it-IT', { dateSt
     <p v-if="data && !data.approved.length" class="admin-page__empty">Ancora nessun rifugio verificato.</p>
     <div class="admin-page__list">
       <article v-for="s in data?.approved" :key="s.id" class="admin-page__item">
-        <h3 class="shelter-review__name"><NuxtLink :to="`/rifugi/${s.slug}`" class="shelter-review__name-link">{{ s.name }}</NuxtLink></h3>
+        <h3 class="shelter-review__name"><NuxtLink :to="`/shelters/${s.slug}`" class="shelter-review__name-link">{{ s.name }}</NuxtLink></h3>
         <p class="shelter-review__meta">📍 {{ s.city }} · @{{ s.owner }} · <code>{{ s.taxCode }}</code></p>
         <input
           v-if="asking?.id === s.id" v-model="reason[s.id]" maxlength="200" class="input"

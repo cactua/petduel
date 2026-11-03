@@ -95,8 +95,8 @@ const viewerPhotos = computed(() => photoGroups.value.map(g => ({ image: g.photo
       <article v-for="a in alerts" :key="a.id" class="report-review__alert">
         <img v-if="a.image" :src="a.image" :alt="a.name" class="report-review__alert-img">
         <div class="report-review__info">
-          <NuxtLink :to="`/pet/${a.petId}`" class="report-review__name-link"><b>{{ a.name }}</b></NuxtLink>
-          <span class="report-review__line">di <NuxtLink :to="`/admin/utenti?q=${a.owner}`" class="report-review__link">@{{ a.owner }}</NuxtLink></span>
+          <NuxtLink :to="entryUrl(a.petId)" class="report-review__name-link"><b>{{ a.name }}</b></NuxtLink>
+          <span class="report-review__line">di <NuxtLink :to="`/admin/users?q=${a.owner}`" class="report-review__link">@{{ a.owner }}</NuxtLink></span>
           <span class="report-review__line report-review__line--small">{{ a.hits }} voti · {{ a.day }}{{ a.challenge ? ' · in una sfida' : '' }}</span>
         </div>
         <button type="button" class="btn btn--ghost" @click="seen(a)">Visto</button>
@@ -115,8 +115,8 @@ const viewerPhotos = computed(() => photoGroups.value.map(g => ({ image: g.photo
 
         <div class="report-review__info">
           <template v-if="g.photo">
-            <h2 class="report-review__name"><NuxtLink :to="`/pet/${g.photo.petId}`" class="report-review__name-link">{{ g.photo.petName }}</NuxtLink></h2>
-            <p class="report-review__line">di <NuxtLink :to="`/admin/utenti?q=${g.photo.owner}`" class="report-review__link">@{{ g.photo.owner }}</NuxtLink></p>
+            <h2 class="report-review__name"><NuxtLink :to="entryUrl(g.photo.petId)" class="report-review__name-link">{{ g.photo.petName }}</NuxtLink></h2>
+            <p class="report-review__line">di <NuxtLink :to="`/admin/users?q=${g.photo.owner}`" class="report-review__link">@{{ g.photo.owner }}</NuxtLink></p>
             <p v-if="g.photo.credit" class="report-review__line">🎨 Artista: {{ g.photo.credit.text }}</p>
           </template>
           <template v-else-if="g.user">

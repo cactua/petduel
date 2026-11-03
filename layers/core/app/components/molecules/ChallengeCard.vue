@@ -26,7 +26,7 @@ const when = computed(() => {
 </script>
 
 <template>
-  <NuxtLink :to="`/sfide/${challenge.slug}`" class="challenge-card" :class="[`challenge-card--${challenge.status}`, { 'challenge-card--big': big }]">
+  <NuxtLink :to="`/challenges/${challenge.slug}`" class="challenge-card" :class="[`challenge-card--${challenge.status}`, { 'challenge-card--big': big }]">
     <div class="challenge-card__top">
       <span class="challenge-card__emoji" aria-hidden="true">{{ challenge.emoji }}</span>
       <div class="challenge-card__text">

@@ -1,4 +1,4 @@
-// Rifugi e adozioni: pagine /rifugi e /rifugio, richieste di adozione, verifica dei rifugi nell'admin.
+// Rifugi e adozioni: pagine /shelters e /my-shelter, richieste di adozione, verifica dei rifugi nell'admin.
 // Un sito lo include mettendolo in "extends" prima del nucleo. Tabelle e letture dei dati restano nel nucleo:
 // sui siti senza questo layer sono semplicemente vuote
 import { fileURLToPath } from "node:url";

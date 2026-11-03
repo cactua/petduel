@@ -9,8 +9,8 @@ useSeoMeta({ description: () => t('shelters.seo') })
 const route = useRoute()
 const species = ref<Species>()
 // La città resta nell'indirizzo, così "Cerca casa a Torino" si può condividere
-const city = ref(typeof route.query.citta === 'string' ? route.query.citta : '')
-watch(city, c => navigateTo({ query: c ? { citta: c } : {} }, { replace: true }))
+const city = ref(typeof route.query.city === 'string' ? route.query.city : '')
+watch(city, c => navigateTo({ query: c ? { city: c } : {} }, { replace: true }))
 
 const { data, pending } = await useFetch<{ pets: AdoptablePet[], cities: string[] }>('/api/adoptables', {
   query: computed(() => ({ species: species.value, city: city.value || undefined })),
@@ -39,7 +39,7 @@ const { loggedIn } = useUserSession()
 
     <ol v-if="data?.pets.length" class="shelters-page__grid" :class="{ 'is-loading': pending }" :aria-busy="pending">
       <li v-for="p in data.pets" :key="p.id">
-        <NuxtLink :to="`/pet/${p.id}`" class="shelters-page__pet">
+        <NuxtLink :to="entryUrl(p.id)" class="shelters-page__pet">
           <div class="shelters-page__photo">
             <picture><source v-for="s in photoSources(p.image, 'v', '(min-width: 760px) 240px, 46vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="p.image" :alt="$t('shelters.alt', { name: p.name, species: speciesText(p.species, 'one').toLowerCase() })" loading="lazy" class="shelters-page__img"></picture>
             <span class="shelters-page__ribbon" :class="`shelters-page__ribbon--${p.adoption}`">{{ $t(`adoption.status.${p.adoption}`) }}</span>
@@ -60,7 +60,7 @@ const { loggedIn } = useUserSession()
 
     <h2 v-if="shelters?.length" class="shelters-page__heading">{{ $t('shelters.verified') }}</h2>
     <div v-if="shelters?.length" class="shelters-page__list">
-      <NuxtLink v-for="s in shelters" :key="s.slug" :to="`/rifugi/${s.slug}`" class="shelters-page__shelter" :style="accentStyle(s.accent)">
+      <NuxtLink v-for="s in shelters" :key="s.slug" :to="`/shelters/${s.slug}`" class="shelters-page__shelter" :style="accentStyle(s.accent)">
         <span class="shelters-page__logo">
           <img v-if="s.logo" :src="shelterImageSources(s.logo, 'logo').src" alt="" loading="lazy" class="shelters-page__logo-img">
           <template v-else>{{ s.name.slice(0, 1) }}</template>
@@ -77,7 +77,7 @@ const { loggedIn } = useUserSession()
         <b>{{ $t('shelters.joinTitle') }}</b>
         <p class="shelters-page__join-lead">{{ $t('shelters.joinText') }}</p>
       </div>
-      <NuxtLink :to="loggedIn ? '/rifugio' : { path: '/registrati', query: { redirect: '/rifugio' } }" class="btn btn--primary btn--lg">{{ $t('shelters.joinCta') }}</NuxtLink>
+      <NuxtLink :to="loggedIn ? '/my-shelter' : { path: '/signup', query: { redirect: '/my-shelter' } }" class="btn btn--primary btn--lg">{{ $t('shelters.joinCta') }}</NuxtLink>
     </aside>
   </section>
 </template>

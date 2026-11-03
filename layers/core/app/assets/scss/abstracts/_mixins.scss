@@ -75,3 +75,24 @@
 
   &::-webkit-scrollbar { display: none; }
 }
+
+// Pagine con una griglia di PetTile (votati, preferiti, seguiti): titolo, introduzione, vuoto e griglia
+@mixin pet-list-page {
+  @include stack($space-6);
+  padding-bottom: 16px;
+
+  &__title { font-family: var(--display); font-size: clamp(24px, 5vw, 32px); }
+
+  &__lead { margin: 4px 0 0; color: var(--muted); line-height: 1.5; }
+
+  &__empty { text-align: center; color: var(--muted); padding: 30px 0; }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(46%, 190px), 1fr));
+    gap: $space-5;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}

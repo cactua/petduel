@@ -70,7 +70,8 @@
     "artistTagged": "On t'a indiqué comme auteur d'une image de {name}",
     "reportResolved": "Nous avons examiné ton signalement et sommes intervenus. Merci !",
     "reportDismissed": "Nous avons examiné ton signalement : pour l'instant ça ne va pas contre les règles. Merci quand même !",
-    "compliment": "{name} a reçu de nouveaux compliments 💌"
+    "compliment": "{name} a reçu de nouveaux compliments 💌",
+    "followNew": "Du nouveau chez {'@'}{user} : jette un œil"
   },
   "time": {
     "now": "maintenant",
@@ -373,10 +374,10 @@
     },
     "period": "Période",
     "periods": {
-      "settimana": "Semaine",
-      "mese": "Mois",
-      "sempre": "Depuis toujours",
-      "nuovi": "Nouveaux"
+      "week": "Semaine",
+      "month": "Mois",
+      "all": "Depuis toujours",
+      "new": "Nouveaux"
     },
     "rollingNote": "Cœurs reçus {period} : chaque vote vaut un cœur. Retour à zéro le {date}.",
     "totalNote": "Tous les cœurs reçus : chaque vote vaut un cœur, et on n'en perd jamais.",
@@ -495,7 +496,14 @@
     "works": "Une image attribuée | {n} images attribuées",
     "worksHelp": "Des images publiées par d'autres qui t'indiquent comme auteur. Si ce n'est pas toi, retire ton nom ; si c'est à toi mais sans ton accord, signale-la.",
     "notMe": "Ce n'est pas moi",
-    "notAllowed": "Sans mon accord"
+    "notAllowed": "Sans mon accord",
+    "commissions": {
+      "title": "Commissions",
+      "none": "Ne pas le dire",
+      "open": "Commissions ouvertes",
+      "closed": "Commissions fermées",
+      "url": "Où les demander (lien)"
+    }
   },
   "report": {
     "open": "Signaler",
@@ -579,12 +587,32 @@
         "text": "Utilise « Signaler » sur une image ou un profil : seuls les modérateurs le lisent. Tu peux aussi bloquer qui te dérange."
       }
     },
-    "outro": "Ne pas respecter les règles peut faire retirer des images ou suspendre un compte. Merci de garder cet endroit sympa !"
+    "outro": "Ne pas respecter les règles peut faire retirer des images ou suspendre un compte. Merci de garder cet endroit sympa !",
+    "promptTitle": "On a écrit les règles de la communauté",
+    "promptText": "Quelques règles pour que l'endroit reste bienveillant : respect, seulement ce qui est à toi ou avec permission, pas d'IA, pas de données personnelles. En continuant, tu les acceptes.",
+    "promptAccept": "J'ai lu, j'accepte"
   },
   "voted": {
     "title": "Tes votes",
     "lead": "Ceux que tu as choisis dans tes derniers duels : ouvre le profil de la personne qui les a publiés pour voir les autres, ou la page de l'artiste.",
     "empty": "Tu n'as encore voté pour aucun duel.",
     "goVote": "Aller voter →"
+  },
+  "follow": {
+    "follow": "Suivre",
+    "following": "Abonné·e",
+    "followers": "Tes abonné·es",
+    "title": "Tes abonnements",
+    "lead": "Les nouveautés des personnes que tu suis : ce qu'elles publient et les œuvres où elles sont créditées comme artistes.",
+    "whoTitle": "Personnes que tu suis",
+    "empty": "Tu ne suis encore personne. Ouvre un profil et touche « Suivre ».",
+    "noWorks": "Rien de nouveau pour l'instant chez les personnes que tu suis."
+  },
+  "favorites": {
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "title": "Favoris",
+    "lead": "Ceux que tu as enregistrés. Tu es seul·e à les voir : personne ne sait que tu les as enregistrés.",
+    "empty": "Pas encore de favoris. Ouvre la page d'un participant et touche « Enregistrer »."
   }
 }

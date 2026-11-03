@@ -22,11 +22,11 @@ export async function requireAdmin(event: H3Event) {
 
 export async function loadSessionUser(user: { id: number, username: string }) {
   const db = await useDb()
-  const [row] = await db.select({ id: users.id, username: users.username, role: users.role, bannedAt: users.bannedAt })
+  const [row] = await db.select({ id: users.id, username: users.username, role: users.role, bannedAt: users.bannedAt, rulesAcceptedAt: users.rulesAcceptedAt })
     .from(users).where(eq(users.id, user.id))
   // Un account sospeso perde subito la sessione
   if (!row || row.username !== user.username || row.bannedAt) return null
-  return { id: row.id, username: row.username, role: row.role }
+  return { id: row.id, username: row.username, role: row.role, needsRules: !row.rulesAcceptedAt }
 }
 
 export async function isAdmin(userId: number) {
@@ -37,7 +37,7 @@ export async function isAdmin(userId: number) {
 
 export async function startSession(event: H3Event, user: User) {
   await replaceUserSession(event, {
-    user: { id: user.id, username: user.username, role: user.role },
+    user: { id: user.id, username: user.username, role: user.role, needsRules: !user.rulesAcceptedAt },
     loggedInAt: Date.now(),
     voterId: `u:${user.id}`,
     recent: [],

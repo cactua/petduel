@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import site from '#site'
-import { SPECIES_SLUG, type MyShelter, type PetGallery } from '#shared/models'
+import { rankingPath, type MyShelter, type PetGallery } from '#shared/models'
 
 const route = useRoute()
 const { data: pet, error, refresh } = await useFetch<PetGallery & { isMine: boolean, speciesRank: number | null }>(
@@ -17,14 +17,14 @@ async function onDeleted() {
   await navigateTo(`/u/${pet.value!.owner}`)
 }
 
-// Link condivisi da una sfida: /pet/<id>?sfida=<slug>
+// Link condivisi da una sfida: /pet/<id>?challenge=<slug>
 const sfida = computed(() => {
-  const q = route.query.sfida
+  const q = route.query.challenge
   return typeof q === 'string' && /^[a-z0-9-]{1,80}$/.test(q) ? q : undefined
 })
 
-// Da un avviso di festa (/pet/<id>?condividi=1) la card da condividere è già aperta, solo per il proprietario
-const shareNow = computed(() => route.query.condividi === '1' && !!pet.value?.isMine)
+// Da un avviso di festa (/pet/<id>?share=1) la card da condividere è già aperta, solo per il proprietario
+const shareNow = computed(() => route.query.share === '1' && !!pet.value?.isMine)
 
 // Anteprima del link su WhatsApp, Telegram, Facebook, X…
 const origin = useRequestURL().origin
@@ -38,7 +38,7 @@ useSeoMeta({
   // Nelle anteprime dei link il titolo non passa dal titleTemplate: il nome del sito si aggiunge qui
   ogTitle: () => [title(), site.name].filter(Boolean).join(' · '),
   ogDescription: () => (pet.value ? t('pet.ogDescription', { name: pet.value.name }) : ''),
-  ogImage: () => (isPublic.value && pet.value ? `${origin}/card/${pet.value.id}.png?formato=og${sfida.value ? `&sfida=${sfida.value}` : ''}` : undefined),
+  ogImage: () => (isPublic.value && pet.value ? `${origin}/card/${pet.value.id}.png?format=og${sfida.value ? `&challenge=${sfida.value}` : ''}` : undefined),
   ogImageWidth: 1200,
   ogImageHeight: 630,
   twitterCard: 'summary_large_image',
@@ -51,7 +51,7 @@ useSeoMeta({
     <p v-if="error" class="pet-page__empty">{{ $t('pet.notFound') }}</p>
     <template v-else-if="pet">
       <NuxtLink :to="`/u/${pet.owner}`" class="pet-page__owner">← @{{ pet.owner }}</NuxtLink>
-      <NuxtLink v-if="sfida" :to="{ path: `/sfide/${sfida}`, query: { tab: 'vota' } }" class="pet-page__challenge">
+      <NuxtLink v-if="sfida" :to="`/challenges/${sfida}`" class="pet-page__challenge">
         🏆 {{ $t('pet.inChallenge', { name: pet.name }) }} →
       </NuxtLink>
       <PetGallery :pet="pet" :editable="pet.isMine" hero @changed="refresh()" @deleted="onDeleted">
@@ -59,13 +59,14 @@ useSeoMeta({
           <div class="pet-page__actions">
             <NuxtLink
               v-if="pet.speciesRank"
-              :to="{ path: `/classifica/${SPECIES_SLUG[pet.species]}`, query: { periodo: 'sempre' } }"
+              :to="{ path: rankingPath(pet.species), query: { period: 'all' } }"
               class="pet-page__rank"
             >
               <PetRosette v-if="pet.speciesRank <= 3" :place="pet.speciesRank" class="pet-page__rosette" />
               {{ $t('pet.rank', { rank: pet.speciesRank, among: speciesText(pet.species, 'among') }) }}
             </NuxtLink>
             <ShareCard v-if="isPublic" :pet-id="pet.id" :pet-name="pet.name" :sfida="sfida" :auto-open="shareNow" />
+            <FavoriteButton v-if="isPublic && !pet.isMine" :pet-id="pet.id" />
             <ReportButton v-if="coverId && !pet.isMine" :photo-id="coverId" class="pet-page__report" />
           </div>
         </template>

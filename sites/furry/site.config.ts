@@ -12,6 +12,8 @@ export default defineSite({
   askCredit: true,
   // Per i personaggi non servono razza e città
   breedAndCity: false,
+  // La pagina di un personaggio è /character/<id>, non /pet/<id>
+  entryPath: 'character',
   // Come app/assets/theme.scss. Niente mascotte (mascotSvg), come in app/components/SiteMascot.vue
   brand: {
     accent: '#8b5cf6',

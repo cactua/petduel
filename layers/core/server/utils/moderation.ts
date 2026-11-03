@@ -1,8 +1,9 @@
-import { and, eq } from 'drizzle-orm'
-import { challengeEntries, challenges, photos, pets, reports } from '../db/schema'
+import { and, eq, inArray } from 'drizzle-orm'
+import { challengeEntries, challenges, follows, photos, pets, reports, users } from '../db/schema'
 import { useDb } from './db'
 import { notify } from './notifications'
 import { removeImage } from './photos'
+import { entryUrl } from '#shared/models'
 
 export type PhotoAction = 'approve' | 'reject' | 'remove'
 
@@ -38,13 +39,29 @@ export async function moderatePhoto(adminId: number, id: number, action: PhotoAc
   const text = `notif.${{ approve: 'photoApproved', remove: 'photoRemoved', reject: 'photoRejected' }[action]}${info.challenge ? 'Challenge' : ''}`
   const params = { name: info.name, reason: reason ?? '', ...(info.challenge && info.slug ? { challenge: info.challenge, challengeSlug: info.slug } : {}) }
   await notify(info.ownerId, `${action === 'remove' ? 'foto-rimossa' : 'foto'}:${id}`, action === 'approve'
-    ? { emoji: '✅', text, params, link: info.slug ? `/sfide/${info.slug}` : `/pet/${photo.petId}` }
-    : { emoji: '🚫', text, params, link: `/pet/${photo.petId}` })
+    ? { emoji: '✅', text, params, link: info.slug ? `/challenges/${info.slug}` : entryUrl(photo.petId) }
+    : { emoji: '🚫', text, params, link: entryUrl(photo.petId) })
 
   // L'artista lo scopre solo quando il disegno è pubblico; dal profilo può togliere il suo nome o segnalarlo
   if (action === 'approve' && photo.artistId && photo.artistId !== info.ownerId) {
-    await notify(photo.artistId, `artista:${id}`, { emoji: '🎨', text: 'notif.artistTagged', params: { name: info.name }, link: `/pet/${photo.petId}` })
+    await notify(photo.artistId, `artista:${id}`, { emoji: '🎨', text: 'notif.artistTagged', params: { name: info.name }, link: entryUrl(photo.petId) })
   }
+  if (action === 'approve') await notifyFollowers([info.ownerId, photo.artistId].filter((x): x is number => !!x))
+}
+
+/**
+ * Lavoro nuovo approvato: chi segue il proprietario o l'artista riceve un avviso,
+ * uno al giorno per persona seguita (la key col giorno evita la pioggia di avvisi)
+ */
+async function notifyFollowers(authorIds: number[]) {
+  const db = await useDb()
+  const day = new Date().toISOString().slice(0, 10)
+  const rows = await db.select({ followerId: follows.followerId, author: users.username })
+    .from(follows).innerJoin(users, eq(users.id, follows.followedId))
+    .where(inArray(follows.followedId, [...new Set(authorIds)]))
+  await Promise.all(rows.map(r => notify(r.followerId, `seguiti:${r.author}:${day}`, {
+    emoji: '✨', text: 'notif.followNew', params: { user: r.author }, link: '/following',
+  })))
 }
 
 /**

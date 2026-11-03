@@ -20,17 +20,17 @@ onMounted(load)
         <SiteMascot class="home__mascot" />
         <h1 class="home__question">{{ $t('duel.question') }}</h1>
       </div>
-      <NuxtLink to="/votati" class="home__count" :title="$t('duel.votedTimes', { n: votes })">♥ {{ votes }}</NuxtLink>
+      <NuxtLink to="/voted" class="home__count" :title="$t('duel.votedTimes', { n: votes })">♥ {{ votes }}</NuxtLink>
     </div>
     <div class="home__filters">
       <SpeciesChips v-model="species" class="home__chips" />
-      <NuxtLink to="/votati" class="home__count home__count--inline" :title="$t('duel.votedTimes', { n: votes })">♥ {{ votes }}</NuxtLink>
+      <NuxtLink to="/voted" class="home__count home__count--inline" :title="$t('duel.votedTimes', { n: votes })">♥ {{ votes }}</NuxtLink>
     </div>
 
     <DuelPanel :duel="current" :failed="failed" :votes="votes" :hint="hint" :toast="toast" :result="result" :celebrate="celebrate" :ad="ad" @vote="vote" @skip="skip" @retry="load" @ad-continue="dismissAd">
       <template #empty>
         <p>{{ $t('duel.allVoted') }} 🎉</p>
-        <NuxtLink to="/carica">{{ $t('duel.uploadYours') }}</NuxtLink>
+        <NuxtLink to="/upload">{{ $t('duel.uploadYours') }}</NuxtLink>
       </template>
     </DuelPanel>
   </section>

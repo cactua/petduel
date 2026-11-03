@@ -18,7 +18,8 @@
     "upload-to-r2": "node scripts/upload-to-r2.mjs",
     "lint": "eslint .",
     "typecheck": "nuxi typecheck sites/pets && nuxi typecheck sites/furry",
-    "test": "vitest run"
+    "test": "vitest run",
+    "smoke": "node scripts/smoke-community.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.13",

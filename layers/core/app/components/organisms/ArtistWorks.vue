@@ -35,7 +35,7 @@ async function untag(a: Artwork) {
     <p v-if="error" class="error" role="alert">{{ error }}</p>
     <ul class="artist-works__grid">
       <li v-for="a in artworks" :key="a.photoId" class="artist-works__item">
-        <NuxtLink :to="`/pet/${a.petId}`" class="artist-works__link">
+        <NuxtLink :to="entryUrl(a.petId)" class="artist-works__link">
           <picture><source v-for="s in photoSources(a.image, 'v', '(min-width: 760px) 150px, 31vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="a.image" :alt="a.name" loading="lazy" class="artist-works__img"></picture>
           <span class="artist-works__name">{{ a.name }}</span>
         </NuxtLink>

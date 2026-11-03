@@ -1,18 +1,18 @@
 import { z } from 'zod'
 
 const querySchema = z.object({
-  formato: z.enum(['story', 'og']).catch('story'),
+  format: z.enum(['story', 'og']).catch('story'),
   // Una sfida sconosciuta o malformata non blocca la card: si ignora
-  sfida: z.string().regex(/^[a-z0-9-]{1,80}$/).optional().catch(undefined),
+  challenge: z.string().regex(/^[a-z0-9-]{1,80}$/).optional().catch(undefined),
 })
 
-// /card/<id>.png?formato=story|og&sfida=<slug>: immagine da condividere, solo per pet pubblici
+// /card/<id>.png?format=story|og&challenge=<slug>: immagine da condividere, solo per pet pubblici
 export default defineEventHandler(async (event) => {
   const match = /^(\d{1,9})\.png$/.exec(getRouterParam(event, 'name') ?? '')
   if (!match) throw createError({ statusCode: 404 })
-  const { formato, sfida } = await getValidatedQuery(event, querySchema.parse)
+  const { format, challenge } = await getValidatedQuery(event, querySchema.parse)
 
-  const png = await renderPetCard(Number(match[1]), formato, getRequestURL(event).host, sfida)
+  const png = await renderPetCard(Number(match[1]), format, getRequestURL(event).host, challenge)
   setResponseHeaders(event, {
     'content-type': 'image/png',
     'cache-control': 'public, max-age=600',

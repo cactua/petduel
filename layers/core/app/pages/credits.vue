@@ -12,7 +12,7 @@ const { data } = await useFetch<{ petId: number, name: string, image: string, cr
       <li v-for="c in data" :key="c.image" class="credits__item">
         <picture><source v-for="s in photoSources(c.image, 'v', '44px')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="c.image" :alt="c.name" loading="lazy" class="credits__img"></picture>
         <div class="credits__text">
-          <NuxtLink :to="`/pet/${c.petId}`" class="credits__pet">{{ c.name }}</NuxtLink>
+          <NuxtLink :to="entryUrl(c.petId)" class="credits__pet">{{ c.name }}</NuxtLink>
           <CreditLink :url="c.url" class="credits__author">{{ c.credit }}</CreditLink>
         </div>
       </li>

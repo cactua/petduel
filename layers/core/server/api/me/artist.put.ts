@@ -12,6 +12,8 @@ export default defineEventHandler(async (event) => {
   // Senza doppioni, nell'ordine scelto
   const links = [...new Set(body.data.links)]
   const db = await useDb()
-  await db.update(users).set({ isArtist: body.data.isArtist, artistLinks: links }).where(eq(users.id, user.id))
-  return { isArtist: body.data.isArtist, links }
+  // Senza link le commissioni aperte non servono a niente: resta solo lo stato
+  const { isArtist, commissions, commissionsUrl } = body.data
+  await db.update(users).set({ isArtist, artistLinks: links, commissions, commissionsUrl }).where(eq(users.id, user.id))
+  return { isArtist, links, commissions, commissionsUrl }
 })

@@ -2,7 +2,8 @@ import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto'
 import type { H3Event } from 'h3'
 import { eq, sql } from 'drizzle-orm'
 import { z } from 'zod'
-import { ANON_VOTE_WEIGHT, NEW_ACCOUNT_VOTE_WEIGHT } from '#shared/models'
+import { ANON_VOTE_WEIGHT } from '#shared/models'
+import { BURST_WINDOW_MS, accountVoteWeight, burstHits, isBurst } from '#shared/voteRules'
 import { users, voteAlerts } from '../db/schema'
 import { useDb } from './db'
 
@@ -74,21 +75,16 @@ function anonWeight(event: H3Event) {
   return count > ANON_DAILY_CAP ? 0 : ANON_VOTE_WEIGHT
 }
 
-// Anche con l'account: oltre questo tetto giornaliero i voti restano registrati ma non spostano l'Elo
-const USER_DAILY_CAP = 400
-// Un account appena creato vota a metà peso per i primi giorni: crearne tanti per spingere qualcuno non conviene
-const NEW_ACCOUNT_DAYS = 3
+// Voti di oggi per account: tetto giornaliero e peso ridotto per gli account nuovi (shared/voteRules.ts)
 const userVotes = new Map<number, number>()
 
 async function userWeight(userId: number) {
   newDay()
   const count = (userVotes.get(userId) ?? 0) + 1
   userVotes.set(userId, count)
-  if (count > USER_DAILY_CAP) return 0
   const db = await useDb()
   const [user] = await db.select({ createdAt: users.createdAt }).from(users).where(eq(users.id, userId))
-  const young = !user || Date.now() - user.createdAt.getTime() < NEW_ACCOUNT_DAYS * 86_400_000
-  return young ? NEW_ACCOUNT_VOTE_WEIGHT : 1
+  return accountVoteWeight(count, user?.createdAt ?? null)
 }
 
 function newDay() {
@@ -104,8 +100,6 @@ function newDay() {
  * Oltre la soglia quei voti non contano più e gli admin trovano un avviso tra le segnalazioni.
  * L'IP non si salva: solo un'impronta cifrata, che basta a distinguere le reti
  */
-const BURST_WINDOW_MS = 60 * 60 * 1000
-const BURST_LIMIT = 10
 const bursts = new Map<string, number[]>()
 
 async function burstGuard(event: H3Event, scope: string, winnerId: number) {
@@ -113,11 +107,11 @@ async function burstGuard(event: H3Event, scope: string, winnerId: number) {
   const network = sign(`ip:${ip}`).slice(0, 16)
   const key = `${network}|${scope}|${winnerId}`
   const now = Date.now()
-  const hits = [...(bursts.get(key) ?? []).filter(t => now - t < BURST_WINDOW_MS), now]
+  const hits = burstHits(bursts.get(key) ?? [], now)
   bursts.set(key, hits)
   // Pulizia ogni tanto, perché la mappa non cresca all'infinito
   if (bursts.size > 50_000) for (const [k, v] of bursts) if (now - v.at(-1)! > BURST_WINDOW_MS) bursts.delete(k)
-  if (hits.length <= BURST_LIMIT) return false
+  if (!isBurst(hits)) return false
   const db = await useDb()
   await db.insert(voteAlerts).values({ petId: winnerId, scope, network, day: new Date().toISOString().slice(0, 10), hits: hits.length })
     .onConflictDoUpdate({ target: [voteAlerts.petId, voteAlerts.network, voteAlerts.day], set: { hits: sql`greatest(${voteAlerts.hits}, ${hits.length})` } })

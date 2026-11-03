@@ -4,7 +4,7 @@ import site from '#site'
 const props = defineProps<{ petId: number, petName: string, sfida?: string, label?: string, autoOpen?: boolean }>()
 
 const dialog = ref<HTMLDialogElement>()
-const cardUrl = computed(() => `/card/${props.petId}.png${props.sfida ? `?sfida=${props.sfida}` : ''}`)
+const cardUrl = computed(() => `/card/${props.petId}.png${props.sfida ? `?challenge=${props.sfida}` : ''}`)
 const fileName = computed(() => `${props.petName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'pet'}-petduel.png`)
 const { t } = useI18n()
 const text = computed(() => props.sfida
@@ -17,8 +17,8 @@ const canShareLink = ref(false)
 const status = ref('')
 
 function link() {
-  const url = new URL(`/pet/${props.petId}`, location.origin)
-  if (props.sfida) url.searchParams.set('sfida', props.sfida)
+  const url = new URL(entryUrl(props.petId), location.origin)
+  if (props.sfida) url.searchParams.set('challenge', props.sfida)
   return url.toString()
 }
 

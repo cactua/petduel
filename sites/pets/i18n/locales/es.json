@@ -128,51 +128,51 @@
     }
   },
   "themes": {
-    "dormiglione": {
+    "sleepyhead": {
       "title": "El más dormilón",
       "description": "La foto de la siesta más tierna: en la cama, en el sofá o en los sitios más insospechados."
     },
-    "linguaccia": {
+    "tongue-out": {
       "title": "¡Lengua fuera!",
       "description": "Lengua fuera, sin vergüenza."
     },
-    "agguato": {
+    "pounce": {
       "title": "Emboscada felina",
       "description": "El gato a punto de saltar: mirada fija y cola que vibra."
     },
-    "scatola": {
+    "box-king": {
       "title": "Rey de la caja",
       "description": "Dentro de una caja, una cesta, una maceta o cualquier sitio demasiado pequeño."
     },
-    "faccia-colpevole": {
+    "guilty-face": {
       "title": "Cara de culpable",
       "description": "El momento justo después del desastre."
     },
-    "riporto": {
+    "fetch": {
       "title": "El rey de la pelota",
       "description": "Pelota, palo o zapatilla: el perro en acción."
     },
-    "sguardo": {
+    "the-look": {
       "title": "Mirada que enamora",
       "description": "Los ojos más dulces (o más intensos) de la red."
     },
-    "migliori-amici": {
+    "best-friends": {
       "title": "Mejores amigos",
       "description": "Con su juguete, peluche o amigo animal favorito."
     },
-    "esploratore": {
+    "explorer": {
       "title": "Pequeño explorador",
       "description": "Aventuras al aire libre: prados, playas, montañas o el balcón de casa."
     },
-    "musetto-goloso": {
+    "foodie": {
       "title": "Hocico glotón",
       "description": "Pillado comiendo: zanahorias, semillas, pienso o tu bocadillo."
     },
-    "pose-impossibili": {
+    "impossible-poses": {
       "title": "Posturas imposibles",
       "description": "Contorsionistas natos: las posturas más absurdas."
     },
-    "bagnetto": {
+    "bath-time": {
       "title": "Después del baño",
       "description": "Pelo mojado, dignidad perdida."
     }
@@ -188,5 +188,8 @@
   ],
   "reasonTips": {
     "0": "Prueba con una foto en la que el animal se vea bien."
+  },
+  "follow": {
+    "lead": "Las novedades de las personas que sigues: sus nuevos animales y las fotos recién publicadas."
   }
 }

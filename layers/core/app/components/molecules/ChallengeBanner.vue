@@ -8,7 +8,7 @@ const title = computed(() => (challenge.value ? challengeText(challenge.value).t
 </script>
 
 <template>
-  <NuxtLink v-if="challenge" :to="`/sfide/${challenge.slug}`" class="challenge-banner">
+  <NuxtLink v-if="challenge" :to="`/challenges/${challenge.slug}`" class="challenge-banner">
     <span class="challenge-banner__emoji" aria-hidden="true">{{ challenge.emoji }}</span>
     <span class="challenge-banner__text">
       <small class="challenge-banner__eyebrow">{{ $t('challenge.ofTheWeek') }}</small>

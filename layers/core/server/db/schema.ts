@@ -1,5 +1,5 @@
 import { boolean, integer, jsonb, pgTable, real, serial, text, timestamp, unique } from 'drizzle-orm/pg-core'
-import type { AdoptionStatus, ComplimentKind, PetSize, PhotoStatus, ReportReason, ReportStatus, RequestStatus, ShelterAccent, ShelterSocials, ShelterStatus, Species } from '#shared/models'
+import type { AdoptionStatus, CommissionStatus, ComplimentKind, PetSize, PhotoStatus, ReportReason, ReportStatus, RequestStatus, ShelterAccent, ShelterSocials, ShelterStatus, Species } from '#shared/models'
 
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
@@ -13,8 +13,11 @@ export const users = pgTable('users', {
   isArtist: boolean('is_artist').notNull().default(false),
   // Pagine social dell'artista (http/https), mostrate sul profilo
   artistLinks: jsonb('artist_links').$type<string[]>().notNull().default([]),
-  // Quando ha accettato le regole della community (/regole) iscrivendosi; vuoto per chi si è iscritto prima
+  // Quando ha accettato le regole della community (/rules) iscrivendosi; vuoto per chi si è iscritto prima
   rulesAcceptedAt: timestamp('rules_accepted_at', { withTimezone: true }),
+  // Solo artisti: commissioni aperte o chiuse (vuoto = non lo dice) e dove chiederle
+  commissions: text('commissions').$type<CommissionStatus>().notNull().default(''),
+  commissionsUrl: text('commissions_url').notNull().default(''),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
@@ -190,6 +193,20 @@ export const blocks = pgTable('blocks', {
   blockedId: integer('blocked_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 }, t => [unique().on(t.blockerId, t.blockedId)])
+
+// Chi segue un utente vede i nuovi lavori caricati da lui o che lo indicano come artista (/following)
+export const follows = pgTable('follows', {
+  followerId: integer('follower_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  followedId: integer('followed_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, t => [unique().on(t.followerId, t.followedId)])
+
+// Partecipanti salvati tra i preferiti: li vede solo chi li ha salvati (/favorites)
+export const favorites = pgTable('favorites', {
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  petId: integer('pet_id').notNull().references(() => pets.id, { onDelete: 'cascade' }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, t => [unique().on(t.userId, t.petId)])
 
 // Complimenti già pronti a un partecipante: li vedono solo il proprietario e l'artista indicato
 export const compliments = pgTable('compliments', {
@@ -441,6 +458,21 @@ CREATE TABLE IF NOT EXISTS blocks (
   UNIQUE (blocker_id, blocked_id)
 );
 CREATE INDEX IF NOT EXISTS blocks_blocked ON blocks (blocked_id);
+CREATE TABLE IF NOT EXISTS follows (
+  follower_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  followed_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (follower_id, followed_id)
+);
+CREATE INDEX IF NOT EXISTS follows_followed ON follows (followed_id);
+CREATE TABLE IF NOT EXISTS favorites (
+  user_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  pet_id integer NOT NULL REFERENCES pets (id) ON DELETE CASCADE,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (user_id, pet_id)
+);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS commissions text NOT NULL DEFAULT '';
+ALTER TABLE users ADD COLUMN IF NOT EXISTS commissions_url text NOT NULL DEFAULT '';
 CREATE TABLE IF NOT EXISTS compliments (
   id serial PRIMARY KEY,
   pet_id integer NOT NULL REFERENCES pets (id) ON DELETE CASCADE,

@@ -28,6 +28,8 @@ const stats = computed(() => [
   // I cuori dei propri pet li vede solo il proprietario
   ...(profile.value?.isMe ? [{ value: pets.value.reduce((n, p) => n + (p.wins ?? 0), 0), label: t('profile.statWins') }] : []),
   { value: pets.value.reduce((n, p) => n + p.trophies.length, 0), label: t('profile.statTrophies') },
+  // Chi ti segue lo vedi solo tu
+  ...(profile.value?.isMe ? [{ value: profile.value.followers ?? 0, label: t('follow.followers') }] : []),
 ].filter((s, i) => i < 2 || s.value))
 
 // Pet di un rifugio divisi per stato dell'adozione; gli altri profili restano una lista unica
@@ -53,6 +55,23 @@ async function toggleBlock() {
   confirmBlock.value = false
   await $fetch(`/api/users/${profile.value.username}/block`, { method: 'POST', body: { blocked } })
   await refresh()
+}
+
+// Segui: i suoi lavori nuovi finiscono in /following. Chi non è collegato va ad accedere
+const following = ref(false)
+watchEffect(() => (following.value = !!profile.value?.following))
+const followBusy = ref(false)
+async function toggleFollow() {
+  if (!profile.value) return
+  if (!user.value) return navigateTo({ path: '/login', query: { redirect: route.fullPath } })
+  followBusy.value = true
+  try {
+    const res = await $fetch<{ following: boolean }>(`/api/users/${profile.value.username}/follow`, { method: 'POST', body: { following: !following.value } })
+    following.value = res.following
+  }
+  finally {
+    followBusy.value = false
+  }
 }
 
 const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? p.photos.find(ph => ph.image))?.image ?? ''
@@ -87,7 +106,7 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
           <div v-for="s in stats" :key="s.label" class="profile__stat"><dt class="profile__stat-label">{{ s.label }}</dt><dd class="profile__stat-value">{{ s.value }}</dd></div>
         </dl>
         <nav class="profile__actions">
-          <NuxtLink :to="`/rifugi/${shelter.slug}`" class="btn btn--ghost">🏠 {{ $t('profile.visitShelter') }}</NuxtLink>
+          <NuxtLink :to="`/shelters/${shelter.slug}`" class="btn btn--ghost">🏠 {{ $t('profile.visitShelter') }}</NuxtLink>
           <a v-if="pets.length" href="#pets" class="btn btn--ghost">🐾 {{ $t('profile.seeGuests') }}</a>
         </nav>
         <div v-if="!profile.isMe" class="profile__report">
@@ -113,15 +132,28 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
             <a :href="link" target="_blank" rel="noopener noreferrer nofollow ugc" class="btn btn--ghost profile__link">{{ linkLabel(link) }} ↗</a>
           </li>
         </ul>
+        <!-- Commissioni: aperte con il link per chiederle, o chiuse -->
+        <p v-if="profile.artist?.commissions" class="profile__commissions" :class="`profile__commissions--${profile.artist.commissions}`">
+          <a
+            v-if="profile.artist.commissions === 'open' && profile.artist.commissionsUrl" :href="profile.artist.commissionsUrl"
+            target="_blank" rel="noopener noreferrer nofollow ugc"
+          >● {{ $t('artist.commissions.open') }} ↗</a>
+          <span v-else>● {{ $t(`artist.commissions.${profile.artist.commissions}`) }}</span>
+        </p>
         <dl class="profile__stats">
           <div v-for="s in stats" :key="s.label" class="profile__stat"><dt class="profile__stat-label">{{ s.label }}</dt><dd class="profile__stat-value">{{ s.value }}</dd></div>
         </dl>
         <nav v-if="profile.isMe" class="profile__actions">
-          <NuxtLink to="/carica" class="btn btn--primary">+ {{ $t('profile.newPet') }}</NuxtLink>
+          <NuxtLink to="/upload" class="btn btn--primary">+ {{ $t('profile.newPet') }}</NuxtLink>
           <NuxtLink v-if="user?.role === 'admin'" to="/admin" class="btn btn--ghost">{{ $t('profile.admin') }}</NuxtLink>
           <NuxtLink v-if="HAS_ARTISTS" to="/account" class="btn btn--ghost">🎨 {{ profile.artist ? $t('artist.edit') : $t('artist.become') }}</NuxtLink>
         </nav>
-        <div v-else class="profile__report">
+        <nav v-if="!profile.isMe && !profile.blocked" class="profile__actions">
+          <button type="button" class="btn" :class="following ? 'btn--ghost' : 'btn--primary'" :aria-pressed="following" :disabled="followBusy" @click="toggleFollow">
+            {{ following ? `✓ ${$t('follow.following')}` : `+ ${$t('follow.follow')}` }}
+          </button>
+        </nav>
+        <div v-if="!profile.isMe" class="profile__report">
           <ReportButton :username="profile.username" />
           <button v-if="user" type="button" class="profile__block" @click="toggleBlock">
             {{ profile.blocked ? $t('block.unblock') : confirmBlock ? $t('block.confirm') : $t('block.block') }}
@@ -134,22 +166,22 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
       <section v-if="profile.isMe && manage?.status === 'approved'" class="profile__card profile__manage" aria-labelledby="manage-title">
         <h2 id="manage-title" class="profile__manage-title">{{ $t('profile.manageTitle') }}</h2>
         <div class="profile__tiles">
-          <NuxtLink to="/rifugio#richieste" class="profile__tile" :class="{ 'profile__tile--hot': manage.newRequests }">
+          <NuxtLink to="/my-shelter#richieste" class="profile__tile" :class="{ 'profile__tile--hot': manage.newRequests }">
             <span class="profile__tile-icon" aria-hidden="true">📬</span>
             <b class="profile__tile-title">{{ $t('area.requests') }}</b>
             <small class="profile__tile-hint">{{ manage.newRequests ? $t('area.newCount', { n: manage.newRequests }) : $t('profile.noNewRequests') }}</small>
           </NuxtLink>
-          <NuxtLink to="/rifugio?modifica=1" class="profile__tile">
+          <NuxtLink to="/my-shelter?modifica=1" class="profile__tile">
             <span class="profile__tile-icon" aria-hidden="true">🎨</span>
             <b class="profile__tile-title">{{ $t('profile.customize') }}</b>
             <small class="profile__tile-hint">{{ $t('profile.customizeHint') }}</small>
           </NuxtLink>
-          <NuxtLink to="/carica" class="profile__tile">
+          <NuxtLink to="/upload" class="profile__tile">
             <span class="profile__tile-icon" aria-hidden="true">➕</span>
             <b class="profile__tile-title">{{ $t('profile.addGuest') }}</b>
             <small class="profile__tile-hint">{{ $t('profile.addGuestHint') }}</small>
           </NuxtLink>
-          <NuxtLink :to="`/rifugi/${manage.slug}`" class="profile__tile">
+          <NuxtLink :to="`/shelters/${manage.slug}`" class="profile__tile">
             <span class="profile__tile-icon" aria-hidden="true">👀</span>
             <b class="profile__tile-title">{{ $t('profile.publicPage') }}</b>
             <small class="profile__tile-hint">{{ $t('profile.publicPageHint') }}</small>
@@ -159,11 +191,11 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
         <NuxtLink v-if="user?.role === 'admin'" to="/admin" class="profile__admin-link">{{ $t('profile.admin') }} →</NuxtLink>
       </section>
 
-      <NuxtLink v-else-if="profile.isMe && manage?.status === 'pending'" to="/rifugio" class="profile__card profile__status">
+      <NuxtLink v-else-if="profile.isMe && manage?.status === 'pending'" to="/my-shelter" class="profile__card profile__status">
         <span class="profile__status-icon" aria-hidden="true">⏳</span>
         <span class="profile__status-text"><b>{{ manage.name }} · {{ $t('area.pending') }}</b><small>{{ $t('profile.pendingShelter') }}</small></span>
       </NuxtLink>
-      <NuxtLink v-else-if="profile.isMe && manage?.status === 'rejected'" to="/rifugio" class="profile__card profile__status profile__status--warn">
+      <NuxtLink v-else-if="profile.isMe && manage?.status === 'rejected'" to="/my-shelter" class="profile__card profile__status profile__status--warn">
         <span class="profile__status-icon" aria-hidden="true">✋</span>
         <span class="profile__status-text"><b>{{ manage.name }}</b><small>{{ $t('profile.rejectedShelter') }}</small></span>
       </NuxtLink>
@@ -207,11 +239,11 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
 
       <div v-else class="profile__empty">
         <p>{{ profile.isMe ? $t('profile.noPetsMine') : $t('profile.noPets') }}</p>
-        <NuxtLink v-if="profile.isMe" to="/carica" class="btn btn--primary btn--lg">{{ $t('profile.uploadFirst') }}</NuxtLink>
+        <NuxtLink v-if="profile.isMe" to="/upload" class="btn btn--primary btn--lg">{{ $t('profile.uploadFirst') }}</NuxtLink>
       </div>
 
       <!-- Invito discreto per chi non gestisce ancora un rifugio -->
-      <NuxtLink v-if="profile.isMe && !manage && features.shelters" to="/rifugio" class="profile__become">🏠 {{ $t('profile.becomeShelter') }} →</NuxtLink>
+      <NuxtLink v-if="profile.isMe && !manage && features.shelters" to="/my-shelter" class="profile__become">🏠 {{ $t('profile.becomeShelter') }} →</NuxtLink>
     </template>
   </section>
 </template>
@@ -329,6 +361,18 @@ $adoption-dots: (
     cursor: pointer;
 
     &:hover, &:focus-visible { opacity: 1; text-decoration: underline; }
+  }
+
+  &__commissions {
+    margin: 0;
+    font-weight: 800;
+    font-size: 14px;
+
+    a { color: inherit; }
+
+    &--open { color: color-mix(in srgb, var(--mint) 60%, var(--ink)); }
+
+    &--closed { color: var(--muted); }
   }
 
   &__blocked { margin: 0; color: var(--muted); font-size: 13px; font-weight: 700; }

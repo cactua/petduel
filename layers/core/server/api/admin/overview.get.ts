@@ -1,5 +1,6 @@
 import { sql } from 'drizzle-orm'
 import type { AdminActivity, AdminDay, AdminOverview } from '#shared/models'
+import { entryUrl } from '#shared/models'
 
 const TZ = 'Europe/Rome'
 const DAYS = 14
@@ -74,16 +75,16 @@ export default defineEventHandler(async (event): Promise<AdminOverview> => {
 
   const activity = feed.map((r): AdminActivity | null => {
     const at = new Date(r.at).toISOString()
-    const pet = r.id ? `/pet/${r.id}` : null
+    const pet = r.id ? entryUrl(r.id) : null
     switch (r.kind) {
-      case 'signup': return { at, emoji: '👋', text: `Nuovo utente @${r.a}`, link: `/admin/utenti?q=${r.a}` }
-      case 'upload': return { at, emoji: '📸', text: `@${r.b} ha caricato una foto di ${r.a}`, link: '/admin/foto' }
+      case 'signup': return { at, emoji: '👋', text: `Nuovo utente @${r.a}`, link: `/admin/users?q=${r.a}` }
+      case 'upload': return { at, emoji: '📸', text: `@${r.b} ha caricato una foto di ${r.a}`, link: '/admin/photos' }
       case 'reviewed-approved': return { at, emoji: '✅', text: `Foto di ${r.a} approvata${r.b ? ` da @${r.b}` : ''}`, link: pet }
       case 'reviewed-rejected': return { at, emoji: '🚫', text: `Foto di ${r.a} rifiutata${r.b ? ` da @${r.b}` : ''}`, link: null }
-      case 'shelter': return { at, emoji: '🏠', text: `Rifugio "${r.a}" registrato`, link: '/admin/rifugi' }
+      case 'shelter': return { at, emoji: '🏠', text: `Rifugio "${r.a}" registrato`, link: '/admin/shelters' }
       case 'adoption': return { at, emoji: '💌', text: `Richiesta di adozione per ${r.a} a ${r.b}`, link: pet }
       case 'entry': return { at, emoji: '🏁', text: `${r.a} partecipa a "${r.b}"`, link: pet }
-      case 'ad-click': return { at, emoji: '📣', text: `Clic sulla pubblicità "${r.a}"`, link: '/admin/pubblicita' }
+      case 'ad-click': return { at, emoji: '📣', text: `Clic sulla pubblicità "${r.a}"`, link: '/admin/ads' }
       default: return null
     }
   }).filter(a => a !== null)

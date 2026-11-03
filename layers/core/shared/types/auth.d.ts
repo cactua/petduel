@@ -3,6 +3,8 @@ declare module '#auth-utils' {
     id: number
     username: string
     role: 'user' | 'admin'
+    // Iscritto prima che ci fossero le regole: gliele si chiede una volta
+    needsRules?: boolean
   }
 
   interface UserSession {

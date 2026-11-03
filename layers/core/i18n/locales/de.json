@@ -70,7 +70,8 @@
     "artistTagged": "Du wurdest als Urheber*in eines Bildes von {name} angegeben",
     "reportResolved": "Wir haben deine Meldung geprüft und gehandelt. Danke!",
     "reportDismissed": "Wir haben deine Meldung geprüft: Im Moment verstößt es nicht gegen die Regeln. Trotzdem danke!",
-    "compliment": "{name} hat neue Komplimente bekommen 💌"
+    "compliment": "{name} hat neue Komplimente bekommen 💌",
+    "followNew": "Neues von {'@'}{user}: schau mal rein"
   },
   "time": {
     "now": "jetzt",
@@ -373,10 +374,10 @@
     },
     "period": "Zeitraum",
     "periods": {
-      "settimana": "Woche",
-      "mese": "Monat",
-      "sempre": "Allzeit",
-      "nuovi": "Neu"
+      "week": "Woche",
+      "month": "Monat",
+      "all": "Allzeit",
+      "new": "Neu"
     },
     "rollingNote": "Erhaltene Herzen {period}: Jede Stimme ist ein Herz. Zurück auf null am {date}.",
     "totalNote": "Alle erhaltenen Herzen: Jede Stimme ist ein Herz, und Herzen gehen nie verloren.",
@@ -495,7 +496,14 @@
     "works": "Ein zugeordnetes Bild | {n} zugeordnete Bilder",
     "worksHelp": "Von anderen hochgeladene Bilder, die dich als Urheber*in angeben. Wenn du es nicht bist, entferne deinen Namen; wenn es von dir ist, du es aber nicht erlaubt hast, melde es.",
     "notMe": "Bin ich nicht",
-    "notAllowed": "Ohne Erlaubnis"
+    "notAllowed": "Ohne Erlaubnis",
+    "commissions": {
+      "title": "Auftragsarbeiten",
+      "none": "Nicht angeben",
+      "open": "Aufträge offen",
+      "closed": "Aufträge geschlossen",
+      "url": "Wo man anfragt (Link)"
+    }
   },
   "report": {
     "open": "Melden",
@@ -579,12 +587,32 @@
         "text": "Nutze „Melden“ bei einem Bild oder Profil: Nur die Moderation liest es. Du kannst auch alle blockieren, die dich stören."
       }
     },
-    "outro": "Wer die Regeln nicht einhält, riskiert entfernte Bilder oder ein gesperrtes Konto. Danke, dass du diesen Ort schön hältst!"
+    "outro": "Wer die Regeln nicht einhält, riskiert entfernte Bilder oder ein gesperrtes Konto. Danke, dass du diesen Ort schön hältst!",
+    "promptTitle": "Wir haben Community-Regeln geschrieben",
+    "promptText": "Ein paar Regeln, damit es hier freundlich bleibt: Respekt, nur Eigenes oder mit Erlaubnis, keine KI, keine persönlichen Daten. Wenn du weitermachst, akzeptierst du sie.",
+    "promptAccept": "Gelesen, ich akzeptiere"
   },
   "voted": {
     "title": "Deine Stimmen",
     "lead": "Die, die du in deinen letzten Duellen gewählt hast: Öffne das Profil der Person, die sie hochgeladen hat, um ihre anderen zu sehen, oder die Seite der Künstler*in.",
     "empty": "Du hast noch in keinem Duell abgestimmt.",
     "goVote": "Zum Abstimmen →"
+  },
+  "follow": {
+    "follow": "Folgen",
+    "following": "Du folgst",
+    "followers": "Follower",
+    "title": "Gefolgt",
+    "lead": "Neues von den Leuten, denen du folgst: was sie hochladen und Werke, in denen sie als Künstler·in genannt sind.",
+    "whoTitle": "Leute, denen du folgst",
+    "empty": "Du folgst noch niemandem. Öffne ein Profil und tippe auf „Folgen\".",
+    "noWorks": "Noch nichts Neues von den Leuten, denen du folgst."
+  },
+  "favorites": {
+    "save": "Merken",
+    "saved": "Gemerkt",
+    "title": "Favoriten",
+    "lead": "Was du dir gemerkt hast. Nur du siehst es: niemand weiß, dass du es gemerkt hast.",
+    "empty": "Noch keine Favoriten. Öffne die Seite eines Teilnehmers und tippe auf „Merken\"."
   }
 }

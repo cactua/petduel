@@ -4,7 +4,7 @@
 export interface SiteCategory {
   /** Valore salvato nel database, es. "gatto" */
   id: string
-  /** Parte dell'indirizzo della classifica, es. "gatti" in /classifica/gatti */
+  /** Parte dell'indirizzo della classifica, es. "gatti" in /leaderboard/gatti */
   slug: string
   emoji: string
 }
@@ -67,6 +67,11 @@ export interface SiteConfig {
   breedAndCity?: boolean
   /** Se manca valgono i colori e Biscotto del nucleo (DEFAULT_BRAND) */
   brand?: SiteBrand
+  /**
+   * Parola nell'indirizzo della pagina di un partecipante: /<entryPath>/<id>. Se manca: "pet".
+   * Cambiandola, i vecchi indirizzi /pet/<id> portano a quelli nuovi
+   */
+  entryPath?: string
 }
 
 // Aspetto del nucleo: la palette chiara di layers/core/app/assets/scss e Biscotto, la mascotte

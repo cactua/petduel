@@ -70,7 +70,8 @@
     "artistTagged": "You were credited as the creator of an image of {name}",
     "reportResolved": "We reviewed your report and took action. Thank you!",
     "reportDismissed": "We reviewed your report: for now it doesn't break the rules. Thanks anyway!",
-    "compliment": "{name} got new compliments 💌"
+    "compliment": "{name} got new compliments 💌",
+    "followNew": "Something new from {'@'}{user}: take a look"
   },
   "time": {
     "now": "now",
@@ -373,10 +374,10 @@
     },
     "period": "Period",
     "periods": {
-      "settimana": "Week",
-      "mese": "Month",
-      "sempre": "All time",
-      "nuovi": "New"
+      "week": "Week",
+      "month": "Month",
+      "all": "All time",
+      "new": "New"
     },
     "rollingNote": "Hearts received {period}: every vote is one heart. Back to zero on {date}.",
     "totalNote": "All hearts received: every vote is one heart, and hearts are never lost.",
@@ -495,7 +496,14 @@
     "works": "One credited image | {n} credited images",
     "worksHelp": "Images uploaded by others that credit you as the creator. If it isn't you, remove your name; if it's yours but you didn't give permission, report it.",
     "notMe": "Not me",
-    "notAllowed": "No permission"
+    "notAllowed": "No permission",
+    "commissions": {
+      "title": "Commissions",
+      "none": "Don't say",
+      "open": "Commissions open",
+      "closed": "Commissions closed",
+      "url": "Where to ask (link)"
+    }
   },
   "report": {
     "open": "Report",
@@ -579,12 +587,32 @@
         "text": "Use \"Report\" on an image or a profile: only moderators read it. You can also block anyone who bothers you."
       }
     },
-    "outro": "Breaking the rules can get images removed or an account suspended. Thanks for keeping this place nice!"
+    "outro": "Breaking the rules can get images removed or an account suspended. Thanks for keeping this place nice!",
+    "promptTitle": "We wrote our community rules",
+    "promptText": "A few rules to keep this a kind place: respect, only your own work or with permission, no AI, no personal data. By continuing you accept them.",
+    "promptAccept": "I've read them, I accept"
   },
   "voted": {
     "title": "Your votes",
     "lead": "The ones you picked in your latest duels: open the uploader's profile to see their others, or the artist's page.",
     "empty": "You haven't voted in any duel yet.",
     "goVote": "Go vote →"
+  },
+  "follow": {
+    "follow": "Follow",
+    "following": "Following",
+    "followers": "Followers",
+    "title": "Following",
+    "lead": "What's new from the people you follow: what they upload and the works that credit them as the artist.",
+    "whoTitle": "People you follow",
+    "empty": "You aren't following anyone yet. Open a profile and tap \"Follow\".",
+    "noWorks": "Nothing new from the people you follow yet."
+  },
+  "favorites": {
+    "save": "Save",
+    "saved": "Saved",
+    "title": "Favourites",
+    "lead": "The ones you saved. Only you can see them: nobody knows you saved them.",
+    "empty": "No favourites yet. Open an entry's page and tap \"Save\"."
   }
 }

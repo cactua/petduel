@@ -128,51 +128,51 @@
     }
   },
   "themes": {
-    "dormiglione": {
+    "sleepyhead": {
       "title": "Sleepyhead",
       "description": "The cutest nap photo: in bed, on the sofa or in the most unlikely places."
     },
-    "linguaccia": {
+    "tongue-out": {
       "title": "Tongue out!",
       "description": "Tongue out, no shame at all."
     },
-    "agguato": {
+    "pounce": {
       "title": "Feline ambush",
       "description": "The cat about to pounce: fixed stare and twitching tail."
     },
-    "scatola": {
+    "box-king": {
       "title": "King of the box",
       "description": "Inside a box, a basket, a pot or any spot that's way too small."
     },
-    "faccia-colpevole": {
+    "guilty-face": {
       "title": "Guilty face",
       "description": "The moment right after the disaster."
     },
-    "riporto": {
+    "fetch": {
       "title": "Fetch champion",
       "description": "Ball, stick or slipper: the dog in action."
     },
-    "sguardo": {
+    "the-look": {
       "title": "Irresistible gaze",
       "description": "The sweetest (or most intense) eyes on the web."
     },
-    "migliori-amici": {
+    "best-friends": {
       "title": "Best friends",
       "description": "With their favourite toy, plushie or animal friend."
     },
-    "esploratore": {
+    "explorer": {
       "title": "Little explorer",
       "description": "Outdoor adventures: meadows, beaches, mountains or the balcony at home."
     },
-    "musetto-goloso": {
+    "foodie": {
       "title": "Greedy snout",
       "description": "Caught eating: carrots, seeds, kibble or your sandwich."
     },
-    "pose-impossibili": {
+    "impossible-poses": {
       "title": "Impossible poses",
       "description": "Born contortionists: the most absurd positions."
     },
-    "bagnetto": {
+    "bath-time": {
       "title": "After the bath",
       "description": "Wet fur, lost dignity."
     }
@@ -188,5 +188,8 @@
   ],
   "reasonTips": {
     "0": "Try a photo where the animal is clearly visible."
+  },
+  "follow": {
+    "lead": "What's new from the people you follow: their new pets and freshly published photos."
   }
 }

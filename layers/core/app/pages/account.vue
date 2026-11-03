@@ -95,8 +95,8 @@ async function remove() {
     <p class="account-page__links">
       <NuxtLink to="/privacy" class="account-page__link">{{ $t('legal.privacy') }}</NuxtLink> ·
       <NuxtLink to="/cookie" class="account-page__link">{{ $t('legal.cookie') }}</NuxtLink> ·
-      <NuxtLink to="/termini" class="account-page__link">{{ $t('legal.terms') }}</NuxtLink> ·
-      <NuxtLink to="/regole" class="account-page__link">{{ $t('rules.link') }}</NuxtLink>
+      <NuxtLink to="/terms" class="account-page__link">{{ $t('legal.terms') }}</NuxtLink> ·
+      <NuxtLink to="/rules" class="account-page__link">{{ $t('rules.link') }}</NuxtLink>
     </p>
   </section>
 </template>

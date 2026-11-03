@@ -4,11 +4,11 @@ import { NEW_TALENT_DAYS, PERIODS, TOP_RANK, speciesFilterSchema, type Leaderboa
 import { splitBoard } from '../utils/leaderboard'
 
 const TZ = 'Europe/Rome'
-const UNIT: Partial<Record<Period, string>> = { settimana: 'week', mese: 'month' }
+const UNIT: Partial<Record<Period, string>> = { week: 'week', month: 'month' }
 
 const querySchema = z.object({
   species: speciesFilterSchema,
-  period: z.enum(PERIODS).default('settimana'),
+  period: z.enum(PERIODS).default('week'),
   // Classifica di una città: più pet possono essere primi da qualche parte
   city: z.string().trim().min(1).max(40).optional(),
 })
@@ -36,7 +36,7 @@ async function loadRows(species: Species | undefined, period: Period, city: stri
   const visible = sql`${species ? sql`p.species = ${species}` : sql`true`}
     and ${city ? sql`lower(trim(p.city)) = lower(${city})` : sql`true`}
     and not p.hide_from_rankings
-    and ${period === 'nuovi' ? sql`p.created_at >= now() - make_interval(days => ${NEW_TALENT_DAYS})` : sql`true`}
+    and ${period === 'new' ? sql`p.created_at >= now() - make_interval(days => ${NEW_TALENT_DAYS})` : sql`true`}
     and exists (select 1 from photos ph where ph.pet_id = p.id and ph.status = 'approved')`
 
   // Si conta in cuori: ogni voto contato vale uno e non se ne perdono mai. "sempre": tutti i cuori;

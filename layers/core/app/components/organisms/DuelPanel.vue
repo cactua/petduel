@@ -79,7 +79,7 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
 
     <p v-if="showNudge" class="duel-panel__nudge">
       <i18n-t keypath="duel.nudge" tag="span" class="duel-panel__nudge-text"><template #times><b>{{ $t('duel.nudgeTimes', { n: weightTimes }) }}</b></template></i18n-t>
-      <NuxtLink :to="{ path: '/registrati', query: { redirect: route.fullPath } }" class="duel-panel__nudge-link">{{ $t('duel.signUp') }}</NuxtLink>
+      <NuxtLink :to="{ path: '/signup', query: { redirect: route.fullPath } }" class="duel-panel__nudge-link">{{ $t('duel.signUp') }}</NuxtLink>
       <button type="button" class="duel-panel__nudge-close" :aria-label="$t('common.close')" @click="closeNudge">✕</button>
     </p>
     <p v-else class="duel-panel__hint">

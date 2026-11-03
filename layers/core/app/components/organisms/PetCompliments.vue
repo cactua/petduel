@@ -14,7 +14,7 @@ const error = ref('')
 const received = computed(() => COMPLIMENTS.filter(k => data.value?.counts?.[k]))
 
 async function toggle(kind: ComplimentKind) {
-  if (!loggedIn.value) return navigateTo({ path: '/accedi', query: { redirect: route.fullPath } })
+  if (!loggedIn.value) return navigateTo({ path: '/login', query: { redirect: route.fullPath } })
   if (!data.value?.canGive || busy.value) return
   const on = !data.value.mine.includes(kind)
   busy.value = kind

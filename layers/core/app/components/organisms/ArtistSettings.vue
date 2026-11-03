@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MAX_ARTIST_LINKS, artistSettingsSchema, type ArtistSettings } from '#shared/models'
+import { COMMISSION_STATUSES, MAX_ARTIST_LINKS, artistSettingsSchema, type ArtistSettings, type CommissionStatus } from '#shared/models'
 
 // Organismo: segnarsi come artista e scegliere le pagine social da mostrare sul profilo (siti con askCredit)
 const { t } = useI18n()
@@ -7,10 +7,14 @@ const { data } = await useFetch<ArtistSettings>('/api/me/artist')
 
 const isArtist = ref(false)
 const links = ref<string[]>([])
+const commissions = ref<CommissionStatus>('')
+const commissionsUrl = ref('')
 watch(data, (d) => {
   if (!d) return
   isArtist.value = d.isArtist
   links.value = d.links.length ? [...d.links] : ['']
+  commissions.value = d.commissions
+  commissionsUrl.value = d.commissionsUrl
 }, { immediate: true })
 
 const saving = ref(false)
@@ -29,7 +33,12 @@ function removeLink(i: number) {
 async function save() {
   error.value = ''
   saved.value = false
-  const check = artistSettingsSchema.safeParse({ isArtist: isArtist.value, links: links.value.map(l => l.trim()).filter(Boolean) })
+  const check = artistSettingsSchema.safeParse({
+    isArtist: isArtist.value,
+    links: links.value.map(l => l.trim()).filter(Boolean),
+    commissions: commissions.value,
+    commissionsUrl: commissionsUrl.value,
+  })
   if (!check.success) {
     error.value = t(check.error.issues[0]?.message ?? 'validation.check')
     return
@@ -69,6 +78,21 @@ async function save() {
       <button v-if="links.length < MAX_ARTIST_LINKS" type="button" class="btn btn--ghost artist-settings__add" @click="addLink">+ {{ $t('artist.addLink') }}</button>
     </fieldset>
 
+    <!-- Commissioni: si dice solo se sono aperte o chiuse; aperte, con dove chiederle -->
+    <fieldset v-if="isArtist" class="artist-settings__links">
+      <legend class="label">{{ $t('artist.commissions.title') }}</legend>
+      <div class="artist-settings__choices">
+        <label v-for="c in COMMISSION_STATUSES" :key="c" class="artist-settings__choice" :class="{ 'is-active': commissions === c }">
+          <input v-model="commissions" type="radio" name="commissions" :value="c" class="artist-settings__radio" @change="saved = false">
+          {{ $t(`artist.commissions.${c || 'none'}`) }}
+        </label>
+      </div>
+      <input
+        v-if="commissions === 'open'" v-model="commissionsUrl" type="url" inputmode="url" maxlength="200" placeholder="https://"
+        autocomplete="off" class="input" :aria-label="$t('artist.commissions.url')" @input="saved = false"
+      >
+    </fieldset>
+
     <p v-if="error" class="error" role="alert">{{ error }}</p>
     <div class="artist-settings__foot">
       <button type="submit" class="btn btn--primary" :disabled="saving">{{ saving ? $t('auth.wait') : $t('artist.save') }}</button>
@@ -78,6 +102,23 @@ async function save() {
 </template>
 
 <style lang="scss" scoped>
+.artist-settings__choices { display: flex; flex-wrap: wrap; gap: $space-2; }
+
+.artist-settings__choice {
+  display: inline-flex;
+  gap: $space-2;
+  align-items: center;
+  padding: 8px 12px;
+  border: 2px solid var(--line);
+  border-radius: $radius-pill;
+  font-weight: 700;
+  cursor: pointer;
+
+  &.is-active { border-color: var(--action); background: var(--coral-soft); }
+}
+
+.artist-settings__radio { accent-color: var(--action); }
+
 .artist-settings {
   @include stack($space-4);
 

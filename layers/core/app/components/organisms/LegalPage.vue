@@ -10,7 +10,7 @@ import de from '../../legal/de'
 // Privacy, cookie e termini: testi lunghi, uno per lingua in app/legal (non nei file di traduzione)
 const props = defineProps<{ doc: LegalKey }>()
 const TEXTS: Record<string, LegalTexts> = { it, en, es, fr, de }
-const LINKS: Record<LegalKey, string> = { privacy: '/privacy', cookie: '/cookie', terms: '/termini' }
+const LINKS: Record<LegalKey, string> = { privacy: '/privacy', cookie: '/cookie', terms: '/terms' }
 
 const { locale } = useI18n()
 const texts = computed<LegalTexts>(() => TEXTS[locale.value] ?? it)

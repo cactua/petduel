@@ -61,12 +61,12 @@ async function submit() {
       <label v-if="isRegister" class="auth-form__rules">
         <input v-model="form.rules" type="checkbox" class="auth-form__rules-check">
         <i18n-t keypath="auth.rulesAccept" tag="span" scope="global">
-          <template #rules><NuxtLink to="/regole" target="_blank">{{ $t('rules.link') }}</NuxtLink></template>
+          <template #rules><NuxtLink to="/rules" target="_blank">{{ $t('rules.link') }}</NuxtLink></template>
         </i18n-t>
       </label>
       <p v-if="error" class="error auth-form__error" role="alert">{{ error }}</p>
       <i18n-t v-if="isRegister" keypath="auth.legal" tag="p" class="auth-form__legal" scope="global">
-        <template #terms><NuxtLink to="/termini" target="_blank">{{ $t('legal.terms') }}</NuxtLink></template>
+        <template #terms><NuxtLink to="/terms" target="_blank">{{ $t('legal.terms') }}</NuxtLink></template>
         <template #privacy><NuxtLink to="/privacy" target="_blank">{{ $t('legal.privacy') }}</NuxtLink></template>
       </i18n-t>
       <button type="submit" class="btn btn--primary btn--lg auth-form__submit" :disabled="sending">
@@ -75,10 +75,10 @@ async function submit() {
 
       <p class="auth-form__switch">
         <template v-if="isRegister">
-          {{ $t('auth.haveAccount') }} <NuxtLink :to="{ path: '/accedi', query: route.query }">{{ $t('nav.login') }}</NuxtLink>
+          {{ $t('auth.haveAccount') }} <NuxtLink :to="{ path: '/login', query: route.query }">{{ $t('nav.login') }}</NuxtLink>
         </template>
         <template v-else>
-          {{ $t('auth.noAccount') }} <NuxtLink :to="{ path: '/registrati', query: route.query }">{{ $t('auth.register') }}</NuxtLink>
+          {{ $t('auth.noAccount') }} <NuxtLink :to="{ path: '/signup', query: route.query }">{{ $t('auth.register') }}</NuxtLink>
         </template>
       </p>
     </form>

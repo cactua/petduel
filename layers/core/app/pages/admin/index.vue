@@ -36,13 +36,13 @@ const series = (key: 'votes' | 'signups' | 'uploads') => (data.value?.days ?? []
     <template v-if="data">
       <!-- Prima le cose che aspettano qualcuno: se non c'è niente, lo si dice -->
       <div class="dashboard__todo">
-        <NuxtLink v-if="data.todo.photos" to="/admin/foto" class="dashboard__task">
+        <NuxtLink v-if="data.todo.photos" to="/admin/photos" class="dashboard__task">
           <b class="dashboard__task-count">{{ data.todo.photos }}</b> foto da approvare <span class="dashboard__arrow">→</span>
         </NuxtLink>
-        <NuxtLink v-if="data.todo.shelters" to="/admin/rifugi" class="dashboard__task">
+        <NuxtLink v-if="data.todo.shelters" to="/admin/shelters" class="dashboard__task">
           <b class="dashboard__task-count">{{ data.todo.shelters }}</b> {{ data.todo.shelters === 1 ? 'rifugio da verificare' : 'rifugi da verificare' }} <span class="dashboard__arrow">→</span>
         </NuxtLink>
-        <NuxtLink v-if="reports" to="/admin/segnalazioni" class="dashboard__task">
+        <NuxtLink v-if="reports" to="/admin/reports" class="dashboard__task">
           <b class="dashboard__task-count">{{ reports }}</b> {{ reports === 1 ? 'segnalazione da guardare' : 'segnalazioni da guardare' }} <span class="dashboard__arrow">→</span>
         </NuxtLink>
         <p v-if="!data.todo.photos && !data.todo.shelters && !reports" class="dashboard__done">✅ Niente in attesa: tutto in ordine</p>
@@ -53,10 +53,10 @@ const series = (key: 'votes' | 'signups' | 'uploads') => (data.value?.days ?? []
         <div class="dashboard__tile"><span class="dashboard__tile-label">Voti</span><b class="dashboard__tile-value">{{ fmt(data.today.votes) }}</b><small class="dashboard__tile-hint">{{ pct(data.today.anonShare) }} senza account · {{ fmt(data.now.votesLastHour) }} nell'ultima ora</small></div>
         <div class="dashboard__tile"><span class="dashboard__tile-label">Nuovi utenti</span><b class="dashboard__tile-value">{{ fmt(data.today.signups) }}</b><small class="dashboard__tile-hint">{{ fmt(data.totals.users) }} in totale</small></div>
         <div class="dashboard__tile"><span class="dashboard__tile-label">Foto caricate</span><b class="dashboard__tile-value">{{ fmt(data.today.uploads) }}</b><small class="dashboard__tile-hint">{{ fmt(data.totals.photos) }} pubblicate</small></div>
-        <NuxtLink to="/admin/pubblicita" class="dashboard__tile"><span class="dashboard__tile-label">Pubblicità</span><b class="dashboard__tile-value">{{ fmt(data.today.adClicks) }} <em class="dashboard__tile-unit">clic</em></b><small class="dashboard__tile-hint">{{ fmt(data.today.adViews) }} visualizzazioni · CTR {{ pct(ctr) }}</small></NuxtLink>
+        <NuxtLink to="/admin/ads" class="dashboard__tile"><span class="dashboard__tile-label">Pubblicità</span><b class="dashboard__tile-value">{{ fmt(data.today.adClicks) }} <em class="dashboard__tile-unit">clic</em></b><small class="dashboard__tile-hint">{{ fmt(data.today.adViews) }} visualizzazioni · CTR {{ pct(ctr) }}</small></NuxtLink>
       </div>
 
-      <NuxtLink v-if="data.activeChallenge" :to="`/sfide/${data.activeChallenge.slug}`" class="dashboard__challenge">
+      <NuxtLink v-if="data.activeChallenge" :to="`/challenges/${data.activeChallenge.slug}`" class="dashboard__challenge">
         <span class="dashboard__challenge-emoji" aria-hidden="true">{{ data.activeChallenge.emoji }}</span>
         <span class="dashboard__challenge-text"><b>{{ data.activeChallenge.title }}</b><small>{{ data.activeChallenge.entries }} in gara · finisce {{ timeUntil(data.activeChallenge.endsAt) }}</small></span>
       </NuxtLink>

@@ -10,12 +10,12 @@ const { features } = useAppConfig()
 
 const items = computed(() => [
   { to: '/admin', label: 'Panoramica', emoji: '📊', exact: true },
-  { to: '/admin/foto', label: 'Foto', emoji: '📸', badge: todo.value?.photos },
-  { to: '/admin/segnalazioni', label: 'Segnalazioni', emoji: '⚑', badge: todo.value?.reports },
-  { to: '/admin/utenti', label: 'Utenti', emoji: '👥' },
-  ...(features.shelters ? [{ to: '/admin/rifugi', label: 'Rifugi', emoji: '🏠', badge: todo.value?.shelters }] : []),
-  { to: '/admin/sfide', label: 'Sfide', emoji: '🏁' },
-  { to: '/admin/pubblicita', label: 'Pubblicità', emoji: '📣' },
+  { to: '/admin/photos', label: 'Foto', emoji: '📸', badge: todo.value?.photos },
+  { to: '/admin/reports', label: 'Segnalazioni', emoji: '⚑', badge: todo.value?.reports },
+  { to: '/admin/users', label: 'Utenti', emoji: '👥' },
+  ...(features.shelters ? [{ to: '/admin/shelters', label: 'Rifugi', emoji: '🏠', badge: todo.value?.shelters }] : []),
+  { to: '/admin/challenges', label: 'Sfide', emoji: '🏁' },
+  { to: '/admin/ads', label: 'Pubblicità', emoji: '📣' },
 ])
 const isActive = (to: string, exact?: boolean) => (exact ? route.path === to : route.path.startsWith(to))
 </script>

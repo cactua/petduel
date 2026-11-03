@@ -1,6 +1,7 @@
 import { sql } from 'drizzle-orm'
-import { TOP_RANK, type Species } from '#shared/models'
+import { entryUrl, TOP_RANK, type Species } from '#shared/models'
 import { notifications } from '../db/schema'
+import { ensureChallenges } from './challenges'
 import { useDb } from './db'
 
 const TZ = 'Europe/Rome'
@@ -27,9 +28,9 @@ const place = (rank: number) => (rank === 1 ? '🥇' : rank === 2 ? '🥈' : ran
  * Avvisi calcolati al momento invece che da un job programmato: risultati delle sfide finite
  * e posizioni raggiunte nella classifica settimanale. La key evita i doppioni.
  */
-export async function refreshNotifications(userId: number) {
+export async function refreshNotifications(userId: number, force = false) {
   const now = Date.now()
-  if (now - (lastRefresh.get(userId) ?? 0) < REFRESH_MS) return
+  if (!force && now - (lastRefresh.get(userId) ?? 0) < REFRESH_MS) return
   lastRefresh.set(userId, now)
   const db = await useDb()
 
@@ -52,7 +53,7 @@ export async function refreshNotifications(userId: number) {
       text: r.rank === 1 ? 'notif.challengeWon' : 'notif.challengePlace',
       params: { name: r.name, challenge: r.title, challengeSlug: r.slug, rank: r.rank, total: r.total },
       // Un bel risultato si festeggia: si apre la pagina del pet con la card della sfida pronta da condividere
-      link: `/pet/${r.pet_id}?sfida=${r.slug}&condividi=1`,
+      link: `${entryUrl(r.pet_id)}?challenge=${r.slug}&share=1`,
     })
   }
 
@@ -76,11 +77,11 @@ export async function refreshNotifications(userId: number) {
       emoji: '❤️',
       text: 'notif.weeklyHearts',
       params: { n: recap.total, name: recap.best_name },
-      link: `/pet/${recap.best_id}`,
+      link: entryUrl(recap.best_id),
     })
   }
 
-  // Classifica settimanale per specie, come in /classifica: cuori ricevuti da lunedì (a pari cuori decide l'Elo)
+  // Classifica settimanale per specie, come in /leaderboard: cuori ricevuti da lunedì (a pari cuori decide l'Elo)
   const { rows: ranks } = await db.execute<{ id: number, name: string, species: Species, rank: number, week: string }>(sql`
     with week as (select date_trunc('week', now() at time zone ${TZ}) at time zone ${TZ} as since),
     stats as (
@@ -114,7 +115,21 @@ export async function refreshNotifications(userId: number) {
       emoji: tier === 1 ? '👑' : tier === 3 ? '🏆' : '📈',
       text: tier === 1 ? 'notif.rankFirst' : 'notif.rankTop',
       params: { name: r.name, species: r.species, tier },
-      link: `/pet/${r.id}?condividi=1`,
+      link: `${entryUrl(r.id)}?share=1`,
     })
   }
+}
+
+/**
+ * Giro programmato: prepara gli avvisi a tutti i proprietari di pet pubblici, così li trova anche chi non apre la campanella.
+ * Chiude prima le sfide finite (trofei e nuova sfida della settimana)
+ */
+export async function refreshAllNotifications() {
+  const db = await useDb()
+  await ensureChallenges()
+  const { rows } = await db.execute<{ owner_id: number }>(sql`
+    select distinct p.owner_id from pets p
+    where exists (select 1 from photos ph where ph.pet_id = p.id and ph.status = 'approved')`)
+  for (const r of rows) await refreshNotifications(r.owner_id, true)
+  return rows.length
 }

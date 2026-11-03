@@ -128,51 +128,51 @@
     }
   },
   "themes": {
-    "dormiglione": {
+    "sleepyhead": {
       "title": "Le plus gros dormeur",
       "description": "La photo de sieste la plus attendrissante : au lit, sur le canapé ou dans les endroits les plus improbables."
     },
-    "linguaccia": {
+    "tongue-out": {
       "title": "Tire la langue !",
       "description": "Langue dehors, sans aucune honte."
     },
-    "agguato": {
+    "pounce": {
       "title": "Embuscade féline",
       "description": "Le chat prêt à bondir : regard fixe et queue qui frémit."
     },
-    "scatola": {
+    "box-king": {
       "title": "Roi du carton",
       "description": "Dans un carton, un panier, un pot ou n'importe quel endroit bien trop petit."
     },
-    "faccia-colpevole": {
+    "guilty-face": {
       "title": "Tête de coupable",
       "description": "Le moment juste après la catastrophe."
     },
-    "riporto": {
+    "fetch": {
       "title": "Le roi du rapport",
       "description": "Balle, bâton ou chausson : le chien en action."
     },
-    "sguardo": {
+    "the-look": {
       "title": "Regard irrésistible",
       "description": "Les yeux les plus doux (ou les plus intenses) du web."
     },
-    "migliori-amici": {
+    "best-friends": {
       "title": "Meilleurs amis",
       "description": "Avec son jouet, sa peluche ou son ami animal préféré."
     },
-    "esploratore": {
+    "explorer": {
       "title": "Petit explorateur",
       "description": "Aventures en plein air : prés, plages, montagnes ou le balcon de la maison."
     },
-    "musetto-goloso": {
+    "foodie": {
       "title": "Petit gourmand",
       "description": "Pris sur le fait en train de manger : carottes, graines, croquettes ou ton sandwich."
     },
-    "pose-impossibili": {
+    "impossible-poses": {
       "title": "Poses impossibles",
       "description": "Contorsionnistes nés : les positions les plus absurdes."
     },
-    "bagnetto": {
+    "bath-time": {
       "title": "Après le bain",
       "description": "Poils mouillés, dignité perdue."
     }
@@ -188,5 +188,8 @@
   ],
   "reasonTips": {
     "0": "Essaie avec une photo où l'animal se voit bien."
+  },
+  "follow": {
+    "lead": "Les nouveautés des personnes que tu suis : leurs nouveaux animaux et les photos tout juste publiées."
   }
 }

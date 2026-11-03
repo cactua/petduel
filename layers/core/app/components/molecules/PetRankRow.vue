@@ -6,7 +6,7 @@ defineProps<{ pet: RankedPet, score: string, detail: string, mine?: boolean, sho
 </script>
 
 <template>
-  <NuxtLink :to="`/pet/${pet.id}`" class="rank-row">
+  <NuxtLink :to="entryUrl(pet.id)" class="rank-row">
     <span class="rank-row__rank">{{ rankLabel ?? pet.rank }}</span>
     <picture><source v-for="s in photoSources(pet.image, 's', '46px')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="pet.image" alt="" class="rank-row__thumb" loading="lazy"></picture>
     <div class="rank-row__who">

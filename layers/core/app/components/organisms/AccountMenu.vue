@@ -72,14 +72,16 @@ const initial = computed(() => user.value?.username.charAt(0).toUpperCase() ?? '
             <span><b class="account-menu__name">@{{ user.username }}</b><small class="account-menu__sub">{{ $t('menu.seeProfile') }}</small></span>
           </NuxtLink>
           <nav class="account-menu__links">
-            <NuxtLink to="/carica" class="account-menu__link"><AppIcon name="camera" />{{ $t('nav.uploadPhoto') }}</NuxtLink>
-            <NuxtLink to="/votati" class="account-menu__link"><AppIcon name="heart" />{{ $t('voted.title') }}</NuxtLink>
+            <NuxtLink to="/upload" class="account-menu__link"><AppIcon name="camera" />{{ $t('nav.uploadPhoto') }}</NuxtLink>
+            <NuxtLink to="/voted" class="account-menu__link"><AppIcon name="heart" />{{ $t('voted.title') }}</NuxtLink>
+            <NuxtLink to="/favorites" class="account-menu__link"><AppIcon name="star" />{{ $t('favorites.title') }}</NuxtLink>
+            <NuxtLink to="/following" class="account-menu__link"><AppIcon name="sparkle" />{{ $t('follow.title') }}</NuxtLink>
             <template v-if="features.shelters">
-              <NuxtLink v-if="myShelter?.status === 'approved'" to="/rifugio" class="account-menu__link">
+              <NuxtLink v-if="myShelter?.status === 'approved'" to="/my-shelter" class="account-menu__link">
                 <AppIcon name="home" /><span class="account-menu__ellipsis">{{ myShelter.name }}</span>
                 <em v-if="myShelter.newRequests" class="badge badge--action" :aria-label="$t('area.newCount', { n: myShelter.newRequests })">{{ myShelter.newRequests }}</em>
               </NuxtLink>
-              <NuxtLink v-else to="/rifugio" class="account-menu__link"><AppIcon name="home" />{{ myShelter?.status === 'pending' ? `${$t('menu.shelter')} · ${$t('area.pending')}` : $t('menu.becomeShelter') }}</NuxtLink>
+              <NuxtLink v-else to="/my-shelter" class="account-menu__link"><AppIcon name="home" />{{ myShelter?.status === 'pending' ? `${$t('menu.shelter')} · ${$t('area.pending')}` : $t('menu.becomeShelter') }}</NuxtLink>
             </template>
             <NuxtLink v-if="user.role === 'admin'" to="/admin" class="account-menu__link"><AppIcon name="shield" />{{ $t('profile.admin') }}</NuxtLink>
             <NuxtLink to="/account" class="account-menu__link"><AppIcon name="face" />{{ $t('account.title') }}</NuxtLink>
@@ -88,8 +90,8 @@ const initial = computed(() => user.value?.username.charAt(0).toUpperCase() ?? '
         <div v-else class="account-menu__guest">
           <p class="account-menu__guest-text">{{ $t('menu.guest') }}</p>
           <div class="account-menu__guest-actions">
-            <NuxtLink :to="{ path: '/accedi', query: { redirect: route.fullPath } }" class="btn btn--primary">{{ $t('nav.login') }}</NuxtLink>
-            <NuxtLink :to="{ path: '/registrati', query: { redirect: route.fullPath } }" class="btn btn--ghost">{{ $t('auth.register') }}</NuxtLink>
+            <NuxtLink :to="{ path: '/login', query: { redirect: route.fullPath } }" class="btn btn--primary">{{ $t('nav.login') }}</NuxtLink>
+            <NuxtLink :to="{ path: '/signup', query: { redirect: route.fullPath } }" class="btn btn--ghost">{{ $t('auth.register') }}</NuxtLink>
           </div>
         </div>
 
@@ -120,8 +122,8 @@ const initial = computed(() => user.value?.username.charAt(0).toUpperCase() ?? '
         <nav class="account-menu__legal" :aria-label="$t('legal.title')">
           <NuxtLink to="/privacy" class="account-menu__legal-link" @click="close">{{ $t('legal.privacy') }}</NuxtLink>
           <NuxtLink to="/cookie" class="account-menu__legal-link" @click="close">{{ $t('legal.cookie') }}</NuxtLink>
-          <NuxtLink to="/termini" class="account-menu__legal-link" @click="close">{{ $t('legal.terms') }}</NuxtLink>
-          <NuxtLink to="/regole" class="account-menu__legal-link" @click="close">{{ $t('rules.link') }}</NuxtLink>
+          <NuxtLink to="/terms" class="account-menu__legal-link" @click="close">{{ $t('legal.terms') }}</NuxtLink>
+          <NuxtLink to="/rules" class="account-menu__legal-link" @click="close">{{ $t('rules.link') }}</NuxtLink>
         </nav>
         <button type="button" class="account-menu__link account-menu__link--footer" @click="openConsent(); close()"><span class="account-menu__emoji" aria-hidden="true">🍪</span>{{ $t('consent.title') }}</button>
         <button v-if="loggedIn" type="button" class="account-menu__link account-menu__link--footer" @click="logout"><AppIcon name="login" />{{ $t('nav.logout') }}</button>

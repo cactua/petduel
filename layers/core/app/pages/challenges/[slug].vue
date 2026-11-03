@@ -2,9 +2,9 @@
 import type { ChallengeDetail } from '#shared/models'
 
 const TABS = [
-  { key: 'vota', label: 'challenge.vote' },
-  { key: 'classifica', label: 'nav.ranking' },
-  { key: 'partecipa', label: 'challenge.join' },
+  { key: 'vote', label: 'challenge.vote' },
+  { key: 'leaderboard', label: 'nav.ranking' },
+  { key: 'join', label: 'challenge.join' },
 ] as const
 type Tab = (typeof TABS)[number]['key']
 
@@ -18,10 +18,10 @@ useHead({ title: () => (challenge.value ? `${text.value.title}` : `${t('nav.chal
 
 const isActive = computed(() => challenge.value?.status === 'active')
 const tab = computed<Tab>(() => {
-  if (!isActive.value) return 'classifica'
-  return TABS.find(t => t.key === route.query.tab)?.key ?? 'vota'
+  if (!isActive.value) return 'leaderboard'
+  return TABS.find(t => t.key === route.query.tab)?.key ?? 'vote'
 })
-const tabLink = (t: Tab) => ({ path: route.path, query: t === 'vota' ? {} : { tab: t } })
+const tabLink = (t: Tab) => ({ path: route.path, query: t === 'vote' ? {} : { tab: t } })
 
 const { current, votes, toast, hint, failed, result, celebrate, ad, dismissAd, load, vote, skip } = useDuelQueue(() => ({
   duelUrl: `/api/challenges/${slug.value}/duel`,
@@ -30,10 +30,10 @@ const { current, votes, toast, hint, failed, result, celebrate, ad, dismissAd, l
 }))
 // Il duello parte solo quando si apre la scheda Vota
 watch(tab, (t) => {
-  if (t === 'vota' && isActive.value && !current.value) load()
+  if (t === 'vote' && isActive.value && !current.value) load()
 })
 onMounted(() => {
-  if (tab.value === 'vota' && isActive.value && !current.value) load()
+  if (tab.value === 'vote' && isActive.value && !current.value) load()
 })
 
 const when = computed(() => {
@@ -47,11 +47,11 @@ const winner = computed(() => challenge.value?.status === 'ended' ? challenge.va
 </script>
 
 <template>
-  <section class="challenge-page" :class="{ 'challenge-page--vote u-fit-screen': tab === 'vota' }">
-    <p v-if="error" class="challenge-page__empty">{{ $t('challenge.notFound') }} <NuxtLink to="/sfide">{{ $t('challenge.seeAll') }}</NuxtLink></p>
+  <section class="challenge-page" :class="{ 'challenge-page--vote u-fit-screen': tab === 'vote' }">
+    <p v-if="error" class="challenge-page__empty">{{ $t('challenge.notFound') }} <NuxtLink to="/challenges">{{ $t('challenge.seeAll') }}</NuxtLink></p>
     <template v-else-if="challenge">
       <header class="challenge-page__header">
-        <NuxtLink to="/sfide" class="challenge-page__back">← {{ $t('nav.challenges') }}</NuxtLink>
+        <NuxtLink to="/challenges" class="challenge-page__back">← {{ $t('nav.challenges') }}</NuxtLink>
         <div class="challenge-page__title">
           <span class="challenge-page__emoji" aria-hidden="true">{{ challenge.emoji }}</span>
           <div>
@@ -62,7 +62,7 @@ const winner = computed(() => challenge.value?.status === 'ended' ? challenge.va
             </p>
           </div>
         </div>
-        <p v-if="tab !== 'vota'" class="challenge-page__desc">{{ text.description }}</p>
+        <p v-if="tab !== 'vote'" class="challenge-page__desc">{{ text.description }}</p>
         <nav v-if="isActive" class="challenge-page__tabs" :aria-label="$t('challenge.sections')">
           <NuxtLink
             v-for="item in TABS" :key="item.key" :to="tabLink(item.key)"
@@ -74,18 +74,18 @@ const winner = computed(() => challenge.value?.status === 'ended' ? challenge.va
       </header>
 
       <DuelPanel
-        v-if="tab === 'vota'"
+        v-if="tab === 'vote'"
         :duel="current" :failed="failed" :votes="votes" :hint="hint" :toast="toast" :result="result" :celebrate="celebrate" :ad="ad"
         @vote="vote" @skip="skip" @retry="load" @ad-continue="dismissAd"
       >
         <template #empty>
           <p v-if="challenge.entries < 2">{{ $t('challenge.needTwo') }}</p>
           <p v-else>{{ $t('challenge.allVoted') }}</p>
-          <NuxtLink :to="tabLink('partecipa')">{{ $t('challenge.enterYours') }}</NuxtLink>
+          <NuxtLink :to="tabLink('join')">{{ $t('challenge.enterYours') }}</NuxtLink>
         </template>
       </DuelPanel>
 
-      <div v-else-if="tab === 'classifica'" class="challenge-page__scroll">
+      <div v-else-if="tab === 'leaderboard'" class="challenge-page__scroll">
         <div v-if="winner" class="challenge-page__winner">
           <picture><source v-for="s in photoSources(winner.image, 'v', '90px')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="winner.image" :alt="winner.name" class="challenge-page__winner-img"></picture>
           <div>

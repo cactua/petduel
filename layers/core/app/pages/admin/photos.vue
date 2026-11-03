@@ -8,7 +8,7 @@ definePageMeta({ middleware: 'admin' })
 useHead({ title: 'Foto · Admin' })
 
 const route = useRoute()
-const tab = computed(() => (route.query.vista === 'approvate' ? 'approved' : 'pending'))
+const tab = computed(() => (route.query.view === 'approved' ? 'approved' : 'pending'))
 const { data: queue, refresh, error: loadError } = await useFetch<ModerationItem[]>('/api/admin/photos', {
   query: { status: tab },
 })
@@ -75,7 +75,7 @@ const viewerPhotos = computed(() => (queue.value ?? []).map(q => ({ image: q.ima
       <h1 class="admin-page__title">Foto</h1>
       <nav class="segmented" aria-label="Quali foto">
         <NuxtLink :to="{ query: {} }" class="segmented__option photo-review__tab" :class="{ 'is-active': tab === 'pending' }">In attesa</NuxtLink>
-        <NuxtLink :to="{ query: { vista: 'approvate' } }" class="segmented__option photo-review__tab" :class="{ 'is-active': tab === 'approved' }">Approvate di recente</NuxtLink>
+        <NuxtLink :to="{ query: { view: 'approved' } }" class="segmented__option photo-review__tab" :class="{ 'is-active': tab === 'approved' }">Approvate di recente</NuxtLink>
       </nav>
     </header>
     <p class="admin-page__lead">
@@ -104,8 +104,8 @@ const viewerPhotos = computed(() => (queue.value ?? []).map(q => ({ image: q.ima
           <picture><source v-for="s in photoSources(item.image, 'v', '140px')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="item.image" :alt="`Foto di ${item.pet.name}`" class="photo-review__img"></picture>
         </button>
         <div class="photo-review__info">
-          <h2 class="photo-review__name"><NuxtLink :to="`/pet/${item.pet.id}`" class="photo-review__name-link">{{ item.pet.name }}</NuxtLink></h2>
-          <p class="photo-review__line"><template v-if="item.pet.species">{{ speciesName(item.pet.species, 'one') }} · </template><NuxtLink :to="`/admin/utenti?q=${item.owner}`" class="photo-review__link">@{{ item.owner }}</NuxtLink></p>
+          <h2 class="photo-review__name"><NuxtLink :to="entryUrl(item.pet.id)" class="photo-review__name-link">{{ item.pet.name }}</NuxtLink></h2>
+          <p class="photo-review__line"><template v-if="item.pet.species">{{ speciesName(item.pet.species, 'one') }} · </template><NuxtLink :to="`/admin/users?q=${item.owner}`" class="photo-review__link">@{{ item.owner }}</NuxtLink></p>
           <p class="photo-review__line photo-review__line--small">
             {{ timeAgo(item.createdAt) }} · {{ item.pet.approvedPhotos ? `${item.pet.approvedPhotos} foto già approvate` : 'pet nuovo' }}
           </p>

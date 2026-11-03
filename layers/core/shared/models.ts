@@ -14,7 +14,10 @@ const pick = (key: 'slug' | 'emoji') =>
 export const SPECIES_SLUG = pick('slug')
 export const SPECIES_EMOJI = pick('emoji')
 
-// "/classifica/gatti" -> "gatto"
+// Classifica di una categoria; i siti senza categorie (es. furry) hanno solo quella generale
+export const rankingPath = (s: Species | null | undefined) => (s && SPECIES_SLUG[s] ? `/leaderboard/${SPECIES_SLUG[s]}` : '/leaderboard')
+
+// "/leaderboard/cats" -> "gatto"
 export const speciesFromSlug = (slug: unknown) =>
   site.categories.find(c => c.slug === slug)?.id
 
@@ -27,15 +30,15 @@ export const speciesFilterSchema = z.enum(SPECIES as [Species, ...Species[]]).op
 
 // Classifica settimanale e mensile: si azzerano lunedì e il primo del mese (ora italiana)
 // "nuovi": tutti i cuori, ma solo dei partecipanti arrivati da NEW_TALENT_DAYS giorni
-export const PERIODS = ['settimana', 'mese', 'sempre', 'nuovi'] as const
+export const PERIODS = ['week', 'month', 'all', 'new'] as const
 export const NEW_TALENT_DAYS = 30
 export type Period = (typeof PERIODS)[number]
 
 export const PERIOD_LABEL: Record<Period, string> = {
-  settimana: 'Settimana',
-  mese: 'Mese',
-  sempre: 'Di sempre',
-  nuovi: 'Nuovi talenti',
+  week: 'Settimana',
+  month: 'Mese',
+  all: 'Di sempre',
+  new: 'Nuovi talenti',
 }
 
 // Peso del voto di chi non ha un account (il server lo applica, il sito lo racconta)
@@ -67,7 +70,7 @@ export const registerSchema = z.object({
   username: usernameSchema,
   password: passwordSchema,
 })
-/** Iscrizione dal sito: in più va accettato il regolamento della community (/regole) */
+/** Iscrizione dal sito: in più va accettato il regolamento della community (/rules) */
 export const signupSchema = registerSchema.extend({
   rules: z.boolean().refine(v => v, 'validation.rules'),
 })
@@ -234,11 +237,36 @@ export interface Profile {
   // Solo sul proprio profilo: il rifugio che si gestisce, in qualsiasi stato
   manage: ShelterManage | null
   // Chi si è segnato come artista (siti con askCredit), con le sue pagine social
-  artist: { links: string[] } | null
+  artist: { links: string[], commissions: CommissionStatus, commissionsUrl: string } | null
   // Immagini pubblicate da altri che lo indicano come artista, le più recenti
   artworks: Artwork[]
   // L'hai bloccato tu (solo per chi è collegato)
   blocked: boolean
+  // Lo segui tu (solo per chi è collegato)
+  following: boolean
+  // Quanti lo seguono: solo sul proprio profilo
+  followers: number | null
+}
+
+// Un lavoro nuovo di chi segui: caricato da lui o che lo indica come artista
+export interface FollowedWork {
+  photoId: number
+  petId: number
+  name: string
+  image: string
+  owner: string
+  credit: PhotoCredit | null
+  // Chi segui, tra proprietario e artista
+  via: string
+  createdAt: string
+}
+
+export interface FavoritePet {
+  id: number
+  name: string
+  image: string
+  owner: string
+  credit: PhotoCredit | null
 }
 
 export interface Artwork {
@@ -309,6 +337,8 @@ export interface VotedPet {
   owner: string
   credit: PhotoCredit | null
   votedAt: string
+  // Se l'ultimo voto era in una sfida
+  challenge: { slug: string, title: string } | null
 }
 
 // --- Complimenti ---
@@ -381,11 +411,20 @@ export const photoCreditSchema = z.object({
 
 /** Profilo da artista: chi carica un disegno lo può cercare e indicare come autore. Solo dove c'è askCredit */
 export const HAS_ARTISTS = !!site.askCredit
+
+// Pagina di un partecipante: /pet/<id> sul sito degli animali, /character/<id> sul furry (site.entryPath)
+export const ENTRY_PATH = site.entryPath ?? 'pet'
+export const entryUrl = (id: number | string) => `/${ENTRY_PATH}/${id}`
 export const MAX_ARTIST_LINKS = 6
+
+export const COMMISSION_STATUSES = ['', 'open', 'closed'] as const
+export type CommissionStatus = (typeof COMMISSION_STATUSES)[number]
 
 export const artistSettingsSchema = z.object({
   isArtist: z.boolean(),
   links: z.array(optionalUrl.refine(v => !!v, 'validation.website')).max(MAX_ARTIST_LINKS),
+  commissions: z.enum(COMMISSION_STATUSES).default(''),
+  commissionsUrl: optionalUrl,
 })
 export type ArtistSettings = z.infer<typeof artistSettingsSchema>
 

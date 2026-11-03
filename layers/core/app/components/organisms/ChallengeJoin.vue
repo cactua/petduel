@@ -118,7 +118,7 @@ async function submit() {
   <div class="challenge-join">
     <div v-if="!loggedIn" class="challenge-join__box">
       <p class="challenge-join__text">{{ $t('join.needAccount') }}</p>
-      <NuxtLink :to="{ path: '/accedi', query: { redirect: route.fullPath } }" class="btn btn--primary btn--lg">{{ $t('join.loginOrRegister') }}</NuxtLink>
+      <NuxtLink :to="{ path: '/login', query: { redirect: route.fullPath } }" class="btn btn--primary btn--lg">{{ $t('join.loginOrRegister') }}</NuxtLink>
     </div>
 
     <template v-else>
@@ -178,7 +178,7 @@ async function submit() {
         <p v-if="challenge.adoptionOnly" class="challenge-join__text">{{ $t('join.onlyShelters') }}</p>
         <p v-else-if="challenge.species" class="challenge-join__text">{{ $t('join.onlySpecies') }}</p>
         <p v-else class="challenge-join__text">{{ $t('join.uploadFirst') }}</p>
-        <NuxtLink to="/carica" class="btn btn--primary btn--lg">{{ $t('join.uploadPet') }}</NuxtLink>
+        <NuxtLink to="/upload" class="btn btn--primary btn--lg">{{ $t('join.uploadPet') }}</NuxtLink>
       </div>
       <p v-else-if="profile" class="challenge-join__done">{{ $t('join.allIn') }} 🍀</p>
     </template>

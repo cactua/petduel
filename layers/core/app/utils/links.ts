@@ -34,3 +34,6 @@ export function linkLabel(url: string) {
   const known = Object.keys(KNOWN_SITES).find(k => host === k || host.endsWith(`.${k}`))
   return known ? KNOWN_SITES[known]! : host
 }
+
+// Pagina di un partecipante (/pet/<id> o come la chiama il sito): disponibile in tutte le pagine e componenti
+export { entryUrl } from '#shared/models'

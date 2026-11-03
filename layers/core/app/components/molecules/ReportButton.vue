@@ -19,7 +19,7 @@ const error = ref('')
 const id = useId()
 
 function open() {
-  if (!loggedIn.value) return navigateTo({ path: '/accedi', query: { redirect: route.fullPath } })
+  if (!loggedIn.value) return navigateTo({ path: '/login', query: { redirect: route.fullPath } })
   reason.value = props.preset ?? null
   note.value = ''
   sent.value = false
@@ -51,11 +51,14 @@ async function send() {
 <template>
   <span class="report-button">
     <button type="button" class="report-button__open" @click.stop="open">⚑ {{ label ?? $t('report.open') }}</button>
-    <dialog ref="dialog" class="report-button__sheet" :aria-labelledby="`${id}-title`" @click.self="dialog?.close()" @pointerdown.stop @pointerup.stop>
+    <dialog ref="dialog" class="report-button__sheet" :aria-labelledby="`${id}-title`" @click.self="dialog?.close()"
+      @pointerdown.stop @pointerup.stop>
       <form class="report-button__inner" @submit.prevent="send">
         <header class="report-button__head">
-          <h2 :id="`${id}-title`" class="report-button__title">{{ photoId ? $t('report.titlePhoto') : $t('report.titleUser') }}</h2>
-          <button type="button" class="report-button__close" :aria-label="$t('common.close')" @click="dialog?.close()">✕</button>
+          <h2 :id="`${id}-title`" class="report-button__title">{{ photoId ? $t('report.titlePhoto') :
+            $t('report.titleUser') }}</h2>
+          <button type="button" class="report-button__close" :aria-label="$t('common.close')"
+            @click="dialog?.close()">✕</button>
         </header>
         <template v-if="!sent">
           <fieldset class="report-button__reasons">
@@ -66,12 +69,17 @@ async function send() {
             </label>
           </fieldset>
           <div class="field">
-            <label :for="`${id}-note`" class="label">{{ $t('report.note') }} <small>({{ $t('common.optional') }})</small></label>
-            <textarea :id="`${id}-note`" v-model="note" maxlength="300" rows="3" class="input" :placeholder="$t('report.notePlaceholder')" />
+            <label :for="`${id}-note`" class="label">{{ $t('report.note') }} <small>({{ $t('common.optional')
+                }})</small></label>
+            <textarea :id="`${id}-note`" v-model="note" maxlength="300" rows="3" class="input"
+              :placeholder="$t('report.notePlaceholder')" />
           </div>
-          <p class="report-button__hint">{{ $t('report.hint') }} <NuxtLink to="/regole" target="_blank">{{ $t('rules.link') }}</NuxtLink></p>
+          <p class="report-button__hint">{{ $t('report.hint') }} <NuxtLink to="/rules" target="_blank">{{
+            $t('rules.link') }}</NuxtLink>
+          </p>
           <p v-if="error" class="error" role="alert">{{ error }}</p>
-          <button type="submit" class="btn btn--primary" :disabled="!reason || sending">{{ sending ? $t('auth.wait') : $t('report.send') }}</button>
+          <button type="submit" class="btn btn--primary" :disabled="!reason || sending">{{ sending ? $t('auth.wait') :
+            $t('report.send') }}</button>
         </template>
         <template v-else>
           <p class="report-button__thanks" role="status">💜 {{ $t('report.thanks') }}</p>
@@ -95,7 +103,11 @@ async function send() {
     font-weight: 800;
     cursor: pointer;
 
-    &:hover, &:focus-visible { opacity: 1; text-decoration: underline; }
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+      text-decoration: underline;
+    }
   }
 
   &__sheet {
@@ -111,23 +123,47 @@ async function send() {
     border-radius: 24px;
     overflow-y: auto;
 
-    &::backdrop { background: rgba(20, 10, 5, .55); }
+    &::backdrop {
+      background: rgba(20, 10, 5, .55);
+    }
 
-    @include mq-down(sm) { margin: auto 0 0; width: 100vw; border-radius: 24px 24px 0 0; }
+    @include mq-down(sm) {
+      margin: auto 0 0;
+      width: 100vw;
+      border-radius: 24px 24px 0 0;
+    }
   }
 
   &__inner {
     @include stack($space-5);
     padding: 16px;
 
-    @include mq-down(sm) { padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+    @include mq-down(sm) {
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
   }
 
-  &__head { display: flex; align-items: center; gap: $space-3; }
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
 
-  &__title { font-size: 20px; margin-right: auto; }
+  &__title {
+    font-size: 20px;
+    margin-right: auto;
+  }
 
-  &__close { border: 0; background: var(--bg); border-radius: $radius-pill; width: 36px; height: 36px; cursor: pointer; font-size: 16px; color: var(--ink); }
+  &__close {
+    border: 0;
+    background: var(--bg);
+    border-radius: $radius-pill;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--ink);
+  }
 
   &__reasons {
     @include stack($space-2);
@@ -147,13 +183,28 @@ async function send() {
     font-weight: 700;
     cursor: pointer;
 
-    &.is-active { border-color: var(--action); background: var(--coral-soft); }
+    &.is-active {
+      border-color: var(--action);
+      background: var(--coral-soft);
+    }
   }
 
-  &__radio { accent-color: var(--action); }
+  &__radio {
+    accent-color: var(--action);
+  }
 
-  &__hint { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+  &__hint {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.45;
+    white-space: break-spaces
+  }
 
-  &__thanks { margin: 0; font-weight: 800; line-height: 1.5; }
+  &__thanks {
+    margin: 0;
+    font-weight: 800;
+    line-height: 1.5;
+  }
 }
 </style>
