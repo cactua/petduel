@@ -7,7 +7,7 @@ const paramsSchema = z.object({ id: z.coerce.number().int().positive() })
 
 export default defineEventHandler(async (event) => {
   const { id } = await getValidatedRouterParams(event, paramsSchema.parse)
-  const { user } = await getUserSession(event)
+  const user = await optionalUser(event)
 
   const db = await useDb()
   const [row] = await db.select({ ownerId: pets.ownerId, species: pets.species, elo: pets.elo, wins: pets.wins, hidden: pets.hideFromRankings }).from(pets).where(eq(pets.id, id))

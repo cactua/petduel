@@ -3,16 +3,22 @@ import type { H3Event } from 'h3'
 import { eq, sql } from 'drizzle-orm'
 import { z } from 'zod'
 import { ANON_VOTE_WEIGHT } from '#shared/models'
-import { BURST_WINDOW_MS, accountVoteWeight, burstHits, isBurst } from '#shared/voteRules'
+import { BURST_WINDOW_MS, accountVoteWeight, burstWindow, isBurst } from '#shared/voteRules'
 import { users, voteAlerts } from '../db/schema'
 import { useDb } from './db'
+import { hitLimit, networkOf } from './rateLimit'
 
 const RECENT_SIZE = 8
 const DUEL_TTL_MS = 10 * 60 * 1000
 
 // Chi ha un account vota come "u:<id>"; chi non ce l'ha riceve un id anonimo nel cookie cifrato
 export async function getVoter(event: H3Event) {
-  const session = await getUserSession(event)
+  let session = await getUserSession(event)
+  // Un account sospeso o una sessione chiusa da un altro dispositivo non votano più come utente
+  if (session.user && !await loadSessionUser(session.user)) {
+    await clearUserSession(event)
+    session = await getUserSession(event)
+  }
   const voterId = session.user ? `u:${session.user.id}` : session.voterId
   if (voterId && voterId === session.voterId) {
     return { voterId, recent: session.recent ?? [], userId: session.user?.id }
@@ -63,58 +69,36 @@ const voteBodySchema = z.object({
 // e, oltre un tetto giornaliero per IP, restano registrati ma non spostano più l'Elo
 const ANON_DAILY_CAP = 100
 
-// In memoria: si azzera al riavvio, basta finché gira una sola istanza
-const anonVotesByIp = new Map<string, number>()
-let anonVotesDay = ''
+const DAY_MS = 86_400_000
 
-function anonWeight(event: H3Event) {
-  newDay()
-  const ip = getRequestIP(event, { xForwardedFor: true }) ?? 'unknown'
-  const count = (anonVotesByIp.get(ip) ?? 0) + 1
-  anonVotesByIp.set(ip, count)
+// Contatori nel database (server/utils/rateLimit.ts): valgono anche dopo un riavvio e con più server
+async function anonWeight(event: H3Event) {
+  const count = await hitLimit(`vote:anon:${networkOf(event)}:${today()}`, DAY_MS)
   return count > ANON_DAILY_CAP ? 0 : ANON_VOTE_WEIGHT
 }
 
 // Voti di oggi per account: tetto giornaliero e peso ridotto per gli account nuovi (shared/voteRules.ts)
-const userVotes = new Map<number, number>()
-
 async function userWeight(userId: number) {
-  newDay()
-  const count = (userVotes.get(userId) ?? 0) + 1
-  userVotes.set(userId, count)
+  const count = await hitLimit(`vote:user:${userId}:${today()}`, DAY_MS)
   const db = await useDb()
   const [user] = await db.select({ createdAt: users.createdAt }).from(users).where(eq(users.id, userId))
   return accountVoteWeight(count, user?.createdAt ?? null)
 }
 
-function newDay() {
-  const today = new Date().toISOString().slice(0, 10)
-  if (today === anonVotesDay) return
-  anonVotesByIp.clear()
-  userVotes.clear()
-  anonVotesDay = today
-}
+const today = () => new Date().toISOString().slice(0, 10)
 
 /**
  * Raffiche: tanti voti per lo stesso partecipante dalla stessa rete in un'ora (cookie cancellati, più account).
  * Oltre la soglia quei voti non contano più e gli admin trovano un avviso tra le segnalazioni.
  * L'IP non si salva: solo un'impronta cifrata, che basta a distinguere le reti
  */
-const bursts = new Map<string, number[]>()
-
 async function burstGuard(event: H3Event, scope: string, winnerId: number) {
-  const ip = getRequestIP(event, { xForwardedFor: true }) ?? 'unknown'
-  const network = sign(`ip:${ip}`).slice(0, 16)
-  const key = `${network}|${scope}|${winnerId}`
-  const now = Date.now()
-  const hits = burstHits(bursts.get(key) ?? [], now)
-  bursts.set(key, hits)
-  // Pulizia ogni tanto, perché la mappa non cresca all'infinito
-  if (bursts.size > 50_000) for (const [k, v] of bursts) if (now - v.at(-1)! > BURST_WINDOW_MS) bursts.delete(k)
+  const network = networkOf(event)
+  const hits = await hitLimit(`vote:burst:${network}:${scope}:${winnerId}:${burstWindow()}`, BURST_WINDOW_MS)
   if (!isBurst(hits)) return false
   const db = await useDb()
-  await db.insert(voteAlerts).values({ petId: winnerId, scope, network, day: new Date().toISOString().slice(0, 10), hits: hits.length })
-    .onConflictDoUpdate({ target: [voteAlerts.petId, voteAlerts.network, voteAlerts.day], set: { hits: sql`greatest(${voteAlerts.hits}, ${hits.length})` } })
+  await db.insert(voteAlerts).values({ petId: winnerId, scope, network, day: today(), hits })
+    .onConflictDoUpdate({ target: [voteAlerts.petId, voteAlerts.network, voteAlerts.day], set: { hits: sql`greatest(${voteAlerts.hits}, ${hits})` } })
   return true
 }
 
@@ -131,7 +115,7 @@ export async function readVote(event: H3Event, scope: string) {
     throw createError({ statusCode: 429, statusMessage: 'errors.voteTooFast' })
   }
   const loserId = duel.p[0] === winnerId ? duel.p[1] : duel.p[0]
-  const weight = userId ? await userWeight(userId) : anonWeight(event)
+  const weight = userId ? await userWeight(userId) : await anonWeight(event)
   const burst = await burstGuard(event, scope, winnerId)
   return { voterId, winnerId, loserId, weight: burst ? 0 : weight }
 }

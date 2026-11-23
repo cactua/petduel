@@ -11,7 +11,7 @@ export default defineEventHandler(async (event): Promise<ChallengeDetail> => {
 
   const challenge = await getChallenge(parsed.data.slug)
   const [summary] = await toSummaries([challenge])
-  const { user } = await getUserSession(event)
+  const user = await optionalUser(event)
 
   // Le proprie partecipazioni si vedono anche se la foto è ancora in attesa
   let myEntries: ChallengeDetail['myEntries'] = []

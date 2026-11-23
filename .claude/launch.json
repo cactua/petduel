@@ -4,14 +4,29 @@
     {
       "name": "petduel",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000
     },
     {
       "name": "furry",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev:furry"],
+      "runtimeArgs": [
+        "run",
+        "dev:furry"
+      ],
       "port": 3001
+    },
+    {
+      "name": "moto",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev:moto"
+      ],
+      "port": 3002
     },
     {
       "name": "petduel-esistente",

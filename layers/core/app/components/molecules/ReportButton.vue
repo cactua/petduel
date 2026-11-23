@@ -5,7 +5,8 @@ import { PHOTO_REPORT_REASONS, USER_REPORT_REASONS, type ReportInput, type Repor
  * Molecola: "Segnala" un'immagine pubblicata (photoId) o un profilo (username) ai moderatori.
  * Apre un foglio con il motivo e una nota facoltativa; chi non è collegato viene mandato ad accedere
  */
-const props = defineProps<{ photoId?: number, username?: string, preset?: ReportReason, label?: string }>()
+// icon: solo la bandierina tonda, da appoggiare su una foto (il testo resta per i lettori di schermo)
+const props = defineProps<{ photoId?: number, username?: string, preset?: ReportReason, label?: string, icon?: boolean }>()
 
 const { loggedIn } = useUserSession()
 const route = useRoute()
@@ -50,7 +51,8 @@ async function send() {
 
 <template>
   <span class="report-button">
-    <button type="button" class="report-button__open" @click.stop="open">⚑ {{ label ?? $t('report.open') }}</button>
+    <button v-if="icon" type="button" class="report-button__open report-button__open--icon" :aria-label="label ?? $t('report.open')" :title="label ?? $t('report.open')" @click.stop="open">⚑</button>
+    <button v-else type="button" class="report-button__open" @click.stop="open">⚑ {{ label ?? $t('report.open') }}</button>
     <dialog ref="dialog" class="report-button__sheet" :aria-labelledby="`${id}-title`" @click.self="dialog?.close()"
       @pointerdown.stop @pointerup.stop>
       <form class="report-button__inner" @submit.prevent="send">
@@ -102,6 +104,21 @@ async function send() {
     font-size: 13px;
     font-weight: 800;
     cursor: pointer;
+
+    // Sulla foto: tonda e scura come la "i" dei crediti, leggibile su qualunque immagine
+    &--icon {
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(30, 16, 10, .45);
+      color: #fff;
+      opacity: 1;
+      font-size: 12px;
+      line-height: 1;
+    }
 
     &:hover,
     &:focus-visible {

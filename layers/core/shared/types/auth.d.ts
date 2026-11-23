@@ -5,6 +5,9 @@ declare module '#auth-utils' {
     role: 'user' | 'admin'
     // Iscritto prima che ci fossero le regole: gliele si chiede una volta
     needsRules?: boolean
+    // Versione delle sessioni dell'account (users.session_version): se nel database è più alta, questa non vale più.
+    // Assente nelle sessioni aperte prima che esistesse: vale 0
+    sessionVersion?: number
   }
 
   interface UserSession {

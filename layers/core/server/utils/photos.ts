@@ -63,6 +63,15 @@ async function writeVariants(image: string, source: Source, crops: Crops) {
 }
 
 /**
+ * Foto di esempio con i ritagli già decisi (scripts/commons/import.mjs): stesse varianti di un upload.
+ * Le foto di esempio senza ritagli restano la sola foto di base, e le varianti si ricavano quando servono (ensureVariant)
+ */
+export async function writeSeedImage(image: string, data: Buffer, crops: Crops) {
+  const source = await sharp(data).rotate().raw().toBuffer({ resolveWithObject: true })
+  await writeVariants(image, source, crops)
+}
+
+/**
  * Legge un upload multipart: restituisce i campi testuali e salva la foto con i ritagli scelti
  * (campo "crops", JSON) in tutte le varianti. La ricodifica scarta qualsiasi contenuto nascosto
  * nel file originale (EXIF, GPS, payload) e rifiuta ciò che non è un'immagine. Senza ritagli
@@ -77,6 +86,7 @@ export async function readPhotoUpload(event: H3Event) {
   const photo = parts.find(p => p.name === 'photo' && p.filename)
   if (!photo) throw createError({ statusCode: 400, statusMessage: 'errors.photoMissing' })
   if (photo.data.length > MAX_PHOTO_BYTES) throw createError({ statusCode: 413, statusMessage: 'errors.photoTooBig' })
+  assertAllowedImage(photo.data)
 
   let crops: Crops | null = null
   if (fields.crops) {
@@ -103,7 +113,7 @@ export async function readPhotoUpload(event: H3Event) {
       const [artist] = await db.select({ id: users.id, username: users.username }).from(users)
         .where(and(eq(users.username, parsed.data.artist.toLowerCase()), eq(users.isArtist, true), sql`${users.bannedAt} is null`))
       // Chi ha bloccato chi carica risulta "non trovato", come nella ricerca
-      const { user } = await getUserSession(event)
+      const user = await optionalUser(event)
       if (!artist || (user && await isBlockedBetween(artist.id, user.id))) throw createError({ statusCode: 400, statusMessage: 'errors.artistNotFound' })
       // Nome e link copiati qui: tutte le liste degli autori li leggono già da queste due colonne
       credit = { credit: artist.username, creditUrl: `/u/${artist.username}`, artistId: artist.id }

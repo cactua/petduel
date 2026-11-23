@@ -154,7 +154,9 @@
     "artistNotFound": "Diese*r Künstler*in ist nicht registriert",
     "tooManyReports": "Du hast heute viele Meldungen gesendet: versuch es morgen wieder",
     "reportOwn": "Du kannst deine eigenen Inhalte nicht melden",
-    "blocked": "Bei dieser Person nicht möglich"
+    "blocked": "Bei dieser Person nicht möglich",
+    "tooManyLogins": "Zu viele falsche Versuche: versuch es in 15 Minuten wieder",
+    "tooManySignups": "Aus diesem Netzwerk wurden heute viele Konten erstellt: versuch es morgen wieder"
   },
   "auth": {
     "registerTitle": "Erstelle dein Konto",
@@ -236,6 +238,7 @@
     "pick": "Tippe, um ein Foto auszuwählen",
     "pickHelp": "oder füge es ein (Strg+V) oder zieh es hierher. Dann wähle den Zuschnitt",
     "cityPlaceholder": "Berlin",
+    "breedPlaceholder": "Beagle",
     "rules": "Nur eigene Bilder oder solche, die du veröffentlichen darfst. Keine erkennbaren Personen, Kennzeichen oder Adressen.",
     "uploading": "Lädt hoch…",
     "submit": "Zur Freigabe senden",
@@ -369,8 +372,8 @@
     "species": "Rangliste {species}",
     "general": "Gesamtrangliste",
     "this": {
-      "settimana": "diese Woche",
-      "mese": "diesen Monat"
+      "week": "diese Woche",
+      "month": "diesen Monat"
     },
     "period": "Zeitraum",
     "periods": {
@@ -395,7 +398,10 @@
     "cityTitle": "{title} in {city}",
     "celebrate": "{name} ist Platz {place} {among}: feier es!",
     "celebrateShare": "Karte teilen",
-    "newNote": "Neue Talente: nur wer in den letzten {n} Tagen dazugekommen ist, mit allen erhaltenen Herzen."
+    "newNote": "Neue Talente: nur wer in den letzten {n} Tagen dazugekommen ist, mit allen erhaltenen Herzen.",
+    "freeSpot": "Freier Platz",
+    "climbTitle": "Willst du aufs Podest?",
+    "climbText": "Jede Stimme in den Duellen ist ein Herz. Lade ein Foto hoch und sammle Stimmen: Die drei mit den meisten Herzen landen hier."
   },
   "menu": {
     "open": "Kontomenü",
@@ -443,7 +449,16 @@
     "deleteButton": "Konto löschen",
     "passwordLabel": "Zur Sicherheit: Gib dein Passwort ein",
     "understood": "Ich verstehe: Meine Teilnehmer und ihre Bilder verschwinden für immer",
-    "deleteConfirm": "Endgültig löschen"
+    "deleteConfirm": "Endgültig löschen",
+    "securityTitle": "Sicherheit",
+    "securityText": "Wenn du glaubst, dass jemand dein Passwort kennt, oder du ein fremdes Gerät benutzt hast, ändere dein Passwort oder melde dich auf deinen anderen Geräten ab.",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort",
+    "newPasswordHint": "Mindestens 10 Zeichen. Deine anderen Geräte werden abgemeldet.",
+    "changePassword": "Passwort ändern",
+    "signOutOthers": "Auf anderen Geräten abmelden",
+    "passwordChanged": "Passwort geändert. Deine anderen Geräte wurden abgemeldet.",
+    "signedOutOthers": "Erledigt: Du bist jetzt nur noch hier angemeldet."
   },
   "badges": {
     "title": "Erfolge",

@@ -18,6 +18,8 @@ export const users = pgTable('users', {
   // Solo artisti: commissioni aperte o chiuse (vuoto = non lo dice) e dove chiederle
   commissions: text('commissions').$type<CommissionStatus>().notNull().default(''),
   commissionsUrl: text('commissions_url').notNull().default(''),
+  // Cresce quando si esce da tutti i dispositivi o si cambia password: le sessioni con un numero vecchio non valgono più
+  sessionVersion: integer('session_version').notNull().default(0),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
@@ -207,6 +209,14 @@ export const favorites = pgTable('favorites', {
   petId: integer('pet_id').notNull().references(() => pets.id, { onDelete: 'cascade' }),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 }, t => [unique().on(t.userId, t.petId)])
+
+// Contatori dei limiti anti-spam (tentativi di accesso, voti per IP, raffiche): nel database così valgono
+// anche dopo un riavvio e con più server. Una riga per chiave, che riparte da zero quando scade
+export const rateLimits = pgTable('rate_limits', {
+  key: text('key').primaryKey(),
+  count: integer('count').notNull().default(0),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+})
 
 // Complimenti già pronti a un partecipante: li vedono solo il proprietario e l'artista indicato
 export const compliments = pgTable('compliments', {
@@ -473,6 +483,13 @@ CREATE TABLE IF NOT EXISTS favorites (
 );
 ALTER TABLE users ADD COLUMN IF NOT EXISTS commissions text NOT NULL DEFAULT '';
 ALTER TABLE users ADD COLUMN IF NOT EXISTS commissions_url text NOT NULL DEFAULT '';
+CREATE TABLE IF NOT EXISTS rate_limits (
+  key text PRIMARY KEY,
+  count integer NOT NULL DEFAULT 0,
+  expires_at timestamptz NOT NULL
+);
+CREATE INDEX IF NOT EXISTS rate_limits_expires ON rate_limits (expires_at);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS session_version integer NOT NULL DEFAULT 0;
 CREATE TABLE IF NOT EXISTS compliments (
   id serial PRIMARY KEY,
   pet_id integer NOT NULL REFERENCES pets (id) ON DELETE CASCADE,

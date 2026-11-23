@@ -68,6 +68,7 @@ export async function readAdUpload(event: H3Event) {
   const file = parts.find(p => p.name === 'image' && p.filename)
   if (!file) return { fields, source: null }
   if (file.data.length > MAX_AD_BYTES) throw createError({ statusCode: 413, statusMessage: 'L\'immagine supera i 5 MB' })
+  if (!isAllowedImage(file.data)) throw createError({ statusCode: 400, statusMessage: 'Formato non accettato: usa JPEG, PNG o WebP' })
   let buf: Buffer
   try {
     buf = await sharp(file.data, { limitInputPixels: 50_000_000, failOn: 'error' })

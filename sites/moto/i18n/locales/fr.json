@@ -1,0 +1,231 @@
+{
+  "challenge": {
+    "enterYours": "Inscris ta moto"
+  },
+  "notif": {
+    "weeklyHearts": "La semaine dernière, tes motos ont reçu {n} cœur. La plus aimée : {name} | La semaine dernière, tes motos ont reçu {n} cœurs. La plus aimée : {name}"
+  },
+  "validation": {
+    "petName": "Donne un nom à ta moto"
+  },
+  "errors": {
+    "petHidden": "Tu as choisi de garder cette moto hors des classements et des défis",
+    "petNotFound": "Moto introuvable",
+    "wrongSpecies": "Ce défi est pour un autre type de moto",
+    "alreadyEntered": "Cette moto participe déjà au défi",
+    "pickPet": "Choisis la moto"
+  },
+  "auth": {
+    "registerLead": "Il te sert à publier tes motos et à avoir leur galerie.",
+    "loginLead": "Connecte-toi pour publier tes motos et voir ton profil.",
+    "usernamePlaceholder": "ex. genou_par_terre"
+  },
+  "share": {
+    "text": "Regarde {name} sur @:{'site.name'} : quelle moto préfères-tu ?"
+  },
+  "duel": {
+    "question": "Quelle moto préfères-tu ?",
+    "uploadYours": "Publie ta moto",
+    "hint": "Fais glisser ta préférée {over} pour la faire gagner",
+    "hintOver": "sur l'autre"
+  },
+  "upload": {
+    "forWhich": "Pour quelle moto ?",
+    "newPet": "Une nouvelle moto",
+    "rules": "Uniquement tes propres photos où la moto se voit bien. Cache les plaques ; pas de personnes reconnaissables ni d'adresses.",
+    "stepDetails": "La moto",
+    "namePlaceholder": "La Rouge",
+    "breedPlaceholder": "Kawasaki Z900"
+  },
+  "join": {
+    "needAccount": "Pour inscrire ta moto, il te faut un compte.",
+    "title": "Inscrire une moto",
+    "pet": "Moto",
+    "onlySpecies": "Ce défi est réservé à un type de moto et tu n'en as pas d'adaptée.",
+    "uploadFirst": "Publie d'abord ta moto, puis reviens ici pour l'inscrire.",
+    "uploadPet": "Publier une moto",
+    "allIn": "Toutes tes motos adaptées sont déjà en compétition. Bonne chance !",
+    "yourEntries": "Tes motos dans le défi"
+  },
+  "pet": {
+    "species": "Type",
+    "breed": "Marque et modèle",
+    "delete": "Supprimer la moto",
+    "ogDescription": "{name} est sur @:{'site.name'} : quelle moto préfères-tu ? Vote toi aussi !",
+    "notFound": "Moto introuvable."
+  },
+  "profile": {
+    "pets": "{n} motos",
+    "noPetsMine": "Tu n'as encore publié aucune moto.",
+    "noPets": "Aucune moto publique pour l'instant.",
+    "uploadFirst": "Publie ta première moto",
+    "newPet": "Nouvelle moto",
+    "statPets": "Motos",
+    "petsTitle": "Motos · {n}",
+    "filter": "Afficher les motos",
+    "jump": "Aller à une moto",
+    "groups": {
+      "other": "Autres motos"
+    },
+    "addGuestHint": "Publie les photos d'une nouvelle moto"
+  },
+  "challenges": {
+    "lead": "Un nouveau thème chaque lundi. Inscris ta moto avec la bonne photo, vote pour les autres et remporte le trophée."
+  },
+  "credits": {
+    "lead": "Les motos d'exemple utilisent des photos sous licence libre. Merci à celles et ceux qui les ont prises et partagées."
+  },
+  "ranking": {
+    "empty": "Aucune moto dans ce classement pour l'instant.",
+    "yourPets": "Tes motos",
+    "bySpecies": "Top {n} par type",
+    "yourPetsNote": "Hors du top {n}, les motos n'apparaissent pas dans le classement : toi seul les vois.",
+    "climbText": "Chaque vote dans les duels vaut un cœur. Publie ta moto et récolte des votes : les trois qui ont le plus de cœurs arrivent ici."
+  },
+  "menu": {
+    "guest": "Connecte-toi pour publier tes motos, participer aux défis et recevoir des notifications."
+  },
+  "account": {
+    "exportText": "Télécharge un fichier avec tout ce que @:{'site.name'} sait de toi : compte, motos, photos, votes donnés et notifications.",
+    "deleteText": "Nous supprimons immédiatement profil, motos, photos et notifications. Les votes que tu as donnés restent, mais anonymes. C'est irréversible.",
+    "understood": "J'ai compris : mes motos et leurs photos disparaîtront pour toujours"
+  },
+  "badges": {
+    "loved": {
+      "name": "Aimée"
+    },
+    "adored": {
+      "name": "Adorée"
+    },
+    "petOfWeek": {
+      "name": "Moto de la semaine",
+      "desc": "A terminé une semaine à la première place de son type"
+    },
+    "photogenic": {
+      "name": "Photogénique"
+    }
+  },
+  "species": {
+    "filter": "Filtrer par type",
+    "all": "Toutes",
+    "sportiva": {
+      "one": "Sportive",
+      "many": "Sportives",
+      "among": "parmi les sportives"
+    },
+    "naked": {
+      "one": "Roadster",
+      "many": "Roadsters",
+      "among": "parmi les roadsters"
+    },
+    "touring": {
+      "one": "Routière",
+      "many": "Routières",
+      "among": "parmi les routières"
+    },
+    "custom": {
+      "one": "Custom",
+      "many": "Customs",
+      "among": "parmi les customs"
+    },
+    "enduro": {
+      "one": "Tout-terrain",
+      "many": "Tout-terrain",
+      "among": "parmi les tout-terrain"
+    },
+    "scooter": {
+      "one": "Scooter",
+      "many": "Scooters",
+      "among": "parmi les scooters"
+    },
+    "epoca": {
+      "one": "Ancienne",
+      "many": "Anciennes",
+      "among": "parmi les anciennes"
+    },
+    "altra": {
+      "one": "Autre",
+      "many": "Autres",
+      "among": "parmi les autres motos"
+    }
+  },
+  "themes": {
+    "golden-hour": {
+      "title": "Au coucher du soleil",
+      "description": "La moto dans la lumière chaude du soir."
+    },
+    "mountain-pass": {
+      "title": "En haut du col",
+      "description": "Lacets, virages et panoramas : la moto en montagne."
+    },
+    "track-day": {
+      "title": "Sur le circuit",
+      "description": "Vibreurs, angle et chrono : la sportive dans son élément."
+    },
+    "garage": {
+      "title": "À l'atelier",
+      "description": "Au garage, sur la béquille ou entourée d'outils."
+    },
+    "mud": {
+      "title": "Couverte de boue",
+      "description": "Après une journée en tout-terrain, sans lavage."
+    },
+    "sea-view": {
+      "title": "Vue sur la mer",
+      "description": "Bords de mer, plages et routes côtières."
+    },
+    "night-lights": {
+      "title": "Lumières de la nuit",
+      "description": "Phares allumés, enseignes et reflets sur l'asphalte."
+    },
+    "shiny": {
+      "title": "Brillante comme neuve",
+      "description": "Tout juste lavée et lustrée : des chromes qui brillent."
+    },
+    "road-trip": {
+      "title": "Prête pour le voyage",
+      "description": "Sacoches, top-case et des kilomètres devant soi."
+    },
+    "classic": {
+      "title": "Charme d'antan",
+      "description": "Restaurée ou d'origine, avec toutes ses années."
+    },
+    "details": {
+      "title": "Le bon détail",
+      "description": "Un gros plan : réservoir, compteurs, échappement ou le détail qui la rend unique."
+    },
+    "city-ride": {
+      "title": "Balade en ville",
+      "description": "Ruelles, places et feux rouges. Pense à cacher la plaque."
+    }
+  },
+  "reasons": [
+    "On ne voit pas de moto",
+    "Contenu inapproprié",
+    "Photo de mauvaise qualité",
+    "Photo qui n'est pas la tienne ou protégée par le droit d'auteur",
+    "Plaque ou données personnelles visibles",
+    "Photo générée ou retouchée par intelligence artificielle",
+    "Hors sujet pour le défi"
+  ],
+  "reasonTips": {
+    "0": "Essaie avec une photo où toute la moto se voit bien.",
+    "4": "Cache la plaque (et les visages ou adresses) puis publie-la à nouveau."
+  },
+  "compliments": {
+    "love": "Magnifique",
+    "expression": "Quel caractère"
+  },
+  "block": {
+    "active": "Tu as bloqué cet utilisateur : tu ne verras plus ses motos dans les duels et il ne pourra ni t'indiquer ni te faire de compliments."
+  },
+  "voted": {
+    "lead": "Les motos que tu as choisies lors des derniers duels : ouvre le profil de la personne qui les a publiées pour voir ses autres motos."
+  },
+  "follow": {
+    "lead": "Les nouveautés des personnes que tu suis : leurs nouvelles motos et les photos tout juste publiées."
+  },
+  "favorites": {
+    "empty": "Aucun favori. Ouvre la page d'une moto et touche « Enregistrer »."
+  }
+}

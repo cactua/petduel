@@ -154,7 +154,9 @@
     "artistNotFound": "This artist isn't registered",
     "tooManyReports": "You've sent a lot of reports today: try again tomorrow",
     "reportOwn": "You can't report your own things",
-    "blocked": "Not possible for this user"
+    "blocked": "Not possible for this user",
+    "tooManyLogins": "Too many wrong attempts: try again in 15 minutes",
+    "tooManySignups": "Many accounts were created from this network today: try again tomorrow"
   },
   "auth": {
     "registerTitle": "Create your account",
@@ -236,6 +238,7 @@
     "pick": "Tap to choose a photo",
     "pickHelp": "or paste it (Ctrl+V) or drag it here. Then choose how to crop it",
     "cityPlaceholder": "London",
+    "breedPlaceholder": "Beagle",
     "rules": "Only images that are yours or that you have the right to publish. No recognisable people, licence plates or addresses.",
     "uploading": "Uploading…",
     "submit": "Send for approval",
@@ -369,8 +372,8 @@
     "species": "{species} leaderboard",
     "general": "Overall leaderboard",
     "this": {
-      "settimana": "this week",
-      "mese": "this month"
+      "week": "this week",
+      "month": "this month"
     },
     "period": "Period",
     "periods": {
@@ -395,7 +398,10 @@
     "cityTitle": "{title} in {city}",
     "celebrate": "{name} is #{place} {among}: celebrate!",
     "celebrateShare": "Share the card",
-    "newNote": "New talent: only those who arrived in the last {n} days, with all the hearts they got."
+    "newNote": "New talent: only those who arrived in the last {n} days, with all the hearts they got.",
+    "freeSpot": "Free spot",
+    "climbTitle": "Want a spot on the podium?",
+    "climbText": "Every duel vote is one heart. Upload a photo and get votes: the three with the most hearts end up here."
   },
   "menu": {
     "open": "Account menu",
@@ -443,7 +449,16 @@
     "deleteButton": "Delete account",
     "passwordLabel": "For safety, type your password",
     "understood": "I understand: my entries and their images will be gone forever",
-    "deleteConfirm": "Delete forever"
+    "deleteConfirm": "Delete forever",
+    "securityTitle": "Security",
+    "securityText": "If you think someone has your password or you used a device that isn't yours, change your password or sign out of your other devices.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "newPasswordHint": "At least 10 characters. Your other devices will be signed out.",
+    "changePassword": "Change password",
+    "signOutOthers": "Sign out of other devices",
+    "passwordChanged": "Password changed. Your other devices have been signed out.",
+    "signedOutOthers": "Done: you're only signed in here now."
   },
   "badges": {
     "title": "Achievements",

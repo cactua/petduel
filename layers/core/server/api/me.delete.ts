@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   const db = await useDb()
   const [user] = await db.select().from(users).where(eq(users.id, session.id))
   if (!user) throw createError({ statusCode: 404, statusMessage: 'errors.userNotFound' })
-  if (!await verifyPassword(user.passwordHash, password)) throw createError({ statusCode: 403, statusMessage: 'errors.wrongPassword' })
+  await confirmPassword(user, password)
   // Il sito non può restare senza amministratori
   if (user.role === 'admin') {
     const [admins] = await db.select({ n: count() }).from(users).where(and(eq(users.role, 'admin')))

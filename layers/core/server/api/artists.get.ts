@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   if (!q) return []
   const db = await useDb()
   // Chi ti ha bloccato non si trova
-  const { user } = await getUserSession(event)
+  const user = await optionalUser(event)
   const rows = await db.select({ username: users.username }).from(users)
     .where(and(
       eq(users.isArtist, true), isNull(users.bannedAt),

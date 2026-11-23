@@ -154,7 +154,9 @@
     "artistNotFound": "Questo artista non è registrato",
     "tooManyReports": "Hai fatto molte segnalazioni oggi: riprova domani",
     "reportOwn": "Non puoi segnalare le tue cose",
-    "blocked": "Non è possibile per questo utente"
+    "blocked": "Non è possibile per questo utente",
+    "tooManyLogins": "Troppi tentativi sbagliati: riprova tra 15 minuti",
+    "tooManySignups": "Da questa rete sono stati creati molti account oggi: riprova domani"
   },
   "auth": {
     "registerTitle": "Crea il tuo account",
@@ -236,6 +238,7 @@
     "pick": "Tocca per scegliere una foto",
     "pickHelp": "oppure incollala (Ctrl+V) o trascinala qui. Poi scegli come ritagliarla",
     "cityPlaceholder": "Torino",
+    "breedPlaceholder": "Beagle",
     "rules": "Solo immagini tue o che hai il diritto di pubblicare. Niente persone riconoscibili, targhe o indirizzi.",
     "uploading": "Caricamento…",
     "submit": "Invia per l'approvazione",
@@ -369,8 +372,8 @@
     "species": "Classifica {species}",
     "general": "Classifica generale",
     "this": {
-      "settimana": "questa settimana",
-      "mese": "questo mese"
+      "week": "questa settimana",
+      "month": "questo mese"
     },
     "period": "Periodo",
     "periods": {
@@ -395,7 +398,10 @@
     "cityTitle": "{title} a {city}",
     "celebrate": "{name} è {place}° {among}: festeggia!",
     "celebrateShare": "Condividi la card",
-    "newNote": "Nuovi talenti: solo chi è arrivato negli ultimi {n} giorni, con tutti i cuori ricevuti."
+    "newNote": "Nuovi talenti: solo chi è arrivato negli ultimi {n} giorni, con tutti i cuori ricevuti.",
+    "freeSpot": "Posto libero",
+    "climbTitle": "Vuoi salire sul podio?",
+    "climbText": "Ogni voto nei duelli vale un cuore. Carica una foto e fatti votare: i tre con più cuori finiscono qui."
   },
   "menu": {
     "open": "Menu account",
@@ -443,7 +449,16 @@
     "deleteButton": "Elimina l'account",
     "passwordLabel": "Per sicurezza, scrivi la tua password",
     "understood": "Ho capito: i miei partecipanti e le loro immagini spariranno per sempre",
-    "deleteConfirm": "Elimina per sempre"
+    "deleteConfirm": "Elimina per sempre",
+    "securityTitle": "Sicurezza",
+    "securityText": "Se pensi che qualcuno abbia la tua password o usi un dispositivo che non è tuo, cambia la password o esci dagli altri dispositivi.",
+    "currentPassword": "Password attuale",
+    "newPassword": "Nuova password",
+    "newPasswordHint": "Almeno 10 caratteri. Gli altri dispositivi verranno disconnessi.",
+    "changePassword": "Cambia password",
+    "signOutOthers": "Esci dagli altri dispositivi",
+    "passwordChanged": "Password cambiata. Gli altri dispositivi sono stati disconnessi.",
+    "signedOutOthers": "Fatto: resti collegato solo qui."
   },
   "badges": {
     "title": "Traguardi",

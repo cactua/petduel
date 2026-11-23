@@ -20,7 +20,7 @@ export function splitBoard<R extends BoardRow, P>(rows: R[], opts: { species: Sp
   const inSpeciesTop = (r: R) => r.species_rank <= TOP_RANK && counts(r)
   const speciesTop = (s: Species) => rows.filter(r => r.species === s && inSpeciesTop(r)).sort((a, b) => a.species_rank - b.species_rank)
 
-  // Cuori per superare il quinto della specie (se la top non è piena, ne basta uno)
+  // Cuori per superare l'ultimo della top della specie (se la top non è piena, ne basta uno)
   const toTop = (r: R) => {
     const top = speciesTop(r.species)
     const last = top.length >= TOP_RANK ? top[TOP_RANK - 1]!.score : 0

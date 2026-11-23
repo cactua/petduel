@@ -3,7 +3,7 @@ import { PGlite } from '@electric-sql/pglite'
 import { drizzle } from 'drizzle-orm/pglite'
 import { sql } from 'drizzle-orm'
 import * as schema from '../db/schema'
-import type { PublicPet } from '#shared/models'
+import { HAS_BREED_CITY, type PublicPet } from '#shared/models'
 import { seedPets } from './seed'
 
 // PGlite = PostgreSQL in-process, niente da installare in sviluppo.
@@ -20,6 +20,9 @@ let ready: Promise<void> | undefined
 export async function useDb() {
   ready ??= (async () => {
     await client.exec(schema.CREATE_TABLES_SQL)
+    // Sui siti senza razza e città (furry) i due campi restano vuoti anche per i pet salvati prima che si spegnessero,
+    // altrimenti un vecchio valore ("gatto") ricompare nelle card e nelle classifiche
+    if (!HAS_BREED_CITY) await client.exec(`update pets set breed = '', city = '' where breed <> '' or city <> ''`)
     const [row] = await db.select({ count: sql<number>`count(*)::int` }).from(schema.pets)
     if (!row?.count) await seedPets(db)
   })()

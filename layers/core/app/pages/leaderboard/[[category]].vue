@@ -36,11 +36,11 @@ const title = computed(() => (city.value ? t('ranking.cityTitle', { title: baseT
 useHead({ title: () => `${title.value}` })
 
 const isRolling = computed(() => period.value === 'week' || period.value === 'month')
+// Il podio ha sempre tre gradini (2° a sinistra, 1° al centro, 3° a destra): dove non c'è nessuno resta un posto libero
 const podium = computed(() => {
   const top = data.value?.top ?? []
-  return top.length >= 3 ? [top[1]!, top[0]!, top[2]!] : []
+  return [2, 1, 3].map(place => ({ place, pet: top[place - 1] }))
 })
-const rest = computed(() => (podium.value.length ? data.value?.top.slice(3) : data.value?.top) ?? [])
 
 const resets = computed(() => data.value?.resetsAt
   ? new Date(data.value.resetsAt).toLocaleDateString(intlLocale(), { weekday: 'long', day: 'numeric', month: 'long' })
@@ -101,51 +101,63 @@ const toTop = (p: RankedPet & { toTop: number }) =>
     </header>
     <NuxtLink v-if="features.shelters" to="/shelters" class="ranking__adopt">🏠 <b>{{ $t('shelters.title') }}</b>: {{ $t('ranking.adoptLink') }} →</NuxtLink>
 
-    <div v-if="celebrate" class="ranking__celebrate">
-      <span class="ranking__party" aria-hidden="true">🎉</span>
-      <p class="ranking__celebrate-text">
-        {{ $t('ranking.celebrate', {
-          name: celebrate.pet.name, place: celebrate.place,
-          among: [speciesText(celebrate.pet.species, 'among'), city ? $t('ranking.inCity', { city }) : ''].filter(Boolean).join(' '),
-        }) }}
-      </p>
-      <ShareCard :pet-id="celebrate.pet.id" :pet-name="celebrate.pet.name" :label="$t('ranking.celebrateShare')" />
-    </div>
-
     <div class="ranking__results" :class="{ 'is-loading': status === 'pending' }">
-      <ol v-if="podium.length" class="ranking__podium">
-        <li v-for="p in podium" :key="p.id" class="ranking__place" :class="[`ranking__place--${p.rank}`, { 'is-mine': isMine(p) }]">
-          <NuxtLink :to="entryUrl(p.id)" class="ranking__place-link">
-            <span class="ranking__photo">
-              <PetEars :species="p.species" />
-              <picture><source v-for="s in photoSources(p.image, 'v', '(min-width: 760px) 300px, 34vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="p.image" :alt="p.name" class="ranking__img"></picture>
-              <PetRosette :place="p.rank" class="ranking__medal" />
-            </span>
-            <b class="ranking__name">{{ p.name }}</b>
-            <span class="ranking__score">{{ score(p) }}</span>
-            <span class="ranking__step" aria-hidden="true">{{ p.rank }}</span>
-          </NuxtLink>
-        </li>
-      </ol>
-
-      <ol v-if="rest.length" class="ranking__list" :start="podium.length ? 4 : 1">
-        <li v-for="p in rest" :key="p.id" class="ranking__row" :class="{ 'is-mine': isMine(p) }">
-          <PetRankRow :pet="p" :score="score(p)" :detail="detail(p)" :mine="isMine(p)" :show-species="!species" />
-        </li>
-      </ol>
-
-      <div v-if="!data?.top.length" class="ranking__empty">
-        <p>
-          <template v-if="isRolling">
-            {{ $t('ranking.noDuels', { period: periodText }) }}
-            {{ species ? speciesText(species, 'among') : '' }} {{ species ? SPECIES_EMOJI[species] : '' }}
-          </template>
-          <template v-else>{{ $t('ranking.empty') }}</template>
-        </p>
-        <NuxtLink to="/" class="btn btn--primary btn--lg">{{ $t('ranking.goVote') }}</NuxtLink>
+      <div class="ranking__stage">
+        <span v-for="n in 6" :key="n" class="ranking__spark" :class="`ranking__spark--${n}`" aria-hidden="true">✦</span>
+        <ol class="ranking__podium">
+          <li
+            v-for="s in podium" :key="s.place" class="ranking__place"
+            :class="[`ranking__place--${s.place}`, { 'is-mine': s.pet && isMine(s.pet), 'is-free': !s.pet }]"
+          >
+            <NuxtLink v-if="s.pet" :to="entryUrl(s.pet.id)" class="ranking__place-link">
+              <span class="ranking__photo">
+                <PetEars :species="s.pet.species" />
+                <picture><source v-for="src in photoSources(s.pet.image, 'v', '(min-width: 760px) 300px, 34vw')" :key="`${src.media}${src.type}`" v-bind="src"><img :src="s.pet.image" :alt="s.pet.name" class="ranking__img"></picture>
+                <PetRosette :place="s.place" class="ranking__medal" />
+              </span>
+              <b class="ranking__name">{{ s.pet.name }}</b>
+              <span class="ranking__owner">@{{ s.pet.owner }}</span>
+              <span class="ranking__score">{{ score(s.pet) }}</span>
+            </NuxtLink>
+            <div v-else class="ranking__place-link">
+              <span class="ranking__photo"><span class="ranking__free" aria-hidden="true">?</span></span>
+              <b class="ranking__name">{{ $t('ranking.freeSpot') }}</b>
+            </div>
+            <span class="ranking__step" aria-hidden="true">{{ s.place }}</span>
+          </li>
+        </ol>
       </div>
 
-      <template v-if="data?.bySpecies.length">
+      <p v-if="!data?.top.length" class="ranking__empty">
+        <template v-if="isRolling">
+          {{ $t('ranking.noDuels', { period: periodText }) }}
+          {{ species ? speciesText(species, 'among') : '' }} {{ species ? SPECIES_EMOJI[species] : '' }}
+        </template>
+        <template v-else>{{ $t('ranking.empty') }}</template>
+      </p>
+
+      <div v-if="celebrate" class="ranking__celebrate">
+        <span class="ranking__party" aria-hidden="true">🎉</span>
+        <p class="ranking__celebrate-text">
+          {{ $t('ranking.celebrate', {
+            name: celebrate.pet.name, place: celebrate.place,
+            among: [speciesText(celebrate.pet.species, 'among'), city ? $t('ranking.inCity', { city }) : ''].filter(Boolean).join(' '),
+          }) }}
+        </p>
+        <ShareCard :pet-id="celebrate.pet.id" :pet-name="celebrate.pet.name" :label="$t('ranking.celebrateShare')" />
+      </div>
+
+      <section v-if="data?.mine.length" class="ranking__block">
+        <h2 class="ranking__mine-title">{{ $t('ranking.yourPets') }}</h2>
+        <p class="ranking__note">{{ $t('ranking.yourPetsNote', { n: TOP_RANK }) }}</p>
+        <ol class="ranking__list">
+          <li v-for="p in data.mine" :key="p.id" class="ranking__row is-mine">
+            <PetRankRow :pet="p" :score="score(p)" :detail="toTop(p)" mine :show-species="!species" rank-label="🎯" />
+          </li>
+        </ol>
+      </section>
+
+      <section v-if="data?.bySpecies.length" class="ranking__block">
         <h2 class="ranking__group-title">{{ $t('ranking.bySpecies', { n: TOP_RANK }) }}</h2>
         <div class="ranking__species-grid">
           <section v-for="g in data.bySpecies" :key="g.species" class="ranking__species">
@@ -159,17 +171,19 @@ const toTop = (p: RankedPet & { toTop: number }) =>
             </ol>
           </section>
         </div>
-      </template>
+      </section>
 
-      <template v-if="data?.mine.length">
-        <h2 class="ranking__mine-title">{{ $t('ranking.yourPets') }}</h2>
-        <p class="ranking__note ranking__note--mine">{{ $t('ranking.yourPetsNote', { n: TOP_RANK }) }}</p>
-        <ol class="ranking__list">
-          <li v-for="p in data.mine" :key="p.id" class="ranking__row is-mine">
-            <PetRankRow :pet="p" :score="score(p)" :detail="toTop(p)" mine :show-species="!species" rank-label="🎯" />
-          </li>
-        </ol>
-      </template>
+      <aside class="ranking__climb">
+        <SiteMascot />
+        <div class="ranking__climb-body">
+          <h2 class="ranking__climb-title">{{ $t('ranking.climbTitle') }}</h2>
+          <p class="ranking__climb-text">{{ $t('ranking.climbText') }}</p>
+          <div class="ranking__climb-actions">
+            <NuxtLink to="/" class="btn btn--primary">{{ $t('ranking.goVote') }}</NuxtLink>
+            <NuxtLink to="/upload" class="btn btn--ghost">{{ $t('nav.upload') }}</NuxtLink>
+          </div>
+        </div>
+      </aside>
     </div>
   </section>
 </template>
@@ -177,11 +191,11 @@ const toTop = (p: RankedPet & { toTop: number }) =>
 <style lang="scss" scoped>
 @use "sass:list";
 
-// Gradini del podio: altezza, colore, dimensione del numero
+// Gradini del podio: altezza, colore in alto e in basso, dimensione del numero
 $steps: (
-  1: (56px, var(--sun), 26px),
-  2: (38px, #d9dee6, 20px),
-  3: (24px, #eab98f, 16px),
+  1: (92px, var(--sun), var(--sun-deep), 38px),
+  2: (66px, #eef1f5, #b7bfcc, 30px),
+  3: (48px, #f3c9a2, #c98a5a, 24px),
 );
 
 // Pagina: classifica per specie, città e periodo, con podio
@@ -204,13 +218,7 @@ $steps: (
     &.is-active { background: var(--sun); color: var(--sun-ink); }
   }
 
-  &__note {
-    margin: 0;
-    color: var(--muted);
-    font-size: 13px;
-
-    &--mine { margin-bottom: $space-3; }
-  }
+  &__note { margin: 0; color: var(--muted); font-size: 13px; }
 
   &__celebrate {
     display: flex;
@@ -244,12 +252,46 @@ $steps: (
 
   &__near { border: 0; @include pill(8px, 14px); font-weight: 800; font-size: 13px; cursor: pointer; background: var(--coral-soft); color: var(--coral-deep); }
 
-  &__results.is-loading { opacity: .5; transition: opacity .2s; }
+  &__results {
+    @include stack($space-6);
+
+    &.is-loading { opacity: .5; transition: opacity .2s; }
+  }
+
+  // Palco: un faro dall'alto, qualche scintilla e i tre gradini appoggiati sul bordo in basso
+  &__stage {
+    position: relative;
+    overflow: hidden;
+    padding: 34px 12px 0;
+    border-radius: 28px;
+    background:
+      radial-gradient(75% 65% at 50% 0%, color-mix(in srgb, var(--sun) 30%, transparent), transparent 72%),
+      linear-gradient(to bottom, var(--surface), color-mix(in srgb, var(--surface) 55%, var(--bg)));
+    box-shadow: $shadow-card, inset 0 0 0 1px var(--line);
+  }
+
+  &__spark {
+    position: absolute;
+    line-height: 1;
+    color: var(--sun);
+    pointer-events: none;
+    animation: twinkle 2.8s ease-in-out infinite;
+
+    &--1 { top: 14px; left: 7%; font-size: 15px; }
+    &--2 { top: 52px; left: 19%; font-size: 9px; animation-delay: .7s; }
+    &--3 { top: 10px; right: 10%; font-size: 19px; animation-delay: 1.2s; }
+    &--4 { top: 64px; right: 5%; font-size: 10px; color: var(--coral); animation-delay: 1.8s; }
+    &--5 { top: 8px; left: 30%; font-size: 8px; color: var(--coral); animation-delay: .3s; }
+    &--6 { top: 96px; left: 3%; font-size: 11px; animation-delay: 2.2s; }
+
+    @media (prefers-reduced-motion: reduce) { animation: none; opacity: .6; }
+  }
 
   // Podio: il primo più grande e più in alto, secondo e terzo più piccoli, ognuno sul suo gradino
   &__podium {
+    position: relative;
     list-style: none;
-    margin: 0 0 12px;
+    margin: 0;
     padding: 0;
     display: grid;
     grid-template-columns: 1fr 1.25fr 1fr;
@@ -259,7 +301,9 @@ $steps: (
     @include mq(md) { max-width: 560px; margin-inline: auto; }
   }
 
-  &__place-link { display: flex; flex-direction: column; align-items: center; gap: $space-1; @include plain-link(var(--ink)); text-align: center; }
+  &__place { display: flex; flex-direction: column; min-width: 0; }
+
+  &__place-link { display: flex; flex-direction: column; align-items: center; gap: 2px; @include plain-link(var(--ink)); text-align: center; min-width: 0; }
 
   &__photo {
     --ear: 24px;
@@ -277,6 +321,21 @@ $steps: (
     .ranking__place--3 & { width: 76%; transform: rotate(2deg); }
 
     .ranking__place.is-mine & { outline: 3px solid var(--coral); outline-offset: 3px; }
+
+    .ranking__place.is-free & { background: transparent; padding: 0; box-shadow: none; }
+  }
+
+  // Posto ancora libero: una cornice tratteggiata da conquistare
+  &__free {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 3 / 4;
+    border: 2px dashed color-mix(in srgb, var(--muted) 55%, transparent);
+    border-radius: 18px;
+    font-family: var(--display);
+    font-size: 34px;
+    color: var(--muted);
+    background: color-mix(in srgb, var(--surface) 60%, transparent);
   }
 
   &__img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 15px; }
@@ -291,23 +350,50 @@ $steps: (
   }
 
   &__step {
-    align-self: stretch;
-    margin-top: $space-1;
-    border-radius: 12px 12px 0 0;
+    margin-top: $space-3;
+    border-radius: 14px 14px 0 0;
     display: grid;
     place-items: center;
     font-family: var(--display);
     font-weight: 600;
     color: #3d2416;
+    box-shadow: inset 0 3px 0 rgba(255, 255, 255, .5);
 
     @each $place, $s in $steps {
-      .ranking__place--#{$place} & { height: list.nth($s, 1); background: list.nth($s, 2); font-size: list.nth($s, 3); }
+      .ranking__place--#{$place} & {
+        height: list.nth($s, 1);
+        background: linear-gradient(to bottom, list.nth($s, 2), list.nth($s, 3));
+        font-size: list.nth($s, 4);
+      }
     }
+
+    .ranking__place.is-free & { opacity: .55; }
   }
 
-  &__name { font-family: var(--display); font-weight: 600; font-size: 16px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  &__name {
+    margin-top: 10px;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 16px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
-  &__score { font-weight: 800; color: var(--coral); font-variant-numeric: tabular-nums; }
+    .ranking__place.is-free & { color: var(--muted); font-size: 14px; }
+  }
+
+  &__owner { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 700; color: var(--muted); }
+
+  &__score {
+    margin-top: $space-1;
+    @include pill(3px, 10px);
+    font-weight: 900;
+    font-size: 13px;
+    color: var(--coral);
+    background: color-mix(in srgb, var(--coral) 16%, transparent);
+    font-variant-numeric: tabular-nums;
+  }
 
   &__list { list-style: none; margin: 0; padding: 0; @include stack($space-2); }
 
@@ -319,9 +405,11 @@ $steps: (
     &.is-mine { box-shadow: inset 0 0 0 2px var(--coral); }
   }
 
-  &__mine-title { font-size: 17px; margin-top: 16px; margin-bottom: $space-1; }
+  &__block { @include stack($space-3); }
 
-  &__group-title { font-size: 19px; margin: 18px 0 10px; }
+  &__mine-title { font-size: 17px; margin: 0; }
+
+  &__group-title { font-size: 19px; margin: 0; }
 
   &__species-grid {
     display: grid;
@@ -338,8 +426,32 @@ $steps: (
 
   &__arrow { color: var(--coral); }
 
-  &__empty { text-align: center; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: $space-4; padding: 30px 0; }
+  &__empty { margin: 0; text-align: center; color: var(--muted); font-weight: 700; }
+
+  // Invito in fondo: come si sale sul podio
+  &__climb {
+    display: flex;
+    align-items: center;
+    gap: $space-5;
+    padding: 18px;
+    border-radius: 24px;
+    background: color-mix(in srgb, var(--coral) 14%, var(--surface));
+    box-shadow: $shadow-card;
+  }
+
+  &__climb-body { @include stack($space-3); flex: 1; min-width: 0; }
+
+  &__climb-title { margin: 0; font-size: 19px; }
+
+  &__climb-text { margin: 0; line-height: 1.5; }
+
+  &__climb-actions { @include cluster($space-3); }
 
   &__adopt { display: block; padding: 12px 16px; border-radius: $radius-md; background: var(--coral-soft); @include plain-link(var(--ink)); font-size: 14px; font-weight: 700; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: .25; transform: scale(.8); }
+  50% { opacity: .95; transform: scale(1.15); }
 }
 </style>

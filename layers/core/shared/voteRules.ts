@@ -6,7 +6,7 @@ import { NEW_ACCOUNT_VOTE_WEIGHT } from './models'
 export const USER_DAILY_CAP = 400
 // Un account appena creato vota a metà peso per i primi giorni: crearne tanti per spingere qualcuno non conviene
 export const NEW_ACCOUNT_DAYS = 3
-// Raffiche: più di BURST_LIMIT voti per lo stesso partecipante dalla stessa rete in BURST_WINDOW_MS
+// Raffiche: più di BURST_LIMIT voti per lo stesso partecipante dalla stessa rete nella stessa finestra di BURST_WINDOW_MS
 export const BURST_WINDOW_MS = 60 * 60 * 1000
 export const BURST_LIMIT = 10
 
@@ -19,9 +19,8 @@ export function accountVoteWeight(votesToday: number, createdAt: Date | null, no
   return young ? NEW_ACCOUNT_VOTE_WEIGHT : 1
 }
 
-/** Voti della stessa rete per lo stesso partecipante ancora dentro la finestra, più questo */
-export function burstHits(previous: readonly number[], now = Date.now()) {
-  return [...previous.filter(t => now - t < BURST_WINDOW_MS), now]
-}
+/** Finestra delle raffiche in cui cade un istante: i voti si contano per finestra */
+export const burstWindow = (now = Date.now()) => Math.floor(now / BURST_WINDOW_MS)
 
-export const isBurst = (hits: readonly number[]) => hits.length > BURST_LIMIT
+/** `count` sono i voti della stessa rete per lo stesso partecipante nella finestra, compreso questo */
+export const isBurst = (count: number) => count > BURST_LIMIT

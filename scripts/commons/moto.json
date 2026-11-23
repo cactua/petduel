@@ -1,0 +1,606 @@
+[
+  {
+    "name": "Saetta",
+    "species": "sportiva",
+    "breed": "Ducati 959 Panigale",
+    "city": "Bologna",
+    "photos": [
+      "File:Ducati 959 Panigale (27768163304).jpg"
+    ]
+  },
+  {
+    "name": "Ventuno",
+    "species": "sportiva",
+    "breed": "Ducati Panigale V2",
+    "city": "Imola",
+    "photos": [
+      "File:Ducati 955 Panigale V2 (IMG 9845).jpg",
+      "File:Ducati 955 Panigale V2 (IMG 9851).jpg"
+    ]
+  },
+  {
+    "name": "Fulmine",
+    "species": "sportiva",
+    "breed": "Ducati Panigale V4 R",
+    "city": "Misano Adriatico",
+    "photos": [
+      "File:2026 Ducati Panigale V4R.jpg"
+    ]
+  },
+  {
+    "name": "Piuma",
+    "species": "sportiva",
+    "breed": "Ducati Panigale V4 Superleggera",
+    "city": "Mugello",
+    "photos": [
+      "File:2020 Ducati Panigale V4 Superleggera.jpg"
+    ]
+  },
+  {
+    "name": "Rossa",
+    "species": "sportiva",
+    "breed": "Ducati Panigale V4 R",
+    "city": "Modena",
+    "photos": [
+      "File:Ducati Panigale V4 R (2).jpg",
+      "File:Ducati Panigale V4 R (3).jpg"
+    ]
+  },
+  {
+    "name": "Nerofumo",
+    "species": "sportiva",
+    "breed": "Aprilia RSV4",
+    "city": "Noale",
+    "photos": [
+      "File:APRILIONA 098.jpg"
+    ]
+  },
+  {
+    "name": "Calabrone",
+    "species": "sportiva",
+    "breed": "BMW S 1000 RR",
+    "city": "Monza",
+    "photos": [
+      "File:BMW S1000 RR Studio.JPG"
+    ]
+  },
+  {
+    "name": "Trident",
+    "species": "naked",
+    "breed": "Triumph Trident 660",
+    "city": "Torino",
+    "photos": [
+      "File:2022 Triumph Trident 660.jpg",
+      "File:Triumph Trident 660 (1).jpg"
+    ]
+  },
+  {
+    "name": "Diablo",
+    "species": "naked",
+    "breed": "Triumph Trident 660",
+    "city": "Genova",
+    "photos": [
+      "File:Triumph Trident 660 Silver Ice Diablo Red.jpg"
+    ]
+  },
+  {
+    "name": "Smeraldo",
+    "species": "naked",
+    "breed": "Kawasaki Z900",
+    "city": "Brescia",
+    "photos": [
+      "File:Z9002020.jpg"
+    ]
+  },
+  {
+    "name": "Arancina",
+    "species": "naked",
+    "breed": "Yamaha MT-09",
+    "city": "Palermo",
+    "photos": [
+      "File:Yamaha MT-09.jpg"
+    ]
+  },
+  {
+    "name": "Acquamarina",
+    "species": "naked",
+    "breed": "Yamaha MT-09",
+    "city": "Rimini",
+    "photos": [
+      "File:2022 Yamaha MT-09.jpg"
+    ]
+  },
+  {
+    "name": "Tigre",
+    "species": "naked",
+    "breed": "Yamaha MT-09",
+    "city": "Milano",
+    "photos": [
+      "File:Moscow, Kaloshin Lane X Arbat, Yamaha MT-09, June 2026 05.jpg"
+    ]
+  },
+  {
+    "name": "Mostro",
+    "species": "naked",
+    "breed": "Ducati Monster 821",
+    "city": "Bologna",
+    "photos": [
+      "File:Ducati Monster 821 (1).jpg"
+    ]
+  },
+  {
+    "name": "Duca",
+    "species": "naked",
+    "breed": "KTM Duke II 640",
+    "city": "Bolzano",
+    "photos": [
+      "File:KTM Duke II 640.JPG"
+    ]
+  },
+  {
+    "name": "Scheggia",
+    "species": "naked",
+    "breed": "Megelli Naked 250",
+    "city": "Padova",
+    "photos": [
+      "File:Megelli Naked motorcycle.jpg"
+    ]
+  },
+  {
+    "name": "Granturismo",
+    "species": "touring",
+    "breed": "BMW R 1150 RT",
+    "city": "Lecco",
+    "photos": [
+      "File:BMW R1150RT 3.JPG",
+      "File:BMW R1150RT 2.JPG"
+    ]
+  },
+  {
+    "name": "Argento",
+    "species": "touring",
+    "breed": "BMW R 1150 RT",
+    "city": "Udine",
+    "photos": [
+      "File:BMW R1150RT in Otovice.JPG",
+      "File:BMW R1150RT (2) in Otovice.JPG"
+    ]
+  },
+  {
+    "name": "Bagaglio",
+    "species": "touring",
+    "breed": "BMW R 1200 RT",
+    "city": "Verona",
+    "photos": [
+      "File:BMW R1200 RT DSCF4670.jpg"
+    ]
+  },
+  {
+    "name": "Blu Notte",
+    "species": "touring",
+    "breed": "BMW R 1250 RT",
+    "city": "Trento",
+    "photos": [
+      "File:R 1250 RT im Böhmerwald.jpg",
+      "File:2022-09 R1250 RT im Böhmerwald.jpg"
+    ]
+  },
+  {
+    "name": "Crocevia",
+    "species": "touring",
+    "breed": "Honda Crossrunner",
+    "city": "Ancona",
+    "photos": [
+      "File:Honda Crossrunner 2013 (9527533974).jpg"
+    ]
+  },
+  {
+    "name": "Ammiraglia",
+    "species": "touring",
+    "breed": "GWM Souo S2000",
+    "city": "Napoli",
+    "photos": [
+      "File:GWM Souo S2000.jpg"
+    ]
+  },
+  {
+    "name": "Bob",
+    "species": "custom",
+    "breed": "Harley-Davidson Street Bob",
+    "city": "Varese",
+    "photos": [
+      "File:Harley-Davidson \"Street Bob\".jpg"
+    ]
+  },
+  {
+    "name": "Molla",
+    "species": "custom",
+    "breed": "Harley-Davidson Softail Springer",
+    "city": "Cagliari",
+    "photos": [
+      "File:Harley-Davidson Softail Springer Screamin' Eagle 2008.jpg"
+    ]
+  },
+  {
+    "name": "Nonna Heritage",
+    "species": "custom",
+    "breed": "Harley-Davidson Heritage Softail",
+    "city": "Parma",
+    "photos": [
+      "File:Harley-Davidson Heritage Softail, Windsor, Ontario, 2026-05-08 01.jpg"
+    ]
+  },
+  {
+    "name": "Fiammata",
+    "species": "custom",
+    "breed": "Chopper",
+    "city": "Livorno",
+    "photos": [
+      "File:Chopper WI.jpg"
+    ]
+  },
+  {
+    "name": "Oceano",
+    "species": "custom",
+    "breed": "Harley-Davidson custom",
+    "city": "La Spezia",
+    "photos": [
+      "File:Harley-Davidson custom Leimershof -20190907-RM-162129.jpg"
+    ]
+  },
+  {
+    "name": "Vecchia Volpe",
+    "species": "custom",
+    "breed": "Harley-Davidson bobber",
+    "city": "Como",
+    "photos": [
+      "File:Ältere Harley-Davidson Motorräder in Kreuzlingen (2015).jpg"
+    ]
+  },
+  {
+    "name": "Regina",
+    "species": "custom",
+    "breed": "Harley-Davidson Road King",
+    "city": "Aosta",
+    "photos": [
+      "File:Harley-Davidson Road King in Switzerland (2022).jpg"
+    ]
+  },
+  {
+    "name": "Canyon",
+    "species": "custom",
+    "breed": "Harley-Davidson Dyna",
+    "city": "Grosseto",
+    "photos": [
+      "File:Red Harley Davidson Motorcycle at Canyon Ridge.jpg"
+    ]
+  },
+  {
+    "name": "Ombra",
+    "species": "custom",
+    "breed": "Harley-Davidson Street Glide",
+    "city": "Ferrara",
+    "photos": [
+      "File:Harley-Davidson Street Glide parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02 04.jpg"
+    ]
+  },
+  {
+    "name": "Rubino",
+    "species": "custom",
+    "breed": "Harley-Davidson Road Glide",
+    "city": "Pescara",
+    "photos": [
+      "File:Harley-Davidson Road Glide parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02 04.jpg"
+    ]
+  },
+  {
+    "name": "Zucca",
+    "species": "enduro",
+    "breed": "KTM 690 Enduro",
+    "city": "Cuneo",
+    "photos": [
+      "File:KTM 690 Enduro.JPG"
+    ]
+  },
+  {
+    "name": "Sterrata",
+    "species": "enduro",
+    "breed": "Honda CRF300L",
+    "city": "Sondrio",
+    "photos": [
+      "File:2022 Honda CRF300L.jpg"
+    ]
+  },
+  {
+    "name": "Deserto",
+    "species": "enduro",
+    "breed": "Yamaha Ténéré 700",
+    "city": "Belluno",
+    "photos": [
+      "File:Yamaha Tenere 700.jpg"
+    ]
+  },
+  {
+    "name": "Orizzonte",
+    "species": "enduro",
+    "breed": "Yamaha Ténéré 700",
+    "city": "Trieste",
+    "photos": [
+      "File:Tenere 700.jpg"
+    ]
+  },
+  {
+    "name": "Neve",
+    "species": "enduro",
+    "breed": "Honda CRF250L",
+    "city": "L'Aquila",
+    "photos": [
+      "File:Honda CRF250L.jpg"
+    ]
+  },
+  {
+    "name": "Pellegrina",
+    "species": "enduro",
+    "breed": "Moto da viaggio",
+    "city": "Perugia",
+    "photos": [
+      "File:Com a moto em Santiago de COmpostela.jpg"
+    ]
+  },
+  {
+    "name": "Supermotard",
+    "species": "enduro",
+    "breed": "KTM 690 SMC R",
+    "city": "Arezzo",
+    "photos": [
+      "File:Enduro R Ansicht Links.jpg"
+    ]
+  },
+  {
+    "name": "Fango",
+    "species": "enduro",
+    "breed": "Maico enduro",
+    "city": "Biella",
+    "photos": [
+      "File:Maico enduro motorcycle 1980s.jpg",
+      "File:Maico and SWM enduro 1970s.jpg"
+    ]
+  },
+  {
+    "name": "Esploratrice",
+    "species": "enduro",
+    "breed": "BMW F 700 GS",
+    "city": "Bergamo",
+    "photos": [
+      "File:BMW F 700 GS.jpg"
+    ]
+  },
+  {
+    "name": "Ciliegia",
+    "species": "scooter",
+    "breed": "Vespa",
+    "city": "Todi",
+    "photos": [
+      "File:Vespa a Todi.JPG"
+    ]
+  },
+  {
+    "name": "Piccola",
+    "species": "scooter",
+    "breed": "Vespa 90 Small Frame",
+    "city": "Pontedera",
+    "photos": [
+      "File:1964 Vespa 90 Small Frame made by Piaggio now in California 1.jpg"
+    ]
+  },
+  {
+    "name": "Francesca",
+    "species": "scooter",
+    "breed": "Vespa",
+    "city": "Assisi",
+    "photos": [
+      "File:Red Vespa scooter in front of Rocca Maggiore, Assisi.jpg"
+    ]
+  },
+  {
+    "name": "Biancaneve",
+    "species": "scooter",
+    "breed": "Vespa 50 Special",
+    "city": "Arezzo",
+    "photos": [
+      "File:Piaggio Vespa Special 50cc in Arezzo.jpg"
+    ]
+  },
+  {
+    "name": "Cielo",
+    "species": "scooter",
+    "breed": "Lambretta",
+    "city": "Bari",
+    "photos": [
+      "File:Lambretta scooter, Malta - Flickr - sludgegulper.jpg"
+    ]
+  },
+  {
+    "name": "Metallica",
+    "species": "scooter",
+    "breed": "Lambretta Li 125 Special",
+    "city": "Milano",
+    "photos": [
+      "File:1966 Innocenti Lambretta Li125 Special Metallic Blue 1.jpg"
+    ]
+  },
+  {
+    "name": "Tivù",
+    "species": "scooter",
+    "breed": "Lambretta TV 150",
+    "city": "Roma",
+    "photos": [
+      "File:Lambretta Ti 150 (46318492261).jpg"
+    ]
+  },
+  {
+    "name": "Ocra",
+    "species": "scooter",
+    "breed": "NSU Lambretta 150",
+    "city": "Salerno",
+    "photos": [
+      "File:NSU Lambretta, 149 cm³, 6 PS, Bj. 1955 (Sp).JPG"
+    ]
+  },
+  {
+    "name": "Mandarino",
+    "species": "scooter",
+    "breed": "Lambretta X200",
+    "city": "Catania",
+    "photos": [
+      "File:Lambretta x200 in thailand.jpg"
+    ]
+  },
+  {
+    "name": "Nonno Rex",
+    "species": "epoca",
+    "breed": "NSU Standard Rex Sport",
+    "city": "Mantova",
+    "photos": [
+      "File:ZweiRadMuseumNSU Standard RexSport.JPG"
+    ]
+  },
+  {
+    "name": "Zeta Uno",
+    "species": "epoca",
+    "breed": "Kawasaki Z1",
+    "city": "Reggio Emilia",
+    "photos": [
+      "File:KAWASAKI Z1.jpg"
+    ]
+  },
+  {
+    "name": "Zeta",
+    "species": "epoca",
+    "breed": "Kawasaki Z900 (1975)",
+    "city": "Vicenza",
+    "photos": [
+      "File:Kawasaki Z900 (1975) - 15332870981.jpg",
+      "File:Z900.JPG"
+    ]
+  },
+  {
+    "name": "Vecchio Pope",
+    "species": "epoca",
+    "breed": "Pope",
+    "city": "Siena",
+    "photos": [
+      "File:Vintage Pope motorcycle (17135975543).jpg"
+    ]
+  },
+  {
+    "name": "Officina",
+    "species": "epoca",
+    "breed": "Moto d'epoca",
+    "city": "Pavia",
+    "photos": [
+      "File:Vintage vehicles and motorcycles workshop in Yass, 2023, 10.jpg"
+    ]
+  },
+  {
+    "name": "Ruggine",
+    "species": "epoca",
+    "breed": "Moto d'epoca",
+    "city": "Lucca",
+    "photos": [
+      "File:Vintage vehicles and motorcycles workshop in Yass, 2023, 06.jpg"
+    ]
+  },
+  {
+    "name": "Sunbeam",
+    "species": "epoca",
+    "breed": "Sunbeam (1929)",
+    "city": "Torino",
+    "photos": [
+      "File:1929 Sunbeam touring motorcycle (6940404957).jpg",
+      "File:1929 Sunbeam touring motorcycle (6794326732).jpg"
+    ]
+  },
+  {
+    "name": "Petrolio",
+    "species": "altra",
+    "breed": "Cafe racer",
+    "city": "Firenze",
+    "photos": [
+      "File:Backfire Motorcycle Night Ballard, Wa, 19 Aug 2009 -7.jpg",
+      "File:Backfire Motorcycle Night, Ballard, Wa, 19 Aug 2009 -9.jpg"
+    ]
+  },
+  {
+    "name": "Corvo",
+    "species": "altra",
+    "breed": "Ryca CS-1",
+    "city": "Treviso",
+    "photos": [
+      "File:Ryca CS-1.jpg"
+    ]
+  },
+  {
+    "name": "Caffè",
+    "species": "altra",
+    "breed": "Honda CB350 cafe racer",
+    "city": "Novara",
+    "photos": [
+      "File:1972 Honda CB351.jpg"
+    ]
+  },
+  {
+    "name": "Polvere",
+    "species": "altra",
+    "breed": "Triumph Scrambler",
+    "city": "Asti",
+    "photos": [
+      "File:Triumph Scrambler 2.JPG"
+    ]
+  },
+  {
+    "name": "Brigante",
+    "species": "altra",
+    "breed": "Triumph Scrambler 900",
+    "city": "Matera",
+    "photos": [
+      "File:Scrambler 900-1.JPG"
+    ]
+  },
+  {
+    "name": "Limone",
+    "species": "altra",
+    "breed": "Ducati Scrambler Classic",
+    "city": "Sorrento",
+    "photos": [
+      "File:Ducati Scrambler Classic 2014.jpg"
+    ]
+  },
+  {
+    "name": "Icona",
+    "species": "altra",
+    "breed": "Ducati Scrambler Icon",
+    "city": "Bologna",
+    "photos": [
+      "File:Ducati Scrambler Icon 803 CC – Hamburger Motorrad Tage 2015 01.jpg"
+    ]
+  },
+  {
+    "name": "Sabbia",
+    "species": "altra",
+    "breed": "Triumph Scrambler",
+    "city": "Lecce",
+    "photos": [
+      "File:Triumph Scrambler Modded w Thunderbike Exhaust Renthal Road Ultra Low Handlebars Clearwater Lights (2014) Rt Side.jpg"
+    ]
+  },
+  {
+    "name": "Undici",
+    "species": "altra",
+    "breed": "Ducati Scrambler 1100",
+    "city": "Ravenna",
+    "photos": [
+      "File:Scrambler 1100.jpg"
+    ]
+  }
+]

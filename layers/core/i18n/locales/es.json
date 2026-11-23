@@ -154,7 +154,9 @@
     "artistNotFound": "Este artista no está registrado",
     "tooManyReports": "Has enviado muchas denuncias hoy: inténtalo mañana",
     "reportOwn": "No puedes denunciar tus propias cosas",
-    "blocked": "No es posible para este usuario"
+    "blocked": "No es posible para este usuario",
+    "tooManyLogins": "Demasiados intentos fallidos: vuelve a intentarlo en 15 minutos",
+    "tooManySignups": "Hoy se han creado muchas cuentas desde esta red: inténtalo mañana"
   },
   "auth": {
     "registerTitle": "Crea tu cuenta",
@@ -236,6 +238,7 @@
     "pick": "Toca para elegir una foto",
     "pickHelp": "o pégala (Ctrl+V) o arrástrala aquí. Luego elige cómo recortarla",
     "cityPlaceholder": "Madrid",
+    "breedPlaceholder": "Beagle",
     "rules": "Solo imágenes tuyas o que tengas derecho a publicar. Nada de personas reconocibles, matrículas o direcciones.",
     "uploading": "Subiendo…",
     "submit": "Enviar para aprobación",
@@ -369,8 +372,8 @@
     "species": "Ranking de {species}",
     "general": "Ranking general",
     "this": {
-      "settimana": "esta semana",
-      "mese": "este mes"
+      "week": "esta semana",
+      "month": "este mes"
     },
     "period": "Periodo",
     "periods": {
@@ -395,7 +398,10 @@
     "cityTitle": "{title} en {city}",
     "celebrate": "¡{name} es el n.º {place} {among}: celébralo!",
     "celebrateShare": "Comparte la tarjeta",
-    "newNote": "Nuevos talentos: solo quien llegó en los últimos {n} días, con todos los corazones recibidos."
+    "newNote": "Nuevos talentos: solo quien llegó en los últimos {n} días, con todos los corazones recibidos.",
+    "freeSpot": "Puesto libre",
+    "climbTitle": "¿Quieres subir al podio?",
+    "climbText": "Cada voto en los duelos vale un corazón. Sube una foto y consigue votos: los tres con más corazones acaban aquí."
   },
   "menu": {
     "open": "Menú de la cuenta",
@@ -443,7 +449,16 @@
     "deleteButton": "Eliminar la cuenta",
     "passwordLabel": "Por seguridad, escribe tu contraseña",
     "understood": "Lo entiendo: mis participantes y sus imágenes desaparecerán para siempre",
-    "deleteConfirm": "Eliminar para siempre"
+    "deleteConfirm": "Eliminar para siempre",
+    "securityTitle": "Seguridad",
+    "securityText": "Si crees que alguien tiene tu contraseña o has usado un dispositivo que no es tuyo, cambia la contraseña o cierra la sesión en los demás dispositivos.",
+    "currentPassword": "Contraseña actual",
+    "newPassword": "Nueva contraseña",
+    "newPasswordHint": "Al menos 10 caracteres. Se cerrará la sesión en los demás dispositivos.",
+    "changePassword": "Cambiar contraseña",
+    "signOutOthers": "Cerrar sesión en los demás dispositivos",
+    "passwordChanged": "Contraseña cambiada. Se ha cerrado la sesión en los demás dispositivos.",
+    "signedOutOthers": "Hecho: ahora solo tienes la sesión abierta aquí."
   },
   "badges": {
     "title": "Logros",

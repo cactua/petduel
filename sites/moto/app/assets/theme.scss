@@ -1,0 +1,62 @@
+// Palette del sito moto, "officina": arancio carburatore al posto del corallo, antracite per il testo, sfondo chiaro caldo;
+// giallo dei premi e rosa dei cuori restano. Ridefinisce le variabili del nucleo (layers/core/app/assets/scss/abstracts/_tokens.scss).
+// "html:root" pesa più di ":root", così vince qualunque sia l'ordine dei fogli di stile
+$moto-light: (
+  bg: #f7f4f0,
+  surface: #fff,
+  ink: #24262b,
+  muted: #6b6f78,
+  coral: #f26b1d,
+  coral-deep: #d4540b,
+  coral-soft: #ffe6d5,
+  action: #c2410c,
+  sun-ink: #24262b,
+  line: #e5e0d9,
+  shadow: rgba(36, 38, 43, 0.18),
+  glow: rgba(242, 107, 29, 0.45),
+  blob-1: #ffe1cc,
+  blob-2: #dfe4ea,
+  blob-3: #fff0c2,
+);
+
+$moto-dark: (
+  bg: #131417,
+  surface: #1e2024,
+  ink: #f1f2f4,
+  muted: #a7abb3,
+  coral: #ff8a3d,
+  coral-deep: #d4540b,
+  coral-soft: #3a2a20,
+  action: #d4540b,
+  line: #2e3137,
+  shadow: rgba(0, 0, 0, 0.5),
+  glow: rgba(0, 0, 0, 0.55),
+  blob-1: #3a2618,
+  blob-2: #23282f,
+  blob-3: #33301c,
+);
+
+@mixin moto-vars($theme) {
+  @each $name, $value in $theme {
+    --#{"" + $name}: #{$value};
+  }
+}
+
+html:root {
+  @include moto-vars($moto-light);
+
+  // Senza mascotte sopra le card non serve lo spazio in alto
+  .duel-arena {
+    padding-top: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html:root:not([data-theme="light"]) {
+    @include moto-vars($moto-dark);
+  }
+}
+
+html:root[data-theme="dark"] {
+  @include moto-vars($moto-dark);
+}

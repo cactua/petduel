@@ -1,32 +1,53 @@
-// Cerca foto di animali domestici con licenza libera su Wikimedia Commons e crea dei provini da rivedere a mano.
-// Uso: node scripts/commons/discover.mjs <cartella-output>
-// Le foto scelte vanno poi copiate in scripts/commons/pets.json (vedi import.mjs).
+// Cerca foto con licenza libera su Wikimedia Commons per i contenuti di esempio di un sito e crea dei provini da rivedere a mano.
+// Uso: node scripts/commons/discover.mjs <cartella-output> [sito] [categorie]   (sito: pets, il predefinito, o moto; categorie: es. "sportiva,enduro")
+// Le foto scelte vanno poi copiate in scripts/commons/<sito>.json (vedi import.mjs).
 import { mkdir, writeFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import { api, fetchBuffer, freeLicense, plainText, sleep } from './lib.mjs'
 
 const sharp = createRequire(import.meta.url)('sharp')
 const out = process.argv[2]
-if (!out) {
-  console.error('Uso: node scripts/commons/discover.mjs <cartella-output>')
+const site = process.argv[3] || 'pets'
+// Facoltativo: solo alcune categorie, separate da virgola (es. "sportiva,enduro")
+const only = process.argv[4]?.split(',')
+
+// Ricerche per categoria del sito (gli id di site.config.ts)
+const SITES = {
+  pets: {
+    cane: ['dog portrait incategory:Quality_images', 'puppy incategory:Quality_images'],
+    gatto: ['cat portrait incategory:Quality_images', 'kitten incategory:Quality_images'],
+    coniglio: ['domestic rabbit', 'pet rabbit', 'dwarf rabbit'],
+    roditore: ['guinea pig pet', 'Syrian hamster', 'pet chinchilla', 'pet rat'],
+    uccello: ['budgerigar pet', 'cockatiel pet', 'pet canary', 'Agapornis pet'],
+    rettile: ['leopard gecko', 'Pogona vitticeps pet', 'Testudo hermanni', 'corn snake pet'],
+    altro: ['pet ferret', 'African pygmy hedgehog', 'pet pony'],
+  },
+  moto: {
+    sportiva: ['Ducati Panigale', 'Aprilia RSV4', 'Kawasaki Ninja ZX-10R', 'Yamaha YZF-R6', 'MV Agusta F3', 'Suzuki GSX-R'],
+    // "naked" da solo trova le biciclettate nudiste: meglio i modelli
+    naked: ['Triumph Trident 660', 'Kawasaki Z900 2020', 'Yamaha MT-09', 'Ducati Monster 821', 'KTM Duke'],
+    touring: ['touring motorcycle', 'BMW R 1250 RT', 'Honda Gold Wing', 'BMW R 1200 GS'],
+    custom: ['Harley-Davidson motorcycle', 'chopper motorcycle', 'custom motorcycle', 'bobber motorcycle'],
+    enduro: ['KTM 690 Enduro', 'Honda CRF300L', 'Yamaha Tenere 700', 'Husqvarna 701', 'Honda Africa Twin'],
+    scooter: ['Vespa scooter', 'Lambretta scooter', 'Honda PCX', 'Piaggio scooter'],
+    epoca: ['vintage motorcycle', 'classic motorcycle', 'Moto Guzzi Falcone', 'BSA motorcycle'],
+    altra: ['cafe racer motorcycle', 'scrambler motorcycle', 'Royal Enfield motorcycle', 'motorcycle sidecar'],
+  },
+}
+const QUERIES = SITES[site]
+if (!out || !QUERIES) {
+  console.error(`Uso: node scripts/commons/discover.mjs <cartella-output> [${Object.keys(SITES).join('|')}]`)
   process.exit(1)
 }
 
-const QUERIES = {
-  cane: ['dog portrait incategory:Quality_images', 'puppy incategory:Quality_images'],
-  gatto: ['cat portrait incategory:Quality_images', 'kitten incategory:Quality_images'],
-  coniglio: ['domestic rabbit', 'pet rabbit', 'dwarf rabbit'],
-  roditore: ['guinea pig pet', 'Syrian hamster', 'pet chinchilla', 'pet rat'],
-  uccello: ['budgerigar pet', 'cockatiel pet', 'pet canary', 'Agapornis pet'],
-  rettile: ['leopard gecko', 'Pogona vitticeps pet', 'Testudo hermanni', 'corn snake pet'],
-  altro: ['pet ferret', 'African pygmy hedgehog', 'pet pony'],
-}
-
-// Niente zoo, animali selvatici, persone in primo piano o disegni
-const EXCLUDE = /wild|zoo|tierpark|vogelpark|wildlife|girl|boy|\bman\b|woman|people|child|wolf|fox|dhole|cricetus|skull|museum|statue|drawing|illustration|stamp|sculpture|dead|meat|market|map/i
+// Animali: niente zoo, animali selvatici, persone in primo piano o disegni.
+// Moto: niente gare con piloti, incidenti, polizia, persone o disegni
+const EXCLUDE = site === 'moto'
+  ? /race|racing|rider|crash|accident|police|polizia|military|army|girl|boy|\bman\b|woman|people|child|drawing|illustration|stamp|poster|advert|toy|lego|map/i
+  : /wild|zoo|tierpark|vogelpark|wildlife|girl|boy|\bman\b|woman|people|child|wolf|fox|dhole|cricetus|skull|museum|statue|drawing|illustration|stamp|sculpture|dead|meat|market|map/i
 
 const candidates = {}
-for (const [species, queries] of Object.entries(QUERIES)) {
+for (const [species, queries] of Object.entries(QUERIES).filter(([s]) => !only || only.includes(s))) {
   const seen = new Map()
   for (const q of queries) {
     const data = await api({
@@ -59,7 +80,9 @@ await mkdir(out, { recursive: true })
 await writeFile(`${out}/candidates.json`, JSON.stringify(candidates, null, 2))
 
 // Un provino per specie: miniature numerate, per scegliere a colpo d'occhio
-const W = 200, H = 260, COLS = 6
+// Moto in orizzontale, animali in verticale
+const [W, H] = site === 'moto' ? [300, 200] : [200, 260]
+const COLS = 6
 for (const [species, list] of Object.entries(candidates)) {
   const tiles = []
   for (const [i, c] of list.entries()) {

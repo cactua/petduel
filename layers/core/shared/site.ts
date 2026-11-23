@@ -72,6 +72,11 @@ export interface SiteConfig {
    * Cambiandola, i vecchi indirizzi /pet/<id> portano a quelli nuovi
    */
   entryPath?: string
+  /**
+   * Soggetti larghi (come le moto viste di lato): su computer le card del duello usano il ritaglio orizzontale 3:2
+   * invece di quello verticale 3:4. Se manca: no
+   */
+  wideMedia?: boolean
 }
 
 // Aspetto del nucleo: la palette chiara di layers/core/app/assets/scss e Biscotto, la mascotte

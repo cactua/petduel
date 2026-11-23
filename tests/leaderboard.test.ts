@@ -16,7 +16,7 @@ const ids = (list: { id: number }[]) => list.map(p => p.id)
 const split = (rows: ReturnType<typeof board>, species: Species | null = null, userId: number | null = null) =>
   splitBoard(rows, { species, userId }, r => ({ id: r.id }))
 
-describe('classifica: solo la top 5, mai chi ha zero cuori', () => {
+describe('classifica: solo la top 3, mai chi ha zero cuori', () => {
   const rows = board([
     { id: 1, species: 'cane', score: 20 },
     { id: 2, species: 'cane', score: 15 },
@@ -29,13 +29,13 @@ describe('classifica: solo la top 5, mai chi ha zero cuori', () => {
     { id: 9, species: 'gatto', score: 1 },
   ])
 
-  it('mostra al massimo 5 pet nella top generale', () => {
-    expect(ids(split(rows).top)).toEqual([1, 2, 3, 4, 5])
+  it('mostra al massimo 3 pet nella top generale', () => {
+    expect(ids(split(rows).top)).toEqual([1, 2, 3])
   })
 
-  it('mostra la top 5 di ogni specie, senza i pet a zero cuori', () => {
+  it('mostra la top 3 di ogni specie, senza i pet a zero cuori', () => {
     const { bySpecies } = split(rows)
-    expect(bySpecies.find(g => g.species === 'cane')!.top.map(p => p.id)).toEqual([1, 2, 4, 5, 6])
+    expect(bySpecies.find(g => g.species === 'cane')!.top.map(p => p.id)).toEqual([1, 2, 4])
     expect(bySpecies.find(g => g.species === 'gatto')!.top.map(p => p.id)).toEqual([3, 9])
   })
 
@@ -48,10 +48,10 @@ describe('classifica: solo la top 5, mai chi ha zero cuori', () => {
     expect(ids(split(rows, null, 1).mine)).toEqual([7, 8])
   })
 
-  it('dice quanti cuori mancano per superare il quinto della specie', () => {
+  it('dice quanti cuori mancano per superare il terzo della specie', () => {
     const mine = split(rows, null, 1).mine
-    // Quinto tra i cani: 9 cuori, il pet ne ha 3 → ne servono 7 per passarlo
-    expect(mine.find(p => p.id === 7)!.toTop).toBe(7)
+    // Terzo tra i cani: 12 cuori, il pet ne ha 3 → ne servono 10 per passarlo
+    expect(mine.find(p => p.id === 7)!.toTop).toBe(10)
     // Tra i gatti la top non è piena: basta un cuore
     expect(mine.find(p => p.id === 8)!.toTop).toBe(1)
   })

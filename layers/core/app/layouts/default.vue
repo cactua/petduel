@@ -8,7 +8,7 @@ const { features } = useAppConfig()
 <template>
   <div class="app-shell">
     <header class="app-shell__header">
-      <NuxtLink to="/" class="app-shell__logo"><AppIcon name="paw" />{{ site.name }}</NuxtLink>
+      <NuxtLink to="/" class="app-shell__logo"><SiteIcon />{{ site.name }}</NuxtLink>
       <nav class="app-shell__nav">
         <NuxtLink to="/challenges" class="app-shell__nav-link">{{ $t('nav.challenges') }}</NuxtLink>
         <NuxtLink to="/leaderboard" class="app-shell__nav-link">{{ $t('nav.ranking') }}</NuxtLink>
@@ -19,6 +19,8 @@ const { features } = useAppConfig()
         <NuxtLink v-if="loggedIn" to="/upload" class="btn btn--primary">+ {{ $t('nav.upload') }}</NuxtLink>
         <NuxtLink v-else to="/login" class="btn btn--primary">{{ $t('nav.login') }}</NuxtLink>
       </div>
+      <!-- Qui una pagina può aggiungere un'informazione sua con <Teleport to="#header-extra"> (la home: i voti dati) -->
+      <div id="header-extra" class="app-shell__extra" />
       <NotificationBell v-if="loggedIn" class="app-shell__notif" />
       <AccountMenu class="app-shell__menu" />
     </header>
@@ -109,6 +111,20 @@ const { features } = useAppConfig()
   }
 
   &__notif + &__menu { margin-left: -20px; }
+
+  // Spazio per la pagina: vuoto non occupa posto; pieno si prende il margine automatico al posto della campanella
+  &__extra {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+
+    &:empty { display: none; }
+
+    @include mq(md) { margin-left: -14px; }
+  }
+
+  &__extra:not(:empty) + &__notif,
+  &__extra:not(:empty) + &__menu { margin-left: -18px; }
 
   &__main { flex: 1; display: flex; flex-direction: column; }
 

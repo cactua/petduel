@@ -23,6 +23,7 @@ export async function readShelterImage(event: H3Event) {
   const photo = parts?.find(p => p.name === 'photo' && p.filename)
   if (!photo) throw createError({ statusCode: 400, statusMessage: 'errors.photoMissing' })
   if (photo.data.length > MAX_BYTES) throw createError({ statusCode: 413, statusMessage: 'errors.photoTooBig' })
+  assertAllowedImage(photo.data)
 
   let source
   try {

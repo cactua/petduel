@@ -8,7 +8,7 @@ const TZ = 'Europe/Rome'
 // Risultati delle sfide finite da non più di tanti giorni
 const RESULTS_DAYS = 14
 // Le soglie di classifica settimanale per specie che meritano un avviso, dalla migliore (oltre la top non si vede)
-const RANK_TIERS = [1, 3, TOP_RANK] as const
+const RANK_TIERS = [1, TOP_RANK] as const
 // Il ricalcolo per utente al massimo una volta ogni tanto: la campanella si apre spesso
 const REFRESH_MS = 60_000
 const lastRefresh = new Map<number, number>()

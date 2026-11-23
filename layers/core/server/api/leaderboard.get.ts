@@ -79,7 +79,7 @@ const publicRows = defineCachedFunction(
 
 export default defineEventHandler(async (event): Promise<Leaderboard> => {
   const { species, period, city } = await getValidatedQuery(event, querySchema.parse)
-  const { user } = await getUserSession(event)
+  const user = await optionalUser(event)
   const db = await useDb()
 
   const unit = UNIT[period] ? sql.raw(`'${UNIT[period]}'`) : null

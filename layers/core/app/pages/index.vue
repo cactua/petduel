@@ -20,12 +20,14 @@ onMounted(load)
         <SiteMascot class="home__mascot" />
         <h1 class="home__question">{{ $t('duel.question') }}</h1>
       </div>
-      <NuxtLink to="/voted" class="home__count" :title="$t('duel.votedTimes', { n: votes })">♥ {{ votes }}</NuxtLink>
     </div>
-    <div class="home__filters">
-      <SpeciesChips v-model="species" class="home__chips" />
-      <NuxtLink to="/voted" class="home__count home__count--inline" :title="$t('duel.votedTimes', { n: votes })">♥ {{ votes }}</NuxtLink>
-    </div>
+    <SpeciesChips v-model="species" />
+    <!-- I voti dati stanno nella barra in alto, accanto alla campanella: qui ogni pixel va alle foto -->
+    <ClientOnly>
+      <Teleport to="#header-extra">
+        <NuxtLink to="/voted" class="home__count" :title="$t('duel.votedTimes', { n: votes })">♥ {{ votes }}</NuxtLink>
+      </Teleport>
+    </ClientOnly>
 
     <DuelPanel :duel="current" :failed="failed" :votes="votes" :hint="hint" :toast="toast" :result="result" :celebrate="celebrate" :ad="ad" @vote="vote" @skip="skip" @retry="load" @ad-continue="dismissAd">
       <template #empty>
@@ -43,12 +45,9 @@ onMounted(load)
   @include stack($space-4);
 
   // Su telefono ogni pixel in altezza va alle foto: la domanda resta solo per i lettori di schermo
-  // e il contatore dei voti passa accanto ai filtri
   &__head {
     display: flex;
     align-items: flex-end;
-    justify-content: space-between;
-    gap: $space-5;
 
     @include mq-down(md) { @include visually-hidden; }
   }
@@ -77,8 +76,8 @@ onMounted(load)
     &:first-child { border-radius: 20px; }
   }
 
+  // Nella barra in alto (Teleport): gli stili scoped seguono l'elemento anche lì
   &__count {
-    margin-bottom: 12px;
     font-weight: 900;
     font-size: 13px;
     @include pill(6px, 12px);
@@ -87,17 +86,7 @@ onMounted(load)
     font-variant-numeric: tabular-nums;
     // Porta a "Votati da te"
     text-decoration: none;
-
-    &--inline {
-      margin: 0;
-      flex-shrink: 0;
-
-      @include mq(md) { display: none; }
-    }
+    flex-shrink: 0;
   }
-
-  &__filters { display: flex; align-items: center; gap: $space-3; min-width: 0; }
-
-  &__chips { flex: 1; min-width: 0; }
 }
 </style>

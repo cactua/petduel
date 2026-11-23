@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 import type { H3Event } from 'h3'
 import { users, type User } from '../db/schema'
 
@@ -20,13 +20,25 @@ export async function requireAdmin(event: H3Event) {
   return user
 }
 
-export async function loadSessionUser(user: { id: number, username: string }) {
+export async function loadSessionUser(user: { id: number, username: string, sessionVersion?: number }) {
   const db = await useDb()
-  const [row] = await db.select({ id: users.id, username: users.username, role: users.role, bannedAt: users.bannedAt, rulesAcceptedAt: users.rulesAcceptedAt })
+  const [row] = await db.select({ id: users.id, username: users.username, role: users.role, bannedAt: users.bannedAt, rulesAcceptedAt: users.rulesAcceptedAt, sessionVersion: users.sessionVersion })
     .from(users).where(eq(users.id, user.id))
-  // Un account sospeso perde subito la sessione
+  // Un account sospeso perde subito la sessione, e così una sessione chiusa da "Esci da tutti i dispositivi"
   if (!row || row.username !== user.username || row.bannedAt) return null
-  return { id: row.id, username: row.username, role: row.role, needsRules: !row.rulesAcceptedAt }
+  if ((user.sessionVersion ?? 0) !== row.sessionVersion) return null
+  return { id: row.id, username: row.username, role: row.role, needsRules: !row.rulesAcceptedAt, sessionVersion: row.sessionVersion }
+}
+
+/**
+ * Chiude tutte le sessioni dell'account (gli altri dispositivi vengono disconnessi alla prossima richiesta)
+ * e ne riapre una nuova su questo dispositivo
+ */
+export async function revokeOtherSessions(event: H3Event, userId: number) {
+  const db = await useDb()
+  const [user] = await db.update(users).set({ sessionVersion: sql`${users.sessionVersion} + 1` })
+    .where(eq(users.id, userId)).returning()
+  await startSession(event, user!)
 }
 
 export async function isAdmin(userId: number) {
@@ -37,7 +49,7 @@ export async function isAdmin(userId: number) {
 
 export async function startSession(event: H3Event, user: User) {
   await replaceUserSession(event, {
-    user: { id: user.id, username: user.username, role: user.role, needsRules: !user.rulesAcceptedAt },
+    user: { id: user.id, username: user.username, role: user.role, needsRules: !user.rulesAcceptedAt, sessionVersion: user.sessionVersion },
     loggedInAt: Date.now(),
     voterId: `u:${user.id}`,
     recent: [],
@@ -50,4 +62,29 @@ let dummyHash: Promise<string> | undefined
 export function getDummyHash() {
   dummyHash ??= hashPassword('password-fittizia-per-il-timing')
   return dummyHash
+}
+
+// Conferma della password da dentro l'account (eliminarlo, cambiare password): pochi tentativi sbagliati
+// ogni 15 minuti, così chi trova una sessione aperta non può indovinarla
+const CONFIRM_WINDOW_MS = 15 * 60 * 1000
+const MAX_CONFIRM_FAILS = 8
+
+export async function confirmPassword(user: { id: number, passwordHash: string }, password: string) {
+  const key = `password:${user.id}`
+  if (await peekLimit(key) >= MAX_CONFIRM_FAILS) throw createError({ statusCode: 429, statusMessage: 'errors.tooManyLogins' })
+  if (user.passwordHash === '!' || !await verifyPassword(user.passwordHash, password)) {
+    await hitLimit(key, CONFIRM_WINDOW_MS)
+    throw createError({ statusCode: 403, statusMessage: 'errors.wrongPassword' })
+  }
+  await clearLimit(key)
+}
+
+/**
+ * Utente della sessione, ricontrollato nel database, per le pagine che si vedono anche senza account ma
+ * mostrano di più al proprietario. null se non è collegato, o se la sessione non vale più (account
+ * sospeso o eliminato, "Esci da tutti i dispositivi")
+ */
+export async function optionalUser(event: H3Event) {
+  const { user } = await getUserSession(event)
+  return user ? await loadSessionUser(user) : null
 }

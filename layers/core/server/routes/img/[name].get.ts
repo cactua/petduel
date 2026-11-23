@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
 
   const isPublic = photo.status === 'approved'
   if (!isPublic) {
-    const { user } = await getUserSession(event)
+    const user = await optionalUser(event)
     if (!user || (user.id !== photo.ownerId && !(await isAdmin(user.id)))) throw createError({ statusCode: 404 })
   }
 

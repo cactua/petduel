@@ -50,6 +50,11 @@ async function remove() {
       <ArtistSettings />
     </article>
 
+    <article class="account-page__card">
+      <h2 class="account-page__card-title">🔒 {{ $t('account.securityTitle') }}</h2>
+      <AccountSecurity />
+    </article>
+
     <article v-if="blocked?.length" class="account-page__card">
       <h2 class="account-page__card-title">🚫 {{ $t('block.listTitle') }}</h2>
       <p class="account-page__text">{{ $t('block.listText') }}</p>

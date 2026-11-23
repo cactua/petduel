@@ -1,0 +1,231 @@
+{
+  "challenge": {
+    "enterYours": "Iscrivi la tua moto"
+  },
+  "notif": {
+    "weeklyHearts": "La settimana scorsa le tue moto hanno ricevuto {n} cuore. La più amata: {name} | La settimana scorsa le tue moto hanno ricevuto {n} cuori. La più amata: {name}"
+  },
+  "validation": {
+    "petName": "Dai un nome alla tua moto"
+  },
+  "errors": {
+    "petHidden": "Hai scelto di tenere questa moto fuori da classifiche e sfide",
+    "petNotFound": "Moto non trovata",
+    "wrongSpecies": "Questa sfida è per un altro tipo di moto",
+    "alreadyEntered": "Questa moto partecipa già alla sfida",
+    "pickPet": "Scegli la moto"
+  },
+  "auth": {
+    "registerLead": "Serve per caricare le tue moto e avere la loro gallery.",
+    "loginLead": "Accedi per caricare le tue moto e vedere il tuo profilo.",
+    "usernamePlaceholder": "es. curva_e_piega"
+  },
+  "share": {
+    "text": "Guarda {name} su @:{'site.name'}: quale moto preferisci?"
+  },
+  "duel": {
+    "question": "Quale moto preferisci?",
+    "uploadYours": "Carica la tua moto",
+    "hint": "Trascina la tua preferita {over} per farla vincere",
+    "hintOver": "sopra l'altra"
+  },
+  "upload": {
+    "forWhich": "Per quale moto?",
+    "newPet": "Una nuova moto",
+    "rules": "Solo foto tue in cui si vede bene la moto. Copri le targhe, niente persone riconoscibili o indirizzi.",
+    "stepDetails": "La moto",
+    "namePlaceholder": "La Rossa",
+    "breedPlaceholder": "Ducati Monster 821"
+  },
+  "join": {
+    "needAccount": "Per iscrivere la tua moto devi avere un account.",
+    "title": "Iscrivi una moto",
+    "pet": "Moto",
+    "onlySpecies": "Questa sfida è solo per un tipo di moto e non ne hai di adatte.",
+    "uploadFirst": "Prima carica la tua moto, poi torna qui per iscriverla.",
+    "uploadPet": "Carica una moto",
+    "allIn": "Tutte le tue moto adatte sono già in gara. In bocca al lupo!",
+    "yourEntries": "Le tue moto in gara"
+  },
+  "pet": {
+    "species": "Tipo",
+    "breed": "Marca e modello",
+    "delete": "Elimina moto",
+    "ogDescription": "{name} è su @:{'site.name'}: quale moto preferisci? Vota anche tu!",
+    "notFound": "Moto non trovata."
+  },
+  "profile": {
+    "pets": "{n} moto",
+    "noPetsMine": "Non hai ancora caricato nessuna moto.",
+    "noPets": "Nessuna moto pubblica, per ora.",
+    "uploadFirst": "Carica la tua prima moto",
+    "newPet": "Nuova moto",
+    "statPets": "Moto",
+    "petsTitle": "Le moto · {n}",
+    "filter": "Mostra le moto",
+    "jump": "Vai a una moto",
+    "groups": {
+      "other": "Altre moto"
+    },
+    "addGuestHint": "Carica le foto di una nuova moto"
+  },
+  "challenges": {
+    "lead": "Ogni lunedì un tema nuovo. Iscrivi la tua moto con la foto giusta, vota le altre e conquista il trofeo."
+  },
+  "credits": {
+    "lead": "Le moto di esempio usano foto con licenza libera. Grazie a chi le ha scattate e condivise."
+  },
+  "ranking": {
+    "empty": "Nessuna moto in questa classifica, per ora.",
+    "yourPets": "Le tue moto",
+    "bySpecies": "Top {n} per tipo",
+    "yourPetsNote": "Fuori dalla top {n} le moto non compaiono in classifica: queste le vedi solo tu.",
+    "climbText": "Ogni voto nei duelli vale un cuore. Carica la tua moto e fatti votare: le tre con più cuori finiscono qui."
+  },
+  "menu": {
+    "guest": "Accedi per caricare le tue moto, partecipare alle sfide e ricevere gli avvisi."
+  },
+  "account": {
+    "exportText": "Scarica un file con tutto quello che @:{'site.name'} sa di te: account, moto, foto, voti dati e avvisi.",
+    "deleteText": "Cancelliamo subito profilo, moto, foto e avvisi. I voti che hai dato restano, ma anonimi. Non si può tornare indietro.",
+    "understood": "Ho capito: le mie moto e le loro foto spariranno per sempre"
+  },
+  "badges": {
+    "loved": {
+      "name": "Amata"
+    },
+    "adored": {
+      "name": "Adorata"
+    },
+    "petOfWeek": {
+      "name": "Moto della settimana",
+      "desc": "Ha chiuso una settimana al primo posto del suo tipo"
+    },
+    "photogenic": {
+      "name": "Fotogenica"
+    }
+  },
+  "species": {
+    "filter": "Filtra per tipo",
+    "all": "Tutte",
+    "sportiva": {
+      "one": "Sportiva",
+      "many": "Sportive",
+      "among": "tra le sportive"
+    },
+    "naked": {
+      "one": "Naked",
+      "many": "Naked",
+      "among": "tra le naked"
+    },
+    "touring": {
+      "one": "Touring",
+      "many": "Touring",
+      "among": "tra le touring"
+    },
+    "custom": {
+      "one": "Custom",
+      "many": "Custom",
+      "among": "tra le custom"
+    },
+    "enduro": {
+      "one": "Fuoristrada",
+      "many": "Fuoristrada",
+      "among": "tra le fuoristrada"
+    },
+    "scooter": {
+      "one": "Scooter",
+      "many": "Scooter",
+      "among": "tra gli scooter"
+    },
+    "epoca": {
+      "one": "D'epoca",
+      "many": "D'epoca",
+      "among": "tra le moto d'epoca"
+    },
+    "altra": {
+      "one": "Altra",
+      "many": "Altre",
+      "among": "tra le altre moto"
+    }
+  },
+  "themes": {
+    "golden-hour": {
+      "title": "Al tramonto",
+      "description": "La moto nella luce calda della sera."
+    },
+    "mountain-pass": {
+      "title": "In cima al passo",
+      "description": "Tornanti, curve e panorami: la moto in montagna."
+    },
+    "track-day": {
+      "title": "In pista",
+      "description": "Cordoli, piega e cronometro: la sportiva nel suo habitat."
+    },
+    "garage": {
+      "title": "In officina",
+      "description": "In garage, sul cavalletto o con gli attrezzi intorno."
+    },
+    "mud": {
+      "title": "Sporca di fango",
+      "description": "Dopo una giornata fuoristrada, senza lavarla."
+    },
+    "sea-view": {
+      "title": "Vista mare",
+      "description": "Lungomare, spiagge e strade costiere."
+    },
+    "night-lights": {
+      "title": "Luci della notte",
+      "description": "Fari accesi, insegne e riflessi sull'asfalto."
+    },
+    "shiny": {
+      "title": "Lucida come nuova",
+      "description": "Appena lavata e lucidata: cromature che brillano."
+    },
+    "road-trip": {
+      "title": "Pronta per il viaggio",
+      "description": "Borse, bauletto e chilometri davanti."
+    },
+    "classic": {
+      "title": "Fascino d'epoca",
+      "description": "Restaurata o originale, con tutti i suoi anni."
+    },
+    "details": {
+      "title": "Il dettaglio giusto",
+      "description": "Un primo piano: serbatoio, strumentazione, scarico o il particolare che la rende unica."
+    },
+    "city-ride": {
+      "title": "Giro in città",
+      "description": "Tra vicoli, piazze e semafori. Occhio a coprire le targhe."
+    }
+  },
+  "reasons": [
+    "Non si vede una moto",
+    "Contenuto inappropriato",
+    "Foto di bassa qualità",
+    "Foto non tua o protetta da copyright",
+    "Targa o dati personali visibili",
+    "Foto generata o modificata con l'intelligenza artificiale",
+    "Non in tema con la sfida"
+  ],
+  "reasonTips": {
+    "0": "Prova con una foto in cui la moto si vede bene, tutta intera.",
+    "4": "Copri la targa (e volti o indirizzi) e ricaricala."
+  },
+  "compliments": {
+    "love": "Che bella",
+    "expression": "Che grinta"
+  },
+  "block": {
+    "active": "Hai bloccato questo utente: non vedrai le sue moto nei duelli e non potrà indicarti né farti complimenti."
+  },
+  "voted": {
+    "lead": "Le moto che hai scelto negli ultimi duelli: apri il profilo di chi le ha caricate per vedere le altre sue."
+  },
+  "follow": {
+    "lead": "Le novità delle persone che segui: le loro moto nuove e le foto appena pubblicate."
+  },
+  "favorites": {
+    "empty": "Nessun preferito. Apri la pagina di una moto e tocca \"Salva\"."
+  }
+}

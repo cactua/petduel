@@ -154,7 +154,9 @@
     "artistNotFound": "Cet artiste n'est pas inscrit",
     "tooManyReports": "Tu as envoyé beaucoup de signalements aujourd'hui : réessaie demain",
     "reportOwn": "Tu ne peux pas signaler tes propres contenus",
-    "blocked": "Impossible pour cet utilisateur"
+    "blocked": "Impossible pour cet utilisateur",
+    "tooManyLogins": "Trop de tentatives incorrectes : réessaie dans 15 minutes",
+    "tooManySignups": "Beaucoup de comptes ont été créés depuis ce réseau aujourd'hui : réessaie demain"
   },
   "auth": {
     "registerTitle": "Crée ton compte",
@@ -236,6 +238,7 @@
     "pick": "Touche pour choisir une photo",
     "pickHelp": "ou colle-la (Ctrl+V) ou fais-la glisser ici. Ensuite choisis comment la recadrer",
     "cityPlaceholder": "Lyon",
+    "breedPlaceholder": "Beagle",
     "rules": "Uniquement des images à toi ou que tu as le droit de publier. Pas de personnes reconnaissables, de plaques d'immatriculation ni d'adresses.",
     "uploading": "Publication…",
     "submit": "Envoyer pour approbation",
@@ -369,8 +372,8 @@
     "species": "Classement {species}",
     "general": "Classement général",
     "this": {
-      "settimana": "cette semaine",
-      "mese": "ce mois-ci"
+      "week": "cette semaine",
+      "month": "ce mois-ci"
     },
     "period": "Période",
     "periods": {
@@ -395,7 +398,10 @@
     "cityTitle": "{title} à {city}",
     "celebrate": "{name} est n° {place} {among} : fête ça !",
     "celebrateShare": "Partager la carte",
-    "newNote": "Nouveaux talents : seulement ceux arrivés ces {n} derniers jours, avec tous les cœurs reçus."
+    "newNote": "Nouveaux talents : seulement ceux arrivés ces {n} derniers jours, avec tous les cœurs reçus.",
+    "freeSpot": "Place libre",
+    "climbTitle": "Tu veux monter sur le podium ?",
+    "climbText": "Chaque vote dans les duels vaut un cœur. Publie une photo et fais-toi voter : les trois qui ont le plus de cœurs arrivent ici."
   },
   "menu": {
     "open": "Menu du compte",
@@ -443,7 +449,16 @@
     "deleteButton": "Supprimer le compte",
     "passwordLabel": "Par sécurité, saisis ton mot de passe",
     "understood": "Je comprends : mes participants et leurs images disparaîtront pour toujours",
-    "deleteConfirm": "Supprimer définitivement"
+    "deleteConfirm": "Supprimer définitivement",
+    "securityTitle": "Sécurité",
+    "securityText": "Si tu penses que quelqu'un connaît ton mot de passe ou si tu as utilisé un appareil qui n'est pas à toi, change ton mot de passe ou déconnecte tes autres appareils.",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "newPasswordHint": "Au moins 10 caractères. Tes autres appareils seront déconnectés.",
+    "changePassword": "Changer le mot de passe",
+    "signOutOthers": "Déconnecter les autres appareils",
+    "passwordChanged": "Mot de passe changé. Tes autres appareils ont été déconnectés.",
+    "signedOutOthers": "C'est fait : tu n'es plus connecté qu'ici."
   },
   "badges": {
     "title": "Trophées",

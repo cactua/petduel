@@ -1,0 +1,219 @@
+{
+  "challenge": {
+    "enterYours": "Enter your bike"
+  },
+  "notif": {
+    "weeklyHearts": "Last week your bikes received {n} heart. Most loved: {name} | Last week your bikes received {n} hearts. Most loved: {name}"
+  },
+  "validation": {
+    "petName": "Give your bike a name"
+  },
+  "errors": {
+    "petHidden": "You chose to keep this bike out of leaderboards and challenges",
+    "petNotFound": "Bike not found",
+    "wrongSpecies": "This challenge is for another type of bike",
+    "alreadyEntered": "This bike is already in the challenge",
+    "pickPet": "Choose the bike"
+  },
+  "auth": {
+    "registerLead": "You need it to upload your bikes and get their gallery.",
+    "loginLead": "Log in to upload your bikes and see your profile.",
+    "usernamePlaceholder": "e.g. knee_down"
+  },
+  "share": {
+    "text": "Check out {name} on @:{'site.name'}: which bike do you prefer?"
+  },
+  "duel": {
+    "question": "Which bike do you prefer?",
+    "uploadYours": "Upload your bike"
+  },
+  "upload": {
+    "forWhich": "For which bike?",
+    "newPet": "A new bike",
+    "rules": "Only your own photos where the bike is clearly visible. Cover number plates; no recognisable people or addresses.",
+    "stepDetails": "The bike",
+    "namePlaceholder": "Red Lady",
+    "breedPlaceholder": "Triumph Bonneville T120"
+  },
+  "join": {
+    "needAccount": "You need an account to enter your bike.",
+    "title": "Enter a bike",
+    "pet": "Bike",
+    "onlySpecies": "This challenge is only for one type of bike and you don't have a suitable one.",
+    "uploadFirst": "Upload your bike first, then come back here to enter it.",
+    "uploadPet": "Upload a bike",
+    "allIn": "All your suitable bikes are already competing. Good luck!",
+    "yourEntries": "Your bikes in the challenge"
+  },
+  "pet": {
+    "species": "Type",
+    "breed": "Make and model",
+    "delete": "Delete bike",
+    "ogDescription": "{name} is on @:{'site.name'}: which bike do you prefer? Vote too!",
+    "notFound": "Bike not found."
+  },
+  "profile": {
+    "pets": "{n} bikes",
+    "noPetsMine": "You haven't uploaded any bikes yet.",
+    "noPets": "No public bikes yet.",
+    "uploadFirst": "Upload your first bike",
+    "newPet": "New bike",
+    "statPets": "Bikes",
+    "petsTitle": "Bikes · {n}",
+    "filter": "Show bikes",
+    "jump": "Go to a bike",
+    "groups": {
+      "other": "Other bikes"
+    },
+    "addGuestHint": "Upload photos of a new bike"
+  },
+  "challenges": {
+    "lead": "A new theme every Monday. Enter your bike with the right photo, vote for the others and win the trophy."
+  },
+  "credits": {
+    "lead": "The sample bikes use freely licensed photos. Thanks to the people who took and shared them."
+  },
+  "ranking": {
+    "empty": "No bikes in this leaderboard yet.",
+    "yourPets": "Your bikes",
+    "bySpecies": "Top {n} by type",
+    "yourPetsNote": "Bikes outside the top {n} don't appear in the leaderboard: only you can see these.",
+    "climbText": "Every vote in the duels is worth a heart. Upload your bike and get votes: the three with the most hearts end up here."
+  },
+  "menu": {
+    "guest": "Log in to upload your bikes, join challenges and get notifications."
+  },
+  "account": {
+    "exportText": "Download a file with everything @:{'site.name'} knows about you: account, bikes, photos, votes cast and notifications.",
+    "deleteText": "We immediately delete your profile, bikes, photos and notifications. The votes you cast stay, but anonymous. This can't be undone.",
+    "understood": "I understand: my bikes and their photos will be gone forever"
+  },
+  "badges": {
+    "petOfWeek": {
+      "name": "Bike of the week",
+      "desc": "Finished a week in first place in its type"
+    }
+  },
+  "species": {
+    "filter": "Filter by type",
+    "sportiva": {
+      "one": "Sport bike",
+      "many": "Sport bikes",
+      "among": "among sport bikes"
+    },
+    "naked": {
+      "one": "Naked",
+      "many": "Nakeds",
+      "among": "among nakeds"
+    },
+    "touring": {
+      "one": "Tourer",
+      "many": "Tourers",
+      "among": "among tourers"
+    },
+    "custom": {
+      "one": "Custom",
+      "many": "Customs",
+      "among": "among customs"
+    },
+    "enduro": {
+      "one": "Off-road",
+      "many": "Off-road",
+      "among": "among off-road bikes"
+    },
+    "scooter": {
+      "one": "Scooter",
+      "many": "Scooters",
+      "among": "among scooters"
+    },
+    "epoca": {
+      "one": "Vintage",
+      "many": "Vintage",
+      "among": "among vintage bikes"
+    },
+    "altra": {
+      "one": "Other",
+      "many": "Others",
+      "among": "among other bikes"
+    }
+  },
+  "themes": {
+    "golden-hour": {
+      "title": "At sunset",
+      "description": "The bike in the warm evening light."
+    },
+    "mountain-pass": {
+      "title": "Top of the pass",
+      "description": "Hairpins, bends and views: the bike in the mountains."
+    },
+    "track-day": {
+      "title": "Track day",
+      "description": "Kerbs, lean angle and lap times: the sport bike in its element."
+    },
+    "garage": {
+      "title": "In the workshop",
+      "description": "In the garage, on the stand or surrounded by tools."
+    },
+    "mud": {
+      "title": "Covered in mud",
+      "description": "After a day off-road, before any washing."
+    },
+    "sea-view": {
+      "title": "Sea view",
+      "description": "Seafronts, beaches and coastal roads."
+    },
+    "night-lights": {
+      "title": "Night lights",
+      "description": "Headlights on, neon signs and reflections on the tarmac."
+    },
+    "shiny": {
+      "title": "Shiny as new",
+      "description": "Freshly washed and polished: gleaming chrome."
+    },
+    "road-trip": {
+      "title": "Ready to roam",
+      "description": "Panniers, top box and miles ahead."
+    },
+    "classic": {
+      "title": "Vintage charm",
+      "description": "Restored or original, with every one of its years."
+    },
+    "details": {
+      "title": "The right detail",
+      "description": "A close-up: tank, dials, exhaust or the detail that makes it unique."
+    },
+    "city-ride": {
+      "title": "City ride",
+      "description": "Alleys, squares and traffic lights. Remember to cover the number plates."
+    }
+  },
+  "reasons": [
+    "No motorbike visible",
+    "Inappropriate content",
+    "Low-quality photo",
+    "Not your photo or copyrighted",
+    "Number plate or personal data visible",
+    "Photo generated or edited with AI",
+    "Off-topic for the challenge"
+  ],
+  "reasonTips": {
+    "0": "Try a photo where the whole bike is clearly visible.",
+    "4": "Cover the number plate (and any faces or addresses) and upload it again."
+  },
+  "compliments": {
+    "love": "Gorgeous",
+    "expression": "So much attitude"
+  },
+  "block": {
+    "active": "You've blocked this user: you won't see their bikes in duels and they can't credit you or pay you compliments."
+  },
+  "voted": {
+    "lead": "The bikes you picked in your latest duels: open the uploader's profile to see their other bikes."
+  },
+  "follow": {
+    "lead": "News from the people you follow: their new bikes and freshly published photos."
+  },
+  "favorites": {
+    "empty": "No favourites yet. Open a bike's page and tap \"Save\"."
+  }
+}

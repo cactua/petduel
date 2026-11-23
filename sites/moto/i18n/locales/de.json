@@ -1,0 +1,221 @@
+{
+  "challenge": {
+    "enterYours": "Melde dein Motorrad an"
+  },
+  "notif": {
+    "weeklyHearts": "Letzte Woche haben deine Motorräder {n} Herz bekommen. Am beliebtesten: {name} | Letzte Woche haben deine Motorräder {n} Herzen bekommen. Am beliebtesten: {name}"
+  },
+  "validation": {
+    "petName": "Gib deinem Motorrad einen Namen"
+  },
+  "errors": {
+    "petHidden": "Du hast entschieden, dieses Motorrad aus Ranglisten und Challenges herauszuhalten",
+    "petNotFound": "Motorrad nicht gefunden",
+    "wrongSpecies": "Diese Challenge ist für eine andere Motorradart",
+    "alreadyEntered": "Dieses Motorrad nimmt schon an der Challenge teil",
+    "pickPet": "Wähle das Motorrad"
+  },
+  "auth": {
+    "registerLead": "Damit kannst du deine Motorräder hochladen und ihre Galerie haben.",
+    "loginLead": "Melde dich an, um deine Motorräder hochzuladen und dein Profil zu sehen.",
+    "usernamePlaceholder": "z. B. kurvenjaeger"
+  },
+  "share": {
+    "text": "Schau dir {name} auf @:{'site.name'} an: Welches Motorrad gefällt dir besser?"
+  },
+  "duel": {
+    "question": "Welches Motorrad gefällt dir besser?",
+    "uploadYours": "Lade dein Motorrad hoch",
+    "hint": "Zieh dein Lieblingsmotorrad {over}, damit es gewinnt",
+    "hintOver": "auf das andere"
+  },
+  "upload": {
+    "forWhich": "Für welches Motorrad?",
+    "newPet": "Ein neues Motorrad",
+    "rules": "Nur eigene Fotos, auf denen das Motorrad gut zu sehen ist. Kennzeichen abdecken, keine erkennbaren Personen oder Adressen.",
+    "stepDetails": "Das Motorrad",
+    "namePlaceholder": "Rote Rakete",
+    "breedPlaceholder": "BMW R 1250 GS"
+  },
+  "join": {
+    "needAccount": "Um dein Motorrad anzumelden, brauchst du ein Konto.",
+    "title": "Motorrad anmelden",
+    "pet": "Motorrad",
+    "onlySpecies": "Diese Challenge ist nur für eine Motorradart, und du hast kein passendes.",
+    "uploadFirst": "Lade zuerst dein Motorrad hoch und komm dann zurück, um es anzumelden.",
+    "uploadPet": "Motorrad hochladen",
+    "allIn": "Alle deine passenden Motorräder sind schon dabei. Viel Glück!",
+    "yourEntries": "Deine Motorräder in der Challenge"
+  },
+  "pet": {
+    "species": "Art",
+    "breed": "Marke und Modell",
+    "delete": "Motorrad löschen",
+    "ogDescription": "{name} ist auf @:{'site.name'}: Welches Motorrad gefällt dir besser? Stimm mit ab!",
+    "notFound": "Motorrad nicht gefunden."
+  },
+  "profile": {
+    "pets": "{n} Motorräder",
+    "noPetsMine": "Du hast noch kein Motorrad hochgeladen.",
+    "noPets": "Noch keine öffentlichen Motorräder.",
+    "uploadFirst": "Lade dein erstes Motorrad hoch",
+    "newPet": "Neues Motorrad",
+    "statPets": "Motorräder",
+    "petsTitle": "Motorräder · {n}",
+    "filter": "Motorräder anzeigen",
+    "jump": "Zu einem Motorrad",
+    "groups": {
+      "other": "Andere Motorräder"
+    },
+    "addGuestHint": "Lade Fotos eines neuen Motorrads hoch"
+  },
+  "challenges": {
+    "lead": "Jeden Montag ein neues Thema. Melde dein Motorrad mit dem passenden Foto an, stimm für die anderen ab und hol dir die Trophäe."
+  },
+  "credits": {
+    "lead": "Die Beispielmotorräder nutzen frei lizenzierte Fotos. Danke an alle, die sie aufgenommen und geteilt haben."
+  },
+  "ranking": {
+    "empty": "Noch keine Motorräder in dieser Rangliste.",
+    "yourPets": "Deine Motorräder",
+    "bySpecies": "Top {n} nach Art",
+    "yourPetsNote": "Außerhalb der Top {n} erscheinen Motorräder nicht in der Rangliste: Diese siehst nur du.",
+    "climbText": "Jede Stimme in den Duellen ist ein Herz wert. Lade dein Motorrad hoch und sammle Stimmen: Die drei mit den meisten Herzen landen hier."
+  },
+  "menu": {
+    "guest": "Melde dich an, um deine Motorräder hochzuladen, an Challenges teilzunehmen und Benachrichtigungen zu bekommen."
+  },
+  "account": {
+    "exportText": "Lade eine Datei mit allem herunter, was @:{'site.name'} über dich weiß: Konto, Motorräder, Fotos, abgegebene Stimmen und Benachrichtigungen.",
+    "deleteText": "Wir löschen sofort Profil, Motorräder, Fotos und Benachrichtigungen. Deine abgegebenen Stimmen bleiben, aber anonym. Das lässt sich nicht rückgängig machen.",
+    "understood": "Ich habe verstanden: Meine Motorräder und ihre Fotos verschwinden für immer"
+  },
+  "badges": {
+    "petOfWeek": {
+      "name": "Motorrad der Woche",
+      "desc": "Hat eine Woche auf Platz eins seiner Art beendet"
+    }
+  },
+  "species": {
+    "filter": "Nach Art filtern",
+    "sportiva": {
+      "one": "Sportler",
+      "many": "Sportler",
+      "among": "unter den Sportlern"
+    },
+    "naked": {
+      "one": "Naked Bike",
+      "many": "Naked Bikes",
+      "among": "unter den Naked Bikes"
+    },
+    "touring": {
+      "one": "Tourer",
+      "many": "Tourer",
+      "among": "unter den Tourern"
+    },
+    "custom": {
+      "one": "Custom",
+      "many": "Customs",
+      "among": "unter den Customs"
+    },
+    "enduro": {
+      "one": "Offroad",
+      "many": "Offroad",
+      "among": "unter den Offroad-Bikes"
+    },
+    "scooter": {
+      "one": "Roller",
+      "many": "Roller",
+      "among": "unter den Rollern"
+    },
+    "epoca": {
+      "one": "Oldtimer",
+      "many": "Oldtimer",
+      "among": "unter den Oldtimern"
+    },
+    "altra": {
+      "one": "Andere",
+      "many": "Andere",
+      "among": "unter den anderen Motorrädern"
+    }
+  },
+  "themes": {
+    "golden-hour": {
+      "title": "Im Sonnenuntergang",
+      "description": "Das Motorrad im warmen Abendlicht."
+    },
+    "mountain-pass": {
+      "title": "Oben am Pass",
+      "description": "Kehren, Kurven und Aussicht: das Motorrad in den Bergen."
+    },
+    "track-day": {
+      "title": "Auf der Rennstrecke",
+      "description": "Curbs, Schräglage und Rundenzeiten: der Sportler in seinem Element."
+    },
+    "garage": {
+      "title": "In der Werkstatt",
+      "description": "In der Garage, auf dem Ständer oder umgeben von Werkzeug."
+    },
+    "mud": {
+      "title": "Voller Schlamm",
+      "description": "Nach einem Tag im Gelände, ungewaschen."
+    },
+    "sea-view": {
+      "title": "Meerblick",
+      "description": "Uferpromenaden, Strände und Küstenstraßen."
+    },
+    "night-lights": {
+      "title": "Lichter der Nacht",
+      "description": "Scheinwerfer an, Leuchtreklamen und Spiegelungen auf dem Asphalt."
+    },
+    "shiny": {
+      "title": "Glänzend wie neu",
+      "description": "Frisch gewaschen und poliert: blitzendes Chrom."
+    },
+    "road-trip": {
+      "title": "Bereit für die Reise",
+      "description": "Koffer, Topcase und Kilometer vor sich."
+    },
+    "classic": {
+      "title": "Charme von früher",
+      "description": "Restauriert oder original, mit all seinen Jahren."
+    },
+    "details": {
+      "title": "Das richtige Detail",
+      "description": "Eine Nahaufnahme: Tank, Instrumente, Auspuff oder das Detail, das es einzigartig macht."
+    },
+    "city-ride": {
+      "title": "Stadtrunde",
+      "description": "Gassen, Plätze und Ampeln. Denk daran, das Kennzeichen abzudecken."
+    }
+  },
+  "reasons": [
+    "Kein Motorrad zu sehen",
+    "Unangemessener Inhalt",
+    "Foto von schlechter Qualität",
+    "Nicht dein Foto oder urheberrechtlich geschützt",
+    "Kennzeichen oder persönliche Daten sichtbar",
+    "Mit künstlicher Intelligenz erzeugtes oder bearbeitetes Foto",
+    "Passt nicht zur Challenge"
+  ],
+  "reasonTips": {
+    "0": "Versuch es mit einem Foto, auf dem das ganze Motorrad gut zu sehen ist.",
+    "4": "Deck das Kennzeichen ab (und Gesichter oder Adressen) und lade es noch einmal hoch."
+  },
+  "compliments": {
+    "love": "Wunderschön",
+    "expression": "Was für ein Auftritt"
+  },
+  "block": {
+    "active": "Du hast diese Person blockiert: Du siehst ihre Motorräder nicht mehr in Duellen, und sie kann dich weder angeben noch dir Komplimente machen."
+  },
+  "voted": {
+    "lead": "Die Motorräder, die du in den letzten Duellen gewählt hast: Öffne das Profil der Person, die sie hochgeladen hat, um ihre anderen zu sehen."
+  },
+  "follow": {
+    "lead": "Neues von den Personen, denen du folgst: ihre neuen Motorräder und frisch veröffentlichte Fotos."
+  },
+  "favorites": {
+    "empty": "Keine Favoriten. Öffne die Seite eines Motorrads und tippe auf \"Merken\"."
+  }
+}

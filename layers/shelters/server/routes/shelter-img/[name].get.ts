@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   if (!shelter) throw createError({ statusCode: 404 })
   const isPublic = shelter.status === 'approved'
   if (!isPublic) {
-    const { user } = await getUserSession(event)
+    const user = await optionalUser(event)
     if (user?.id !== shelter.userId) throw createError({ statusCode: 404 })
   }
   const data = await useStorage('uploads').getItemRaw(getRouterParam(event, 'name')!)

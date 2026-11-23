@@ -10,7 +10,7 @@ export default defineEventHandler(async (event): Promise<PetCompliments> => {
   const { id } = await getValidatedRouterParams(event, paramsSchema.parse)
   const readers = await complimentReaders(id)
   if (!readers) throw createError({ statusCode: 404, statusMessage: 'errors.petNotFound' })
-  const { user } = await getUserSession(event)
+  const user = await optionalUser(event)
   if (!user) return { mine: [], counts: null, canGive: false }
 
   const db = await useDb()

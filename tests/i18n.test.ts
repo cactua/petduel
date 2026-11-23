@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { baseCompile } from '@intlify/message-compiler'
 
 // Ogni testo di ogni lingua deve compilare: un "@" o una graffa sbagliati rompono tutto il file nel browser
-const DIRS = ['layers/core/i18n/locales', 'layers/shelters/i18n/locales', 'sites/pets/i18n/locales', 'sites/furry/i18n/locales']
+const DIRS = ['layers/core/i18n/locales', 'layers/shelters/i18n/locales', 'sites/pets/i18n/locales', 'sites/furry/i18n/locales', 'sites/moto/i18n/locales']
 
 function* messages(node: unknown, path: string): Generator<[string, string]> {
   if (typeof node === 'string') yield [path, node]

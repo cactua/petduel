@@ -15,7 +15,7 @@ export default defineEventHandler(async (event): Promise<Profile> => {
     .from(users).where(eq(users.username, parsed.data.username))
   if (!profile) throw createError({ statusCode: 404, statusMessage: 'errors.userNotFound' })
 
-  const { user } = await getUserSession(event)
+  const user = await optionalUser(event)
   const isMe = user?.id === profile.id
   const [shelter, [voted], galleries, manage, artworks, [blocked], [following], [followers]] = await Promise.all([
     shelterOfUser(profile.id),

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { PublicPet } from '#shared/models'
+import site from '#site'
 
 const props = defineProps<{ pets: [PublicPet, PublicPet], coach?: boolean, result?: { index: number, delta: number } | null }>()
 const emit = defineEmits<{ vote: [index: number] }>()
@@ -125,7 +126,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="duel-arena">
+  <div class="duel-arena" :class="{ 'duel-arena--wide': site.wideMedia }">
     <div
       v-for="(pet, i) in pets"
       :key="pet.id"
@@ -149,7 +150,7 @@ onBeforeUnmount(() => {
       <div class="duel-arena__frame">
         <PetEars :species="pet.species" />
         <div class="duel-arena__photo">
-          <picture><source v-for="s in photoSources(pet.image, 'h', '(min-width: 760px) 480px, 92vw', 'v')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="pet.image" :alt="`${pet.name}, ${pet.breed}`" draggable="false" class="duel-arena__img"></picture>
+          <picture><source v-for="s in photoSources(pet.image, 'h', '(min-width: 760px) 480px, 92vw', site.wideMedia ? undefined : 'v')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="pet.image" :alt="[pet.name, pet.breed].filter(Boolean).join(', ')" draggable="false" class="duel-arena__img"></picture>
           <span v-if="pet.adoption === 'available' || pet.adoption === 'fostered'" class="duel-arena__ribbon">🏠 {{ $t(`adoption.status.${pet.adoption}`) }}</span>
           <span class="duel-arena__stamp" :style="{ opacity: stampOpacity(i) }">{{ $t('duel.wins') }}</span>
           <!-- Solo sul vincitore: la sua card scivola sopra quella del perdente e la copre -->
@@ -157,24 +158,28 @@ onBeforeUnmount(() => {
           <svg class="duel-arena__arrows" viewBox="0 0 36 54" aria-hidden="true">
             <path d="M6 6l12 10 12-10" /><path d="M6 20l12 10 12-10" /><path d="M6 34l12 10 12-10" />
           </svg>
-          <!-- Autore e licenza dietro una "i": la scritta fissa copriva la foto -->
-          <span v-if="pet.credit" class="duel-arena__credit" @pointerdown.stop @keydown.stop>
-            <CreditLink
-              v-if="creditOpen === i" :url="pet.credit.url"
-              class="duel-arena__credit-link"
-            >{{ $t('photo.credit', { text: pet.credit.text }) }}</CreditLink>
-            <button
-              type="button" class="duel-arena__credit-info" :class="{ 'is-open': creditOpen === i }" :aria-expanded="creditOpen === i" :aria-label="$t('photo.creditInfo')"
-              @click.stop="creditOpen = creditOpen === i ? null : i"
-            >i</button>
+          <!-- Angolo della foto: autore e licenza dietro una "i" (la scritta fissa copriva la foto) e la bandierina per segnalare.
+               Toccarli non deve far partire il trascinamento del voto -->
+          <span v-if="pet.credit || pet.photoId" class="duel-arena__tools" @pointerdown.stop @keydown.stop>
+            <template v-if="pet.credit">
+              <CreditLink
+                v-if="creditOpen === i" :url="pet.credit.url"
+                class="duel-arena__credit-link"
+              >{{ $t('photo.credit', { text: pet.credit.text }) }}</CreditLink>
+              <button
+                type="button" class="duel-arena__credit-info" :class="{ 'is-open': creditOpen === i }" :aria-expanded="creditOpen === i" :aria-label="$t('photo.creditInfo')"
+                @click.stop="creditOpen = creditOpen === i ? null : i"
+              >i</button>
+            </template>
+            <ReportButton v-if="pet.photoId" :photo-id="pet.photoId" :label="$t('report.openNamed', { name: pet.name })" icon />
           </span>
         </div>
         <!-- Collare con medaglietta: nome, razza e città -->
         <div class="duel-arena__collar">
-          <span class="duel-arena__medal" :class="`duel-arena__medal--${pet.species}`"><AppIcon name="paw" /></span>
+          <span class="duel-arena__medal" :class="`duel-arena__medal--${pet.species}`"><SiteIcon /></span>
           <div class="duel-arena__who">
             <b class="duel-arena__name">{{ pet.name }}</b>
-            <small class="duel-arena__meta">{{ [pet.breed, pet.city].filter(Boolean).join(' · ') }} · @{{ pet.owner }}</small>
+            <small class="duel-arena__meta">{{ [pet.breed, pet.city, `@${pet.owner}`].filter(Boolean).join(' · ') }}</small>
           </div>
         </div>
       </div>
@@ -214,6 +219,16 @@ $medals: (
   padding: 16px 6px 4px;
 
   @include mq(md) { flex-direction: row; gap: 40px; padding-top: 34px; }
+
+  // Soggetti larghi (site.wideMedia): su computer card 3:2 centrate in altezza invece che alte quanto lo spazio.
+  // L'altezza si ricava dalla larghezza: metà spazio meno stacco e cornice, foto 3:2 ((w - 76px) / 3), più bordo e collare
+  &--wide {
+    @include mq(md) { container-type: size; align-items: center; }
+  }
+
+  &--wide &__card {
+    @include mq(md) { align-self: center; height: min(100%, calc((100cqw - 76px) / 3 + 54px)); }
+  }
 
   &__card {
     flex: 1;
@@ -288,6 +303,10 @@ $medals: (
     border-radius: 50%;
     display: grid;
     place-items: center;
+    // Senza specie (furry) prende il colore del sito; le specie hanno il loro
+    background: var(--coral);
+    box-shadow: inset 0 -3px 0 var(--coral-deep);
+    color: #fff;
 
     .icon {
       width: 14px;
@@ -330,7 +349,7 @@ $medals: (
     @include mq(md) { color: var(--muted); }
   }
 
-  &__credit {
+  &__tools {
     position: absolute;
     right: 10px;
     top: 10px;
@@ -452,8 +471,9 @@ $medals: (
       @include mq(md) { top: 32%; bottom: auto; left: auto; right: 14px; margin-left: 0; transform: rotate(-90deg); }
     }
 
+    // Stessa distanza dal VS della prima card (che deve stare sopra il collare): le due frecce si specchiano
     .duel-arena__card--second & {
-      top: 8px;
+      top: 58px;
       transform: rotate(180deg);
 
       @include mq(md) { top: 32%; left: 14px; margin-left: 0; transform: rotate(90deg); }
@@ -483,12 +503,12 @@ $medals: (
     display: grid;
     place-items: center;
     border-radius: 50%;
-    background: #ff6f61;
+    background: var(--coral);
     border: 4px solid var(--surface);
     // Cucitura
     outline: 2px dashed rgba(255, 255, 255, .75);
     outline-offset: -11px;
-    box-shadow: 0 10px 18px -8px rgba(232, 74, 60, .75), inset 0 -4px 0 rgba(0, 0, 0, .12);
+    box-shadow: 0 10px 18px -8px color-mix(in srgb, var(--coral-deep) 75%, transparent), inset 0 -4px 0 rgba(0, 0, 0, .12);
     transform: rotate(-10deg);
     animation: beat 1.8s ease-in-out infinite;
 

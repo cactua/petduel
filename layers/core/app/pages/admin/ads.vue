@@ -206,7 +206,7 @@ const networkSeries = computed(() => data.value?.network.days.map(d => ({ day: d
             <div class="ad-admin__file">
               <label class="ad-admin__pick">
                 {{ imageSrc ? 'Cambia immagine' : 'Scegli un\'immagine' }}
-                <input type="file" accept="image/*" class="u-visually-hidden" @change="setFile(($event.target as HTMLInputElement).files?.[0] ?? null)">
+                <input type="file" accept="image/jpeg,image/png,image/webp" class="u-visually-hidden" @change="setFile(($event.target as HTMLInputElement).files?.[0] ?? null)">
               </label>
               <button v-if="imageSrc" type="button" class="btn btn--ghost" @click="setFile(null); keptImage = null">Togli</button>
               <small v-if="!imageSrc" class="admin-form__hint">Facoltativa. JPG, PNG o WebP fino a 5 MB.</small>

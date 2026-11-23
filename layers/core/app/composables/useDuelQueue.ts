@@ -67,6 +67,13 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
     return load()
   }
 
+  // Il token di ogni coppia è legato al votante: entrando o uscendo dall'account cambia,
+  // e le coppie già in pagina (anche quella precaricata) non si possono più votare
+  const { user } = useUserSession()
+  watch(() => user.value?.id, (now, before) => {
+    if (now !== before && (current.value || failed.value)) reset()
+  })
+
   // Nessuno dei due convince, o piacciono uguale: si passa alla coppia dopo senza votare (la coppia può tornare più avanti)
   // Non durante un voto: hint si riempie appena si sceglie
   function skip() {
@@ -96,6 +103,8 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
     }
     else {
       toast.value = errorMessage(outcome.reason, 'duel.voteFailed')
+      // Anche la coppia precaricata potrebbe avere un token ormai scaduto (sessione cambiata in un'altra scheda)
+      next = null
     }
 
     const showAd = outcome.status === 'fulfilled' ? adDue() : null

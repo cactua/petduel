@@ -70,11 +70,9 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
       <div v-for="i in 2" :key="i" class="duel-panel__ghost"><span class="duel-panel__ghost-photo" /><span class="duel-panel__ghost-line" /></div>
     </div>
     <!-- Fuori dalla catena v-if/v-else sopra: dentro, quando sparisce farebbe comparire il riquadro "hai votato tutto" -->
-    <!-- Segnala sotto ogni card (dalla parte della card), Salta in mezzo -->
+    <!-- Sotto resta solo Salta: la bandierina per segnalare sta nell'angolo di ogni foto -->
     <div v-if="!ad && duel?.pets && !result && !hint" class="duel-panel__extras">
-      <ReportButton v-if="duel.pets[0].photoId" :photo-id="duel.pets[0].photoId" :label="$t('report.openNamed', { name: duel.pets[0].name })" class="duel-panel__report" />
       <button type="button" class="duel-panel__skip" @click="emit('skip')">{{ $t('duel.skip') }} →</button>
-      <ReportButton v-if="duel.pets[1].photoId" :photo-id="duel.pets[1].photoId" :label="$t('report.openNamed', { name: duel.pets[1].name })" class="duel-panel__report duel-panel__report--end" />
     </div>
 
     <p v-if="showNudge" class="duel-panel__nudge">
@@ -104,17 +102,7 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
   @include stack($space-4);
   position: relative;
 
-  &__extras {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: $space-2;
-    color: var(--muted);
-  }
-
-  &__report { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-  &__report--end { text-align: right; }
+  &__extras { display: flex; justify-content: center; }
 
   &__skip {
     border: 0;

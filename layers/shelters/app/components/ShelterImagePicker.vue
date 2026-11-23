@@ -122,7 +122,7 @@ async function remove() {
         <template v-else>
           <label class="btn btn--ghost image-picker__choose">
             {{ id ? $t('shelterEdit.change') : $t('shelterEdit.choose') }}
-            <input ref="input" type="file" accept="image/*" class="u-visually-hidden" @change="pick(($event.target as HTMLInputElement).files?.[0])">
+            <input ref="input" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/avif" class="u-visually-hidden" @change="pick(($event.target as HTMLInputElement).files?.[0])">
           </label>
           <button v-if="id" type="button" class="btn btn--link" :disabled="busy" @click="remove">{{ $t('shelterEdit.remove') }}</button>
         </template>

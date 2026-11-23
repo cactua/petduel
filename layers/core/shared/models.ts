@@ -115,7 +115,7 @@ export interface PublicPet {
 }
 
 // In classifica si mostrano solo i primi: chi è più indietro non viene esposto (brutto per i proprietari)
-export const TOP_RANK = 5
+export const TOP_RANK = 3
 
 export interface RankedPet extends PublicPet {
   rank: number

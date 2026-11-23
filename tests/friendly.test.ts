@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { COMPLIMENTS, NEW_ACCOUNT_VOTE_WEIGHT, PHOTO_REPORT_REASONS, artistSettingsSchema, entryUrl, rankingPath, reportSchema, signupSchema, type Species } from '#shared/models'
-import { BURST_LIMIT, BURST_WINDOW_MS, NEW_ACCOUNT_DAYS, USER_DAILY_CAP, accountVoteWeight, burstHits, isBurst } from '#shared/voteRules'
+import { BURST_LIMIT, BURST_WINDOW_MS, NEW_ACCOUNT_DAYS, USER_DAILY_CAP, accountVoteWeight, burstWindow, isBurst } from '#shared/voteRules'
 
 const DAY = 86_400_000
 const NOW = Date.UTC(2026, 10, 3, 12)
@@ -29,17 +29,14 @@ describe('peso dei voti con account', () => {
 
 describe('raffiche di voti', () => {
   it('scatta solo oltre la soglia', () => {
-    let hits: number[] = []
-    for (let i = 0; i < BURST_LIMIT; i++) hits = burstHits(hits, NOW + i)
-    expect(isBurst(hits)).toBe(false)
-    expect(isBurst(burstHits(hits, NOW + BURST_LIMIT))).toBe(true)
+    expect(isBurst(BURST_LIMIT)).toBe(false)
+    expect(isBurst(BURST_LIMIT + 1)).toBe(true)
   })
 
-  it('i voti fuori dalla finestra non contano più', () => {
-    const old = Array.from({ length: BURST_LIMIT * 2 }, (_, i) => NOW - BURST_WINDOW_MS - i)
-    const hits = burstHits(old, NOW)
-    expect(hits).toEqual([NOW])
-    expect(isBurst(hits)).toBe(false)
+  it('ogni ora è una finestra nuova', () => {
+    const start = burstWindow(NOW) * BURST_WINDOW_MS
+    expect(burstWindow(start + BURST_WINDOW_MS - 1)).toBe(burstWindow(start))
+    expect(burstWindow(start + BURST_WINDOW_MS)).toBe(burstWindow(start) + 1)
   })
 })
 

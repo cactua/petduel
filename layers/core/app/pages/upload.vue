@@ -186,7 +186,7 @@ function again() {
           <div v-if="HAS_BREED_CITY" class="upload-page__two">
             <div class="field">
               <label for="breed" class="label">{{ $t('pet.breed') }} <small>({{ $t('common.optional') }})</small></label>
-              <input id="breed" v-model="form.breed" maxlength="40" placeholder="Beagle" class="input upload-page__input">
+              <input id="breed" v-model="form.breed" maxlength="40" :placeholder="$t('upload.breedPlaceholder')" class="input upload-page__input">
             </div>
             <div class="field">
               <label for="city" class="label">{{ $t('pet.city') }} <small>({{ $t('common.optional') }})</small></label>
