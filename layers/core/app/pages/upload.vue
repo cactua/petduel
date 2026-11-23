@@ -20,6 +20,8 @@ const preview = ref('')
 const crops = ref<Crops | null>(null)
 // Artista dell'immagine, sui siti che lo chiedono
 const credit = reactive({ credit: '', creditUrl: '', artist: '' })
+// Le immagini vanno nei duelli salvo scelta diversa (es. schizzi o reference che si vogliono solo nel profilo)
+const inDuels = ref(true)
 const sending = ref(false)
 const error = ref('')
 const done = ref(false)
@@ -76,8 +78,11 @@ async function submit() {
     body.append('creditUrl', check.data.creditUrl)
     body.append('artist', check.data.artist)
   }
-  body.append('photo', photo.value)
+  sending.value = true
+  // Troppo grande: si rimpicciolisce qui invece di farla rifiutare
+  body.append('photo', await shrinkImage(photo.value))
   if (crops.value) body.append('crops', JSON.stringify(crops.value))
+  body.append('inDuels', String(inDuels.value))
 
   sending.value = true
   try {
@@ -99,6 +104,7 @@ function again() {
   crops.value = null
   Object.assign(form, blankForm())
   Object.assign(credit, { credit: '', creditUrl: '', artist: '' })
+  inDuels.value = true
   refreshProfile()
 }
 </script>
@@ -196,6 +202,13 @@ function again() {
         </template>
         <p v-else-if="targetPet" class="upload-page__adding">{{ $t('upload.addTo', { name: targetPet.name }) }}</p>
         <CreditFields v-if="site.askCredit" v-model="credit" />
+        <label class="upload-page__duels">
+          <input v-model="inDuels" type="checkbox" class="upload-page__duels-box" aria-describedby="duels-hint">
+          <span class="upload-page__duels-text">
+            <b>{{ $t('gallery.inDuels') }}</b>
+            <small id="duels-hint">{{ $t('gallery.inDuelsHint') }}</small>
+          </span>
+        </label>
 
         <p class="upload-page__rules">{{ $t('upload.rules') }}</p>
         <p v-if="error" class="error" role="alert">{{ error }}</p>
@@ -349,6 +362,25 @@ function again() {
 
   // Scelta del pet e della specie: pillole al posto del menu a tendina
   &__targets { @include cluster($space-3); }
+
+  &__duels {
+    display: flex;
+    gap: $space-3;
+    align-items: flex-start;
+    padding: 12px 14px;
+    border: 2px solid var(--line);
+    border-radius: $radius-md;
+    cursor: pointer;
+  }
+
+  &__duels-box { width: 22px; height: 22px; margin: 1px 0 0; flex-shrink: 0; accent-color: var(--action); }
+
+  &__duels-text {
+    @include stack(2px);
+    font-size: 15px;
+
+    small { color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.4; }
+  }
 
   &__option {
     position: relative;

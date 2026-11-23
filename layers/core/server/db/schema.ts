@@ -1,5 +1,6 @@
-import { boolean, integer, jsonb, pgTable, real, serial, text, timestamp, unique } from 'drizzle-orm/pg-core'
-import type { AdoptionStatus, CommissionStatus, ComplimentKind, PetSize, PhotoStatus, ReportReason, ReportStatus, RequestStatus, ShelterAccent, ShelterSocials, ShelterStatus, Species } from '#shared/models'
+import { boolean, integer, jsonb, pgTable, real, serial, text, timestamp, unique, type AnyPgColumn } from 'drizzle-orm/pg-core'
+import type { Crop } from '#shared/images'
+import type { AdoptionStatus, ChallengeTranslations, CommissionStatus, ComplimentKind, PetSize, PhotoStatus, ReportReason, ReportStatus, RequestStatus, ShelterAccent, ShelterSocials, ShelterStatus, SonaSheet, Species } from '#shared/models'
 
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
@@ -20,6 +21,17 @@ export const users = pgTable('users', {
   commissionsUrl: text('commissions_url').notNull().default(''),
   // Cresce quando si esce da tutti i dispositivi o si cambia password: le sessioni con un numero vecchio non valgono più
   sessionVersion: integer('session_version').notNull().default(0),
+  // Due righe su di sé e pronomi, mostrati sul profilo (facoltativi)
+  bio: text('bio').notNull().default(''),
+  pronouns: text('pronouns').notNull().default(''),
+  // Avatar e banner ritagliati da una propria immagine (photo_id): si vedono finché quella è approvata,
+  // se viene eliminata si torna alla lettera. *_image è l'id dei file generati, *_crop il ritaglio scelto
+  avatarPhotoId: integer('avatar_photo_id').references((): AnyPgColumn => photos.id, { onDelete: 'set null' }),
+  avatarImage: text('avatar_image'),
+  avatarCrop: jsonb('avatar_crop').$type<Crop>(),
+  bannerPhotoId: integer('banner_photo_id').references((): AnyPgColumn => photos.id, { onDelete: 'set null' }),
+  bannerImage: text('banner_image'),
+  bannerCrop: jsonb('banner_crop').$type<Crop>(),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
@@ -42,6 +54,8 @@ export const pets = pgTable('pets', {
   about: text('about').notNull().default(''),
   // Il rifugio può tenerlo fuori da classifiche e sfide (resta nei duelli e in "Cerca casa")
   hideFromRankings: boolean('hide_from_rankings').notNull().default(false),
+  // Siti con site.sona: scheda del personaggio (specie, pronomi, colori, regole per chi lo disegna, reference)
+  sona: jsonb('sona').$type<SonaSheet>(),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
@@ -107,6 +121,8 @@ export const photos = pgTable('photos', {
   creditUrl: text('credit_url'),
   // Artista registrato scelto da chi carica: credit è il suo username e credit_url il suo profilo ("/u/…")
   artistId: integer('artist_id').references(() => users.id, { onDelete: 'set null' }),
+  // Il proprietario sceglie quali immagini usare nei duelli; le altre restano nel profilo
+  inDuels: boolean('in_duels').notNull().default(true),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
@@ -130,6 +146,8 @@ export const challenges = pgTable('challenges', {
   emoji: text('emoji').notNull(),
   species: text('species').$type<Species>(),
   adoptionOnly: boolean('adoption_only').notNull().default(false),
+  // Titolo e descrizione nelle altre lingue: { en: { title, description }, ... }
+  translations: jsonb('translations').$type<ChallengeTranslations>().notNull().default({}),
   startsAt: timestamp('starts_at', { withTimezone: true }).notNull(),
   endsAt: timestamp('ends_at', { withTimezone: true }).notNull(),
   createdBy: integer('created_by').references(() => users.id, { onDelete: 'set null' }),
@@ -421,6 +439,7 @@ CREATE TABLE IF NOT EXISTS challenges (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 ALTER TABLE challenges ADD COLUMN IF NOT EXISTS adoption_only boolean NOT NULL DEFAULT false;
+ALTER TABLE challenges ADD COLUMN IF NOT EXISTS translations jsonb NOT NULL DEFAULT '{}'::jsonb;
 CREATE INDEX IF NOT EXISTS challenges_dates ON challenges (starts_at, ends_at);
 CREATE TABLE IF NOT EXISTS challenge_entries (
   id serial PRIMARY KEY,
@@ -571,4 +590,15 @@ CREATE TABLE IF NOT EXISTS settings (
   key text PRIMARY KEY,
   value text NOT NULL
 );
+ALTER TABLE users ADD COLUMN IF NOT EXISTS bio text NOT NULL DEFAULT '';
+ALTER TABLE users ADD COLUMN IF NOT EXISTS pronouns text NOT NULL DEFAULT '';
+ALTER TABLE pets ADD COLUMN IF NOT EXISTS sona jsonb;
+ALTER TABLE photos ADD COLUMN IF NOT EXISTS in_duels boolean NOT NULL DEFAULT true;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_photo_id integer REFERENCES photos(id) ON DELETE SET NULL;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS banner_photo_id integer REFERENCES photos(id) ON DELETE SET NULL;
+ALTER TABLE users DROP COLUMN IF EXISTS banner_y;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_image text;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_crop jsonb;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS banner_image text;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS banner_crop jsonb;
 `

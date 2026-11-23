@@ -214,6 +214,11 @@
     "lead": "News from the people you follow: their new bikes and freshly published photos."
   },
   "favorites": {
-    "empty": "No favourites yet. Open a bike's page and tap \"Save\"."
+    "empty": "No favorites yet. Open a bike's page and tap \"Save\"."
+  },
+  "advertise": {
+    "numbers": {
+      "entries": "Bikes competing"
+    }
   }
 }

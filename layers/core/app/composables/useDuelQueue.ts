@@ -1,4 +1,7 @@
-import type { AdSlot, Duel, ShownAd } from '#shared/models'
+import { isHouseAd, type AdSlot, type Duel, type ShownAd } from '#shared/models'
+
+// Invito a fare pubblicità già mostrato in questa visita (fino al prossimo caricamento della pagina)
+let houseShown = false
 
 // Durata dell'animazione "vince" prima di passare alla coppia successiva
 const RESULT_MS = 1200
@@ -12,6 +15,7 @@ const isMilestone = (n: number) => [10, 25, 50].includes(n) || (n > 0 && n % 100
  */
 export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl: string, query?: Record<string, unknown>, challenge?: boolean }>) {
   const { t } = useI18n()
+  const { haptics } = useA11yPrefs()
   const current = ref<Duel | null>(null)
   const votes = ref(0)
   const toast = ref('')
@@ -37,6 +41,11 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
     const n = votes.value - startAfter
     if (n <= 0 || n % every) return null
     adSlot = fetchAd()
+    // L'invito a fare pubblicità qui si vede una volta per visita, non ogni N voti
+    if (isHouseAd(slot.ad)) {
+      if (houseShown) return null
+      houseShown = true
+    }
     return slot.ad
   }
   const dismissAd = () => (ad.value = null)
@@ -95,7 +104,7 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
     if (outcome.status === 'fulfilled') {
       votes.value++
       result.value = { index, delta: outcome.value.delta }
-      navigator.vibrate?.(25)
+      if (haptics.value) navigator.vibrate?.(25)
       if (isMilestone(votes.value)) {
         celebrate.value++
         toast.value = `🎉 ${t('duel.votesMilestone', { n: votes.value })}`

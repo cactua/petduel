@@ -50,6 +50,9 @@ onMounted(load)
     align-items: flex-end;
 
     @include mq-down(md) { @include visually-hidden; }
+
+    // Su computer la domanda sta al centro, sopra le due card
+    @include mq(lg) { justify-content: center; }
   }
 
   // La mascotte fa la domanda dentro un fumetto (se il sito non ne ha, resta il fumetto senza punta)
@@ -72,6 +75,8 @@ onMounted(load)
     box-shadow: 0 8px 18px -12px var(--shadow);
 
     @include mq(md) { font-size: 24px; margin-bottom: 14px; }
+
+    @include mq(lg) { font-size: 28px; padding: 8px 20px; }
 
     &:first-child { border-radius: 20px; }
   }

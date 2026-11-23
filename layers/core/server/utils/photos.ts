@@ -124,6 +124,9 @@ export async function readPhotoUpload(event: H3Event) {
   delete fields.credit
   delete fields.creditUrl
   delete fields.artist
+  // Spunta "Usala nei duelli": senza il campo vale sì
+  const inDuels = fields.inDuels !== 'false'
+  delete fields.inDuels
 
   // Foto raddrizzata secondo l'EXIF: i ritagli sono calcolati su questa
   let oriented: Source
@@ -145,7 +148,7 @@ export async function readPhotoUpload(event: H3Event) {
     await removeImage(image)
     throw e
   }
-  return { fields, image, credit }
+  return { fields, image, credit, inDuels }
 }
 
 /**

@@ -26,12 +26,36 @@ const shownPhotos = computed(() => {
   return props.hero || expanded.value || all.length <= tiles.value ? all : all.slice(0, tiles.value - 1)
 })
 const hiddenCount = computed(() => props.pet.photos.length - shownPhotos.value.length)
-// Nelle liste i comandi del proprietario (modifica, elimina) compaiono solo dopo "Gestisci"
-const managing = ref(!!props.hero)
+// I comandi del proprietario (duelli, modifica, elimina) compaiono solo dopo "Gestisci"
+const managing = ref(false)
 const adoption = computed(() => props.pet.adoptionInfo?.status ?? null)
 
 const error = ref('')
 const confirming = ref<number | null>(null)
+
+// Quali immagini usare nei duelli: si cambia subito qui, e si torna indietro se il server non accetta
+const duelOverride = reactive<Record<number, boolean>>({})
+const isInDuels = (p: { id: number, inDuels: boolean }) => duelOverride[p.id] ?? p.inDuels
+const togglingDuel = ref<number | null>(null)
+async function setInDuels(photoId: number, value: boolean) {
+  error.value = ''
+  duelOverride[photoId] = value
+  togglingDuel.value = photoId
+  try {
+    await $fetch(`/api/photos/${photoId}`, { method: 'PATCH', body: { inDuels: value } })
+  }
+  catch (e) {
+    duelOverride[photoId] = !value
+    error.value = errorMessage(e)
+  }
+  finally {
+    togglingDuel.value = null
+  }
+}
+// Riepilogo: quante immagini girano nei duelli (le rifiutate non contano)
+const usable = computed(() => props.pet.photos.filter(p => p.status !== 'rejected'))
+const duelCount = computed(() => usable.value.filter(isInDuels).length)
+const noDuelPhoto = computed(() => usable.value.length > 0 && !props.pet.photos.some(p => p.status === 'approved' && isInDuels(p)))
 
 async function remove(photoId: number) {
   if (confirming.value !== photoId) {
@@ -116,7 +140,7 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
           </component>
           <NuxtLink v-if="adoption && !hero" :to="entryUrl(pet.id)" class="pet-gallery__adopt" :class="`pet-gallery__adopt--${adoption}`">{{ $t(`adoption.status.${adoption}`) }}</NuxtLink>
           <button
-            v-if="editable && !hero" type="button" class="pet-gallery__manage" :class="{ 'is-active': managing }" :aria-pressed="managing"
+            v-if="editable" type="button" class="pet-gallery__manage" :class="{ 'is-active': managing }" :aria-pressed="managing"
             @click="managing = !managing; confirmingPet = false; confirming = null"
           >
             {{ managing ? $t('gallery.done') : $t('gallery.manage') }}
@@ -148,7 +172,39 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
       </div>
     </div>
 
-    <div class="pet-gallery__grid">
+    <!-- Gestione: una riga per immagine con stato, scelta per i duelli ed eliminazione -->
+    <div v-if="editable && managing" class="pet-gallery__manager">
+      <p class="pet-gallery__summary" role="status">
+        {{ $t('gallery.duelCount', { done: duelCount, total: usable.length }, usable.length) }}
+      </p>
+      <p v-if="noDuelPhoto" class="pet-gallery__warn">{{ $t('gallery.noDuelPhoto', { name: pet.name }) }}</p>
+      <ul class="pet-gallery__rows">
+        <li v-for="photo in pet.photos" :key="photo.id" class="pet-gallery__row" :class="{ 'is-off': photo.image && !isInDuels(photo) }">
+          <button v-if="photo.image" type="button" class="pet-gallery__row-thumb" :aria-label="$t('pet.zoomPhoto')" @click="openPhoto(photo.image)">
+            <picture><source v-for="s in photoSources(photo.image, 's', '64px')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="photo.image" alt="" loading="lazy" class="pet-gallery__row-img"></picture>
+          </button>
+          <span v-else class="pet-gallery__row-thumb pet-gallery__row-thumb--gone" aria-hidden="true">✕</span>
+          <div class="pet-gallery__row-info">
+            <span class="pet-gallery__row-status" :class="`pet-gallery__row-status--${photo.status}`">{{ $t(`pet.photoStatus.${photo.status}`) }}</span>
+            <small v-if="photo.rejectReason" class="pet-gallery__row-note">{{ rejectReason(photo.rejectReason) }}</small>
+            <label v-if="photo.status !== 'rejected'" class="pet-gallery__row-duel">
+              <input
+                type="checkbox" class="pet-gallery__row-box" :checked="isInDuels(photo)" :disabled="togglingDuel === photo.id"
+                @change="setInDuels(photo.id, ($event.target as HTMLInputElement).checked)"
+              >
+              {{ $t('gallery.inDuels') }}
+            </label>
+          </div>
+          <button type="button" class="pet-gallery__row-remove" :class="{ 'is-confirming': confirming === photo.id }" @click="remove(photo.id)">
+            {{ confirming === photo.id ? $t('common.confirm') : $t('common.delete') }}
+          </button>
+        </li>
+      </ul>
+      <p class="pet-gallery__hint">{{ $t('gallery.inDuelsHint') }}</p>
+      <NuxtLink :to="`/upload?pet=${pet.id}`" class="btn btn--ghost btn--sm pet-gallery__add-link">+ {{ $t('pet.addPhoto') }}</NuxtLink>
+    </div>
+
+    <div v-else class="pet-gallery__grid">
       <figure v-for="photo in shownPhotos" :key="photo.id" class="pet-gallery__photo" :class="`pet-gallery__photo--${photo.status}`">
         <button v-if="photo.image" type="button" class="pet-gallery__zoom" :aria-label="$t('pet.zoomPhoto')" @click="openPhoto(photo.image)">
           <picture><source v-for="s in photoSources(photo.image, 'v', '(min-width: 760px) 170px, 31vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="photo.image" :alt="$t('pet.photoOf', { name: pet.name })" loading="lazy" class="pet-gallery__photo-img"></picture>
@@ -160,9 +216,9 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
         <CreditLink
           v-if="photo.credit && !editable" class="pet-gallery__credit" :url="photo.credit.url"
         >{{ $t('photo.credit', { text: photo.credit.text }) }}</CreditLink>
-        <figcaption v-if="editable && (managing || photo.status !== 'approved')" class="pet-gallery__caption">
-          <span class="pet-gallery__status">{{ photo.status !== 'approved' ? $t(`pet.photoStatus.${photo.status}`) : '' }}</span>
-          <button v-if="managing" type="button" class="pet-gallery__remove" @click="remove(photo.id)">{{ confirming === photo.id ? $t('common.confirm') : $t('common.delete') }}</button>
+        <!-- Al proprietario: stato della revisione, oppure che l'immagine resta fuori dai duelli -->
+        <figcaption v-if="editable && (photo.status !== 'approved' || !isInDuels(photo))" class="pet-gallery__caption">
+          <span class="pet-gallery__status">{{ photo.status !== 'approved' ? $t(`pet.photoStatus.${photo.status}`) : $t('gallery.profileOnly') }}</span>
         </figcaption>
       </figure>
       <button v-if="hiddenCount > 0" type="button" class="pet-gallery__tile pet-gallery__tile--more" @click="expanded = true">
@@ -275,7 +331,8 @@ $scrim: rgba(30, 15, 5, .7);
     border-radius: $radius-pill;
     border: 2px solid transparent;
     background: var(--coral-soft);
-    color: var(--coral-deep);
+    // Testo scuro: il corallo sul rosa chiaro non si leggeva abbastanza, soprattutto nel tema scuro
+    color: var(--ink);
 
     &.is-active { border-color: var(--coral-deep); }
   }
@@ -389,7 +446,89 @@ $scrim: rgba(30, 15, 5, .7);
     .pet-gallery__photo--rejected & { color: #ff9a8a; }
   }
 
-  &__remove { border: 0; @include pill(3px, 8px); font-size: 11px; font-weight: 800; background: rgba(255, 255, 255, .92); color: #3d2416; cursor: pointer; }
+  &__manager { @include stack($space-3); }
+
+  &__summary { margin: 0; font-weight: 900; font-size: 15px; }
+
+  &__warn {
+    margin: 0;
+    padding: 10px 14px;
+    border-radius: $radius-sm;
+    background: var(--coral-soft);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  &__rows { list-style: none; margin: 0; padding: 0; @include stack($space-2); }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: 8px;
+    border: 2px solid var(--line);
+    border-radius: $radius-md;
+    background: var(--surface);
+
+    &.is-off { border-style: dashed; }
+  }
+
+  &__row-thumb {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--line);
+    cursor: zoom-in;
+
+    .pet-gallery__row.is-off & { opacity: .55; }
+
+    &--gone { display: grid; place-items: center; color: var(--muted); font-weight: 900; cursor: auto; }
+  }
+
+  &__row-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  &__row-info { flex: 1; min-width: 0; @include stack(2px); align-items: flex-start; }
+
+  &__row-status {
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--muted);
+
+    &--pending { color: var(--ink); }
+
+    &--rejected { color: var(--coral-deep); }
+  }
+
+  &__row-note { font-size: 12px; color: var(--muted); line-height: 1.35; }
+
+  // Tutta la scritta è cliccabile: bersaglio alto 44px
+  &__row-duel { display: inline-flex; align-items: center; gap: $space-2; min-height: 44px; font-weight: 800; font-size: 15px; cursor: pointer; }
+
+  &__row-box { width: 22px; height: 22px; margin: 0; accent-color: var(--action); cursor: pointer; }
+
+  &__row-remove {
+    flex-shrink: 0;
+    min-height: 44px;
+    border: 2px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    @include pill(6px, 14px);
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+
+    &.is-confirming { background: var(--coral-deep); border-color: var(--coral-deep); color: #fff; }
+  }
+
+  &__hint { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+  &__add-link { align-self: flex-start; }
 
   &__tools { @include cluster($space-3); justify-content: flex-end; }
 

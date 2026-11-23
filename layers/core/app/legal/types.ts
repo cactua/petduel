@@ -1,9 +1,9 @@
-// Testi legali (privacy, cookie, termini) nelle 5 lingue del sito.
+// Testi legali (privacy, cookie, termini, accessibilità) nelle 5 lingue del sito.
 // {site} è il nome del sito (site.config.ts); {owner} ed {email} vengono dal file .env (NUXT_PUBLIC_LEGAL_OWNER, NUXT_PUBLIC_LEGAL_EMAIL).
 // Sono una base di partenza: prima del lancio vanno fatti controllare da un legale.
 export const LEGAL_UPDATED = '2026-10-31'
 
-export type LegalKey = 'privacy' | 'cookie' | 'terms'
+export type LegalKey = 'privacy' | 'cookie' | 'terms' | 'accessibility'
 
 export interface LegalSection {
   h: string

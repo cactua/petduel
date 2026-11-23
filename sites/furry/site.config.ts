@@ -14,13 +14,15 @@ export default defineSite({
   breedAndCity: false,
   // La pagina di un personaggio è /character/<id>, non /pet/<id>
   entryPath: 'character',
+  // Profilo con le schede delle sona: specie, pronomi, colori e regole per chi le disegna
+  sona: true,
   // Come app/assets/theme.scss. Niente mascotte (mascotSvg), come in app/components/SiteMascot.vue
   brand: {
-    accent: '#8b5cf6',
-    glow: 'rgba(139,92,246,.5)',
-    background: '#f8f5ff',
-    ink: '#2a2140',
-    muted: '#6b5f86',
-    blobs: ['#e7dcff', '#d2f4ee', '#ffe0ef'],
+    accent: '#c2410c',
+    glow: 'rgba(217,72,15,.4)',
+    background: '#fbf7f0',
+    ink: '#1f1a17',
+    muted: '#6b5e52',
+    blobs: ['#ffe3cc', '#d4f1e8', '#dbeafe'],
   },
 })

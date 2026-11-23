@@ -178,5 +178,44 @@ export default {
         },
       ],
     },
+    accessibility: {
+      title: 'Accessibility statement',
+      intro: 'We want {site} to be easy for everyone to use, including people who use a screen reader, only a keyboard, magnification, or who find precise movements difficult.',
+      sections: [
+        {
+          h: 'Goal',
+          p: ['We follow WCAG 2.2 level AA and the European standard EN 301 549, as required by the European Accessibility Act (EU Directive 2019/882).'],
+        },
+        {
+          h: 'Compliance status',
+          p: ['{site} is partially compliant: most pages meet the requirements, but the limitations listed below remain.'],
+        },
+        {
+          h: 'What we have done',
+          list: [
+            'You can vote with the "Pick" button, without dragging; on a keyboard the arrow keys are enough.',
+            '"Skip to content" link, a logical tab order and a clearly visible focus outline.',
+            'Text and buttons with at least 4.5:1 contrast, and buttons at least 44 pixels in size.',
+            'From the menu you can choose less motion, high contrast, a light or dark theme, and turn off vibration.',
+            'The site works with browser zoom up to 200% and in 5 languages.',
+          ],
+        },
+        {
+          h: 'Known limitations',
+          list: [
+            'Images uploaded by users are described by the name and details they entered, not by a full description of what they show.',
+            'Ads come from third parties and may not meet every requirement.',
+          ],
+        },
+        {
+          h: 'How we checked',
+          p: ['With an internal assessment, using automated checks and manual testing with a keyboard and a screen reader.'],
+        },
+        {
+          h: 'Report a problem',
+          p: ['If you find a part of the site you cannot use, write to {email}: we reply within 30 days and, where possible, provide the content another way.', 'If you are not satisfied with the answer, you can contact the market surveillance authority in your country.'],
+        },
+      ],
+    },
   },
 } satisfies LegalTexts

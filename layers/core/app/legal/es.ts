@@ -178,5 +178,44 @@ export default {
         },
       ],
     },
+    accessibility: {
+      title: 'Declaración de accesibilidad',
+      intro: 'Queremos que {site} sea fácil de usar para todos, también para quien usa un lector de pantalla, solo el teclado, la ampliación o tiene dificultades con los movimientos precisos.',
+      sections: [
+        {
+          h: 'Objetivo',
+          p: ['Seguimos las pautas WCAG 2.2 nivel AA y la norma europea EN 301 549, como exige el Acta Europea de Accesibilidad (Directiva UE 2019/882).'],
+        },
+        {
+          h: 'Estado de conformidad',
+          p: ['{site} es parcialmente conforme: la mayoría de las páginas cumplen los requisitos, pero quedan las limitaciones indicadas abajo.'],
+        },
+        {
+          h: 'Qué hemos hecho',
+          list: [
+            'Puedes votar con el botón «Elegir», sin arrastrar; con el teclado bastan las flechas.',
+            'Enlace «Ir al contenido», orden de tabulación lógico y foco bien visible.',
+            'Textos y botones con contraste de al menos 4,5:1 y botones de al menos 44 píxeles.',
+            'Desde el menú puedes elegir menos animaciones, contraste alto, tema claro u oscuro y apagar la vibración.',
+            'El sitio funciona con el zoom del navegador hasta el 200 % y en 5 idiomas.',
+          ],
+        },
+        {
+          h: 'Limitaciones conocidas',
+          list: [
+            'Las imágenes subidas por los usuarios se describen con el nombre y los datos que introdujeron, no con una descripción completa de lo que muestran.',
+            'Los anuncios vienen de terceros y puede que no cumplan todos los requisitos.',
+          ],
+        },
+        {
+          h: 'Cómo lo comprobamos',
+          p: ['Con una evaluación interna, con controles automáticos y pruebas manuales con teclado y lector de pantalla.'],
+        },
+        {
+          h: 'Informa de un problema',
+          p: ['Si encuentras una parte del sitio que no puedes usar, escríbenos a {email}: respondemos en 30 días y, si es posible, te damos el contenido de otra forma.', 'Si la respuesta no te satisface, puedes dirigirte a la autoridad de vigilancia de tu país.'],
+        },
+      ],
+    },
   },
 } satisfies LegalTexts

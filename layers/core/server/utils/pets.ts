@@ -1,5 +1,5 @@
 import { and, asc, desc, eq, inArray, sql, type SQL } from 'drizzle-orm'
-import type { PetGallery } from '#shared/models'
+import { HAS_SONA, type PetGallery } from '#shared/models'
 import { petBadges } from '#shared/badges'
 import { photos, pets, users, type Pet } from '../db/schema'
 import { imageUrl, photoCredit, useDb } from './db'
@@ -10,6 +10,8 @@ const TZ = 'Europe/Rome'
 
 // Solo i pet con almeno una foto approvata sono visibili al pubblico
 export const hasApprovedPhoto = sql`exists (select 1 from ${photos} where ${photos.petId} = ${pets.id} and ${photos.status} = 'approved')`
+// Nei duelli: almeno una foto approvata che il proprietario ha lasciato spuntata per i duelli
+export const hasDuelPhoto = sql`exists (select 1 from ${photos} where ${photos.petId} = ${pets.id} and ${photos.status} = 'approved' and ${photos.inDuels})`
 
 // In classifiche e sfide entrano tutti, tranne i pet che un rifugio ha scelto di tenere fuori
 export const inRankings = sql`not ${pets.hideFromRankings}`
@@ -20,12 +22,12 @@ export const aheadOf = (pet: { wins: number, elo: number }) =>
 // Foto approvata più recente: copertina in classifica
 export const coverImage = sql<string>`(select ${photos.image} from ${photos} where ${photos.petId} = ${pets.id} and ${photos.status} = 'approved' order by ${photos.createdAt} desc limit 1)`
 
-// Nei duelli ogni volta una foto approvata a caso, così tutta la gallery partecipa
-export async function randomApprovedImages(petIds: number[]) {
+// Nei duelli ogni volta una foto approvata a caso tra quelle spuntate per i duelli
+export async function randomApprovedImages(petIds: number[], duelsOnly = false) {
   const db = await useDb()
   const rows = await db.execute<{ id: number, pet_id: number, image: string, credit: string | null, credit_url: string | null }>(sql`
     select distinct on (pet_id) id, pet_id, image, credit, credit_url from ${photos}
-    where ${inArray(photos.petId, petIds)} and status = 'approved'
+    where ${inArray(photos.petId, petIds)} and status = 'approved' ${duelsOnly ? sql`and in_duels` : sql``}
     order by pet_id, random()`)
   return new Map(rows.rows.map(r => [r.pet_id, { photoId: r.id, image: r.image, credit: photoCredit(r.credit, r.credit_url) }]))
 }
@@ -65,11 +67,13 @@ export async function loadGalleries(where: SQL | undefined, includePrivate: bool
       adopted: pet.adoption === 'adopted',
     }),
     adoptionInfo: adoptions.get(pet.id) ?? null,
+    ...(HAS_SONA ? { sona: pet.sona ?? null } : {}),
     photos: photoRows.filter(ph => ph.petId === pet.id).map(ph => ({
       id: ph.id,
       // Il file di una foto rifiutata viene cancellato: resta solo il motivo
       image: ph.status === 'rejected' ? '' : imageUrl(ph.image),
       status: ph.status,
+      inDuels: ph.inDuels,
       rejectReason: ph.rejectReason,
       credit: photoCredit(ph.credit, ph.creditUrl),
       createdAt: ph.createdAt.toISOString(),

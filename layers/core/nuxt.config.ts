@@ -154,6 +154,9 @@ export default messages
         owner: "",
         email: "",
       },
+      // Email per chi vuole fare pubblicità (pagina /advertise); vuota = quella delle pagine legali.
+      // Da .env: NUXT_PUBLIC_ADS_EMAIL
+      adsEmail: "",
     },
     session: {
       // Sessione di 30 giorni; cookie httpOnly, SameSite=Lax, Secure in produzione

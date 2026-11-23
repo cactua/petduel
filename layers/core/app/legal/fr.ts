@@ -178,5 +178,44 @@ export default {
         },
       ],
     },
+    accessibility: {
+      title: 'Déclaration d\'accessibilité',
+      intro: 'Nous voulons que {site} soit facile à utiliser pour tout le monde, y compris avec un lecteur d\'écran, uniquement au clavier, avec un agrandissement ou en cas de difficulté avec les gestes précis.',
+      sections: [
+        {
+          h: 'Objectif',
+          p: ['Nous suivons les WCAG 2.2 niveau AA et la norme européenne EN 301 549, comme le demande l\'Acte européen sur l\'accessibilité (directive UE 2019/882).'],
+        },
+        {
+          h: 'État de conformité',
+          p: ['{site} est partiellement conforme : la plupart des pages respectent les exigences, mais les limites ci-dessous demeurent.'],
+        },
+        {
+          h: 'Ce que nous avons fait',
+          list: [
+            'Tu peux voter avec le bouton « Choisir », sans glisser ; au clavier, les flèches suffisent.',
+            'Lien « Aller au contenu », ordre de tabulation logique et focus bien visible.',
+            'Textes et boutons avec un contraste d\'au moins 4,5:1 et boutons d\'au moins 44 pixels.',
+            'Dans le menu, tu peux choisir moins d\'animations, un contraste élevé, un thème clair ou sombre et couper la vibration.',
+            'Le site fonctionne avec le zoom du navigateur jusqu\'à 200 % et en 5 langues.',
+          ],
+        },
+        {
+          h: 'Limites connues',
+          list: [
+            'Les images envoyées par les utilisateurs sont décrites par le nom et les informations saisies, pas par une description complète de leur contenu.',
+            'Les publicités viennent de tiers et peuvent ne pas respecter toutes les exigences.',
+          ],
+        },
+        {
+          h: 'Comment nous l\'avons vérifié',
+          p: ['Par une évaluation interne, avec des contrôles automatiques et des tests manuels au clavier et au lecteur d\'écran.'],
+        },
+        {
+          h: 'Signaler un problème',
+          p: ['Si une partie du site t\'est inaccessible, écris-nous à {email} : nous répondons sous 30 jours et, si possible, te fournissons le contenu autrement.', 'Si la réponse ne te satisfait pas, tu peux t\'adresser à l\'autorité de surveillance de ton pays.'],
+        },
+      ],
+    },
   },
 } satisfies LegalTexts

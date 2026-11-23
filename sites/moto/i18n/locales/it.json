@@ -227,5 +227,10 @@
   },
   "favorites": {
     "empty": "Nessun preferito. Apri la pagina di una moto e tocca \"Salva\"."
+  },
+  "advertise": {
+    "numbers": {
+      "entries": "Moto in gara"
+    }
   }
 }

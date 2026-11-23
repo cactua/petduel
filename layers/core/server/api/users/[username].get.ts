@@ -1,7 +1,8 @@
-import { and, count, desc, eq } from 'drizzle-orm'
+import { and, count, desc, eq, inArray } from 'drizzle-orm'
 import { z } from 'zod'
 import { blocks, follows, pets, photos, users, votes } from '../../db/schema'
-import { HAS_ARTISTS, usernameSchema, type Profile } from '#shared/models'
+import { HAS_ARTISTS, usernameSchema, type Profile, type ProfileMedia } from '#shared/models'
+import type { Crop } from '#shared/images'
 
 const paramsSchema = z.object({ username: usernameSchema })
 
@@ -11,13 +12,14 @@ export default defineEventHandler(async (event): Promise<Profile> => {
   if (!parsed.success) throw createError({ statusCode: 404, statusMessage: 'errors.userNotFound' })
 
   const db = await useDb()
-  const [profile] = await db.select({ id: users.id, username: users.username, createdAt: users.createdAt, isArtist: users.isArtist, artistLinks: users.artistLinks, commissions: users.commissions, commissionsUrl: users.commissionsUrl })
+  const [profile] = await db.select({ id: users.id, username: users.username, createdAt: users.createdAt, isArtist: users.isArtist, artistLinks: users.artistLinks, commissions: users.commissions, commissionsUrl: users.commissionsUrl, bio: users.bio, pronouns: users.pronouns, avatarPhotoId: users.avatarPhotoId, avatarImage: users.avatarImage, avatarCrop: users.avatarCrop, bannerPhotoId: users.bannerPhotoId, bannerImage: users.bannerImage, bannerCrop: users.bannerCrop })
     .from(users).where(eq(users.username, parsed.data.username))
   if (!profile) throw createError({ statusCode: 404, statusMessage: 'errors.userNotFound' })
 
   const user = await optionalUser(event)
   const isMe = user?.id === profile.id
-  const [shelter, [voted], galleries, manage, artworks, [blocked], [following], [followers]] = await Promise.all([
+  const chosen = [profile.avatarPhotoId, profile.bannerPhotoId].filter((id): id is number => id !== null)
+  const [shelter, [voted], galleries, manage, artworks, [blocked], [following], [followers], images] = await Promise.all([
     shelterOfUser(profile.id),
     db.select({ n: count() }).from(votes).where(eq(votes.voterId, `u:${profile.id}`)),
     loadGalleries(eq(pets.ownerId, profile.id), isMe),
@@ -36,7 +38,15 @@ export default defineEventHandler(async (event): Promise<Profile> => {
       : [],
     // Il numero di chi ti segue lo vedi solo tu: niente gara a chi ne ha di più
     isMe ? db.select({ n: count() }).from(follows).where(eq(follows.followedId, profile.id)) : [],
+    // Stato delle immagini di partenza di avatar e banner
+    chosen.length ? db.select({ id: photos.id, status: photos.status }).from(photos).where(inArray(photos.id, chosen)) : [],
   ])
+  // Si vedono solo con l'immagine di partenza approvata; finché è in revisione solo il proprietario
+  const media = (photoId: number | null, id: string | null, crop: Crop | null): ProfileMedia | null => {
+    const status = images.find(i => i.id === photoId)?.status
+    if (!photoId || !id || !crop || !status || status === 'rejected' || (status === 'pending' && !isMe)) return null
+    return { id, photoId, crop, pending: status === 'pending' }
+  }
   return {
     username: profile.username,
     memberSince: profile.createdAt.toISOString(),
@@ -50,5 +60,9 @@ export default defineEventHandler(async (event): Promise<Profile> => {
     blocked: !!blocked,
     following: !!following,
     followers: followers?.n ?? null,
+    bio: profile.bio,
+    pronouns: profile.pronouns,
+    avatar: media(profile.avatarPhotoId, profile.avatarImage, profile.avatarCrop),
+    banner: media(profile.bannerPhotoId, profile.bannerImage, profile.bannerCrop),
   }
 })

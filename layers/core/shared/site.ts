@@ -77,6 +77,11 @@ export interface SiteConfig {
    * invece di quello verticale 3:4. Se manca: no
    */
   wideMedia?: boolean
+  /**
+   * Scheda del personaggio sul profilo (specie, pronomi, colori, regole per chi lo disegna, reference sheet),
+   * pensata per le sona dei siti furry. Se manca: no
+   */
+  sona?: boolean
 }
 
 // Aspetto del nucleo: la palette chiara di layers/core/app/assets/scss e Biscotto, la mascotte

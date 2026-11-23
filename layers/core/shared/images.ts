@@ -81,3 +81,37 @@ export function centeredCrop(width: number, height: number, ratio: number): Crop
   const h = Math.min(1, width / ratio / height)
   return { x: (1 - w) / 2, y: (1 - h) / 2, w, h }
 }
+
+/**
+ * Avatar e banner del profilo, ritagliati dalla persona tra le proprie immagini.
+ * Si parte dalla variante già inquadrata al caricamento (quadrata per l'avatar, orizzontale per il banner).
+ * File: <id>-pa<larghezza>.<formato> e <id>-pw<larghezza>.<formato>, serviti da /profile-img/.
+ */
+export const PROFILE_IMAGES = {
+  avatar: { code: 'a', ratio: 1, widths: [96, 192, 384], from: 's', fromWidth: 1080 },
+  banner: { code: 'w', ratio: 4, widths: [720, 1440], from: 'h', fromWidth: 1440 },
+} as const satisfies Record<string, { code: string, ratio: number, widths: readonly number[], from: ImageVariant, fromWidth: number }>
+export type ProfileImageKind = keyof typeof PROFILE_IMAGES
+export const PROFILE_IMAGE_KINDS = Object.keys(PROFILE_IMAGES) as ProfileImageKind[]
+
+export const profileImageName = (id: string, kind: ProfileImageKind, width: number, format: ImageFormat) =>
+  `${id}-p${PROFILE_IMAGES[kind].code}${width}.${format}`
+
+export function parseProfileImageName(name: string) {
+  const m = /^([a-f0-9-]{36})-p([aw])(\d{2,4})\.(webp|avif)$/.exec(name)
+  if (!m) return null
+  const kind: ProfileImageKind = m[2] === 'a' ? 'avatar' : 'banner'
+  const width = Number(m[3])
+  if (!(PROFILE_IMAGES[kind].widths as readonly number[]).includes(width)) return null
+  return { id: m[1]!, kind, width, format: m[4] as ImageFormat }
+}
+
+/** <source> AVIF e WebP e src di ripiego di un avatar o banner del profilo */
+export function profileImageSources(id: string, kind: ProfileImageKind, sizes: string) {
+  const { widths } = PROFILE_IMAGES[kind]
+  const set = (format: ImageFormat) => widths.map(w => `/profile-img/${profileImageName(id, kind, w, format)} ${w}w`).join(', ')
+  return {
+    sources: IMAGE_FORMATS.map(f => ({ type: `image/${f}`, srcset: set(f), sizes })),
+    src: `/profile-img/${profileImageName(id, kind, widths[widths.length - 1]!, 'webp')}`,
+  }
+}

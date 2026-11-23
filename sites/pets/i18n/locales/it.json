@@ -191,5 +191,10 @@
   },
   "follow": {
     "lead": "Le novità delle persone che segui: i loro animali nuovi e le foto appena pubblicate."
+  },
+  "advertise": {
+    "numbers": {
+      "entries": "Animali in gara"
+    }
   }
 }

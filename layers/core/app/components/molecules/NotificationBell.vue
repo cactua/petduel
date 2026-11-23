@@ -108,7 +108,8 @@ const ago = timeAgo
     padding: 0 5px;
     border-radius: $radius-pill;
     background: var(--heart);
-    color: #fff;
+    // Testo scuro: il bianco sul rosa cuore non arrivava a 4.5:1
+    color: #2a0a12;
     font-size: 11px;
     font-weight: 900;
     line-height: 19px;

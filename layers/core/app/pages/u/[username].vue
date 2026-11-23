@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { shelterImageSources } from '#shared/images'
-import { HAS_ARTISTS, type AdoptionStatus, type PetGallery as Gallery, type Profile } from '#shared/models'
+import { HAS_ARTISTS, HAS_SONA, entryUrl, type AdoptionStatus, type PetGallery as Gallery, type Profile } from '#shared/models'
 
 const { features } = useAppConfig()
 
@@ -75,6 +75,60 @@ async function toggleFollow() {
 }
 
 const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? p.photos.find(ph => ph.image))?.image ?? ''
+
+// Condividi il profilo: menu del telefono se c'è, altrimenti il link copiato
+const shareStatus = ref('')
+async function shareProfile() {
+  const url = location.href.split('#')[0]!
+  try {
+    if (navigator.share) await navigator.share({ title: profile.value ? `@${profile.value.username}` : '', url })
+    else {
+      await navigator.clipboard.writeText(url)
+      shareStatus.value = t('profile.linkCopied')
+    }
+  }
+  catch { /* condivisione annullata */ }
+}
+
+// --- Siti con le sona (furry): schede Personaggi, Galleria, Per altri ---
+const sonaMode = computed(() => HAS_SONA && !shelter.value)
+type Tab = 'characters' | 'gallery' | 'forOthers'
+const tabs = computed<Tab[]>(() => [
+  ...(pets.value.length || profile.value?.isMe ? ['characters' as const] : []),
+  ...(pets.value.length ? ['gallery' as const] : []),
+  ...(profile.value?.artworks.length ? ['forOthers' as const] : []),
+])
+const tab = ref<Tab>('characters')
+watchEffect(() => {
+  if (tabs.value.length && !tabs.value.includes(tab.value)) tab.value = tabs.value[0]!
+})
+// Frecce sinistra/destra tra le schede, come si aspetta chi usa la tastiera
+const tabRefs = ref<HTMLButtonElement[]>([])
+function onTabKey(e: KeyboardEvent, i: number) {
+  const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0
+  if (!step) return
+  e.preventDefault()
+  const next = (i + step + tabs.value.length) % tabs.value.length
+  tab.value = tabs.value[next]!
+  tabRefs.value[next]?.focus()
+}
+
+// Personaggio aperto: dal link (?c=<id>) o il primo
+const selectedId = ref<number | null>(Number(route.query.c) || null)
+const selected = computed(() => pets.value.find(p => p.id === selectedId.value) ?? pets.value[0] ?? null)
+function pick(id: number) {
+  selectedId.value = id
+  history.replaceState(history.state, '', `?c=${id}`)
+}
+
+// Galleria: tutte le immagini pubblicate dei suoi personaggi, filtrabili per personaggio
+const galleryFilter = ref<number | 'all'>('all')
+const galleryItems = computed(() => pets.value
+  .filter(p => galleryFilter.value === 'all' || p.id === galleryFilter.value)
+  .flatMap(p => p.photos.filter(ph => ph.status === 'approved' && ph.image).map(ph => ({ ...ph, pet: p.name, petId: p.id })))
+  .sort((a, b) => b.createdAt.localeCompare(a.createdAt)))
+const viewing = ref<number | null>(null)
+const viewerPhotos = computed(() => galleryItems.value.map(g => ({ image: g.image, alt: t('pet.photoOf', { name: g.pet }), credit: g.credit, id: g.id })))
 </script>
 
 <template>
@@ -117,15 +171,15 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
         </div>
       </header>
 
-      <header v-else class="profile__card profile__hero">
-        <div class="profile__id">
-          <span class="profile__avatar" aria-hidden="true">{{ profile.username[0]?.toUpperCase() }}</span>
+      <header v-else class="profile__card profile__hero" :class="{ 'profile__hero--banner': profile.banner || profile.isMe }">
+        <ProfileMedia :profile="profile" @saved="refresh()">
           <div class="profile__names">
             <span v-if="profile.artist" class="badge badge--soft">🎨 {{ $t('artist.badge') }}</span>
             <h1 class="profile__title">@{{ profile.username }}</h1>
-            <p class="profile__sub">{{ $t('profile.since', { date: since }) }}</p>
+            <p class="profile__sub">{{ [profile.pronouns, $t('profile.since', { date: since })].filter(Boolean).join(' · ') }}</p>
           </div>
-        </div>
+        </ProfileMedia>
+        <p v-if="profile.bio" class="profile__bio">{{ profile.bio }}</p>
         <!-- Pagine social dell'artista: link scritti da lui, quindi niente "follow" -->
         <ul v-if="profile.artist?.links.length" class="profile__links" :aria-label="$t('artist.links')">
           <li v-for="link in profile.artist.links" :key="link">
@@ -147,12 +201,16 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
           <NuxtLink to="/upload" class="btn btn--primary">+ {{ $t('profile.newPet') }}</NuxtLink>
           <NuxtLink v-if="user?.role === 'admin'" to="/admin" class="btn btn--ghost">{{ $t('profile.admin') }}</NuxtLink>
           <NuxtLink v-if="HAS_ARTISTS" to="/account" class="btn btn--ghost">🎨 {{ profile.artist ? $t('artist.edit') : $t('artist.become') }}</NuxtLink>
+          <NuxtLink to="/account#bio" class="btn btn--ghost">{{ $t('profile.aboutTitle') }}</NuxtLink>
+          <button type="button" class="btn btn--ghost" @click="shareProfile">{{ $t('profile.share') }}</button>
         </nav>
         <nav v-if="!profile.isMe && !profile.blocked" class="profile__actions">
           <button type="button" class="btn" :class="following ? 'btn--ghost' : 'btn--primary'" :aria-pressed="following" :disabled="followBusy" @click="toggleFollow">
             {{ following ? `✓ ${$t('follow.following')}` : `+ ${$t('follow.follow')}` }}
           </button>
+          <button type="button" class="btn btn--ghost" @click="shareProfile">{{ $t('profile.share') }}</button>
         </nav>
+        <p v-if="shareStatus" class="profile__sub" role="status">{{ shareStatus }}</p>
         <div v-if="!profile.isMe" class="profile__report">
           <ReportButton :username="profile.username" />
           <button v-if="user" type="button" class="profile__block" @click="toggleBlock">
@@ -204,6 +262,66 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
         {{ $t('profile.pending', pending) }}
       </p>
 
+      <!-- Siti con le sona: tre schede invece della lista lunga -->
+      <template v-if="sonaMode">
+        <div v-if="tabs.length > 1" role="tablist" :aria-label="$t('sona.tabs.label')" class="profile__tabs">
+          <button
+            v-for="(k, i) in tabs" :id="`tab-${k}`" :key="k" ref="tabRefs" type="button" role="tab" class="profile__tab"
+            :aria-selected="tab === k" :aria-controls="`panel-${k}`" :tabindex="tab === k ? 0 : -1"
+            @click="tab = k" @keydown="onTabKey($event, i)"
+          >
+            {{ $t(`sona.tabs.${k}`) }}
+            <span v-if="k === 'gallery'" class="profile__tab-count">{{ pets.reduce((n, p) => n + p.photos.filter(ph => ph.status === 'approved').length, 0) }}</span>
+          </button>
+        </div>
+
+        <section v-if="tab === 'characters'" id="panel-characters" role="tabpanel" aria-labelledby="tab-characters" class="profile__panel">
+          <div v-if="pets.length > 1" role="group" :aria-label="$t('sona.pick')" class="profile__chars">
+            <button
+              v-for="p in pets" :key="p.id" type="button" class="profile__char" :aria-pressed="selected?.id === p.id"
+              @click="pick(p.id)"
+            >
+              <picture v-if="thumb(p)"><source v-for="s in photoSources(thumb(p), 's', '34px')" :key="s.type" v-bind="s"><img :src="thumb(p)" alt="" class="profile__char-thumb"></picture>
+              <span v-else class="profile__char-thumb profile__char-thumb--empty" aria-hidden="true">{{ p.name[0] }}</span>
+              {{ p.name }}
+            </button>
+          </div>
+          <template v-if="selected">
+            <SonaSheet :key="selected.id" :pet="selected" :editable="profile.isMe" @changed="refresh()" />
+            <PetGallery :id="`pet-${selected.id}`" :key="`g${selected.id}`" :pet="selected" :editable="profile.isMe" link-title class="profile__pet" @changed="refresh()" @deleted="refresh()" />
+          </template>
+          <div v-else class="profile__empty">
+            <p>{{ profile.isMe ? $t('profile.noPetsMine') : $t('profile.noPets') }}</p>
+            <NuxtLink v-if="profile.isMe" to="/upload" class="btn btn--primary btn--lg">{{ $t('profile.uploadFirst') }}</NuxtLink>
+          </div>
+        </section>
+
+        <section v-else-if="tab === 'gallery'" id="panel-gallery" role="tabpanel" aria-labelledby="tab-gallery" class="profile__panel">
+          <div v-if="pets.length > 1" role="group" :aria-label="$t('sona.pick')" class="profile__filter">
+            <button type="button" class="chip" :aria-pressed="galleryFilter === 'all'" @click="galleryFilter = 'all'">{{ $t('sona.all') }}</button>
+            <button v-for="p in pets" :key="p.id" type="button" class="chip" :aria-pressed="galleryFilter === p.id" @click="galleryFilter = p.id">{{ p.name }}</button>
+          </div>
+          <ul v-if="galleryItems.length" class="profile__grid">
+            <li v-for="(g, i) in galleryItems" :key="g.id" class="profile__tile-art">
+              <button type="button" class="profile__art-open" :aria-label="$t('pet.photoOf', { name: g.pet })" @click="viewing = i">
+                <picture><source v-for="s in photoSources(g.image, 'v', '(min-width: 1040px) 240px, (min-width: 760px) 22vw, 46vw')" :key="s.type" v-bind="s"><img :src="g.image" alt="" loading="lazy" class="profile__art-img"></picture>
+              </button>
+              <p class="profile__art-meta">
+                <NuxtLink :to="entryUrl(g.petId)" class="profile__art-name">{{ g.pet }}</NuxtLink>
+                <span v-if="g.credit">{{ $t('photo.credit', { text: g.credit.text }) }}</span>
+              </p>
+            </li>
+          </ul>
+          <p v-else class="profile__empty">{{ $t('sona.galleryEmpty') }}</p>
+          <PhotoViewer v-model="viewing" :photos="viewerPhotos" />
+        </section>
+
+        <section v-else-if="tab === 'forOthers'" id="panel-forOthers" role="tabpanel" aria-labelledby="tab-forOthers" class="profile__panel">
+          <ArtistWorks :artworks="profile.artworks" :is-me="profile.isMe" class="profile__card" @changed="refresh()" />
+        </section>
+      </template>
+
+      <template v-else>
       <ArtistWorks v-if="profile.artworks.length" :artworks="profile.artworks" :is-me="profile.isMe" class="profile__card" @changed="refresh()" />
 
       <template v-if="pets.length">
@@ -220,7 +338,7 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
         <nav v-if="pets.length > 1" class="profile__index" :aria-label="$t('profile.jump')">
           <template v-for="g in visibleGroups" :key="g.id">
             <a v-for="p in g.pets" :key="p.id" :href="`#pet-${p.id}`" class="profile__index-link">
-              <img v-if="thumb(p)" :src="thumb(p)" alt="" loading="lazy" class="profile__index-thumb">
+              <picture v-if="thumb(p)"><source v-for="s in photoSources(thumb(p), 's', '30px')" :key="s.type" v-bind="s"><img :src="thumb(p)" alt="" loading="lazy" class="profile__index-thumb"></picture>
               <span v-else class="profile__index-thumb profile__index-thumb--empty">{{ p.name[0] }}</span>
               {{ p.name }}
               <i v-if="p.adoptionInfo" class="profile__dot" :class="`profile__dot--${p.adoptionInfo.status}`" :title="$t(`adoption.status.${p.adoptionInfo.status}`)" />
@@ -241,6 +359,7 @@ const thumb = (p: Gallery) => (p.photos.find(ph => ph.status === 'approved') ?? 
         <p>{{ profile.isMe ? $t('profile.noPetsMine') : $t('profile.noPets') }}</p>
         <NuxtLink v-if="profile.isMe" to="/upload" class="btn btn--primary btn--lg">{{ $t('profile.uploadFirst') }}</NuxtLink>
       </div>
+      </template>
 
       <!-- Invito discreto per chi non gestisce ancora un rifugio -->
       <NuxtLink v-if="profile.isMe && !manage && features.shelters" to="/my-shelter" class="profile__become">🏠 {{ $t('profile.becomeShelter') }} →</NuxtLink>
@@ -301,7 +420,8 @@ $adoption-dots: (
     display: grid;
     place-items: center;
     overflow: hidden;
-    background: var(--coral);
+    // Colore dei pulsanti: con la lettera bianca il contrasto resta buono anche nel tema scuro
+    background: var(--action);
     color: #fff;
     font-family: var(--display);
     font-size: 30px;
@@ -315,7 +435,8 @@ $adoption-dots: (
     @include stack(2px);
     align-items: flex-start;
 
-    .profile__hero--shelter & { padding-top: $space-2; }
+    .profile__hero--shelter &,
+    .profile__hero--banner & { padding-top: $space-2; }
   }
 
   &__title { font-size: 28px; overflow-wrap: anywhere; line-height: 1.1; text-wrap: balance; }
@@ -374,6 +495,92 @@ $adoption-dots: (
 
     &--closed { color: var(--muted); }
   }
+
+  &__bio { margin: 0; font-size: 16px; line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
+
+  // Schede (siti con le sona)
+  &__tabs {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    padding: 4px;
+    border-radius: $radius-pill;
+    background: color-mix(in srgb, var(--line) 70%, var(--bg));
+  }
+
+  &__tab {
+    min-height: 44px;
+    border: 0;
+    border-radius: $radius-pill;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+
+    &[aria-selected="true"] { background: var(--surface); box-shadow: 0 1px 4px var(--shadow); }
+  }
+
+  &__tab-count { color: var(--muted); font-weight: 700; }
+
+  &__panel { @include stack($space-6); }
+
+  &__chars { @include cluster($space-3); }
+
+  &__char {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-3;
+    min-height: 44px;
+    padding: 4px 14px 4px 4px;
+    border-radius: $radius-pill;
+    border: 2px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+
+    &[aria-pressed="true"] { border-color: var(--action); box-shadow: inset 0 0 0 1px var(--action); }
+  }
+
+  &__char-thumb {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    &--empty { display: grid; place-items: center; background: var(--coral-soft); }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(46%, 220px), 1fr));
+    gap: $space-4;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__tile-art { @include card(6px, $radius-lg); @include stack($space-2); }
+
+  &__art-open { border: 0; padding: 0; background: none; cursor: zoom-in; border-radius: $radius-md; }
+
+  &__art-img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: $radius-md; background: var(--bg); }
+
+  &__art-meta {
+    margin: 0;
+    padding: 0 4px 4px;
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  &__art-name { @include plain-link(var(--ink)); font-weight: 800; font-size: 14px; }
 
   &__blocked { margin: 0; color: var(--muted); font-size: 13px; font-weight: 700; }
 

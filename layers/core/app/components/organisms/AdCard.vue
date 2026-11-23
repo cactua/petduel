@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { isNetworkAd, type AdCrop, type ShownAd } from '#shared/models'
+import { isHouseAd, isNetworkAd, type AdCrop, type ShownAd } from '#shared/models'
 
 // Pubblicità tra un duello e l'altro: occupa il posto dell'arena finché non si tocca "Continua".
 // In anteprima (admin) non conta la visualizzazione e il link non porta da nessuna parte;
@@ -9,8 +9,10 @@ import { isNetworkAd, type AdCrop, type ShownAd } from '#shared/models'
 const props = defineProps<{ ad: ShownAd, preview?: boolean, crop?: AdCrop | null }>()
 const emit = defineEmits<{ continue: [] }>()
 
-const own = computed(() => isNetworkAd(props.ad) ? null : props.ad)
+const own = computed(() => isNetworkAd(props.ad) || isHouseAd(props.ad) ? null : props.ad)
 const net = computed(() => isNetworkAd(props.ad) ? props.ad : null)
+// Nessuna campagna in onda: la card invita a fare pubblicità qui
+const house = computed(() => isHouseAd(props.ad))
 const adtest = import.meta.dev ? 'on' : undefined
 const slotEl = ref<HTMLElement>()
 
@@ -60,8 +62,20 @@ async function showNetwork(client: string) {
 
 <template>
   <article class="ad-card" :aria-label="$t('ad.label')">
-    <p class="ad-card__label">{{ $t('ad.sponsored') }}<template v-if="own?.advertiser"> · {{ own.advertiser }}</template></p>
-    <div v-if="net" class="ad-card__body ad-card__body--network">
+    <p class="ad-card__label">
+      <span>{{ house ? $t('ad.label') : $t('ad.sponsored') }}<template v-if="own?.advertiser"> · {{ own.advertiser }}</template></span>
+      <!-- Chi vede un annuncio scopre che può metterne uno suo -->
+      <NuxtLink v-if="!house && !preview" to="/advertise" class="ad-card__yours">{{ $t('ad.yours') }}</NuxtLink>
+    </p>
+    <NuxtLink v-if="house" to="/advertise" class="ad-card__body">
+      <span class="ad-card__media ad-card__media--placeholder ad-card__media--house" aria-hidden="true">📣</span>
+      <span class="ad-card__text">
+        <b class="ad-card__title">{{ $t('ad.houseTitle') }}</b>
+        <span class="ad-card__desc">{{ $t('ad.houseBody') }}</span>
+      </span>
+      <span class="ad-card__cta">{{ $t('ad.houseCta') }}</span>
+    </NuxtLink>
+    <div v-else-if="net" class="ad-card__body ad-card__body--network">
       <ins
         ref="slotEl" class="adsbygoogle ad-card__slot" :data-ad-client="net.client" :data-ad-slot="net.slot"
         data-ad-format="auto" data-full-width-responsive="true" :data-adtest="adtest"
@@ -98,7 +112,10 @@ async function showNetwork(client: string) {
 
   @include mq(md) { max-width: 560px; width: 100%; align-self: center; }
 
-  &__label { margin: 0; @include eyebrow(12px); font-weight: 800; letter-spacing: .04em; padding-left: 4px; }
+  &__label { margin: 0; display: flex; justify-content: space-between; align-items: center; gap: $space-3; flex-wrap: wrap; @include eyebrow(12px); font-weight: 800; letter-spacing: .04em; padding-left: 4px; }
+
+  // Link piccolo ma comodo da toccare: area di 44px senza allargare la riga
+  &__yours { text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--muted); padding: 12px 4px; margin: -12px 0; text-decoration: underline; text-underline-offset: 3px; &:hover { color: var(--ink); } }
 
   &__body {
     flex: 1;
@@ -125,6 +142,8 @@ async function showNetwork(client: string) {
     container-type: size;
 
     &--placeholder { display: grid; place-items: center; font-size: 56px; }
+
+    &--house { background: var(--coral-soft, var(--bg)); font-size: 72px; }
   }
 
   &__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }

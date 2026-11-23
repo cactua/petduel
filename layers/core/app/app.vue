@@ -3,6 +3,8 @@ import site from '#site'
 import { siteBrand } from '#shared/site'
 
 const { locale } = useI18n()
+// Meno animazioni e contrasto alto scelti dal menu: attributi su <html>
+useA11yHtmlAttrs()
 // Le pagine danno solo il proprio titolo: il nome del sito si aggiunge qui
 useHead({
   htmlAttrs: { lang: () => locale.value },

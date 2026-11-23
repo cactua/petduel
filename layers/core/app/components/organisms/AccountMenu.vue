@@ -22,6 +22,14 @@ const theme = computed<Theme>({
 useHead({ htmlAttrs: { 'data-theme': () => (theme.value === 'system' ? undefined : theme.value) } })
 const THEMES: { key: Theme, icon: 'sun' | 'moon' | 'auto' }[] = [{ key: 'system', icon: 'auto' }, { key: 'light', icon: 'sun' }, { key: 'dark', icon: 'moon' }]
 
+// Accessibilità: interruttori che valgono su questo dispositivo (cookie, come il tema)
+const { lessMotion, moreContrast, haptics } = useA11yPrefs()
+const SWITCHES = [
+  { key: 'motion', label: 'menu.lessMotion', on: lessMotion },
+  { key: 'contrast', label: 'menu.moreContrast', on: moreContrast },
+  { key: 'haptics', label: 'menu.haptics', on: haptics },
+]
+
 async function logout() {
   open.value = false
   await $fetch('/api/auth/logout', { method: 'POST' })
@@ -60,7 +68,7 @@ const initial = computed(() => user.value?.username.charAt(0).toUpperCase() ?? '
       type="button" class="account-menu__trigger" :class="{ 'is-open': open }" :aria-expanded="open" aria-haspopup="true"
       :aria-label="$t('menu.open')" @click="open = !open"
     >
-      <span v-if="loggedIn && user" class="account-menu__initial" aria-hidden="true">{{ initial }}</span>
+      <span v-if="loggedIn && user" class="account-menu__initial" aria-hidden="true"><MyAvatar :letter="initial" /></span>
       <AppIcon v-else name="face" />
     </button>
 
@@ -68,7 +76,7 @@ const initial = computed(() => user.value?.username.charAt(0).toUpperCase() ?? '
       <div v-if="open" class="account-menu__panel" role="region" :aria-label="$t('menu.open')">
         <template v-if="loggedIn && user">
           <NuxtLink :to="`/u/${user.username}`" class="account-menu__who">
-            <span class="account-menu__initial account-menu__initial--big" aria-hidden="true">{{ initial }}</span>
+            <span class="account-menu__initial account-menu__initial--big" aria-hidden="true"><MyAvatar :letter="initial" /></span>
             <span><b class="account-menu__name">@{{ user.username }}</b><small class="account-menu__sub">{{ $t('menu.seeProfile') }}</small></span>
           </NuxtLink>
           <nav class="account-menu__links">
@@ -119,11 +127,24 @@ const initial = computed(() => user.value?.username.charAt(0).toUpperCase() ?? '
           </div>
         </section>
 
+        <section class="account-menu__section">
+          <h3 class="account-menu__heading">{{ $t('menu.a11y') }}</h3>
+          <button
+            v-for="s in SWITCHES" :key="s.key" type="button" role="switch" :aria-checked="s.on.value"
+            class="account-menu__switch" @click="s.on.value = !s.on.value"
+          >
+            <span class="account-menu__switch-label">{{ $t(s.label) }}</span>
+            <span class="account-menu__switch-track" aria-hidden="true"><span class="account-menu__switch-thumb" /></span>
+          </button>
+        </section>
+
         <nav class="account-menu__legal" :aria-label="$t('legal.title')">
           <NuxtLink to="/privacy" class="account-menu__legal-link" @click="close">{{ $t('legal.privacy') }}</NuxtLink>
           <NuxtLink to="/cookie" class="account-menu__legal-link" @click="close">{{ $t('legal.cookie') }}</NuxtLink>
           <NuxtLink to="/terms" class="account-menu__legal-link" @click="close">{{ $t('legal.terms') }}</NuxtLink>
           <NuxtLink to="/rules" class="account-menu__legal-link" @click="close">{{ $t('rules.link') }}</NuxtLink>
+          <NuxtLink to="/accessibility" class="account-menu__legal-link" @click="close">{{ $t('legal.accessibility') }}</NuxtLink>
+          <NuxtLink to="/advertise" class="account-menu__legal-link" @click="close">{{ $t('advertise.link') }}</NuxtLink>
         </nav>
         <button type="button" class="account-menu__link account-menu__link--footer" @click="openConsent(); close()"><span class="account-menu__emoji" aria-hidden="true">🍪</span>{{ $t('consent.title') }}</button>
         <button v-if="loggedIn" type="button" class="account-menu__link account-menu__link--footer" @click="logout"><AppIcon name="login" />{{ $t('nav.logout') }}</button>
@@ -294,12 +315,59 @@ const initial = computed(() => user.value?.username.charAt(0).toUpperCase() ?? '
     .is-active & { background: var(--coral); color: #fff; }
   }
 
+  // Interruttore: tutta la riga si tocca, il cursore a destra mostra acceso/spento anche con la spunta
+  &__switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-4;
+    min-height: 44px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--bg);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+
+    &:focus-visible { outline: 2px solid var(--coral); outline-offset: 1px; }
+  }
+
+  &__switch-track {
+    flex-shrink: 0;
+    width: 44px;
+    height: 26px;
+    padding: 3px;
+    border-radius: $radius-pill;
+    background: var(--muted);
+    display: flex;
+
+    [aria-checked="true"] > & { background: var(--action); justify-content: flex-end; }
+  }
+
+  &__switch-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    display: grid;
+    place-items: center;
+
+    // Spunta quando è acceso: lo stato non dipende solo dal colore
+    [aria-checked="true"] &::after { content: ""; width: 8px; height: 4px; border: solid var(--action); border-width: 0 0 2px 2px; transform: translateY(-1px) rotate(-45deg); }
+  }
+
   &__legal { order: 99; display: flex; flex-wrap: wrap; gap: 4px 12px; padding: 8px 10px 4px; border-top: 1px solid var(--line); }
 
   &__legal-link {
     @include plain-link(var(--muted));
     font-size: 12px;
     font-weight: 800;
+    // Area da toccare alta almeno 24px (WCAG 2.5.8)
+    display: inline-block;
+    padding: 5px 0;
 
     &:hover { color: var(--coral-deep); }
   }

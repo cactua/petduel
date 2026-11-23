@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm'
-import { entryUrl, TOP_RANK, type Species } from '#shared/models'
+import { entryUrl, TOP_RANK, type ChallengeTranslations, type Species } from '#shared/models'
 import { notifications } from '../db/schema'
 import { ensureChallenges } from './challenges'
 import { useDb } from './db'
@@ -28,6 +28,10 @@ const place = (rank: number) => (rank === 1 ? '🥇' : rank === 2 ? '🥈' : ran
  * Avvisi calcolati al momento invece che da un job programmato: risultati delle sfide finite
  * e posizioni raggiunte nella classifica settimanale. La key evita i doppioni.
  */
+// Titolo della sfida nelle altre lingue, come parametri piatti dell'avviso ("challenge_en": "...")
+const translatedTitles = (t: ChallengeTranslations | null) =>
+  Object.fromEntries(Object.entries(t ?? {}).flatMap(([lang, x]) => (x ? [[`challenge_${lang}`, x.title]] : [])))
+
 export async function refreshNotifications(userId: number, force = false) {
   const now = Date.now()
   if (!force && now - (lastRefresh.get(userId) ?? 0) < REFRESH_MS) return
@@ -35,9 +39,9 @@ export async function refreshNotifications(userId: number, force = false) {
   const db = await useDb()
 
   // Posizione finale di ogni pet dell'utente nelle sfide appena concluse (stesso ordine della classifica della sfida)
-  const { rows: results } = await db.execute<{ cid: number, slug: string, title: string, pet_id: number, name: string, rank: number, total: number }>(sql`
+  const { rows: results } = await db.execute<{ cid: number, slug: string, title: string, translations: ChallengeTranslations, pet_id: number, name: string, rank: number, total: number }>(sql`
     select * from (
-      select c.id as cid, c.slug, c.title, p.id as pet_id, p.name, p.owner_id,
+      select c.id as cid, c.slug, c.title, c.translations, p.id as pet_id, p.name, p.owner_id,
         row_number() over (partition by c.id order by e.wins desc, e.elo desc, e.id)::int as rank,
         count(*) over (partition by c.id)::int as total
       from challenges c
@@ -51,7 +55,7 @@ export async function refreshNotifications(userId: number, force = false) {
     await notify(userId, `sfida:${r.cid}:${r.pet_id}`, {
       emoji: place(r.rank),
       text: r.rank === 1 ? 'notif.challengeWon' : 'notif.challengePlace',
-      params: { name: r.name, challenge: r.title, challengeSlug: r.slug, rank: r.rank, total: r.total },
+      params: { name: r.name, challenge: r.title, challengeSlug: r.slug, ...translatedTitles(r.translations), rank: r.rank, total: r.total },
       // Un bel risultato si festeggia: si apre la pagina del pet con la card della sfida pronta da condividere
       link: `${entryUrl(r.pet_id)}?challenge=${r.slug}&share=1`,
     })

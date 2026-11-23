@@ -3,10 +3,21 @@ import site from '#site'
 // Template (Atomic Design): testata, contenuto della pagina e dock in basso su mobile
 const { loggedIn, user } = useUserSession()
 const { features } = useAppConfig()
+const { t } = useI18n()
+// Note legali sempre raggiungibili in fondo alla pagina (nei duelli, che stanno in uno schermo, sono nel menu)
+const LEGAL = computed(() => [
+  { to: '/rules', label: t('rules.link') },
+  { to: '/privacy', label: t('legal.privacy') },
+  { to: '/cookie', label: t('legal.cookie') },
+  { to: '/terms', label: t('legal.terms') },
+  { to: '/accessibility', label: t('legal.accessibility') },
+  { to: '/advertise', label: t('advertise.link') },
+])
 </script>
 
 <template>
   <div class="app-shell">
+    <a href="#main" class="skip-link">{{ $t('nav.skip') }}</a>
     <header class="app-shell__header">
       <NuxtLink to="/" class="app-shell__logo"><SiteIcon />{{ site.name }}</NuxtLink>
       <nav class="app-shell__nav">
@@ -25,9 +36,18 @@ const { features } = useAppConfig()
       <AccountMenu class="app-shell__menu" />
     </header>
 
-    <main class="app-shell__main">
+    <main id="main" class="app-shell__main" tabindex="-1">
       <slot />
     </main>
+
+    <footer class="app-shell__footer">
+      <nav :aria-label="$t('legal.title')">
+        <ul class="app-shell__footer-links">
+          <li v-for="l in LEGAL" :key="l.to"><NuxtLink :to="l.to" class="app-shell__footer-link">{{ l.label }}</NuxtLink></li>
+        </ul>
+      </nav>
+      <p class="app-shell__footer-note">© {{ new Date().getFullYear() }} {{ site.name }}</p>
+    </footer>
 
     <!-- I duelli sono la home e si raggiungono dal logo; l'admin si apre dal menu dell'account -->
     <nav class="app-shell__dock" :aria-label="$t('nav.sections')">
@@ -36,7 +56,8 @@ const { features } = useAppConfig()
       <NuxtLink to="/upload" class="app-shell__dock-link app-shell__dock-link--big" :aria-label="$t('nav.uploadPhoto')"><AppIcon name="camera" /></NuxtLink>
       <NuxtLink v-if="features.shelters" to="/shelters" class="app-shell__dock-link"><AppIcon name="home" /><span>{{ $t('nav.adopt') }}</span></NuxtLink>
       <NuxtLink :to="loggedIn && user ? `/u/${user.username}` : '/login'" class="app-shell__dock-link">
-        <AppIcon :name="loggedIn ? 'face' : 'login'" /><span>{{ loggedIn ? $t('nav.profile') : $t('nav.login') }}</span>
+        <span v-if="loggedIn && user" class="app-shell__dock-avatar" aria-hidden="true"><MyAvatar :letter="user.username.charAt(0).toUpperCase()" /></span>
+        <AppIcon v-else name="login" /><span>{{ loggedIn ? $t('nav.profile') : $t('nav.login') }}</span>
       </NuxtLink>
     </nav>
     <ConsentBanner />
@@ -63,6 +84,9 @@ const { features } = useAppConfig()
   }
 
   @include mq(md) { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+
+  // Schermi larghi: un po' più di spazio, così le card dei duelli non diventano strisce alte e strette
+  @media (min-width: 1280px) { max-width: 1200px; }
 
   // Sopra il contenuto, così i menu a tendina non finiscono sotto le card dei duelli
   &__header { position: relative; z-index: $z-header; display: flex; align-items: center; gap: 28px; }
@@ -126,7 +150,48 @@ const { features } = useAppConfig()
   &__extra:not(:empty) + &__notif,
   &__extra:not(:empty) + &__menu { margin-left: -18px; }
 
-  &__main { flex: 1; display: flex; flex-direction: column; }
+  &__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    // Ci arriva il "Vai al contenuto": nessun bordo intorno a tutta la pagina
+    &:focus { outline: none; }
+  }
+
+  // Piè di pagina con le note legali; nei duelli (a schermo intero) le stesse voci sono nel menu dell'account
+  &__footer {
+    @include stack($space-2);
+    align-items: center;
+    padding: $space-7 0 $space-3;
+    text-align: center;
+
+    .app-shell:has(.u-fit-screen) & { display: none; }
+  }
+
+  &__footer-links {
+    @include cluster($space-1);
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__footer-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 $space-4;
+    @include plain-link(var(--muted));
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover { color: var(--ink); }
+  }
+
+  &__footer-note { margin: 0; color: var(--muted); font-size: 13px; font-weight: 700; }
 
   // Barra in basso su mobile: un "dock" bianco che galleggia sul fondo
   &__dock {
@@ -163,6 +228,21 @@ const { features } = useAppConfig()
     span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
     :deep(.icon) { width: 22px; height: 22px; }
+
+    // Il proprio avatar al posto dell'icona del profilo
+    .app-shell__dock-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: var(--action);
+      color: #fff;
+      font-family: var(--display);
+      font-size: 12px;
+      font-weight: 700;
+    }
 
     &.router-link-active { color: var(--coral); }
 

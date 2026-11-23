@@ -1,39 +1,42 @@
-// Palette del sito furry: viola al posto del corallo, sfondo lavanda; giallo dei premi e rosa dei cuori restano.
+// Palette del sito furry: arancio bruciato su crema calda, testo quasi nero (niente viola, scelta del 2026-11-23).
+// Giallo dei premi e rosa dei cuori restano quelli del nucleo.
 // Ridefinisce le variabili del nucleo (layers/core/app/assets/scss/abstracts/_tokens.scss). "html:root" pesa più
 // di ":root", così vince qualunque sia l'ordine dei fogli di stile
 $furry-light: (
-  bg: #f8f5ff,
+  bg: #fbf7f0,
   surface: #fff,
-  ink: #2a2140,
-  muted: #6b5f86,
-  coral: #8b5cf6,
-  coral-deep: #7c3aed,
-  coral-soft: #ece4ff,
-  action: #6d28d9,
-  sun-ink: #2a2140,
-  line: #e6def6,
-  shadow: rgba(42, 33, 64, 0.18),
-  glow: rgba(139, 92, 246, 0.5),
-  blob-1: #e7dcff,
-  blob-2: #d2f4ee,
-  blob-3: #ffe0ef,
+  ink: #1f1a17,
+  muted: #6b5e52,
+  // Testo grande e icone: almeno 3:1 sul bianco
+  coral: #d9480f,
+  coral-deep: #c2410c,
+  coral-soft: #ffe3cc,
+  // Pulsanti con testo bianco: almeno 4.5:1
+  action: #c2410c,
+  sun-ink: #1f1a17,
+  line: #ece2d4,
+  shadow: rgba(31, 26, 23, 0.18),
+  glow: rgba(217, 72, 15, 0.4),
+  blob-1: #ffe3cc,
+  blob-2: #d4f1e8,
+  blob-3: #dbeafe,
 );
 
 $furry-dark: (
-  bg: #16121f,
-  surface: #211b2e,
-  ink: #f2ecff,
-  muted: #b2a5cc,
-  coral: #a78bfa,
-  coral-deep: #7c3aed,
-  coral-soft: #2f2545,
-  action: #7c3aed,
-  line: #342a48,
+  bg: #1a1512,
+  surface: #26201b,
+  ink: #fbf1e6,
+  muted: #c4b3a2,
+  coral: #ff8a4c,
+  coral-deep: #c2410c,
+  coral-soft: #3d2a1e,
+  action: #c2410c,
+  line: #3a302a,
   shadow: rgba(0, 0, 0, 0.5),
   glow: rgba(0, 0, 0, 0.55),
-  blob-1: #2d2245,
-  blob-2: #173233,
-  blob-3: #3a2034,
+  blob-1: #3d2a1e,
+  blob-2: #1d3530,
+  blob-3: #1e2a3d,
 );
 
 @mixin furry-vars($theme) {

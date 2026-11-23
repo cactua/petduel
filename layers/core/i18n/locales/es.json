@@ -25,7 +25,8 @@
     "login": "Entrar",
     "profile": "Perfil",
     "sections": "Secciones",
-    "language": "Idioma"
+    "language": "Idioma",
+    "skip": "Ir al contenido"
   },
   "species": {
     "filter": "Filtrar por categoría",
@@ -98,7 +99,8 @@
     "taxCode": "NIF o CIF no válido",
     "phone": "Teléfono no válido",
     "check": "Revisa los campos",
-    "rules": "Para registrarte acepta las normas de la comunidad"
+    "rules": "Para registrarte acepta las normas de la comunidad",
+    "color": "Usa un color como #ff8800"
   },
   "errors": {
     "generic": "Algo ha salido mal, inténtalo de nuevo",
@@ -180,7 +182,11 @@
     "label": "Publicidad",
     "sponsored": "Patrocinado",
     "continue": "Sigue votando",
-    "thanks": "Gracias: la publicidad mantiene @:{'site.name'} gratis"
+    "thanks": "Gracias: la publicidad mantiene @:{'site.name'} gratis",
+    "yours": "¿Tu anuncio aquí?",
+    "houseTitle": "Tu anuncio aquí",
+    "houseBody": "¿Tienes una tienda, un evento o un servicio? Hazte ver por quien vota en @:{'site.name'}.",
+    "houseCta": "Descubre cómo"
   },
   "share": {
     "text": "¡Mira a {name} en @:{'site.name'}!",
@@ -213,6 +219,8 @@
     "hint": "Arrastra tu favorito {over} para que gane",
     "hintOver": "encima del otro",
     "hintHold": "mantén pulsado para ampliar",
+    "hintKeys": "para elegir",
+    "keySpace": "Espacio",
     "makeWin": "Haz ganar a {name}",
     "wins": "¡Gana!",
     "beat": "¡Has elegido a {winner}!",
@@ -221,7 +229,10 @@
     "question": "¿Cuál prefieres?",
     "votedTimes": "Has votado {n} veces",
     "uploadYours": "Sube a tu participante",
-    "skip": "Saltar"
+    "skip": "Saltar",
+    "choose": "Elegir",
+    "chosen": "Elegido",
+    "orDrag": "O arrastra uno encima del otro"
   },
   "upload": {
     "noClipboardPhoto": "No hay ninguna foto en el portapapeles: cópiala y vuelve a intentarlo",
@@ -355,7 +366,34 @@
     "customizeHint": "Portada, mapa, horarios, donaciones",
     "addGuestHint": "Sube las imágenes de un nuevo participante",
     "publicPage": "Ver la página",
-    "publicPageHint": "Cómo la ven los demás"
+    "publicPageHint": "Cómo la ven los demás",
+    "aboutTitle": "Bio y pronombres",
+    "bio": "Bio",
+    "bioHint": "Un par de líneas sobre ti, hasta 300 caracteres",
+    "pronouns": "Pronombres",
+    "pronounsHint": "P. ej. ella, él, elle",
+    "saveAbout": "Guardar",
+    "savedAbout": "Guardado",
+    "share": "Compartir perfil",
+    "linkCopied": "Enlace copiado",
+    "media": {
+      "editAvatar": "Cambiar avatar",
+      "editBanner": "Cambiar banner",
+      "addBanner": "Añadir un banner",
+      "frame": "Recorte: arrastra para mover, flechas para ajustar, + y − para el zoom",
+      "zoom": "Zoom",
+      "dragHint": "Arrastra la imagen para elegir la parte que se ve.",
+      "pick": "Elige una imagen",
+      "upload": "Subir nueva",
+      "letter": "Letra",
+      "none": "Ninguno",
+      "pendingAlt": "{name}, en revisión",
+      "pending": "En revisión",
+      "pendingAvatar": "El nuevo avatar se verá cuando se revise la imagen.",
+      "needCharacter": "Para subir una imagen, crea primero un personaje.",
+      "addTo": "Añadirla a",
+      "reviewHint": "La imagen se revisa como las demás (fuera de los duelos): los demás la verán cuando se apruebe."
+    }
   },
   "challenges": {
     "title": "Retos semanales",
@@ -412,13 +450,22 @@
       "system": "Automático",
       "light": "Claro",
       "dark": "Oscuro"
-    }
+    },
+    "a11y": "Accesibilidad",
+    "lessMotion": "Menos animaciones",
+    "moreContrast": "Contraste alto",
+    "haptics": "Vibrar al votar"
   },
   "gallery": {
     "manage": "Gestionar",
     "done": "Listo",
     "showAll": "Las {n} fotos",
-    "showLess": "Mostrar menos fotos"
+    "showLess": "Mostrar menos fotos",
+    "inDuels": "Usar en duelos",
+    "inDuelsHint": "Desmarca las imágenes que solo quieras en tu perfil (bocetos, referencias, recuerdos): siguen visibles para todos, pero no entran en los duelos.",
+    "duelCount": "{done} de {total} imagen en duelos | {done} de {total} imágenes en duelos",
+    "noDuelPhoto": "Ninguna imagen pública de {name} está en los duelos: por ahora no aparecerá en los enfrentamientos.",
+    "profileOnly": "Solo perfil"
   },
   "consent": {
     "title": "Cookies y anuncios",
@@ -435,7 +482,8 @@
     "title": "Aviso legal",
     "privacy": "Privacidad",
     "cookie": "Cookies",
-    "terms": "Condiciones de uso"
+    "terms": "Condiciones de uso",
+    "accessibility": "Accesibilidad"
   },
   "account": {
     "title": "Tu cuenta",
@@ -629,5 +677,109 @@
     "title": "Favoritos",
     "lead": "Los que has guardado. Solo los ves tú: nadie sabe que los has guardado.",
     "empty": "Aún no hay favoritos. Abre la página de un participante y toca \"Guardar\"."
+  },
+  "sona": {
+    "tabs": {
+      "label": "Secciones del perfil",
+      "characters": "Personajes",
+      "gallery": "Galería",
+      "forOthers": "Para otros"
+    },
+    "pick": "Elige el personaje",
+    "species": "Especie",
+    "pronouns": "Pronombres",
+    "traits": "Rasgos",
+    "about": "Descripción",
+    "colors": "Colores",
+    "copy": "Copiar {name} {hex}",
+    "copied": "Copiado {hex}",
+    "forArtists": "Para quien lo dibuja",
+    "yes": "Sí",
+    "no": "No",
+    "refBy": "Referencia: {artist}",
+    "openRef": "Abrir la referencia a pantalla completa",
+    "works": "Imágenes de {name}",
+    "edit": "Editar ficha",
+    "save": "Guardar ficha",
+    "cancel": "Cancelar",
+    "saved": "Ficha guardada",
+    "empty": "Añade especie, colores y reglas para quien lo dibuja: los visitantes los verán aquí.",
+    "addColor": "Añadir color",
+    "colorName": "Nombre del color",
+    "colorValue": "Color",
+    "removeColor": "Quitar el color {n}",
+    "yesHint": "Qué se puede hacer, uno por línea (p. ej. fanart)",
+    "noHint": "Qué no, uno por línea (p. ej. imágenes IA)",
+    "refPick": "Imagen para usar como referencia",
+    "refAuto": "La más reciente",
+    "galleryEmpty": "Todavía no hay imágenes.",
+    "all": "Todos"
+  },
+  "advertise": {
+    "link": "Publicidad",
+    "eyebrow": "Publicidad",
+    "title": "Hazte ver en @:{'site.name'}",
+    "lead": "Tu anuncio aparece entre un duelo y el siguiente, ante personas que están mirando y votando con atención. Sin ventanas emergentes: una tarjeta clara, marcada como “Patrocinado”.",
+    "numbers": {
+      "title": "Quién lo ve",
+      "votes": "Votos en los últimos 30 días",
+      "voters": "Personas que han votado",
+      "entries": "Personajes en competición",
+      "every": "Un anuncio cada {n} votos: lo bastante para que se note, no tanto como para molestar."
+    },
+    "how": {
+      "title": "Cómo se ve",
+      "text": "Una tarjeta a toda altura con imagen, título, un texto breve y un botón hacia tu web. Se queda hasta que la persona toca “Seguir votando”.",
+      "labelled": "Siempre se indica como publicidad, con el nombre del anunciante.",
+      "preview": "Ejemplo de anuncio entre duelos"
+    },
+    "choose": {
+      "title": "Qué puedes elegir",
+      "place": "Dónde: una ciudad y un radio en km, o en todas partes",
+      "lang": "En qué idioma: el texto puede cambiar para cada idioma del sitio",
+      "category": "En qué duelos: todos o solo una categoría",
+      "audience": "A quién: a todos, solo a quien tiene cuenta o solo a invitados",
+      "time": "Cuándo: fechas de inicio y fin, días de la semana y franjas horarias",
+      "caps": "Cuánto: un límite de vistas o de clics, y cuántas veces lo ve la misma persona"
+    },
+    "prices": {
+      "title": "Cuánto cuesta",
+      "flat": {
+        "title": "Precio fijo",
+        "text": "Una cantidad por un periodo, por ejemplo una semana o un mes."
+      },
+      "cpm": {
+        "title": "Por vistas",
+        "text": "Pagas cada 1.000 veces que se muestra el anuncio."
+      },
+      "cpc": {
+        "title": "Por clic",
+        "text": "Pagas solo cuando alguien toca el anuncio y llega a tu web."
+      },
+      "quote": "Cuéntanos qué quieres promocionar y te enviamos un presupuesto."
+    },
+    "report": {
+      "title": "Qué recibes",
+      "text": "Vistas y clics de tu campaña, en total y de personas distintas. Los enlaces a tu web llevan utm_source, así en tus estadísticas ves las visitas y compras que llegan desde aquí."
+    },
+    "rules": {
+      "title": "Qué aceptamos",
+      "text": "Revisamos cada anuncio antes de publicarlo. Nada de contenido para adultos, apuestas, armas, promesas engañosas ni productos que puedan dañar a los animales. Podemos rechazar o retirar un anuncio que no cumpla estas reglas."
+    },
+    "contact": {
+      "title": "Escríbenos",
+      "text": "Cuéntanos quién eres, qué quieres promocionar, dónde y durante cuánto tiempo. Te respondemos con las opciones y un presupuesto.",
+      "button": "Escribir para anunciarse",
+      "or": "O escribe a",
+      "subject": "Publicidad en {site}",
+      "body": "¡Hola! Me gustaría anunciarme.\n\nQuién soy / negocio:\nQué quiero promocionar:\nDónde (ciudad o en todas partes):\nPeriodo:\nWeb:\n",
+      "missing": "Falta el email de publicidad"
+    },
+    "sample": {
+      "advertiser": "Tienda de ejemplo",
+      "title": "Tu titular aquí",
+      "body": "Una frase sobre lo que ofreces y por qué vale la pena.",
+      "cta": "Más información"
+    }
   }
 }

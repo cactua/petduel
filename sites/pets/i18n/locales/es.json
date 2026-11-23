@@ -191,5 +191,10 @@
   },
   "follow": {
     "lead": "Las novedades de las personas que sigues: sus nuevos animales y las fotos recién publicadas."
+  },
+  "advertise": {
+    "numbers": {
+      "entries": "Mascotas en competición"
+    }
   }
 }

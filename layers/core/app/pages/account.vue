@@ -45,6 +45,11 @@ async function remove() {
       <p class="account-page__user">@{{ user?.username }}</p>
     </header>
 
+    <article id="bio" class="account-page__card">
+      <h2 class="account-page__card-title">{{ $t('profile.aboutTitle') }}</h2>
+      <ProfileAbout />
+    </article>
+
     <article v-if="HAS_ARTISTS" class="account-page__card">
       <h2 class="account-page__card-title">🎨 {{ $t('artist.title') }}</h2>
       <ArtistSettings />

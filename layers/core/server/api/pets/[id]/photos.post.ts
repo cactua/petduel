@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   if (!pet) throw createError({ statusCode: 404, statusMessage: 'errors.petNotFound' })
   await assertPendingQuota(user.id)
 
-  const { image, credit } = await readPhotoUpload(event)
-  await db.insert(photos).values({ petId: pet.id, image, ...credit })
-  return { petId: pet.id }
+  const { image, credit, inDuels } = await readPhotoUpload(event)
+  const [row] = await db.insert(photos).values({ petId: pet.id, image, ...credit, inDuels }).returning({ id: photos.id })
+  return { petId: pet.id, photoId: row!.id }
 })

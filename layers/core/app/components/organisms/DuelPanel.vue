@@ -33,6 +33,20 @@ function closeNudge() {
 const showNudge = computed(() => !loggedIn.value && !nudgeClosed.value && props.votes >= NUDGE_AFTER && !props.hint && !props.ad)
 const weightTimes = Math.round(1 / ANON_VOTE_WEIGHT)
 
+// Barra spaziatrice = Salta (le frecce votano, vedi DuelArena). Non quando il fuoco è su un pulsante,
+// un link o un campo: lì lo spazio fa già la sua cosa
+const canSkip = computed(() => !props.ad && !!props.duel?.pets && !props.result && !props.hint)
+function onSkipKey(e: KeyboardEvent) {
+  if (e.key !== ' ' || e.repeat || e.ctrlKey || e.metaKey || e.altKey || !canSkip.value) return
+  const el = e.target
+  if (el instanceof Element && el.closest('button, a, input, textarea, select, summary, [contenteditable], [role="button"], [role="menu"], dialog')) return
+  e.preventDefault()
+  emit('skip')
+}
+onMounted(() => window.addEventListener('keydown', onSkipKey))
+onBeforeUnmount(() => window.removeEventListener('keydown', onSkipKey))
+
+const { lessMotion } = useA11yPrefs()
 const CONFETTI_COLORS = ['var(--coral)', 'var(--sun)', 'var(--heart)', 'var(--mint)', '#7cc3f0', '#b9a4ff']
 const confetti = Array.from({ length: 28 }, (_, i) => ({
   '--x': `${Math.round((Math.random() - 0.5) * 340)}px`,
@@ -69,26 +83,32 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
     <div v-else class="duel-panel__skeleton" aria-busy="true" :aria-label="$t('duel.loading')">
       <div v-for="i in 2" :key="i" class="duel-panel__ghost"><span class="duel-panel__ghost-photo" /><span class="duel-panel__ghost-line" /></div>
     </div>
-    <!-- Fuori dalla catena v-if/v-else sopra: dentro, quando sparisce farebbe comparire il riquadro "hai votato tutto" -->
-    <!-- Sotto resta solo Salta: la bandierina per segnalare sta nell'angolo di ogni foto -->
-    <div v-if="!ad && duel?.pets && !result && !hint" class="duel-panel__extras">
-      <button type="button" class="duel-panel__skip" @click="emit('skip')">{{ $t('duel.skip') }} →</button>
+    <!-- Fuori dalla catena v-if/v-else sopra: dentro, quando sparisce farebbe comparire il riquadro "hai votato tutto".
+         Salta e il suggerimento: uno sopra l'altro su telefono, sulla stessa riga su computer -->
+    <div class="duel-panel__foot">
+      <!-- Sotto resta solo Salta: la bandierina per segnalare sta nell'angolo di ogni foto -->
+      <button v-if="canSkip" type="button" class="duel-panel__skip" aria-keyshortcuts="Space" @click="emit('skip')">
+        {{ $t('duel.skip') }} →<kbd class="duel-panel__kbd">{{ $t('duel.keySpace') }}</kbd>
+      </button>
+      <p v-if="showNudge" class="duel-panel__nudge">
+        <i18n-t keypath="duel.nudge" tag="span" class="duel-panel__nudge-text"><template #times><b>{{ $t('duel.nudgeTimes', { n: weightTimes }) }}</b></template></i18n-t>
+        <NuxtLink :to="{ path: '/signup', query: { redirect: route.fullPath } }" class="duel-panel__nudge-link">{{ $t('duel.signUp') }}</NuxtLink>
+        <button type="button" class="duel-panel__nudge-close" :aria-label="$t('common.close')" @click="closeNudge">✕</button>
+      </p>
+      <p v-else class="duel-panel__hint">
+        <template v-if="ad">{{ $t('ad.thanks') }}</template>
+        <template v-else-if="hint">{{ hint }}</template>
+        <template v-else>
+          {{ $t('duel.orDrag') }}<span class="duel-panel__hint-more"> · {{ $t('duel.hintHold') }}</span>
+          <!-- Con mouse e tastiera: le frecce votano (vedi DuelArena) -->
+          <span v-if="duel?.pets" class="duel-panel__hint-keys"> · <kbd>←</kbd> <kbd>→</kbd> {{ $t('duel.hintKeys') }}</span>
+        </template>
+      </p>
     </div>
-
-    <p v-if="showNudge" class="duel-panel__nudge">
-      <i18n-t keypath="duel.nudge" tag="span" class="duel-panel__nudge-text"><template #times><b>{{ $t('duel.nudgeTimes', { n: weightTimes }) }}</b></template></i18n-t>
-      <NuxtLink :to="{ path: '/signup', query: { redirect: route.fullPath } }" class="duel-panel__nudge-link">{{ $t('duel.signUp') }}</NuxtLink>
-      <button type="button" class="duel-panel__nudge-close" :aria-label="$t('common.close')" @click="closeNudge">✕</button>
-    </p>
-    <p v-else class="duel-panel__hint">
-      <template v-if="ad">{{ $t('ad.thanks') }}</template>
-      <template v-else-if="hint">{{ hint }}</template>
-      <template v-else><i18n-t keypath="duel.hint"><template #over><b>{{ $t('duel.hintOver') }}</b></template></i18n-t><span class="duel-panel__hint-more"> · {{ $t('duel.hintHold') }}</span></template>
-    </p>
     <Transition name="pop">
       <div v-if="toast" class="duel-panel__toast" role="status">{{ toast }}</div>
     </Transition>
-    <div v-if="celebrate" :key="celebrate" class="duel-panel__confetti" aria-hidden="true">
+    <div v-if="celebrate && !lessMotion" :key="celebrate" class="duel-panel__confetti" aria-hidden="true">
       <i v-for="(c, i) in confetti" :key="i" class="duel-panel__confetto" :style="c" />
     </div>
   </div>
@@ -102,7 +122,20 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
   @include stack($space-4);
   position: relative;
 
-  &__extras { display: flex; justify-content: center; }
+  &__foot {
+    @include stack($space-4);
+    align-items: center;
+
+    > .duel-panel__nudge { align-self: stretch; }
+
+    @include mq(lg) {
+      flex-direction: row;
+      justify-content: center;
+      gap: $space-5;
+
+      > .duel-panel__nudge { align-self: center; }
+    }
+  }
 
   &__skip {
     border: 0;
@@ -115,6 +148,18 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
     cursor: pointer;
 
     &:hover, &:focus-visible { color: var(--ink); text-decoration: underline; }
+
+    // Su computer un vero pulsante, non una scritta persa in fondo
+    @include mq(lg) {
+      font-size: 15px;
+      padding: 8px 18px;
+      border-radius: $radius-pill;
+      background: var(--surface);
+      color: var(--ink);
+      box-shadow: $shadow-flat;
+
+      &:hover, &:focus-visible { text-decoration: none; background: var(--coral-soft); }
+    }
   }
 
   &__hint {
@@ -130,6 +175,42 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
 
   // Il consiglio in più solo dove c'è spazio per una riga sola
   &__hint-more { @include mq-down(md) { display: none; } }
+
+  // Il tasto per saltare, sul pulsante stesso: solo dove c'è una tastiera
+  &__kbd {
+    display: none;
+    margin-left: $space-2;
+    padding: 1px 6px;
+    border-radius: 6px;
+    background: var(--bg);
+    box-shadow: inset 0 -2px 0 var(--line);
+    color: var(--muted);
+    font: inherit;
+    font-size: 12px;
+
+    @media (hover: hover) and (pointer: fine) { @include mq(lg) { display: inline-block; } }
+  }
+
+  // Le frecce solo con mouse (dove c'è una tastiera) e su schermi larghi
+  &__hint-keys {
+    display: none;
+
+    @media (hover: hover) and (pointer: fine) { @include mq(lg) { display: inline; } }
+
+    kbd {
+      display: inline-block;
+      min-width: 22px;
+      padding: 1px 5px;
+      border-radius: 6px;
+      background: var(--surface);
+      box-shadow: inset 0 -2px 0 var(--line);
+      color: var(--ink);
+      font: inherit;
+      text-align: center;
+    }
+  }
+
+  @include mq(lg) { &__hint { font-size: 14px; } }
 
   &__empty {
     flex: 1;

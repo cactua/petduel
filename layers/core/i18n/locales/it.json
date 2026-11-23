@@ -25,7 +25,8 @@
     "login": "Accedi",
     "profile": "Profilo",
     "sections": "Sezioni",
-    "language": "Lingua"
+    "language": "Lingua",
+    "skip": "Vai al contenuto"
   },
   "species": {
     "filter": "Filtra per categoria",
@@ -98,7 +99,8 @@
     "taxCode": "Codice fiscale o partita IVA non valido",
     "phone": "Telefono non valido",
     "check": "Controlla i campi",
-    "rules": "Per iscriverti accetta le regole della community"
+    "rules": "Per iscriverti accetta le regole della community",
+    "color": "Usa un colore come #ff8800"
   },
   "errors": {
     "generic": "Qualcosa è andato storto, riprova",
@@ -180,7 +182,11 @@
     "label": "Pubblicità",
     "sponsored": "Sponsorizzato",
     "continue": "Continua a votare",
-    "thanks": "Grazie: la pubblicità tiene @:{'site.name'} gratis"
+    "thanks": "Grazie: la pubblicità tiene @:{'site.name'} gratis",
+    "yours": "Il tuo annuncio qui?",
+    "houseTitle": "Il tuo annuncio qui",
+    "houseBody": "Hai un negozio, un evento o un servizio? Fatti vedere da chi vota su @:{'site.name'}.",
+    "houseCta": "Scopri come"
   },
   "share": {
     "text": "Guarda {name} su @:{'site.name'}!",
@@ -213,6 +219,8 @@
     "hint": "Trascina il tuo preferito {over} per farlo vincere",
     "hintOver": "sopra l'altro",
     "hintHold": "tieni premuto per ingrandire",
+    "hintKeys": "per scegliere",
+    "keySpace": "Spazio",
     "makeWin": "Fai vincere {name}",
     "wins": "Vince!",
     "beat": "Hai scelto {winner}!",
@@ -221,7 +229,10 @@
     "question": "Chi preferisci?",
     "votedTimes": "Hai votato {n} volte",
     "uploadYours": "Carica il tuo partecipante",
-    "skip": "Salta"
+    "skip": "Salta",
+    "choose": "Scegli",
+    "chosen": "Scelto",
+    "orDrag": "Oppure trascina il preferito sopra l'altro"
   },
   "upload": {
     "noClipboardPhoto": "Negli appunti non c'è una foto: copiala e riprova",
@@ -355,7 +366,34 @@
     "customizeHint": "Copertina, mappa, orari, donazioni",
     "addGuestHint": "Carica le immagini di un nuovo partecipante",
     "publicPage": "Guarda la pagina",
-    "publicPageHint": "Come la vedono gli altri"
+    "publicPageHint": "Come la vedono gli altri",
+    "aboutTitle": "Bio e pronomi",
+    "bio": "Bio",
+    "bioHint": "Due righe su di te, fino a 300 caratteri",
+    "pronouns": "Pronomi",
+    "pronounsHint": "Es. lei/lei, lui/lui, loro",
+    "saveAbout": "Salva",
+    "savedAbout": "Salvato",
+    "share": "Condividi il profilo",
+    "linkCopied": "Link copiato",
+    "media": {
+      "editAvatar": "Cambia avatar",
+      "editBanner": "Cambia banner",
+      "addBanner": "Aggiungi un banner",
+      "frame": "Ritaglio: trascina per spostare, frecce per muovere, + e − per lo zoom",
+      "zoom": "Zoom",
+      "dragHint": "Trascina l’immagine per scegliere la parte da mostrare.",
+      "pick": "Scegli un’immagine",
+      "upload": "Carica nuova",
+      "letter": "Lettera",
+      "none": "Nessuno",
+      "pendingAlt": "{name}, in revisione",
+      "pending": "In revisione",
+      "pendingAvatar": "Il nuovo avatar si vedrà dopo la revisione dell’immagine.",
+      "needCharacter": "Per caricare un’immagine crea prima un personaggio.",
+      "addTo": "Aggiungila a",
+      "reviewHint": "L’immagine va in revisione come le altre (fuori dai duelli): gli altri la vedranno dopo l’approvazione."
+    }
   },
   "challenges": {
     "title": "Sfide settimanali",
@@ -412,13 +450,22 @@
       "system": "Automatico",
       "light": "Chiaro",
       "dark": "Scuro"
-    }
+    },
+    "a11y": "Accessibilità",
+    "lessMotion": "Meno animazioni",
+    "moreContrast": "Contrasto alto",
+    "haptics": "Vibrazione quando voti"
   },
   "gallery": {
     "manage": "Gestisci",
     "done": "Fatto",
     "showAll": "Tutte le {n} foto",
-    "showLess": "Mostra meno foto"
+    "showLess": "Mostra meno foto",
+    "inDuels": "Usala nei duelli",
+    "inDuelsHint": "Togli la spunta per le immagini che vuoi solo nel profilo (schizzi, reference, foto ricordo): restano visibili a tutti, ma non entrano nei duelli.",
+    "duelCount": "{done} di {total} immagine nei duelli | {done} di {total} immagini nei duelli",
+    "noDuelPhoto": "Nessuna immagine pubblica di {name} è nei duelli: per ora non comparirà nelle sfide.",
+    "profileOnly": "Solo profilo"
   },
   "consent": {
     "title": "Cookie e annunci",
@@ -435,7 +482,8 @@
     "title": "Note legali",
     "privacy": "Privacy",
     "cookie": "Cookie",
-    "terms": "Termini d'uso"
+    "terms": "Termini d'uso",
+    "accessibility": "Accessibilità"
   },
   "account": {
     "title": "Il tuo account",
@@ -629,5 +677,109 @@
     "title": "Preferiti",
     "lead": "Quelli che hai salvato. Li vedi solo tu: nessuno sa che li hai salvati.",
     "empty": "Nessun preferito. Apri la pagina di un partecipante e tocca \"Salva\"."
+  },
+  "sona": {
+    "tabs": {
+      "label": "Sezioni del profilo",
+      "characters": "Personaggi",
+      "gallery": "Galleria",
+      "forOthers": "Per altri"
+    },
+    "pick": "Scegli il personaggio",
+    "species": "Specie",
+    "pronouns": "Pronomi",
+    "traits": "Segni particolari",
+    "about": "Descrizione",
+    "colors": "Colori",
+    "copy": "Copia {name} {hex}",
+    "copied": "Copiato {hex}",
+    "forArtists": "Per chi lo disegna",
+    "yes": "Sì",
+    "no": "No",
+    "refBy": "Reference: {artist}",
+    "openRef": "Apri la reference a schermo intero",
+    "works": "Immagini di {name}",
+    "edit": "Modifica scheda",
+    "save": "Salva scheda",
+    "cancel": "Annulla",
+    "saved": "Scheda salvata",
+    "empty": "Aggiungi specie, colori e regole per chi lo disegna: chi visita il profilo li vede qui.",
+    "addColor": "Aggiungi colore",
+    "colorName": "Nome del colore",
+    "colorValue": "Colore",
+    "removeColor": "Togli il colore {n}",
+    "yesHint": "Cosa si può fare, una voce per riga (es. fanart)",
+    "noHint": "Cosa non fare, una voce per riga (es. immagini AI)",
+    "refPick": "Immagine da usare come reference",
+    "refAuto": "La più recente",
+    "galleryEmpty": "Ancora nessuna immagine.",
+    "all": "Tutti"
+  },
+  "advertise": {
+    "link": "Pubblicità",
+    "eyebrow": "Pubblicità",
+    "title": "Fatti vedere su @:{'site.name'}",
+    "lead": "Il tuo annuncio compare tra un duello e l’altro, a persone che stanno guardando e votando con attenzione. Niente pop-up: una card chiara, segnata come “Sponsorizzato”.",
+    "numbers": {
+      "title": "Chi lo vede",
+      "votes": "Voti negli ultimi 30 giorni",
+      "voters": "Persone che hanno votato",
+      "entries": "Personaggi in gara",
+      "every": "Una pubblicità ogni {n} voti: abbastanza per essere notata, non così spesso da dare fastidio."
+    },
+    "how": {
+      "title": "Come appare",
+      "text": "Una card a tutta altezza con immagine, titolo, testo breve e un pulsante verso il tuo sito. Resta finché la persona non tocca “Continua a votare”.",
+      "labelled": "È sempre indicata come pubblicità, con il nome di chi la fa.",
+      "preview": "Esempio di annuncio tra i duelli"
+    },
+    "choose": {
+      "title": "Cosa puoi scegliere",
+      "place": "Dove: una città e un raggio in km, oppure ovunque",
+      "lang": "In che lingua: il testo può essere diverso per ogni lingua del sito",
+      "category": "In quali duelli: tutti o solo una categoria",
+      "audience": "A chi: tutti, solo chi ha un account o solo gli ospiti",
+      "time": "Quando: date di inizio e fine, giorni della settimana e fasce orarie",
+      "caps": "Quanto: un tetto di visualizzazioni o di clic, e quante volte la stessa persona la vede"
+    },
+    "prices": {
+      "title": "Quanto costa",
+      "flat": {
+        "title": "Prezzo fisso",
+        "text": "Una cifra per un periodo, per esempio una settimana o un mese."
+      },
+      "cpm": {
+        "title": "A visualizzazioni",
+        "text": "Paghi ogni 1.000 volte che l’annuncio viene mostrato."
+      },
+      "cpc": {
+        "title": "A clic",
+        "text": "Paghi solo quando qualcuno tocca l’annuncio e arriva sul tuo sito."
+      },
+      "quote": "Scrivici cosa vuoi promuovere e ti mandiamo un preventivo."
+    },
+    "report": {
+      "title": "Cosa ricevi",
+      "text": "Visualizzazioni e clic della tua campagna, totali e di persone diverse. I link verso il tuo sito portano utm_source, così nelle tue statistiche vedi le visite e gli acquisti arrivati da qui."
+    },
+    "rules": {
+      "title": "Cosa accettiamo",
+      "text": "Controlliamo ogni annuncio prima che vada in onda. Niente contenuti per adulti, gioco d’azzardo, armi, promesse ingannevoli o prodotti che possono fare male agli animali. Possiamo rifiutare o togliere un annuncio che non rispetta queste regole."
+    },
+    "contact": {
+      "title": "Scrivici",
+      "text": "Raccontaci chi sei, cosa vuoi promuovere, dove e per quanto tempo. Ti rispondiamo con le opzioni e un preventivo.",
+      "button": "Scrivi per fare pubblicità",
+      "or": "Oppure scrivi a",
+      "subject": "Pubblicità su {site}",
+      "body": "Ciao! Vorrei fare pubblicità.\n\nChi sono / attività:\nCosa voglio promuovere:\nDove (città o ovunque):\nPeriodo:\nSito web:\n",
+      "missing": "Email per la pubblicità da completare"
+    },
+    "sample": {
+      "advertiser": "Negozio di esempio",
+      "title": "Il tuo titolo qui",
+      "body": "Una frase che dice cosa offri e perché conviene.",
+      "cta": "Scopri di più"
+    }
   }
 }

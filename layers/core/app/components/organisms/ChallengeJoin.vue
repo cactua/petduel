@@ -91,7 +91,8 @@ async function submit() {
       body.append('creditUrl', check.data.creditUrl)
       body.append('artist', check.data.artist)
     }
-    body.append('photo', file.value)
+    // Troppo grande: si rimpicciolisce qui invece di farla rifiutare
+    body.append('photo', await shrinkImage(file.value))
     if (crops.value) body.append('crops', JSON.stringify(crops.value))
   }
 

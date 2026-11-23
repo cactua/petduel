@@ -1,5 +1,5 @@
 import { and, desc, eq, gt, inArray, lte, sql } from 'drizzle-orm'
-import type { ChallengeStanding, ChallengeStatus, ChallengeSummary, Trophy } from '#shared/models'
+import type { ChallengeStanding, ChallengeTranslations, ChallengeStatus, ChallengeSummary, Trophy } from '#shared/models'
 import { challengeEntries, challenges, photos, pets, users, type Challenge } from '../db/schema'
 import { imageUrl, useDb } from './db'
 import { CHALLENGE_THEMES } from '#shared/themes'
@@ -147,6 +147,7 @@ export async function toSummaries(list: Challenge[]): Promise<ChallengeSummary[]
       emoji: c.emoji,
       species: c.species,
       adoptionOnly: c.adoptionOnly,
+      translations: c.translations,
       startsAt: c.startsAt.toISOString(),
       endsAt: c.endsAt.toISOString(),
       status,
@@ -162,9 +163,9 @@ export async function loadTrophies(petIds: number[]) {
   const trophies = new Map<number, Trophy[]>()
   if (!petIds.length) return trophies
   const db = await useDb()
-  const { rows } = await db.execute<{ pet_id: number, slug: string, title: string, emoji: string, ends_at: Date }>(sql`
+  const { rows } = await db.execute<{ pet_id: number, slug: string, title: string, translations: ChallengeTranslations, emoji: string, ends_at: Date }>(sql`
     select * from (
-      select distinct on (c.id) c.slug, c.title, c.emoji, c.ends_at, e.pet_id
+      select distinct on (c.id) c.slug, c.title, c.translations, c.emoji, c.ends_at, e.pet_id
       from challenges c
       join challenge_entries e on e.challenge_id = c.id
       join photos ph on ph.id = e.photo_id and ph.status = 'approved'
@@ -176,7 +177,7 @@ export async function loadTrophies(petIds: number[]) {
     order by ends_at desc`)
   for (const r of rows) {
     const list = trophies.get(r.pet_id) ?? []
-    list.push({ slug: r.slug, title: r.title, emoji: r.emoji, endsAt: new Date(r.ends_at).toISOString() })
+    list.push({ slug: r.slug, title: r.title, translations: r.translations, emoji: r.emoji, endsAt: new Date(r.ends_at).toISOString() })
     trophies.set(r.pet_id, list)
   }
   return trophies

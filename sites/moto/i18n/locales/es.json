@@ -227,5 +227,10 @@
   },
   "favorites": {
     "empty": "Ningún favorito. Abre la página de una moto y toca \"Guardar\"."
+  },
+  "advertise": {
+    "numbers": {
+      "entries": "Motos en competición"
+    }
   }
 }

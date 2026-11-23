@@ -4,6 +4,7 @@ import { adEvents, adNetworkViews, adoptionRequests, blocks, challengeEntries, c
 import { imageUrl, useDb } from './db'
 import { removeImage } from './photos'
 import { removeShelterImage } from './shelterImages'
+import { removeProfileImage } from './profileImages'
 
 /**
  * Elimina un account: profilo, pet, foto (anche i file), rifugio, richieste di adozione e avvisi.
@@ -16,6 +17,7 @@ export async function deleteAccount(userId: number) {
   const files = petIds.length ? await db.select({ image: photos.image }).from(photos).where(inArray(photos.petId, petIds)) : []
 
   const [shelterImages] = await db.select({ logo: shelters.logo, banner: shelters.banner }).from(shelters).where(eq(shelters.userId, userId))
+  const [profileImages] = await db.select({ avatar: users.avatarImage, banner: users.bannerImage }).from(users).where(eq(users.id, userId))
   const deleted = await db.transaction(async (tx) => {
     const was = `u:${userId}`
     const anon = `d:${randomUUID()}`
@@ -33,6 +35,8 @@ export async function deleteAccount(userId: number) {
     ...files.map(f => removeImage(f.image)),
     removeShelterImage(shelterImages?.logo ?? null, 'logo'),
     removeShelterImage(shelterImages?.banner ?? null, 'banner'),
+    removeProfileImage(profileImages?.avatar ?? null, 'avatar'),
+    removeProfileImage(profileImages?.banner ?? null, 'banner'),
   ])
   return true
 }
@@ -67,7 +71,7 @@ export async function exportAccount(userId: number) {
 
   return {
     exportedAt: new Date().toISOString(),
-    account: { email: user.email, username: user.username, role: user.role, createdAt: user.createdAt },
+    account: { email: user.email, username: user.username, role: user.role, createdAt: user.createdAt, bio: user.bio, pronouns: user.pronouns, avatar: user.avatarPhotoId ? { photoId: user.avatarPhotoId, crop: user.avatarCrop } : null, banner: user.bannerPhotoId ? { photoId: user.bannerPhotoId, crop: user.bannerCrop } : null },
     artist: user.isArtist ? { links: user.artistLinks, commissions: user.commissions, commissionsUrl: user.commissionsUrl } : null,
     rulesAcceptedAt: user.rulesAcceptedAt,
     blocked: (await db.select({ username: users.username }).from(blocks).innerJoin(users, eq(users.id, blocks.blockedId))
@@ -83,6 +87,7 @@ export async function exportAccount(userId: number) {
     pets: myPets.map(p => ({
       id: p.id, name: p.name, species: p.species, breed: p.breed, city: p.city, hearts: p.wins, createdAt: p.createdAt,
       adoption: p.adoption ? { status: p.adoption, sex: p.sex, age: p.age, size: p.size, neutered: p.neutered, about: p.about } : null,
+      sona: p.sona ?? null,
       photos: myPhotos.filter(ph => ph.petId === p.id).map(ph => ({
         status: ph.status, url: ph.status === 'rejected' ? null : imageUrl(ph.image), rejectReason: ph.rejectReason, createdAt: ph.createdAt,
       })),

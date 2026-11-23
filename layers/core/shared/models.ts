@@ -2,6 +2,8 @@ import { z } from 'zod'
 import site from '#site'
 import siteIt from '#site-it'
 import type { Badge } from './badges'
+import { cropSchema, type Crop } from './images'
+import { LANGUAGES } from '../i18n/languages'
 
 // Categorie del sito (per PetDuel le specie). Se il sito non ne ha, ogni contenuto ha categoria "" e competono tutti insieme
 export const SPECIES = site.categories.map(c => c.id)
@@ -146,6 +148,8 @@ export interface PetPhoto {
   id: number
   image: string
   status: PhotoStatus
+  // Usata nei duelli (scelta del proprietario)
+  inDuels: boolean
   rejectReason: string | null
   credit: PhotoCredit | null
   createdAt: string
@@ -160,6 +164,8 @@ export interface PetGallery extends Omit<PublicPet, 'image'> {
   photos: PetPhoto[]
   trophies: Trophy[]
   adoptionInfo?: PetAdoption | null
+  // Siti con site.sona: la scheda del personaggio, se l'ha compilata
+  sona?: SonaSheet | null
 }
 
 // --- Sfide settimanali a tema ---
@@ -183,6 +189,8 @@ export interface ChallengeSummary {
   leaders: { petId: number, name: string, image: string }[]
   // Sfida riservata ai pet dei rifugi che cercano casa
   adoptionOnly: boolean
+  // Titolo e descrizione nelle altre lingue (vuoto per le sfide automatiche, tradotte dai testi del sito)
+  translations: ChallengeTranslations
 }
 
 export interface ChallengeStanding extends RankedPet {
@@ -211,13 +219,24 @@ export interface ChallengeList {
 export interface Trophy {
   slug: string
   title: string
+  translations?: ChallengeTranslations
   emoji: string
   endsAt: string
 }
 
+// Le sfide dei moderatori si scrivono in italiano (title/description) e si traducono in tutte le altre lingue
+export const TRANSLATED_LOCALES = LANGUAGES.map(l => l.code).filter(c => c !== 'it') as [string, ...string[]]
+const challengeTextSchema = z.object({
+  title: text(60).min(3, 'Titolo troppo corto'),
+  description: text(200).min(3, 'Aggiungi una descrizione'),
+})
+export type ChallengeTranslations = Partial<Record<string, { title: string, description: string }>>
+
 export const challengeFieldsSchema = z.object({
   title: text(60).min(3, 'Titolo troppo corto'),
   description: text(200).min(3, 'Aggiungi una descrizione'),
+  // Una traduzione per ogni lingua, obbligatoria
+  translations: z.record(z.enum(TRANSLATED_LOCALES), challengeTextSchema),
   emoji: text(16).min(1, 'Scegli un\'emoji'),
   species: z.enum(SPECIES as [Species, ...Species[]]).nullable().default(null),
   adoptionOnly: z.boolean().default(false),
@@ -246,6 +265,20 @@ export interface Profile {
   following: boolean
   // Quanti lo seguono: solo sul proprio profilo
   followers: number | null
+  // Due righe su di sé e pronomi (facoltativi)
+  bio: string
+  pronouns: string
+  // Immagine rotonda accanto al nome e immagine larga in cima (null: lettera e nessun banner).
+  // id: i file da /profile-img/; pending: l'immagine di partenza è ancora in revisione (lo vede solo il proprietario)
+  avatar: ProfileMedia | null
+  banner: ProfileMedia | null
+}
+
+export interface ProfileMedia {
+  id: string
+  photoId: number
+  crop: Crop
+  pending: boolean
 }
 
 // Un lavoro nuovo di chi segui: caricato da lui o che lo indica come artista
@@ -338,7 +371,7 @@ export interface VotedPet {
   credit: PhotoCredit | null
   votedAt: string
   // Se l'ultimo voto era in una sfida
-  challenge: { slug: string, title: string } | null
+  challenge: { slug: string, title: string, translations?: ChallengeTranslations } | null
 }
 
 // --- Complimenti ---
@@ -416,6 +449,42 @@ export const HAS_ARTISTS = !!site.askCredit
 export const ENTRY_PATH = site.entryPath ?? 'pet'
 export const entryUrl = (id: number | string) => `/${ENTRY_PATH}/${id}`
 export const MAX_ARTIST_LINKS = 6
+
+// --- Scheda del personaggio (siti con site.sona) ---
+
+export const HAS_SONA = !!site.sona
+export const MAX_SONA_COLORS = 8
+export const MAX_SONA_RULES = 6
+const hexColor = z.string().trim().regex(/^#[0-9a-f]{6}$/i, 'validation.color').transform(v => v.toLowerCase())
+const shortList = z.array(text(40).min(1)).max(MAX_SONA_RULES).default([])
+
+/** Tutto facoltativo: chi non compila niente vede solo le immagini, come prima */
+export const sonaSheetSchema = z.object({
+  species: text(40).default(''),
+  pronouns: text(30).default(''),
+  about: text(400).default(''),
+  // Segni particolari: cosa non deve mancare quando lo si disegna
+  traits: text(160).default(''),
+  palette: z.array(z.object({ name: text(20).default(''), hex: hexColor })).max(MAX_SONA_COLORS).default([]),
+  // Per chi lo disegna: cosa sì e cosa no
+  yes: shortList,
+  no: shortList,
+  // Immagine da usare come reference sheet (una delle sue)
+  refPhotoId: z.number().int().positive().nullable().default(null),
+})
+export type SonaSheet = z.infer<typeof sonaSheetSchema>
+
+export const profileAboutSchema = z.object({
+  bio: text(300).default(''),
+  pronouns: text(30).default(''),
+})
+
+// Avatar o banner del profilo: una propria immagine e il ritaglio (frazioni della variante di partenza), o null per toglierlo
+export const profileImageSchema = z.object({
+  kind: z.enum(['avatar', 'banner']),
+  photoId: z.number().int().positive().nullable(),
+  crop: cropSchema.optional(),
+})
 
 export const COMMISSION_STATUSES = ['', 'open', 'closed'] as const
 export type CommissionStatus = (typeof COMMISSION_STATUSES)[number]
@@ -790,8 +859,22 @@ export interface NetworkAd {
   client: string
   slot: string
 }
-export type ShownAd = PublicAd | NetworkAd
+/** Nessuna campagna in onda: la card invita a fare pubblicità qui (al massimo una volta per visita) */
+export interface HouseAd { house: true }
+
+export type ShownAd = PublicAd | NetworkAd | HouseAd
 export const isNetworkAd = (ad: ShownAd): ad is NetworkAd => 'network' in ad
+export const isHouseAd = (ad: ShownAd): ad is HouseAd => 'house' in ad
+
+/** Numeri pubblici della pagina /advertise (ultimi 30 giorni) */
+export interface AdvertiseStats {
+  votes: number
+  voters: number
+  // Personaggi con almeno un'immagine approvata
+  entries: number
+  // Una pubblicità ogni N voti (0 = spente)
+  every: number
+}
 
 // Consenso ai cookie degli annunci Google: senza "ads" lo script di Google non si carica mai.
 // I cookie tecnici del sito (accesso, lingua, tema) non chiedono consenso

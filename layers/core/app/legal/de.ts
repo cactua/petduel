@@ -178,5 +178,44 @@ export default {
         },
       ],
     },
+    accessibility: {
+      title: 'Erklärung zur Barrierefreiheit',
+      intro: 'Wir möchten, dass {site} für alle leicht zu benutzen ist, auch mit Screenreader, nur mit Tastatur, mit Vergrößerung oder bei Schwierigkeiten mit feinen Bewegungen.',
+      sections: [
+        {
+          h: 'Ziel',
+          p: ['Wir folgen den WCAG 2.2 Stufe AA und der europäischen Norm EN 301 549, wie es der European Accessibility Act (EU-Richtlinie 2019/882) verlangt.'],
+        },
+        {
+          h: 'Stand der Konformität',
+          p: ['{site} ist teilweise konform: Die meisten Seiten erfüllen die Anforderungen, die unten genannten Einschränkungen bestehen aber noch.'],
+        },
+        {
+          h: 'Was wir getan haben',
+          list: [
+            'Du kannst mit der Schaltfläche „Wählen“ abstimmen, ohne zu ziehen; mit der Tastatur reichen die Pfeiltasten.',
+            'Link „Zum Inhalt“, logische Tab-Reihenfolge und gut sichtbarer Fokus.',
+            'Texte und Schaltflächen mit mindestens 4,5:1 Kontrast und Schaltflächen von mindestens 44 Pixeln.',
+            'Im Menü kannst du weniger Animationen, hohen Kontrast, helles oder dunkles Design wählen und die Vibration ausschalten.',
+            'Die Seite funktioniert mit Browser-Zoom bis 200 % und in 5 Sprachen.',
+          ],
+        },
+        {
+          h: 'Bekannte Einschränkungen',
+          list: [
+            'Von Nutzern hochgeladene Bilder werden durch Namen und eingegebene Angaben beschrieben, nicht durch eine vollständige Beschreibung des Inhalts.',
+            'Werbung stammt von Dritten und erfüllt eventuell nicht alle Anforderungen.',
+          ],
+        },
+        {
+          h: 'Wie wir es geprüft haben',
+          p: ['Mit einer internen Bewertung, mit automatischen Prüfungen und manuellen Tests mit Tastatur und Screenreader.'],
+        },
+        {
+          h: 'Problem melden',
+          p: ['Wenn du einen Teil der Seite nicht nutzen kannst, schreib uns an {email}: Wir antworten innerhalb von 30 Tagen und stellen dir den Inhalt wenn möglich anders bereit.', 'Bist du mit der Antwort nicht zufrieden, kannst du dich an die Marktüberwachungsbehörde deines Landes wenden.'],
+        },
+      ],
+    },
   },
 } satisfies LegalTexts

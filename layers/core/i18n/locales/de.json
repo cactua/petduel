@@ -25,7 +25,8 @@
     "login": "Anmelden",
     "profile": "Profil",
     "sections": "Bereiche",
-    "language": "Sprache"
+    "language": "Sprache",
+    "skip": "Zum Inhalt"
   },
   "species": {
     "filter": "Nach Kategorie filtern",
@@ -98,7 +99,8 @@
     "taxCode": "Ungültige Steuer- oder USt-IdNr.",
     "phone": "Ungültige Telefonnummer",
     "check": "Überprüfe die Felder",
-    "rules": "Akzeptiere die Community-Regeln, um dich zu registrieren"
+    "rules": "Akzeptiere die Community-Regeln, um dich zu registrieren",
+    "color": "Nutze eine Farbe wie #ff8800"
   },
   "errors": {
     "generic": "Etwas ist schiefgelaufen, bitte versuch es erneut",
@@ -180,7 +182,11 @@
     "label": "Werbung",
     "sponsored": "Gesponsert",
     "continue": "Weiter abstimmen",
-    "thanks": "Danke: Werbung hält @:{'site.name'} kostenlos"
+    "thanks": "Danke: Werbung hält @:{'site.name'} kostenlos",
+    "yours": "Deine Anzeige hier?",
+    "houseTitle": "Deine Anzeige hier",
+    "houseBody": "Du hast einen Laden, ein Event oder einen Service? Lass dich von den Leuten sehen, die auf @:{'site.name'} abstimmen.",
+    "houseCta": "So geht’s"
   },
   "share": {
     "text": "Schau dir {name} auf @:{'site.name'} an!",
@@ -213,6 +219,8 @@
     "hint": "Zieh deinen Favoriten {over}, damit er gewinnt",
     "hintOver": "auf den anderen",
     "hintHold": "gedrückt halten zum Vergrößern",
+    "hintKeys": "zum Wählen",
+    "keySpace": "Leertaste",
     "makeWin": "{name} gewinnen lassen",
     "wins": "Gewinnt!",
     "beat": "Du hast {winner} gewählt!",
@@ -221,7 +229,10 @@
     "question": "Wen findest du besser?",
     "votedTimes": "Du hast {n}-mal abgestimmt",
     "uploadYours": "Lade deinen Teilnehmer hoch",
-    "skip": "Überspringen"
+    "skip": "Überspringen",
+    "choose": "Wählen",
+    "chosen": "Gewählt",
+    "orDrag": "Oder zieh eins auf das andere"
   },
   "upload": {
     "noClipboardPhoto": "In der Zwischenablage ist kein Foto: Kopiere eins und versuch es erneut",
@@ -355,7 +366,34 @@
     "customizeHint": "Titelbild, Karte, Zeiten, Spenden",
     "addGuestHint": "Bilder eines neuen Teilnehmers hochladen",
     "publicPage": "Seite ansehen",
-    "publicPageHint": "So sehen sie andere"
+    "publicPageHint": "So sehen sie andere",
+    "aboutTitle": "Bio und Pronomen",
+    "bio": "Bio",
+    "bioHint": "Ein paar Zeilen über dich, bis zu 300 Zeichen",
+    "pronouns": "Pronomen",
+    "pronounsHint": "Z. B. sie/ihr, er/ihm, they/them",
+    "saveAbout": "Speichern",
+    "savedAbout": "Gespeichert",
+    "share": "Profil teilen",
+    "linkCopied": "Link kopiert",
+    "media": {
+      "editAvatar": "Avatar ändern",
+      "editBanner": "Banner ändern",
+      "addBanner": "Banner hinzufügen",
+      "frame": "Zuschnitt: ziehen zum Verschieben, Pfeiltasten zum Feinjustieren, + und − zum Zoomen",
+      "zoom": "Zoom",
+      "dragHint": "Ziehe das Bild, um den sichtbaren Ausschnitt zu wählen.",
+      "pick": "Bild auswählen",
+      "upload": "Neu hochladen",
+      "letter": "Buchstabe",
+      "none": "Keins",
+      "pendingAlt": "{name}, in Prüfung",
+      "pending": "In Prüfung",
+      "pendingAvatar": "Dein neuer Avatar erscheint, sobald das Bild geprüft ist.",
+      "needCharacter": "Um ein Bild hochzuladen, erstelle zuerst einen Charakter.",
+      "addTo": "Hinzufügen zu",
+      "reviewHint": "Das Bild wird wie die anderen geprüft (nicht in Duellen): Andere sehen es nach der Freigabe."
+    }
   },
   "challenges": {
     "title": "Wöchentliche Challenges",
@@ -412,13 +450,22 @@
       "system": "Automatisch",
       "light": "Hell",
       "dark": "Dunkel"
-    }
+    },
+    "a11y": "Barrierefreiheit",
+    "lessMotion": "Weniger Animationen",
+    "moreContrast": "Hoher Kontrast",
+    "haptics": "Beim Abstimmen vibrieren"
   },
   "gallery": {
     "manage": "Verwalten",
     "done": "Fertig",
     "showAll": "Alle {n} Fotos",
-    "showLess": "Weniger Fotos"
+    "showLess": "Weniger Fotos",
+    "inDuels": "In Duellen verwenden",
+    "inDuelsHint": "Entferne das Häkchen bei Bildern, die nur im Profil erscheinen sollen (Skizzen, Refs, Erinnerungen): Alle sehen sie weiterhin, aber sie kommen nicht in Duelle.",
+    "duelCount": "{done} von {total} Bild in Duellen | {done} von {total} Bildern in Duellen",
+    "noDuelPhoto": "Kein öffentliches Bild von {name} ist in Duellen – vorerst erscheint es in keinem Duell.",
+    "profileOnly": "Nur Profil"
   },
   "consent": {
     "title": "Cookies und Werbung",
@@ -435,7 +482,8 @@
     "title": "Rechtliches",
     "privacy": "Datenschutz",
     "cookie": "Cookies",
-    "terms": "Nutzungsbedingungen"
+    "terms": "Nutzungsbedingungen",
+    "accessibility": "Barrierefreiheit"
   },
   "account": {
     "title": "Dein Konto",
@@ -629,5 +677,109 @@
     "title": "Favoriten",
     "lead": "Was du dir gemerkt hast. Nur du siehst es: niemand weiß, dass du es gemerkt hast.",
     "empty": "Noch keine Favoriten. Öffne die Seite eines Teilnehmers und tippe auf „Merken\"."
+  },
+  "sona": {
+    "tabs": {
+      "label": "Profilbereiche",
+      "characters": "Charaktere",
+      "gallery": "Galerie",
+      "forOthers": "Für andere"
+    },
+    "pick": "Charakter wählen",
+    "species": "Spezies",
+    "pronouns": "Pronomen",
+    "traits": "Merkmale",
+    "about": "Beschreibung",
+    "colors": "Farben",
+    "copy": "{name} {hex} kopieren",
+    "copied": "{hex} kopiert",
+    "forArtists": "Für Zeichner",
+    "yes": "Ja",
+    "no": "Nein",
+    "refBy": "Referenz: {artist}",
+    "openRef": "Referenz im Vollbild öffnen",
+    "works": "Bilder von {name}",
+    "edit": "Steckbrief bearbeiten",
+    "save": "Steckbrief speichern",
+    "cancel": "Abbrechen",
+    "saved": "Steckbrief gespeichert",
+    "empty": "Füge Spezies, Farben und Regeln für Zeichner hinzu: Besucher sehen sie hier.",
+    "addColor": "Farbe hinzufügen",
+    "colorName": "Name der Farbe",
+    "colorValue": "Farbe",
+    "removeColor": "Farbe {n} entfernen",
+    "yesHint": "Was erlaubt ist, eins pro Zeile (z. B. Fanart)",
+    "noHint": "Was nicht, eins pro Zeile (z. B. KI-Bilder)",
+    "refPick": "Bild als Referenz",
+    "refAuto": "Das neueste",
+    "galleryEmpty": "Noch keine Bilder.",
+    "all": "Alle"
+  },
+  "advertise": {
+    "link": "Werbung",
+    "eyebrow": "Werbung",
+    "title": "Werde auf @:{'site.name'} gesehen",
+    "lead": "Deine Anzeige erscheint zwischen zwei Duellen, vor Menschen, die genau hinschauen und abstimmen. Keine Pop-ups: eine klare Karte mit der Kennzeichnung „Gesponsert“.",
+    "numbers": {
+      "title": "Wer sie sieht",
+      "votes": "Stimmen in den letzten 30 Tagen",
+      "voters": "Personen, die abgestimmt haben",
+      "entries": "Charaktere im Wettbewerb",
+      "every": "Eine Anzeige alle {n} Stimmen: oft genug, um aufzufallen, nicht so oft, dass sie stört."
+    },
+    "how": {
+      "title": "So sieht sie aus",
+      "text": "Eine Karte in voller Höhe mit Bild, Titel, kurzem Text und einem Button zu deiner Website. Sie bleibt, bis die Person „Weiter abstimmen“ antippt.",
+      "labelled": "Sie ist immer als Werbung gekennzeichnet, mit dem Namen des Werbenden.",
+      "preview": "Beispielanzeige zwischen den Duellen"
+    },
+    "choose": {
+      "title": "Was du wählen kannst",
+      "place": "Wo: eine Stadt und ein Umkreis in km, oder überall",
+      "lang": "In welcher Sprache: der Text kann für jede Sprache der Seite anders sein",
+      "category": "In welchen Duellen: allen oder nur einer Kategorie",
+      "audience": "Für wen: alle, nur Personen mit Konto oder nur Gäste",
+      "time": "Wann: Start- und Enddatum, Wochentage und Uhrzeiten",
+      "caps": "Wie viel: eine Obergrenze für Aufrufe oder Klicks, und wie oft dieselbe Person sie sieht"
+    },
+    "prices": {
+      "title": "Was es kostet",
+      "flat": {
+        "title": "Festpreis",
+        "text": "Ein fester Betrag für einen Zeitraum, zum Beispiel eine Woche oder einen Monat."
+      },
+      "cpm": {
+        "title": "Nach Aufrufen",
+        "text": "Du zahlst pro 1.000 Einblendungen der Anzeige."
+      },
+      "cpc": {
+        "title": "Pro Klick",
+        "text": "Du zahlst nur, wenn jemand die Anzeige antippt und auf deine Website kommt."
+      },
+      "quote": "Schreib uns, was du bewerben möchtest, und wir schicken dir ein Angebot."
+    },
+    "report": {
+      "title": "Was du bekommst",
+      "text": "Aufrufe und Klicks deiner Kampagne, insgesamt und nach verschiedenen Personen. Links zu deiner Website tragen utm_source, so siehst du in deiner eigenen Statistik die Besuche und Käufe von hier."
+    },
+    "rules": {
+      "title": "Was wir annehmen",
+      "text": "Wir prüfen jede Anzeige, bevor sie online geht. Keine Inhalte für Erwachsene, kein Glücksspiel, keine Waffen, keine irreführenden Versprechen und keine Produkte, die Tieren schaden können. Wir können Anzeigen ablehnen oder entfernen, die gegen diese Regeln verstoßen."
+    },
+    "contact": {
+      "title": "Schreib uns",
+      "text": "Erzähl uns, wer du bist, was du bewerben möchtest, wo und wie lange. Wir antworten mit den Möglichkeiten und einem Angebot.",
+      "button": "Wegen Werbung schreiben",
+      "or": "Oder schreib an",
+      "subject": "Werbung auf {site}",
+      "body": "Hallo! Ich möchte Werbung schalten.\n\nWer ich bin / Unternehmen:\nWas ich bewerben möchte:\nWo (Stadt oder überall):\nZeitraum:\nWebsite:\n",
+      "missing": "E-Mail für Werbung fehlt noch"
+    },
+    "sample": {
+      "advertiser": "Beispielladen",
+      "title": "Deine Überschrift hier",
+      "body": "Ein Satz dazu, was du anbietest und warum es sich lohnt.",
+      "cta": "Mehr erfahren"
+    }
   }
 }

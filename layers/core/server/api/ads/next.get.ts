@@ -4,6 +4,7 @@ import { ads } from '../../db/schema'
 
 // Impostazioni della pubblicità e prossimo annuncio da mostrare (scelto a caso, pesato) tra le campagne
 // in onda adatte a chi vota: zona, lingua, specie del filtro (?species=), utente o ospite, giorno e ora, tetti.
+// Senza niente da mostrare arriva l'invito a fare pubblicità qui.
 // Il circuito esterno entra solo se configurato e se chi vota ha accettato i suoi cookie: come riserva quando nessuna campagna è adatta, o in gara col suo peso
 export default defineEventHandler(async (event): Promise<AdSlot> => {
   const { network, ...settings } = await getAdSettings()
@@ -35,5 +36,6 @@ export default defineEventHandler(async (event): Promise<AdSlot> => {
   }
   const total = candidates.reduce((s, c) => s + c.weight, 0)
   let r = Math.random() * total
-  return { settings, ad: candidates.find(c => (r -= c.weight) < 0)?.pick() ?? null }
+  // Nessuna campagna né circuito: la card invita a pubblicizzarsi qui
+  return { settings, ad: candidates.find(c => (r -= c.weight) < 0)?.pick() ?? { house: true } }
 })

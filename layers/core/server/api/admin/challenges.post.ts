@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const admin = await requireAdmin(event)
   const parsed = challengeFieldsSchema.safeParse(await readBody(event))
   if (!parsed.success) throw createError({ statusCode: 400, statusMessage: parsed.error.issues[0]?.message ?? 'Dati non validi' })
-  const { title, description, emoji, species, adoptionOnly, startDate } = parsed.data
+  const { title, description, translations, emoji, species, adoptionOnly, startDate } = parsed.data
 
   let startsAt: Date, endsAt: Date
   try {
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
 
   const base = title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'challenge'
   const [created] = await db.insert(challenges)
-    .values({ slug: `${base}-${startDate}`, title, description, emoji, species, adoptionOnly, startsAt, endsAt, createdBy: admin.id })
+    .values({ slug: `${base}-${startDate}`, title, description, translations, emoji, species, adoptionOnly, startsAt, endsAt, createdBy: admin.id })
     .onConflictDoNothing()
     .returning({ slug: challenges.slug })
   if (!created) throw createError({ statusCode: 409, statusMessage: 'errors.challengeExists' })

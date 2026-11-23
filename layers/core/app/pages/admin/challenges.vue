@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { SPECIES, challengeFieldsSchema, type ChallengeList, type ChallengeSummary, type Species } from '#shared/models'
+import { SPECIES, TRANSLATED_LOCALES, challengeFieldsSchema, type ChallengeList, type ChallengeSummary, type Species } from '#shared/models'
+import { LANGUAGES } from '../../../i18n/languages'
 import { speciesName } from '#shared/speciesNames'
 
 const { features } = useAppConfig()
@@ -16,7 +17,11 @@ function nextMonday() {
   return d.toLocaleDateString('sv-SE')
 }
 
-const form = reactive({ title: '', description: '', emoji: '', species: null as Species | null, adoptionOnly: false, startDate: nextMonday() })
+// Le altre lingue, ognuna col suo titolo e la sua descrizione
+const otherLanguages = LANGUAGES.filter(l => (TRANSLATED_LOCALES as string[]).includes(l.code))
+const emptyTranslations = () => Object.fromEntries(TRANSLATED_LOCALES.map(c => [c, { title: '', description: '' }]))
+
+const form = reactive({ title: '', description: '', translations: emptyTranslations(), emoji: '', species: null as Species | null, adoptionOnly: false, startDate: nextMonday() })
 const error = ref('')
 const notice = ref('')
 const sending = ref(false)
@@ -26,7 +31,10 @@ async function create() {
   notice.value = ''
   const check = challengeFieldsSchema.safeParse(form)
   if (!check.success) {
-    error.value = check.error.issues[0]?.message ?? 'Controlla i campi'
+    const issue = check.error.issues[0]
+    // Per le traduzioni si dice quale lingua manca ("English: Titolo troppo corto")
+    const lang = issue?.path[0] === 'translations' ? LANGUAGES.find(l => l.code === issue.path[1])?.name : undefined
+    error.value = `${lang ? `${lang}: ` : ''}${issue?.message ?? 'Controlla i campi'}`
     return
   }
   sending.value = true
@@ -35,7 +43,7 @@ async function create() {
     notice.value = res.overlapping
       ? `Sfida creata. Nello stesso periodo ci sono altre ${res.overlapping} sfide: si giocheranno in parallelo.`
       : 'Sfida creata.'
-    Object.assign(form, { title: '', description: '', emoji: '', species: null, adoptionOnly: false })
+    Object.assign(form, { title: '', description: '', translations: emptyTranslations(), emoji: '', species: null, adoptionOnly: false })
     await refresh()
   }
   catch (e) {
@@ -93,12 +101,19 @@ const scheduled = computed(() => [...(data.value?.current ?? []), ...(data.value
           <input id="c-emoji" v-model="form.emoji" maxlength="16" placeholder="🎃" class="input challenge-admin__emoji-input">
         </div>
         <div class="field challenge-admin__grow">
-          <label for="c-title" class="label">Titolo</label>
+          <label for="c-title" class="label">Titolo (italiano)</label>
           <input id="c-title" v-model="form.title" maxlength="60" placeholder="Il travestimento più bello" class="input">
         </div>
       </div>
-      <label for="c-desc" class="label">Descrizione (cosa deve mostrare la foto)</label>
+      <label for="c-desc" class="label">Descrizione in italiano (cosa deve mostrare la foto)</label>
       <textarea id="c-desc" v-model="form.description" maxlength="200" rows="2" placeholder="Costumi, cappellini e mantelli: il pet più elegante di Halloween." class="input" />
+      <fieldset v-for="lang in otherLanguages" :key="lang.code" class="challenge-admin__lang" :lang="lang.code">
+        <legend class="challenge-admin__lang-name">{{ lang.name }}</legend>
+        <label :for="`c-title-${lang.code}`" class="label">Titolo</label>
+        <input :id="`c-title-${lang.code}`" v-model="form.translations[lang.code]!.title" maxlength="60" class="input">
+        <label :for="`c-desc-${lang.code}`" class="label">Descrizione</label>
+        <textarea :id="`c-desc-${lang.code}`" v-model="form.translations[lang.code]!.description" maxlength="200" rows="2" class="input" />
+      </fieldset>
       <div class="challenge-admin__row">
         <div v-if="SPECIES.length" class="field challenge-admin__grow">
           <label for="c-species" class="label">Per chi</label>
@@ -138,6 +153,10 @@ const scheduled = computed(() => [...(data.value?.current ?? []), ...(data.value
   &__emoji { width: 80px; }
 
   &__emoji-input { text-align: center; font-size: 20px; padding: 7px; }
+
+  &__lang { @include stack($space-2); margin: $space-2 0 0; padding: $space-3 $space-4 $space-4; border: 1px solid var(--line); border-radius: $radius-md; }
+
+  &__lang-name { padding: 0 $space-2; font-weight: 700; }
 
   &__check { display: flex; align-items: center; gap: $space-3; margin-top: $space-1; }
 

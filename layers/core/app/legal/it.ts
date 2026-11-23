@@ -178,5 +178,44 @@ export default {
         },
       ],
     },
+    accessibility: {
+      title: 'Dichiarazione di accessibilità',
+      intro: 'Vogliamo che {site} sia facile da usare per tutti, anche per chi usa un lettore di schermo, solo la tastiera, l\'ingrandimento o ha difficoltà con i movimenti fini.',
+      sections: [
+        {
+          h: 'Obiettivo',
+          p: ['Seguiamo le linee guida WCAG 2.2 livello AA e la norma europea EN 301 549, come chiede l\'Atto europeo sull\'accessibilità (Direttiva UE 2019/882).'],
+        },
+        {
+          h: 'Stato di conformità',
+          p: ['{site} è parzialmente conforme: la maggior parte delle pagine rispetta i requisiti, ma restano i limiti elencati qui sotto.'],
+        },
+        {
+          h: 'Cosa abbiamo fatto',
+          list: [
+            'Si può votare con il pulsante «Scegli», senza trascinare; da tastiera bastano le frecce.',
+            'Link «Vai al contenuto», ordine di tabulazione logico e bordo ben visibile sull\'elemento attivo.',
+            'Testi e pulsanti con contrasto di almeno 4,5:1, e pulsanti grandi almeno 44 pixel.',
+            'Dal menu puoi scegliere meno animazioni, contrasto alto, tema chiaro o scuro e spegnere la vibrazione.',
+            'Il sito funziona con lo zoom del browser fino al 200% e in 5 lingue.',
+          ],
+        },
+        {
+          h: 'Limiti noti',
+          list: [
+            'Le immagini caricate dagli utenti hanno come descrizione il nome e i dati inseriti, non una descrizione completa di cosa mostrano.',
+            'Gli annunci pubblicitari arrivano da terzi e potrebbero non rispettare tutti i requisiti.',
+          ],
+        },
+        {
+          h: 'Come l\'abbiamo verificato',
+          p: ['Con una valutazione interna, fatta con controlli automatici e prove a mano con tastiera e lettore di schermo.'],
+        },
+        {
+          h: 'Segnala un problema',
+          p: ['Se trovi una parte del sito che non riesci a usare, scrivici a {email}: rispondiamo entro 30 giorni e, se possibile, ti diamo il contenuto in un altro modo.', 'Se la risposta non ti soddisfa puoi rivolgerti all\'autorità di vigilanza del tuo Paese; in Italia è l\'AgID (Agenzia per l\'Italia Digitale).'],
+        },
+      ],
+    },
   },
 } satisfies LegalTexts

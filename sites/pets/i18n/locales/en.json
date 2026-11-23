@@ -158,7 +158,7 @@
     },
     "best-friends": {
       "title": "Best friends",
-      "description": "With their favourite toy, plushie or animal friend."
+      "description": "With their favorite toy, plushie or animal friend."
     },
     "explorer": {
       "title": "Little explorer",
@@ -191,5 +191,10 @@
   },
   "follow": {
     "lead": "What's new from the people you follow: their new pets and freshly published photos."
+  },
+  "advertise": {
+    "numbers": {
+      "entries": "Pets competing"
+    }
   }
 }

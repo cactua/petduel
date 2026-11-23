@@ -1,0 +1,51 @@
+@use "../abstracts" as *;
+
+// Accessibilità: le scelte del menu (data-motion, data-contrast su <html>, vedi useA11yPrefs)
+// e quelle del sistema operativo fanno la stessa cosa.
+
+// Meno animazioni: tutto arriva subito al suo stato finale
+@mixin less-motion {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-motion="reduce"] { @include less-motion; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { @include less-motion; }
+}
+
+// Contrasto alto: il grigio diventa il colore del testo, bordi e righe si vedono bene
+@mixin more-contrast {
+  --muted: var(--ink);
+  --line: color-mix(in srgb, var(--ink) 45%, transparent);
+  --coral-soft: color-mix(in srgb, var(--coral) 22%, var(--surface));
+
+  .card, .chip, .btn--ghost { border-color: var(--ink) !important; }
+}
+
+html:root[data-contrast="more"] { @include more-contrast; }
+
+@media (prefers-contrast: more) {
+  html:root { @include more-contrast; }
+}
+
+// "Vai al contenuto": nascosto finché non ci arriva il tasto Tab
+.skip-link {
+  position: fixed;
+  left: 12px;
+  top: 12px;
+  z-index: $z-overlay + 1;
+  @include pill(10px, 16px);
+  background: var(--ink);
+  color: var(--surface);
+  font-weight: 800;
+  text-decoration: none;
+  transform: translateY(-200%);
+
+  &:focus-visible { transform: none; }
+}

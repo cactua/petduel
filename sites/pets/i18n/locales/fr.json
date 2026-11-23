@@ -191,5 +191,10 @@
   },
   "follow": {
     "lead": "Les nouveautés des personnes que tu suis : leurs nouveaux animaux et les photos tout juste publiées."
+  },
+  "advertise": {
+    "numbers": {
+      "entries": "Animaux en compétition"
+    }
   }
 }

@@ -217,5 +217,10 @@
   },
   "favorites": {
     "empty": "Keine Favoriten. Öffne die Seite eines Motorrads und tippe auf \"Merken\"."
+  },
+  "advertise": {
+    "numbers": {
+      "entries": "Motorräder im Wettbewerb"
+    }
   }
 }

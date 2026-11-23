@@ -1,5 +1,5 @@
 // Cerca foto con licenza libera su Wikimedia Commons per i contenuti di esempio di un sito e crea dei provini da rivedere a mano.
-// Uso: node scripts/commons/discover.mjs <cartella-output> [sito] [categorie]   (sito: pets, il predefinito, o moto; categorie: es. "sportiva,enduro")
+// Uso: node scripts/commons/discover.mjs <cartella-output> [sito] [categorie]   (sito: pets, il predefinito, moto o furry; categorie: es. "sportiva,enduro")
 // Le foto scelte vanno poi copiate in scripts/commons/<sito>.json (vedi import.mjs).
 import { mkdir, writeFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
@@ -33,6 +33,11 @@ const SITES = {
     epoca: ['vintage motorcycle', 'classic motorcycle', 'Moto Guzzi Falcone', 'BSA motorcycle'],
     altra: ['cafe racer motorcycle', 'scrambler motorcycle', 'Royal Enfield motorcycle', 'motorcycle sidecar'],
   },
+  // Furry: il sito non ha categorie, i gruppi servono solo a dividere i provini
+  furry: {
+    fursuit: ['fursuit', 'fursuiter', 'furry convention fursuit', 'Eurofurence fursuit', 'Anthrocon fursuit', 'Midwest FurFest fursuit'],
+    disegni: ['incategory:Furry_art', 'incategory:Furry_characters', 'incategory:Fursonas', 'incategory:Anthropomorphic_foxes_in_art', 'furry character reference sheet', 'kemono character art', 'anthro wolf character', 'furry mascot character'],
+  },
 }
 const QUERIES = SITES[site]
 if (!out || !QUERIES) {
@@ -42,7 +47,10 @@ if (!out || !QUERIES) {
 
 // Animali: niente zoo, animali selvatici, persone in primo piano o disegni.
 // Moto: niente gare con piloti, incidenti, polizia, persone o disegni
-const EXCLUDE = site === 'moto'
+// Furry: niente minori, foto di gruppo o cartelli
+const EXCLUDE = site === 'furry'
+  ? /child|kid|baby|crowd|group|sign|logo|map|stamp|badge|poster|nsfw|toy/i
+  : site === 'moto'
   ? /race|racing|rider|crash|accident|police|polizia|military|army|girl|boy|\bman\b|woman|people|child|drawing|illustration|stamp|poster|advert|toy|lego|map/i
   : /wild|zoo|tierpark|vogelpark|wildlife|girl|boy|\bman\b|woman|people|child|wolf|fox|dhole|cricetus|skull|museum|statue|drawing|illustration|stamp|sculpture|dead|meat|market|map/i
 

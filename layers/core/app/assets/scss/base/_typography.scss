@@ -8,6 +8,16 @@ body {
     radial-gradient(circle at 4% 92%, var(--blob-3) 0 150px, transparent 151px),
     var(--bg);
   background-attachment: fixed;
+
+  // Su uno schermo grande i cerchi netti tagliati dai bordi sembrano macchie: diventano aloni sfumati
+  @include mq(lg) {
+    background:
+      radial-gradient(640px circle at 0% 0%, var(--blob-1), transparent 70%),
+      radial-gradient(760px circle at 100% 55%, var(--blob-2), transparent 70%),
+      radial-gradient(560px circle at 0% 100%, var(--blob-3), transparent 70%),
+      var(--bg);
+    background-attachment: fixed;
+  }
   color: var(--ink);
   font-family: var(--body);
   -webkit-tap-highlight-color: transparent;

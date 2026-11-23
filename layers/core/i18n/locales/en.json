@@ -25,7 +25,8 @@
     "login": "Log in",
     "profile": "Profile",
     "sections": "Sections",
-    "language": "Language"
+    "language": "Language",
+    "skip": "Skip to content"
   },
   "species": {
     "filter": "Filter by category",
@@ -98,7 +99,8 @@
     "taxCode": "Invalid tax code or VAT number",
     "phone": "Invalid phone number",
     "check": "Check the fields",
-    "rules": "To sign up, accept the community rules"
+    "rules": "To sign up, accept the community rules",
+    "color": "Use a color like #ff8800"
   },
   "errors": {
     "generic": "Something went wrong, please try again",
@@ -180,7 +182,11 @@
     "label": "Advertisement",
     "sponsored": "Sponsored",
     "continue": "Keep voting",
-    "thanks": "Thanks: ads keep @:{'site.name'} free"
+    "thanks": "Thanks: ads keep @:{'site.name'} free",
+    "yours": "Your ad here?",
+    "houseTitle": "Your ad here",
+    "houseBody": "Run a shop, an event or a service? Get seen by the people voting on @:{'site.name'}.",
+    "houseCta": "Find out how"
   },
   "share": {
     "text": "Check out {name} on @:{'site.name'}!",
@@ -210,9 +216,11 @@
     "nudge": "With an account your votes count {times} more",
     "nudgeTimes": "{n} times",
     "signUp": "Sign up",
-    "hint": "Drag your favourite {over} to make it win",
+    "hint": "Drag your favorite {over} to make it win",
     "hintOver": "onto the other one",
     "hintHold": "press and hold to zoom",
+    "hintKeys": "to pick",
+    "keySpace": "Space",
     "makeWin": "Make {name} win",
     "wins": "Wins!",
     "beat": "You picked {winner}!",
@@ -221,7 +229,10 @@
     "question": "Which one do you prefer?",
     "votedTimes": "You voted {n} times",
     "uploadYours": "Upload your entry",
-    "skip": "Skip"
+    "skip": "Skip",
+    "choose": "Pick",
+    "chosen": "Picked",
+    "orDrag": "Or drag your favorite onto the other"
   },
   "upload": {
     "noClipboardPhoto": "There's no photo on the clipboard: copy one and try again",
@@ -326,7 +337,7 @@
     },
     "alt": "Photo crop",
     "zoom": "Zoom",
-    "center": "Centre",
+    "center": "Reset",
     "help": "Drag the photo to move it, use the slider (or two fingers) to zoom."
   },
   "profile": {
@@ -355,7 +366,34 @@
     "customizeHint": "Cover, map, hours, donations",
     "addGuestHint": "Upload images of a new entry",
     "publicPage": "View the page",
-    "publicPageHint": "How others see it"
+    "publicPageHint": "How others see it",
+    "aboutTitle": "Bio and pronouns",
+    "bio": "Bio",
+    "bioHint": "A couple of lines about you, up to 300 characters",
+    "pronouns": "Pronouns",
+    "pronounsHint": "E.g. she/her, he/him, they/them",
+    "saveAbout": "Save",
+    "savedAbout": "Saved",
+    "share": "Share profile",
+    "linkCopied": "Link copied",
+    "media": {
+      "editAvatar": "Change avatar",
+      "editBanner": "Change banner",
+      "addBanner": "Add a banner",
+      "frame": "Crop: drag to move, arrow keys to nudge, + and − to zoom",
+      "zoom": "Zoom",
+      "dragHint": "Drag the image to choose the part to show.",
+      "pick": "Choose an image",
+      "upload": "Upload new",
+      "letter": "Letter",
+      "none": "None",
+      "pendingAlt": "{name}, in review",
+      "pending": "In review",
+      "pendingAvatar": "Your new avatar will show once the image is reviewed.",
+      "needCharacter": "To upload an image, create a character first.",
+      "addTo": "Add it to",
+      "reviewHint": "The image is reviewed like the others (kept out of duels): others will see it once it’s approved."
+    }
   },
   "challenges": {
     "title": "Weekly challenges",
@@ -412,13 +450,22 @@
       "system": "Automatic",
       "light": "Light",
       "dark": "Dark"
-    }
+    },
+    "a11y": "Accessibility",
+    "lessMotion": "Less motion",
+    "moreContrast": "High contrast",
+    "haptics": "Vibrate when voting"
   },
   "gallery": {
     "manage": "Manage",
     "done": "Done",
     "showAll": "All {n} photos",
-    "showLess": "Show fewer photos"
+    "showLess": "Show fewer photos",
+    "inDuels": "Use in duels",
+    "inDuelsHint": "Untick images you only want on your profile (sketches, refs, keepsakes): everyone can still see them, but they stay out of duels.",
+    "duelCount": "{done} of {total} image in duels | {done} of {total} images in duels",
+    "noDuelPhoto": "No public image of {name} is in duels, so it won’t show up in matchups for now.",
+    "profileOnly": "Profile only"
   },
   "consent": {
     "title": "Cookies and ads",
@@ -435,7 +482,8 @@
     "title": "Legal",
     "privacy": "Privacy",
     "cookie": "Cookies",
-    "terms": "Terms of use"
+    "terms": "Terms of use",
+    "accessibility": "Accessibility"
   },
   "account": {
     "title": "Your account",
@@ -626,8 +674,112 @@
   "favorites": {
     "save": "Save",
     "saved": "Saved",
-    "title": "Favourites",
+    "title": "Favorites",
     "lead": "The ones you saved. Only you can see them: nobody knows you saved them.",
-    "empty": "No favourites yet. Open an entry's page and tap \"Save\"."
+    "empty": "No favorites yet. Open an entry's page and tap \"Save\"."
+  },
+  "sona": {
+    "tabs": {
+      "label": "Profile sections",
+      "characters": "Characters",
+      "gallery": "Gallery",
+      "forOthers": "For others"
+    },
+    "pick": "Choose the character",
+    "species": "Species",
+    "pronouns": "Pronouns",
+    "traits": "Markings",
+    "about": "About",
+    "colors": "Colors",
+    "copy": "Copy {name} {hex}",
+    "copied": "Copied {hex}",
+    "forArtists": "For artists",
+    "yes": "Yes",
+    "no": "No",
+    "refBy": "Reference: {artist}",
+    "openRef": "Open the reference full screen",
+    "works": "Images of {name}",
+    "edit": "Edit sheet",
+    "save": "Save sheet",
+    "cancel": "Cancel",
+    "saved": "Sheet saved",
+    "empty": "Add species, colors and rules for artists: visitors will see them here.",
+    "addColor": "Add color",
+    "colorName": "Color name",
+    "colorValue": "Color",
+    "removeColor": "Remove color {n}",
+    "yesHint": "What's allowed, one per line (e.g. fanart)",
+    "noHint": "What's not, one per line (e.g. AI images)",
+    "refPick": "Image to use as reference",
+    "refAuto": "The most recent",
+    "galleryEmpty": "No images yet.",
+    "all": "All"
+  },
+  "advertise": {
+    "link": "Advertise",
+    "eyebrow": "Advertising",
+    "title": "Get seen on @:{'site.name'}",
+    "lead": "Your ad appears between one duel and the next, in front of people who are looking closely and voting. No pop-ups: a clear card marked “Sponsored”.",
+    "numbers": {
+      "title": "Who sees it",
+      "votes": "Votes in the last 30 days",
+      "voters": "People who voted",
+      "entries": "Characters competing",
+      "every": "One ad every {n} votes: often enough to be noticed, not so often it gets annoying."
+    },
+    "how": {
+      "title": "How it looks",
+      "text": "A full-height card with an image, a title, a short text and a button to your website. It stays until the person taps “Keep voting”.",
+      "labelled": "It is always marked as an ad, with the advertiser’s name.",
+      "preview": "Example ad between duels"
+    },
+    "choose": {
+      "title": "What you can choose",
+      "place": "Where: a city and a radius in km, or everywhere",
+      "lang": "Which language: the text can differ for each language of the site",
+      "category": "Which duels: all of them or one category only",
+      "audience": "Who: everyone, only people with an account or only guests",
+      "time": "When: start and end dates, days of the week and time slots",
+      "caps": "How much: a cap on views or clicks, and how often the same person sees it"
+    },
+    "prices": {
+      "title": "Pricing",
+      "flat": {
+        "title": "Flat price",
+        "text": "A set amount for a period, for example a week or a month."
+      },
+      "cpm": {
+        "title": "Per views",
+        "text": "You pay for every 1,000 times the ad is shown."
+      },
+      "cpc": {
+        "title": "Per click",
+        "text": "You pay only when someone taps the ad and reaches your website."
+      },
+      "quote": "Tell us what you want to promote and we’ll send you a quote."
+    },
+    "report": {
+      "title": "What you get",
+      "text": "Views and clicks for your campaign, in total and by different people. Links to your website carry utm_source, so your own analytics show the visits and purchases that came from here."
+    },
+    "rules": {
+      "title": "What we accept",
+      "text": "We check every ad before it goes live. No adult content, gambling, weapons, misleading claims or products that can harm animals. We may refuse or remove an ad that breaks these rules."
+    },
+    "contact": {
+      "title": "Get in touch",
+      "text": "Tell us who you are, what you want to promote, where and for how long. We’ll reply with the options and a quote.",
+      "button": "Email us about advertising",
+      "or": "Or write to",
+      "subject": "Advertising on {site}",
+      "body": "Hi! I’d like to advertise.\n\nWho I am / business:\nWhat I want to promote:\nWhere (city or everywhere):\nPeriod:\nWebsite:\n",
+      "missing": "Advertising email to be set"
+    },
+    "sample": {
+      "advertiser": "Example shop",
+      "title": "Your headline here",
+      "body": "One sentence on what you offer and why it’s worth it.",
+      "cta": "Learn more"
+    }
   }
 }

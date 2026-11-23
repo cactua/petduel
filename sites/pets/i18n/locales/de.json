@@ -191,5 +191,10 @@
   },
   "follow": {
     "lead": "Neues von den Leuten, denen du folgst: ihre neuen Tiere und frisch veröffentlichte Fotos."
+  },
+  "advertise": {
+    "numbers": {
+      "entries": "Tiere im Wettbewerb"
+    }
   }
 }

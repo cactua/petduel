@@ -17,7 +17,7 @@ export default defineEventHandler(async (event): Promise<Duel> => {
       species ? eq(pets.species, species) : undefined,
       userId ? ne(pets.ownerId, userId) : undefined, // i propri pet non si votano
       blocked.length ? notInArray(pets.ownerId, blocked) : undefined,
-      hasApprovedPhoto,
+      hasDuelPhoto,
     )),
     db.select({ key: votes.pairKey }).from(votes).where(eq(votes.voterId, voterId)),
   ])
@@ -27,7 +27,7 @@ export default defineEventHandler(async (event): Promise<Duel> => {
 
   const [a, b] = pair
   const [images, owners] = await Promise.all([
-    randomApprovedImages([a.id, b.id]),
+    randomApprovedImages([a.id, b.id], true),
     db.select({ id: users.id, username: users.username }).from(users).where(inArray(users.id, [a.ownerId, b.ownerId])),
   ])
   const owner = (id: number) => owners.find(o => o.id === id)?.username ?? ''

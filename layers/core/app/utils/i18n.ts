@@ -1,4 +1,4 @@
-import { REJECT_REASONS, type AppNotification } from '#shared/models'
+import { REJECT_REASONS, type AppNotification, type ChallengeTranslations } from '#shared/models'
 import { challengeTheme } from '#shared/themes'
 
 const i18n = () => useNuxtApp().$i18n
@@ -20,11 +20,16 @@ export function speciesText(species: string, form: 'one' | 'many' | 'among', t: 
 /** Lingua del browser per Intl ("it-IT", "en-US"...) */
 export const intlLocale = () => i18n().localeProperties.value.language ?? 'it-IT'
 
-/** Titolo e descrizione delle sfide automatiche nella lingua scelta; quelle dei moderatori restano come sono */
-export function challengeText<T extends { slug: string, title: string, description?: string }>(c: T) {
+/**
+ * Titolo e descrizione di una sfida nella lingua scelta: quelle dei moderatori hanno le traduzioni salvate,
+ * quelle automatiche si traducono con i testi del sito. Senza traduzione resta l'italiano
+ */
+export function challengeText<T extends { slug: string, title: string, description?: string, translations?: ChallengeTranslations }>(c: T) {
+  const { t, locale } = i18n()
+  const saved = c.translations?.[locale.value]
+  if (saved) return { title: saved.title, description: saved.description }
   const theme = challengeTheme(c)
   if (!theme) return { title: c.title, description: c.description ?? '' }
-  const { t } = i18n()
   return { title: t(`themes.${theme.slug}.title`), description: t(`themes.${theme.slug}.description`) }
 }
 
@@ -46,7 +51,9 @@ export function notificationText(n: AppNotification) {
   if (!n.params) return n.text
   const { t } = i18n()
   const p: Record<string, unknown> = { ...n.params }
-  if (typeof p.challengeSlug === 'string' && typeof p.challenge === 'string') p.challenge = challengeText({ slug: p.challengeSlug, title: p.challenge }).title
+  const savedTitle = p[`challenge_${i18n().locale.value}`]
+  if (typeof savedTitle === 'string') p.challenge = savedTitle
+  else if (typeof p.challengeSlug === 'string' && typeof p.challenge === 'string') p.challenge = challengeText({ slug: p.challengeSlug, title: p.challenge }).title
   // Dopo un rifiuto, un consiglio su come rimediare
   const tip = typeof p.reason === 'string' && p.reason ? reasonTip(p.reason) : ''
   if (typeof p.reason === 'string') p.reason = rejectReason(p.reason)

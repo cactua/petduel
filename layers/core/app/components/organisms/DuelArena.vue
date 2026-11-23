@@ -4,6 +4,7 @@ import site from '#site'
 
 const props = defineProps<{ pets: [PublicPet, PublicPet], coach?: boolean, result?: { index: number, delta: number } | null }>()
 const emit = defineEmits<{ vote: [index: number] }>()
+const { prefersLessMotion } = useA11yPrefs()
 
 // Oltre questa frazione del percorso verso l'avversario il voto è valido
 const THRESHOLD = 0.4
@@ -110,7 +111,7 @@ function stopCoach() {
 
 onMounted(() => {
   window.addEventListener('keydown', onKey)
-  if (props.coach && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (props.coach && !prefersLessMotion()) {
     const g0 = geometry(0)
     coachAnim = cards.value[0]!.animate(
       [{ transform: 'none' }, { transform: `${translate(g0, Math.min(70, g0.dist * 0.3))} scale(1.02)`, offset: 0.45 }, { transform: 'none' }],
@@ -135,15 +136,10 @@ onBeforeUnmount(() => {
       :class="[i === 0 ? 'duel-arena__card--first' : 'duel-arena__card--second', { 'is-dragging': drag.index === i, 'is-winner': winner === i, 'is-loser': winner === 1 - i }]"
       :data-i="i"
       :style="{ opacity: cardOpacity(i) }"
-      tabindex="0"
-      role="button"
-      :aria-label="$t('duel.makeWin', { name: pet.name })"
       @pointerdown="onDown(i, $event)"
       @pointermove="onMove(i, $event)"
       @pointerup="onUp(i)"
       @pointercancel="onUp(i)"
-      @keydown.enter.prevent="decide(i)"
-      @keydown.space.prevent="decide(i)"
       @contextmenu.prevent
     >
       <!-- Cornice morbida con le orecchie della specie; il trascinamento muove la card esterna -->
@@ -181,6 +177,13 @@ onBeforeUnmount(() => {
             <b class="duel-arena__name">{{ pet.name }}</b>
             <small class="duel-arena__meta">{{ [pet.breed, pet.city, `@${pet.owner}`].filter(Boolean).join(' · ') }}</small>
           </div>
+          <!-- Votare con un tocco, per chi non può o non vuole trascinare (WCAG 2.5.7) -->
+          <button
+            v-if="winner === null" type="button" class="duel-arena__pick" :aria-label="$t('duel.makeWin', { name: pet.name })"
+            @pointerdown.stop @click.stop="decide(i)"
+          >
+            <AppIcon name="heart" />{{ $t('duel.choose') }}
+          </button>
         </div>
       </div>
     </div>
@@ -228,6 +231,35 @@ $medals: (
 
   &--wide &__card {
     @include mq(md) { align-self: center; height: min(100%, calc((100cqw - 76px) / 3 + 54px)); }
+
+    // Su computer stacco più largo e collare più alto (vedi sotto): stessa formula con i nuovi numeri
+    @include mq(lg) { height: min(100%, calc((100cqw - 96px) / 3 + 70px)); }
+  }
+
+  // Computer: le card non si allungano oltre il 4:5 circa e restano al centro; il VS ha il suo spazio
+  // tra le due invece di coprire le foto. Collare più grande, in proporzione alle foto
+  @include mq(lg) {
+    container-type: size;
+    justify-content: center;
+    gap: 64px;
+
+    &:not(.duel-arena--wide) .duel-arena__card { flex: 0 1 auto; width: min(calc(50cqw - 32px), calc(100cqh * .8)); }
+
+    .duel-arena__frame { padding: 8px 8px 0; border-radius: 34px; }
+
+    .duel-arena__img { border-radius: 27px; }
+
+    .duel-arena__collar { padding: 8px 10px 10px 6px; gap: $space-4; }
+
+    .duel-arena__medal { width: 38px; height: 38px; }
+
+    .duel-arena__medal .icon { width: 20px; height: 20px; }
+
+    .duel-arena__name { font-size: 23px; }
+
+    .duel-arena__meta { font-size: 13px; }
+
+    .duel-arena__pick { padding: 0 22px; font-size: 17px; min-height: 46px; }
   }
 
   &__card {
@@ -347,6 +379,31 @@ $medals: (
     white-space: nowrap;
 
     @include mq(md) { color: var(--muted); }
+  }
+
+  // Pulsante "Scegli": sempre visibile, grande abbastanza per il pollice
+  &__pick {
+    flex-shrink: 0;
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    min-height: 44px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: $radius-pill;
+    background: var(--action);
+    color: #fff;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 6px 14px -8px var(--glow);
+
+    .icon { width: 18px; height: 18px; }
+
+    &:hover { background: var(--coral-deep); }
+
+    &:focus-visible { outline: 3px solid #fff; outline-offset: 2px; box-shadow: 0 0 0 6px var(--ink); }
   }
 
   &__tools {

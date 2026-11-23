@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm'
-import type { VotedPet } from '#shared/models'
+import type { ChallengeTranslations, VotedPet } from '#shared/models'
 
 const LIMIT = 60
 
@@ -8,7 +8,7 @@ const LIMIT = 60
 export default defineEventHandler(async (event): Promise<VotedPet[]> => {
   const { voterId, userId } = await getVoter(event)
   const db = await useDb()
-  const { rows } = await db.execute<{ id: number, name: string, owner: string, voted_at: Date, image: string, credit: string | null, credit_url: string | null, slug: string | null, title: string | null }>(sql`
+  const { rows } = await db.execute<{ id: number, name: string, owner: string, voted_at: Date, image: string, credit: string | null, credit_url: string | null, slug: string | null, title: string | null, translations: ChallengeTranslations | null }>(sql`
     with all_votes as (
       select winner_id as pet_id, created_at, null::int as challenge_id from votes where voter_id = ${voterId}
       union all
@@ -20,7 +20,7 @@ export default defineEventHandler(async (event): Promise<VotedPet[]> => {
       select * from (select distinct on (pet_id) pet_id, created_at as voted_at, challenge_id from all_votes order by pet_id, created_at desc) last
       order by voted_at desc limit ${LIMIT}
     )
-    select p.id, p.name, u.username as owner, v.voted_at, ph.image, ph.credit, ph.credit_url, c.slug, c.title
+    select p.id, p.name, u.username as owner, v.voted_at, ph.image, ph.credit, ph.credit_url, c.slug, c.title, c.translations
     from v
     join pets p on p.id = v.pet_id
     left join challenges c on c.id = v.challenge_id
@@ -37,6 +37,6 @@ export default defineEventHandler(async (event): Promise<VotedPet[]> => {
     owner: r.owner,
     credit: photoCredit(r.credit, r.credit_url),
     votedAt: new Date(r.voted_at).toISOString(),
-    challenge: r.slug ? { slug: r.slug, title: r.title ?? '' } : null,
+    challenge: r.slug ? { slug: r.slug, title: r.title ?? '', translations: r.translations ?? {} } : null,
   }))
 })
