@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { eq, sql, type SQL } from 'drizzle-orm'
 import { z } from 'zod'
 import { adminUserPatchSchema } from '#shared/models'
 import { users } from '../../../db/schema'
@@ -13,10 +13,14 @@ export default defineEventHandler(async (event) => {
   if (id === admin.id && (body.role === 'user' || body.banned)) {
     throw createError({ statusCode: 400, statusMessage: 'errors.cannotSelf' })
   }
-  const set: Partial<typeof users.$inferInsert> = {}
+  const set: Partial<{ [K in keyof typeof users.$inferInsert]: typeof users.$inferInsert[K] | SQL }> = {}
   if (body.role) set.role = body.role
   if (body.banned !== undefined) set.bannedAt = body.banned ? new Date() : null
-  if (body.password) set.passwordHash = await hashPassword(body.password)
+  if (body.password) {
+    set.passwordHash = await hashPassword(body.password)
+    // Con la password nuova le sessioni aperte non valgono più: chi l'aveva rubata resta fuori
+    set.sessionVersion = sql`${users.sessionVersion} + 1`
+  }
   if (!Object.keys(set).length) return { ok: true }
 
   const db = await useDb()

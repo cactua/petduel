@@ -229,7 +229,9 @@
     "useImage": "Dieses nehmen",
     "change": "Ändern",
     "choose": "Foto wählen",
-    "remove": "Entfernen"
+    "remove": "Entfernen",
+    "paymentReview": "Neue oder geänderte Spendendaten erscheinen auf eurer Seite erst nach einer Prüfung durch die Moderation, die euch zur Bestätigung kontaktieren kann.",
+    "paymentPending": "⏳ Wir haben eure neuen Spendendaten erhalten: Nach der Prüfung erscheinen sie auf der Seite. Bis dahin bleiben die bisherigen sichtbar."
   },
   "shelterPage": {
     "logoAlt": "Logo von {name}",

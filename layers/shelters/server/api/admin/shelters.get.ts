@@ -21,6 +21,10 @@ export default defineEventHandler(async (event): Promise<{ pending: ShelterRevie
     phone: s.phone,
     owner,
     createdAt: s.createdAt.toISOString(),
+    donateUrl: s.donateUrl,
+    iban: s.iban,
+    pendingDonateUrl: s.pendingDonateUrl,
+    pendingIban: s.pendingIban,
   })
   return {
     pending: rows.filter(r => r.s.status === 'pending').map(item),

@@ -72,7 +72,9 @@
     "reportResolved": "Nous avons examiné ton signalement et sommes intervenus. Merci !",
     "reportDismissed": "Nous avons examiné ton signalement : pour l'instant ça ne va pas contre les règles. Merci quand même !",
     "compliment": "{name} a reçu de nouveaux compliments 💌",
-    "followNew": "Du nouveau chez {'@'}{user} : jette un œil"
+    "followNew": "Du nouveau chez {'@'}{user} : jette un œil",
+    "paymentApproved": "Les nouvelles coordonnées de don ont été approuvées et figurent maintenant sur la page de {name}",
+    "paymentRejected": "Les nouvelles coordonnées de don de {name} n'ont pas été approuvées : les précédentes restent sur la page. Pour en savoir plus, écris aux modérateurs"
   },
   "time": {
     "now": "maintenant",
@@ -100,7 +102,10 @@
     "phone": "Téléphone non valide",
     "check": "Vérifie les champs",
     "rules": "Pour t'inscrire, accepte les règles de la communauté",
-    "color": "Utilise une couleur comme #ff8800"
+    "color": "Utilise une couleur comme #ff8800",
+    "age": "Tu dois avoir au moins 14 ans pour t'inscrire",
+    "reportNote": "Explique en quelques mots ce qui ne va pas (au moins 10 caractères)",
+    "goodFaith": "Confirme que tu signales de bonne foi"
   },
   "errors": {
     "generic": "Une erreur s'est produite, réessaie",
@@ -158,7 +163,9 @@
     "reportOwn": "Tu ne peux pas signaler tes propres contenus",
     "blocked": "Impossible pour cet utilisateur",
     "tooManyLogins": "Trop de tentatives incorrectes : réessaie dans 15 minutes",
-    "tooManySignups": "Beaucoup de comptes ont été créés depuis ce réseau aujourd'hui : réessaie demain"
+    "tooManySignups": "Beaucoup de comptes ont été créés depuis ce réseau aujourd'hui : réessaie demain",
+    "linkExpired": "Ce lien n'est plus valide : il a expiré ou a déjà été utilisé. Demandes-en un nouveau.",
+    "mailUnavailable": "Impossible d'envoyer l'e-mail pour le moment. Réessaie plus tard."
   },
   "auth": {
     "registerTitle": "Crée ton compte",
@@ -175,8 +182,28 @@
     "password": "Mot de passe",
     "email": "E-mail",
     "username": "Nom d'utilisateur",
-    "legal": "En t'inscrivant, tu acceptes les {terms} et confirmes avoir lu la politique de {privacy}. Tu dois avoir au moins 14 ans.",
-    "rulesAccept": "J'ai lu et j'accepte les {rules}"
+    "legal": "En t'inscrivant, tu acceptes les {terms} et confirmes avoir lu la politique de {privacy}.",
+    "rulesAccept": "J'ai lu et j'accepte les {rules}",
+    "forgotLink": "Mot de passe oublié ?",
+    "forgotTitle": "Mot de passe oublié",
+    "forgotLead": "Saisis l'e-mail de ton compte : nous t'envoyons un lien pour en choisir un nouveau.",
+    "forgotSend": "Envoie-moi le lien",
+    "forgotSent": "S'il existe un compte avec cet e-mail, un lien va arriver. Il est valable une heure ; vérifie aussi les spams.",
+    "backToLogin": "Retour à la connexion",
+    "resetTitle": "Choisis un nouveau mot de passe",
+    "resetLead": "Une fois enregistré, nous te déconnectons de tous les autres appareils.",
+    "resetSave": "Enregistrer et se connecter",
+    "resetInvalid": "Ce lien n'est plus valide : il a expiré ou a déjà été utilisé.",
+    "resetRequestNew": "Demander un nouveau lien",
+    "verifyTitle": "Confirmer l'e-mail",
+    "verifyWorking": "Confirmation de ton e-mail…",
+    "verifyDone": "E-mail confirmé, merci ! 🎉",
+    "verifyGoHome": "Aller sur le site",
+    "verifyBar": "Confirme ton e-mail en ouvrant le lien que nous t'avons envoyé. Tu en auras besoin si tu oublies ton mot de passe.",
+    "verifyResend": "Le renvoyer",
+    "verifySent": "C'est fait : regarde ta boîte mail (et les spams).",
+    "verifyHide": "Masquer",
+    "ageConfirm": "J'ai au moins 14 ans"
   },
   "ad": {
     "label": "Publicité",
@@ -409,7 +436,10 @@
   },
   "credits": {
     "title": "Crédits photo",
-    "lead": "Le contenu d'exemple utilise des images sous licence libre. Merci à celles et ceux qui les ont créées et partagées."
+    "lead": "Le contenu d'exemple utilise des images sous licence libre. Merci à celles et ceux qui les ont créées et partagées.",
+    "license": "Texte de la licence",
+    "modified": "recadrée",
+    "modifiedNote": "Les photos de Wikimedia Commons ont été recadrées et redimensionnées pour le site. Le nom renvoie à la page d'origine, « Texte de la licence » aux conditions d'utilisation."
   },
   "ranking": {
     "notFound": "Classement introuvable",
@@ -594,7 +624,11 @@
     "notePlaceholder": "Par exemple : où se trouve l'original",
     "hint": "Seuls les modérateurs lisent les signalements : la personne qui l'a publiée ne saura pas que c'était toi.",
     "send": "Envoyer le signalement",
-    "thanks": "Merci ! Un modérateur va bientôt regarder et tu recevras une notification."
+    "thanks": "Merci ! Un modérateur va bientôt regarder et tu recevras une notification.",
+    "anonymousLead": "Tu peux signaler sans compte. Nous t'écrirons à l'adresse indiquée pour te dire comment ça s'est passé, et nous l'utiliserons seulement pour ça.",
+    "email": "Ton e-mail",
+    "goodFaith": "Je déclare de bonne foi que ce que j'ai écrit est exact et complet.",
+    "thanksEmail": "Merci ! Un modérateur va l'examiner bientôt et nous t'écrirons le résultat."
   },
   "reasonTips": {
     "0": "Essaie avec une image où le sujet se voit bien.",
@@ -800,5 +834,13 @@
     "failed": "Impossible de les activer. Réessaie dans un instant.",
     "install": "Installer l'app",
     "unavailable": "Les notifications ne sont pas disponibles sur ce site."
+  },
+  "mail": {
+    "verifySubject": "Confirme ton e-mail sur {site}",
+    "verifyText": "Bonjour {username},\n\npour confirmer l'adresse e-mail de ton compte {site}, ouvre ce lien :\n\n{link}\n\nLe lien est valable 48 heures. Si tu ne t'es pas inscrit, ignore cet e-mail : sans confirmation, l'adresse ne sera pas utilisée.\n\n{site}",
+    "resetSubject": "Nouveau mot de passe pour {site}",
+    "resetText": "Bonjour {username},\n\ntu as demandé à changer le mot de passe de ton compte {site}. Pour en choisir un nouveau, ouvre ce lien :\n\n{link}\n\nLe lien est valable une heure et ne fonctionne qu'une fois. Si ce n'était pas toi, ignore cet e-mail : ton mot de passe ne change pas.\n\n{site}",
+    "reportSubject": "Ton signalement sur {site}",
+    "reportText": "Bonjour,\n\nnous t'écrivons au sujet du signalement envoyé sur {site}.\n\n{outcome}\n\nSi tu n'es pas d'accord avec la décision, tu peux répondre à cet e-mail pour nous expliquer pourquoi.\n\n{site}"
   }
 }

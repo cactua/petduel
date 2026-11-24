@@ -23,7 +23,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Due famiglie (caricate da Google Fonts come nel `nuxt.config`): **Fredoka** per titoli e numeri grandi (`--display`), '
+        component: 'Due famiglie (servite dal sito con @fontsource, come nel `nuxt.config`): **Fredoka** per titoli e numeri grandi (`--display`), '
           + '**Nunito** per il testo (`--body`). Stili di base in `assets/scss/base/_typography.scss`; etichette, aiuti ed errori dei moduli '
           + 'in `atoms/_field.scss`; utility con prefisso `u-` in `atoms/_utilities.scss` (`.u-muted`, `.u-visually-hidden`).',
       },

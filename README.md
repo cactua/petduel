@@ -87,7 +87,7 @@ npm run upload-to-r2 -- furry
 
 Da fare prima di andare online: HTTPS, Postgres gestito con backup, verifica email e recupero password (serve un servizio email), Cloudflare davanti al sito, `npm audit` periodico.
 
-**Proxy davanti al server.** Il controllo CSRF confronta `Origin` con `X-Forwarded-Host`, e i limiti per rete usano `X-Forwarded-For`. In produzione il server deve essere raggiungibile solo dal proxy (Cloudflare, Nginx…), che riscrive questi header: se fosse esposto direttamente, chiunque potrebbe mandarli falsi e cambiare IP a ogni richiesta.
+**Proxy davanti al server.** I limiti per rete usano l'indirizzo della connessione. Dietro un proxy va detto nel `.env` da dove prendere l'IP vero: `NUXT_CLIENT_IP_HEADER` (es. `cf-connecting-ip` con Cloudflare) oppure `NUXT_TRUSTED_PROXY_HOPS` (quanti proxy aggiungono il loro pezzo in fondo a `X-Forwarded-For`). Il server deve essere raggiungibile solo dal proxy, che riscrive quegli header: altrimenti chiunque potrebbe mandarli falsi. Il controllo CSRF confronta `Origin` con `X-Forwarded-Host`, che va quindi riscritto dal proxy.
 
 ## Struttura
 

@@ -14,6 +14,8 @@ export default defineNitroPlugin((nitro) => {
     try {
       await refreshAllNotifications()
       await purgeLimits()
+      await purgeEmailTokens()
+      await purgeRevokedSessions()
     }
     catch (e) {
       console.error('[avvisi] giro programmato non riuscito', e)

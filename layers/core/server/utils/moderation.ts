@@ -1,8 +1,11 @@
 import { and, eq, inArray } from 'drizzle-orm'
+import site from '#site'
 import { challengeEntries, challenges, follows, photos, pets, reports, users } from '../db/schema'
 import { useDb } from './db'
+import { sendMail } from './mail'
 import { notify } from './notifications'
 import { removeImage } from './photos'
+import { serverT } from './pushText'
 import { entryUrl } from '#shared/models'
 
 export type PhotoAction = 'approve' | 'reject' | 'remove'
@@ -73,9 +76,17 @@ export async function closeReports(adminId: number, target: 'photo' | 'user', id
   const closed = await db.update(reports)
     .set({ status: outcome, resolvedBy: adminId, resolvedAt: new Date() })
     .where(and(eq(reports.status, 'open'), target === 'photo' ? eq(reports.photoId, id) : eq(reports.userId, id)))
-    .returning({ id: reports.id, reporterId: reports.reporterId })
-  await Promise.all(closed.map(r => notify(r.reporterId, `segnalazione:${r.id}`, {
-    emoji: '🛡️', text: outcome === 'resolved' ? 'notif.reportResolved' : 'notif.reportDismissed', params: {},
-  })))
+    .returning({ id: reports.id, reporterId: reports.reporterId, email: reports.reporterEmail, locale: reports.reporterLocale })
+  const text = outcome === 'resolved' ? 'notif.reportResolved' : 'notif.reportDismissed'
+  // Chi aveva un account riceve un avviso; chi ha segnalato senza account, un'email (DSA, art. 16)
+  await Promise.all(closed.map(r => r.reporterId
+    ? notify(r.reporterId, `segnalazione:${r.id}`, { emoji: '🛡️', text, params: {} })
+    : r.email
+      ? sendMail({
+          to: r.email,
+          subject: serverT(r.locale ?? 'it', 'mail.reportSubject', { site: site.name }),
+          text: serverT(r.locale ?? 'it', 'mail.reportText', { site: site.name, outcome: serverT(r.locale ?? 'it', text) }),
+        })
+      : null))
   return closed.length
 }

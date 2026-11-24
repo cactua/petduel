@@ -72,7 +72,9 @@
     "reportResolved": "Wir haben deine Meldung geprüft und gehandelt. Danke!",
     "reportDismissed": "Wir haben deine Meldung geprüft: Im Moment verstößt es nicht gegen die Regeln. Trotzdem danke!",
     "compliment": "{name} hat neue Komplimente bekommen 💌",
-    "followNew": "Neues von {'@'}{user}: schau mal rein"
+    "followNew": "Neues von {'@'}{user}: schau mal rein",
+    "paymentApproved": "Die neuen Spendendaten wurden genehmigt und stehen jetzt auf der Seite von {name}",
+    "paymentRejected": "Die neuen Spendendaten von {name} wurden nicht genehmigt: Auf der Seite bleiben die bisherigen. Bei Fragen schreib der Moderation"
   },
   "time": {
     "now": "jetzt",
@@ -100,7 +102,10 @@
     "phone": "Ungültige Telefonnummer",
     "check": "Überprüfe die Felder",
     "rules": "Akzeptiere die Community-Regeln, um dich zu registrieren",
-    "color": "Nutze eine Farbe wie #ff8800"
+    "color": "Nutze eine Farbe wie #ff8800",
+    "age": "Du musst mindestens 14 Jahre alt sein, um dich zu registrieren",
+    "reportNote": "Erkläre kurz, was nicht stimmt (mindestens 10 Zeichen)",
+    "goodFaith": "Bestätige, dass du in gutem Glauben meldest"
   },
   "errors": {
     "generic": "Etwas ist schiefgelaufen, bitte versuch es erneut",
@@ -158,7 +163,9 @@
     "reportOwn": "Du kannst deine eigenen Inhalte nicht melden",
     "blocked": "Bei dieser Person nicht möglich",
     "tooManyLogins": "Zu viele falsche Versuche: versuch es in 15 Minuten wieder",
-    "tooManySignups": "Aus diesem Netzwerk wurden heute viele Konten erstellt: versuch es morgen wieder"
+    "tooManySignups": "Aus diesem Netzwerk wurden heute viele Konten erstellt: versuch es morgen wieder",
+    "linkExpired": "Dieser Link ist nicht mehr gültig: Er ist abgelaufen oder wurde schon benutzt. Fordere einen neuen an.",
+    "mailUnavailable": "Die E-Mail kann gerade nicht gesendet werden. Versuche es später noch einmal."
   },
   "auth": {
     "registerTitle": "Erstelle dein Konto",
@@ -175,8 +182,28 @@
     "password": "Passwort",
     "email": "E-Mail",
     "username": "Benutzername",
-    "legal": "Mit der Registrierung akzeptierst du die {terms} und bestätigst, die Hinweise zum {privacy} gelesen zu haben. Du musst mindestens 14 Jahre alt sein.",
-    "rulesAccept": "Ich habe die {rules} gelesen und akzeptiere sie"
+    "legal": "Mit der Registrierung akzeptierst du die {terms} und bestätigst, die Hinweise zum {privacy} gelesen zu haben.",
+    "rulesAccept": "Ich habe die {rules} gelesen und akzeptiere sie",
+    "forgotLink": "Passwort vergessen?",
+    "forgotTitle": "Passwort vergessen",
+    "forgotLead": "Gib die E-Mail deines Kontos ein: Wir schicken dir einen Link, um ein neues zu wählen.",
+    "forgotSend": "Link schicken",
+    "forgotSent": "Wenn es ein Konto mit dieser E-Mail gibt, kommt gleich ein Link. Er gilt eine Stunde – schau auch im Spam nach.",
+    "backToLogin": "Zurück zur Anmeldung",
+    "resetTitle": "Neues Passwort wählen",
+    "resetLead": "Nach dem Speichern melden wir dich auf allen anderen Geräten ab.",
+    "resetSave": "Speichern und anmelden",
+    "resetInvalid": "Dieser Link ist nicht mehr gültig: Er ist abgelaufen oder wurde schon benutzt.",
+    "resetRequestNew": "Neuen Link anfordern",
+    "verifyTitle": "E-Mail bestätigen",
+    "verifyWorking": "Deine E-Mail wird bestätigt…",
+    "verifyDone": "E-Mail bestätigt, danke! 🎉",
+    "verifyGoHome": "Zur Website",
+    "verifyBar": "Bestätige deine E-Mail über den Link, den wir dir geschickt haben. Du brauchst sie, falls du dein Passwort vergisst.",
+    "verifyResend": "Nochmal schicken",
+    "verifySent": "Erledigt: Schau in dein Postfach (auch im Spam).",
+    "verifyHide": "Ausblenden",
+    "ageConfirm": "Ich bin mindestens 14 Jahre alt"
   },
   "ad": {
     "label": "Werbung",
@@ -409,7 +436,10 @@
   },
   "credits": {
     "title": "Fotonachweise",
-    "lead": "Die Beispielinhalte verwenden frei lizenzierte Bilder. Danke an alle, die sie erstellt und geteilt haben."
+    "lead": "Die Beispielinhalte verwenden frei lizenzierte Bilder. Danke an alle, die sie erstellt und geteilt haben.",
+    "license": "Lizenztext",
+    "modified": "zugeschnitten",
+    "modifiedNote": "Die Fotos von Wikimedia Commons wurden für die Website zugeschnitten und verkleinert. Der Name führt zur Originalseite, „Lizenztext“ zu den Nutzungsbedingungen."
   },
   "ranking": {
     "notFound": "Rangliste nicht gefunden",
@@ -594,7 +624,11 @@
     "notePlaceholder": "Zum Beispiel: wo das Original zu finden ist",
     "hint": "Meldungen lesen nur die Moderator*innen: Wer es veröffentlicht hat, erfährt nicht, dass du es warst.",
     "send": "Meldung senden",
-    "thanks": "Danke! Ein*e Moderator*in schaut es sich bald an, und du bekommst eine Benachrichtigung."
+    "thanks": "Danke! Ein*e Moderator*in schaut es sich bald an, und du bekommst eine Benachrichtigung.",
+    "anonymousLead": "Du kannst auch ohne Konto melden. Wir schreiben dir an die angegebene E-Mail, wie es ausgegangen ist, und nutzen sie nur dafür.",
+    "email": "Deine E-Mail",
+    "goodFaith": "Ich erkläre in gutem Glauben, dass meine Angaben richtig und vollständig sind.",
+    "thanksEmail": "Danke! Die Moderation schaut sie sich bald an, und wir schreiben dir das Ergebnis."
   },
   "reasonTips": {
     "0": "Versuch es mit einem Bild, auf dem das Motiv gut zu sehen ist.",
@@ -800,5 +834,13 @@
     "failed": "Einschalten hat nicht geklappt. Versuch es gleich noch einmal.",
     "install": "App installieren",
     "unavailable": "Benachrichtigungen sind auf dieser Seite nicht verfügbar."
+  },
+  "mail": {
+    "verifySubject": "Bestätige deine E-Mail bei {site}",
+    "verifyText": "Hallo {username},\n\num die E-Mail-Adresse deines Kontos bei {site} zu bestätigen, öffne diesen Link:\n\n{link}\n\nDer Link gilt 48 Stunden. Wenn du dich nicht angemeldet hast, ignoriere diese E-Mail: Ohne Bestätigung wird die Adresse nicht verwendet.\n\n{site}",
+    "resetSubject": "Neues Passwort für {site}",
+    "resetText": "Hallo {username},\n\ndu hast darum gebeten, das Passwort deines Kontos bei {site} zu ändern. Um ein neues zu wählen, öffne diesen Link:\n\n{link}\n\nDer Link gilt eine Stunde und funktioniert nur einmal. Wenn du das nicht warst, ignoriere diese E-Mail: Dein Passwort bleibt unverändert.\n\n{site}",
+    "reportSubject": "Deine Meldung bei {site}",
+    "reportText": "Hallo,\n\nwir schreiben dir wegen der Meldung, die du bei {site} geschickt hast.\n\n{outcome}\n\nWenn du mit der Entscheidung nicht einverstanden bist, antworte auf diese E-Mail und sag uns warum.\n\n{site}"
   }
 }

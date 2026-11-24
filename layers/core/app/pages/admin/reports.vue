@@ -132,7 +132,7 @@ const viewerPhotos = computed(() => photoGroups.value.map(g => ({ image: g.photo
         <ul class="report-review__reports">
           <li v-for="(r, n) in g.reports" :key="n" class="report-review__report">
             <b v-if="r.byArtist" class="report-review__artist">🎨 Dall'artista indicato</b>
-            <span class="report-review__line report-review__line--small">@{{ r.reporter }} · {{ timeAgo(r.createdAt) }} · {{ REASON_LABEL[r.reason] }}</span>
+            <span class="report-review__line report-review__line--small">{{ r.reporter }} · {{ timeAgo(r.createdAt) }} · {{ REASON_LABEL[r.reason] }}</span>
             <q v-if="r.note" class="report-review__note">{{ r.note }}</q>
           </li>
         </ul>

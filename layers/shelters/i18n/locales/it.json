@@ -229,7 +229,9 @@
     "useImage": "Usa questa",
     "change": "Cambia",
     "choose": "Scegli una foto",
-    "remove": "Togli"
+    "remove": "Togli",
+    "paymentReview": "I dati per le donazioni nuovi o cambiati si vedono sulla pagina dopo un controllo dei moderatori, che potrebbero contattarvi per conferma.",
+    "paymentPending": "⏳ Abbiamo ricevuto i nuovi dati per le donazioni: li controlliamo e poi compaiono sulla pagina. Fino ad allora restano quelli di prima."
   },
   "shelterPage": {
     "logoAlt": "Logo di {name}",

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { PhotoCredit } from '#shared/models'
+import { isCommonsCredit, licenseUrl } from '#shared/license'
 
 // id: foto pubblicata che si può segnalare (non per le proprie)
 export interface ViewerPhoto { image: string, alt: string, credit?: PhotoCredit | null, id?: number }
@@ -82,6 +83,8 @@ onBeforeUnmount(() => {
           <div class="photo-viewer__foot">
             <span v-if="many">{{ index! + 1 }} / {{ photos.length }}</span>
             <CreditLink v-if="photo.credit" :url="photo.credit.url" class="photo-viewer__credit">{{ $t('photo.credit', { text: photo.credit.text }) }}</CreditLink>
+            <a v-if="licenseUrl(photo.credit?.text)" :href="licenseUrl(photo.credit?.text)!" target="_blank" rel="noopener noreferrer license" class="photo-viewer__credit">{{ $t('credits.license') }}</a>
+            <span v-if="isCommonsCredit(photo.credit?.text)">{{ $t('credits.modified') }}</span>
             <ReportButton v-if="photo.id" :key="photo.id" :photo-id="photo.id" />
           </div>
         </template>

@@ -28,6 +28,8 @@ export default defineEventHandler(async (event): Promise<MyShelter> => {
       status: shelter.status,
       rejectReason: shelter.rejectReason,
       taxCode: shelter.taxCode,
+      pendingDonateUrl: shelter.pendingDonateUrl,
+      pendingIban: shelter.pendingIban,
     },
     requests: requests.map(({ r, petName, requester, email }) => ({
       id: r.id,

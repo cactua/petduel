@@ -4,6 +4,6 @@ import { adNetworkViews } from '../../../db/schema'
 export default defineEventHandler(async (event) => {
   const { voterId } = await getVoter(event)
   const db = await useDb()
-  await db.insert(adNetworkViews).values({ voterId })
+  await db.insert(adNetworkViews).values({ voterId: adViewer(voterId) })
   return { ok: true }
 })

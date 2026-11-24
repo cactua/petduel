@@ -48,6 +48,7 @@ export async function purgeLimits() {
 export function networkOf(event: H3Event) {
   const secret = useRuntimeConfig().voteSecret
   if (!secret) throw createError({ statusCode: 500, statusMessage: 'NUXT_VOTE_SECRET non configurato' })
-  const ip = getRequestIP(event, { xForwardedFor: true }) ?? 'unknown'
+  // event.context.clientAddress, fissato dal plugin clientIp: X-Forwarded-For vale solo dietro un proxy dichiarato
+  const ip = event.context.clientAddress ?? resolveClientIp(event, {})
   return createHmac('sha256', secret).update(`ip:${ip}`).digest('base64url').slice(0, 16)
 }

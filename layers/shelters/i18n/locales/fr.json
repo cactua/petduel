@@ -229,7 +229,9 @@
     "useImage": "Utiliser celle-ci",
     "change": "Changer",
     "choose": "Choisis une photo",
-    "remove": "Retirer"
+    "remove": "Retirer",
+    "paymentReview": "Les coordonnées de don nouvelles ou modifiées apparaissent sur votre page après une vérification des modérateurs, qui pourront vous contacter pour confirmer.",
+    "paymentPending": "⏳ Nous avons reçu vos nouvelles coordonnées de don : après vérification, elles apparaîtront sur la page. D'ici là, les précédentes restent affichées."
   },
   "shelterPage": {
     "logoAlt": "Logo de {name}",

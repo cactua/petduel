@@ -1,6 +1,7 @@
+import { randomUUID } from 'node:crypto'
 import { eq, sql } from 'drizzle-orm'
 import type { H3Event } from 'h3'
-import { users, type User } from '../db/schema'
+import { revokedSessions, users, type User } from '../db/schema'
 
 // L'utente della sessione si rilegge dal database: un account eliminato o un ruolo
 // cambiato hanno effetto subito, non quando scade il cookie
@@ -17,17 +18,25 @@ export async function requireUser(event: H3Event) {
 export async function requireAdmin(event: H3Event) {
   const user = await requireUser(event)
   if (user.role !== 'admin') throw createError({ statusCode: 403, statusMessage: 'errors.adminOnly' })
+  // Per il registro delle azioni admin (plugin adminLog)
+  event.context.admin = { id: user.id, username: user.username }
   return user
 }
 
-export async function loadSessionUser(user: { id: number, username: string, sessionVersion?: number }) {
+export async function loadSessionUser(user: { id: number, username: string, sessionVersion?: number, sid?: string }) {
   const db = await useDb()
-  const [row] = await db.select({ id: users.id, username: users.username, role: users.role, bannedAt: users.bannedAt, rulesAcceptedAt: users.rulesAcceptedAt, sessionVersion: users.sessionVersion })
-    .from(users).where(eq(users.id, user.id))
+  const [row] = await db.select({
+    id: users.id, username: users.username, role: users.role, bannedAt: users.bannedAt, rulesAcceptedAt: users.rulesAcceptedAt,
+    sessionVersion: users.sessionVersion, emailVerifiedAt: users.emailVerifiedAt,
+    // Sessione chiusa con "Esci": il cookie non vale più neanche se qualcuno ne aveva una copia
+    revoked: user.sid
+      ? sql<boolean>`exists (select 1 from ${revokedSessions} where ${revokedSessions.sid} = ${user.sid})`
+      : sql<boolean>`false`,
+  }).from(users).where(eq(users.id, user.id))
   // Un account sospeso perde subito la sessione, e così una sessione chiusa da "Esci da tutti i dispositivi"
   if (!row || row.username !== user.username || row.bannedAt) return null
-  if ((user.sessionVersion ?? 0) !== row.sessionVersion) return null
-  return { id: row.id, username: row.username, role: row.role, needsRules: !row.rulesAcceptedAt, sessionVersion: row.sessionVersion }
+  if ((user.sessionVersion ?? 0) !== row.sessionVersion || row.revoked) return null
+  return { id: row.id, username: row.username, role: row.role, needsRules: !row.rulesAcceptedAt, sessionVersion: row.sessionVersion, emailVerified: !!row.emailVerifiedAt, sid: user.sid }
 }
 
 /**
@@ -49,7 +58,8 @@ export async function isAdmin(userId: number) {
 
 export async function startSession(event: H3Event, user: User) {
   await replaceUserSession(event, {
-    user: { id: user.id, username: user.username, role: user.role, needsRules: !user.rulesAcceptedAt, sessionVersion: user.sessionVersion },
+    // sid: codice di questa sessione, per poterla chiudere da sola all'uscita (non serve ad accedere)
+    user: { id: user.id, username: user.username, role: user.role, needsRules: !user.rulesAcceptedAt, sessionVersion: user.sessionVersion, emailVerified: !!user.emailVerifiedAt, sid: randomUUID() },
     loggedInAt: Date.now(),
     voterId: `u:${user.id}`,
     recent: [],
@@ -87,4 +97,17 @@ export async function confirmPassword(user: { id: number, passwordHash: string }
 export async function optionalUser(event: H3Event) {
   const { user } = await getUserSession(event)
   return user ? await loadSessionUser(user) : null
+}
+
+/** Chiude questa sessione: il cookie, anche se copiato, non vale più fino alla sua scadenza naturale */
+export async function revokeSession(sid: string | undefined) {
+  if (!sid) return
+  const db = await useDb()
+  const maxAge = Number(useRuntimeConfig().session.maxAge) || 60 * 60 * 24 * 30
+  await db.insert(revokedSessions).values({ sid, expiresAt: new Date(Date.now() + maxAge * 1000) }).onConflictDoNothing()
+}
+
+export async function purgeRevokedSessions() {
+  const db = await useDb()
+  await db.delete(revokedSessions).where(sql`${revokedSessions.expiresAt} < now()`)
 }

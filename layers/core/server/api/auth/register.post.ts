@@ -8,7 +8,8 @@ const MAX_SIGNUPS_PER_NETWORK = 8
 const RESERVED = new Set(['admin', 'administrator', 'moderatore', 'moderazione', 'petduel', 'support', 'staff', 'root'])
 
 export default defineEventHandler(async (event) => {
-  const parsed = signupSchema.safeParse(await readBody(event))
+  const raw = await readBody(event)
+  const parsed = signupSchema.safeParse(raw)
   if (!parsed.success) {
     throw createError({ statusCode: 400, statusMessage: parsed.error.issues[0]?.message ?? 'Dati non validi' })
   }
@@ -35,5 +36,7 @@ export default defineEventHandler(async (event) => {
   if (!user) throw createError({ statusCode: 409, statusMessage: 'errors.emailOrUsernameTaken' })
 
   await startSession(event, user)
+  // Link per confermare l'email: se l'invio non riesce l'account c'è lo stesso, e il link si richiede dal profilo
+  await sendVerifyEmail(event, user, mailLocale((raw as { locale?: unknown } | null)?.locale))
   return { username: user.username }
 })

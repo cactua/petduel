@@ -229,7 +229,9 @@
     "useImage": "Use this",
     "change": "Change",
     "choose": "Choose a photo",
-    "remove": "Remove"
+    "remove": "Remove",
+    "paymentReview": "New or changed donation details appear on your page after a moderator check; we may contact you to confirm.",
+    "paymentPending": "⏳ We've received your new donation details: we'll check them and then they'll appear on your page. Until then the previous ones stay."
   },
   "shelterPage": {
     "logoAlt": "{name} logo",

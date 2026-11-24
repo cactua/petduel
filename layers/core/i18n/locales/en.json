@@ -72,7 +72,9 @@
     "reportResolved": "We reviewed your report and took action. Thank you!",
     "reportDismissed": "We reviewed your report: for now it doesn't break the rules. Thanks anyway!",
     "compliment": "{name} got new compliments 💌",
-    "followNew": "Something new from {'@'}{user}: take a look"
+    "followNew": "Something new from {'@'}{user}: take a look",
+    "paymentApproved": "The new donation details have been approved and are now on {name}'s page",
+    "paymentRejected": "The new donation details for {name} were not approved: the previous ones stay on the page. Contact the moderators for details"
   },
   "time": {
     "now": "now",
@@ -100,7 +102,10 @@
     "phone": "Invalid phone number",
     "check": "Check the fields",
     "rules": "To sign up, accept the community rules",
-    "color": "Use a color like #ff8800"
+    "color": "Use a color like #ff8800",
+    "age": "You must be at least 14 to sign up",
+    "reportNote": "Explain briefly what's wrong (at least 10 characters)",
+    "goodFaith": "Confirm you're reporting in good faith"
   },
   "errors": {
     "generic": "Something went wrong, please try again",
@@ -158,7 +163,9 @@
     "reportOwn": "You can't report your own things",
     "blocked": "Not possible for this user",
     "tooManyLogins": "Too many wrong attempts: try again in 15 minutes",
-    "tooManySignups": "Many accounts were created from this network today: try again tomorrow"
+    "tooManySignups": "Many accounts were created from this network today: try again tomorrow",
+    "linkExpired": "This link is no longer valid: it has expired or was already used. Ask for a new one.",
+    "mailUnavailable": "We can't send the email right now. Please try again later."
   },
   "auth": {
     "registerTitle": "Create your account",
@@ -175,8 +182,28 @@
     "password": "Password",
     "email": "Email",
     "username": "Username",
-    "legal": "By signing up you accept the {terms} and confirm you have read the {privacy} policy. You must be at least 14.",
-    "rulesAccept": "I've read and accept the {rules}"
+    "legal": "By signing up you accept the {terms} and confirm you have read the {privacy} policy.",
+    "rulesAccept": "I've read and accept the {rules}",
+    "forgotLink": "Forgot your password?",
+    "forgotTitle": "Forgot password",
+    "forgotLead": "Enter your account's email and we'll send you a link to choose a new one.",
+    "forgotSend": "Send me the link",
+    "forgotSent": "If there's an account with this email, a link is on its way. It's valid for one hour; check your spam folder too.",
+    "backToLogin": "Back to log in",
+    "resetTitle": "Choose a new password",
+    "resetLead": "Once saved, we'll sign you out of all other devices.",
+    "resetSave": "Save and log in",
+    "resetInvalid": "This link is no longer valid: it has expired or was already used.",
+    "resetRequestNew": "Ask for a new link",
+    "verifyTitle": "Confirm email",
+    "verifyWorking": "Confirming your email…",
+    "verifyDone": "Email confirmed, thanks! 🎉",
+    "verifyGoHome": "Go to the site",
+    "verifyBar": "Confirm your email by opening the link we sent you. You'll need it if you forget your password.",
+    "verifyResend": "Send it again",
+    "verifySent": "Done: check your inbox (and spam).",
+    "verifyHide": "Hide",
+    "ageConfirm": "I am at least 14 years old"
   },
   "ad": {
     "label": "Advertisement",
@@ -409,7 +436,10 @@
   },
   "credits": {
     "title": "Photo credits",
-    "lead": "The sample content uses freely licensed images. Thanks to everyone who made and shared them."
+    "lead": "The sample content uses freely licensed images. Thanks to everyone who made and shared them.",
+    "license": "License text",
+    "modified": "cropped",
+    "modifiedNote": "Photos from Wikimedia Commons have been cropped and resized for the site. The name links to the original page, \"License text\" to the terms of use."
   },
   "ranking": {
     "notFound": "Leaderboard not found",
@@ -594,7 +624,11 @@
     "notePlaceholder": "For example: where the original is",
     "hint": "Only moderators read reports: the person who posted it won't know it was you.",
     "send": "Send report",
-    "thanks": "Thanks! A moderator will look at it soon and you'll get a notification."
+    "thanks": "Thanks! A moderator will look at it soon and you'll get a notification.",
+    "anonymousLead": "You can report without an account. We'll email you at the address you give to tell you how it went, and use it only for that.",
+    "email": "Your email",
+    "goodFaith": "I declare in good faith that what I wrote is accurate and complete.",
+    "thanksEmail": "Thanks! A moderator will look at it soon and we'll email you the outcome."
   },
   "reasonTips": {
     "0": "Try an image where the subject is clearly visible.",
@@ -800,5 +834,13 @@
     "failed": "Couldn't turn them on. Please try again shortly.",
     "install": "Install the app",
     "unavailable": "Notifications aren't available on this site."
+  },
+  "mail": {
+    "verifySubject": "Confirm your email on {site}",
+    "verifyText": "Hi {username},\n\nto confirm the email address of your {site} account, open this link:\n\n{link}\n\nThe link is valid for 48 hours. If you didn't sign up, ignore this email: without confirmation the address won't be used.\n\n{site}",
+    "resetSubject": "New password for {site}",
+    "resetText": "Hi {username},\n\nyou asked to change the password of your {site} account. To choose a new one, open this link:\n\n{link}\n\nThe link is valid for one hour and works only once. If it wasn't you, ignore this email: your password stays the same.\n\n{site}",
+    "reportSubject": "Your report on {site}",
+    "reportText": "Hi,\n\nwe're writing about the report you sent on {site}.\n\n{outcome}\n\nIf you disagree with the decision, you can reply to this email and tell us why.\n\n{site}"
   }
 }

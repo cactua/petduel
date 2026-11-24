@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import site from '#site'
-import { LEGAL_UPDATED, type LegalKey, type LegalTexts } from '../../legal/types'
+import { LEGAL_UPDATED, type LegalKey, type LegalSection, type LegalTag, type LegalText, type LegalTexts } from '../../legal/types'
 import it from '../../legal/it'
 import en from '../../legal/en'
 import es from '../../legal/es'
@@ -14,15 +14,28 @@ const LINKS: Record<LegalKey, string> = { privacy: '/privacy', cookie: '/cookie'
 
 const { locale } = useI18n()
 const texts = computed<LegalTexts>(() => TEXTS[locale.value] ?? it)
-const page = computed(() => texts.value.docs[props.doc])
+// Ogni sito vede solo le parti che lo riguardano: animali, disegni o moto, rifugi, artisti
+const { features } = useAppConfig()
+const tags = new Set<LegalTag>([site.id as LegalTag, ...(features.shelters ? ['shelters' as const] : []),
+  ...(site.askCredit ? ['artists' as const] : []), ...(site.sona ? ['sona' as const] : [])])
+const shown = (x: LegalText | LegalSection) => typeof x === 'string' || !x.only || x.only.some(tag => tags.has(tag))
+const pick = (list: LegalText[] | undefined) => (list ?? []).filter(shown).map(x => (typeof x === 'string' ? x : x.t))
+const page = computed(() => {
+  const doc = texts.value.docs[props.doc]
+  return {
+    title: doc.title,
+    intro: pick(Array.isArray(doc.intro) ? doc.intro : [doc.intro]).join(' '),
+    sections: doc.sections.filter(shown).map(s => ({ ...s, p: pick(s.p), list: s.list && pick(s.list) })),
+  }
+})
 useHead({ title: () => `${page.value.title}` })
 
 // Titolare ed email arrivano dal file .env; finché mancano si vede chiaramente cosa completare
 const { legal } = useRuntimeConfig().public
 const fill = (s: string) => s
   .replaceAll('{site}', site.name)
-  .replace('{owner}', legal.owner || `[${texts.value.missing}: NUXT_PUBLIC_LEGAL_OWNER]`)
-  .replace('{email}', legal.email || `[${texts.value.missing}: NUXT_PUBLIC_LEGAL_EMAIL]`)
+  .replaceAll('{owner}', legal.owner || `[${texts.value.missing}: NUXT_PUBLIC_LEGAL_OWNER]`)
+  .replaceAll('{email}', legal.email || `[${texts.value.missing}: NUXT_PUBLIC_LEGAL_EMAIL]`)
 const updated = computed(() => texts.value.updated.replace('{date}',
   new Date(`${LEGAL_UPDATED}T12:00:00`).toLocaleDateString(intlLocale(), { day: 'numeric', month: 'long', year: 'numeric' })))
 const others = computed(() => (Object.keys(LINKS) as LegalKey[]).filter(k => k !== props.doc))
@@ -39,7 +52,7 @@ const others = computed(() => (Object.keys(LINKS) as LegalKey[]).filter(k => k !
     <section v-for="s in page.sections" :key="s.h" class="legal-page__section">
       <h2 class="legal-page__heading">{{ s.h }}</h2>
       <p v-for="p in s.p" :key="p" class="legal-page__text">{{ fill(p) }}</p>
-      <ul v-if="s.list" class="legal-page__list">
+      <ul v-if="s.list?.length" class="legal-page__list">
         <li v-for="item in s.list" :key="item" class="legal-page__text">{{ fill(item) }}</li>
       </ul>
       <div v-if="s.table" class="legal-page__table-wrap">

@@ -15,7 +15,13 @@ const pickProfile = (s: ShelterProfile): ShelterProfile => structuredClone({
   publicEmail: s.publicEmail, publicPhone: s.publicPhone, socials: { ...s.socials },
   donateUrl: s.donateUrl, iban: s.iban, contactEmail: s.contactEmail, phone: s.phone,
 })
-const form = reactive(pickProfile(props.shelter))
+// Link per le donazioni e IBAN in attesa di controllo: nel modulo si vedono quelli nuovi, così salvando altro non si perdono
+const form = reactive(pickProfile({
+  ...props.shelter,
+  donateUrl: props.shelter.pendingDonateUrl ?? props.shelter.donateUrl,
+  iban: props.shelter.pendingIban ?? props.shelter.iban,
+}))
+const paymentPending = computed(() => props.shelter.pendingDonateUrl !== null || props.shelter.pendingIban !== null)
 
 // --- Bisogni: elenco breve di cose che servono ---
 const need = ref('')
@@ -137,6 +143,9 @@ const SOCIAL_ICONS = { instagram: '📸', facebook: '👍', tiktok: '🎵', yout
           <input id="e-iban" v-model="form.iban" maxlength="42" autocapitalize="characters" spellcheck="false" placeholder="IT60 X054 2811 1010 0000 0123 456" class="input">
         </div>
       </div>
+      <p class="shelter-editor__note" :class="{ 'shelter-editor__note--pending': paymentPending }">
+        {{ paymentPending ? $t('shelterEdit.paymentPending') : $t('shelterEdit.paymentReview') }}
+      </p>
     </fieldset>
 
     <!-- Dove siamo -->
@@ -258,5 +267,9 @@ const SOCIAL_ICONS = { instagram: '📸', facebook: '👍', tiktok: '🎵', yout
   &__map { height: 260px; border-radius: $radius-md; overflow: hidden; }
 
   &__buttons { @include cluster($space-3); justify-content: flex-end; }
+
+  &__note { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+  &__note--pending { color: var(--ink); font-weight: 700; }
 }
 </style>

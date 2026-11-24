@@ -37,6 +37,7 @@ const LEGAL = computed(() => [
     </header>
 
     <main id="main" class="app-shell__main" tabindex="-1">
+      <EmailVerifyBar />
       <slot />
     </main>
 

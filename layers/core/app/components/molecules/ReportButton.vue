@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { PHOTO_REPORT_REASONS, USER_REPORT_REASONS, type ReportInput, type ReportReason } from '#shared/models'
+import { PHOTO_REPORT_REASONS, REPORT_NOTE_MIN_ANONYMOUS, USER_REPORT_REASONS, emailSchema, type ReportInput, type ReportReason } from '#shared/models'
 
 /**
  * Molecola: "Segnala" un'immagine pubblicata (photoId) o un profilo (username) ai moderatori.
- * Apre un foglio con il motivo e una nota facoltativa; chi non è collegato viene mandato ad accedere
+ * Apre un foglio con il motivo e una nota facoltativa. Si può segnalare anche senza account (DSA, art. 16):
+ * in quel caso servono un'email per la risposta, una spiegazione e la dichiarazione di buona fede
  */
 // icon: solo la bandierina tonda, da appoggiare su una foto (il testo resta per i lettori di schermo)
 const props = defineProps<{ photoId?: number, username?: string, preset?: ReportReason, label?: string, icon?: boolean }>()
 
 const { loggedIn } = useUserSession()
-const route = useRoute()
+const { locale } = useI18n()
+const email = ref('')
+const goodFaith = ref(false)
 const dialog = ref<HTMLDialogElement>()
 const reasons = computed<readonly ReportReason[]>(() => (props.photoId ? PHOTO_REPORT_REASONS : USER_REPORT_REASONS))
 const reason = ref<ReportReason | null>(null)
@@ -20,7 +23,6 @@ const error = ref('')
 const id = useId()
 
 function open() {
-  if (!loggedIn.value) return navigateTo({ path: '/login', query: { redirect: route.fullPath } })
   reason.value = props.preset ?? null
   note.value = ''
   sent.value = false
@@ -31,11 +33,17 @@ function open() {
 async function send() {
   if (!reason.value) return
   error.value = ''
+  if (!loggedIn.value) {
+    if (!emailSchema.safeParse(email.value).success) return (error.value = tr('validation.email'))
+    if (note.value.trim().length < REPORT_NOTE_MIN_ANONYMOUS) return (error.value = tr('validation.reportNote'))
+    if (!goodFaith.value) return (error.value = tr('validation.goodFaith'))
+  }
   sending.value = true
   // Il motivo viene dalla lista giusta per il tipo di segnalazione (reasons), il server lo ricontrolla
+  const who = loggedIn.value ? {} : { email: email.value, goodFaith: goodFaith.value, locale: locale.value }
   const body = (props.photoId
-    ? { target: 'photo', id: props.photoId, reason: reason.value, note: note.value }
-    : { target: 'user', username: props.username ?? '', reason: reason.value, note: note.value }) as ReportInput
+    ? { target: 'photo', id: props.photoId, reason: reason.value, note: note.value, ...who }
+    : { target: 'user', username: props.username ?? '', reason: reason.value, note: note.value, ...who }) as ReportInput
   try {
     await $fetch('/api/reports', { method: 'POST', body })
     sent.value = true
@@ -71,11 +79,22 @@ async function send() {
             </label>
           </fieldset>
           <div class="field">
-            <label :for="`${id}-note`" class="label">{{ $t('report.note') }} <small>({{ $t('common.optional')
+            <label :for="`${id}-note`" class="label">{{ $t('report.note') }} <small v-if="loggedIn">({{ $t('common.optional')
                 }})</small></label>
             <textarea :id="`${id}-note`" v-model="note" maxlength="300" rows="3" class="input"
               :placeholder="$t('report.notePlaceholder')" />
           </div>
+          <template v-if="!loggedIn">
+            <p class="report-button__hint">{{ $t('report.anonymousLead') }}</p>
+            <div class="field">
+              <label :for="`${id}-email`" class="label">{{ $t('report.email') }}</label>
+              <input :id="`${id}-email`" v-model="email" type="email" autocomplete="email" inputmode="email" required class="input">
+            </div>
+            <label class="report-button__faith">
+              <input v-model="goodFaith" type="checkbox">
+              <span>{{ $t('report.goodFaith') }}</span>
+            </label>
+          </template>
           <p class="report-button__hint">{{ $t('report.hint') }} <NuxtLink to="/rules" target="_blank">{{
             $t('rules.link') }}</NuxtLink>
           </p>
@@ -84,7 +103,7 @@ async function send() {
             $t('report.send') }}</button>
         </template>
         <template v-else>
-          <p class="report-button__thanks" role="status">💜 {{ $t('report.thanks') }}</p>
+          <p class="report-button__thanks" role="status">💜 {{ loggedIn ? $t('report.thanks') : $t('report.thanksEmail') }}</p>
           <button type="button" class="btn btn--ghost" @click="dialog?.close()">{{ $t('common.close') }}</button>
         </template>
       </form>
@@ -216,6 +235,17 @@ async function send() {
     font-size: 13px;
     line-height: 1.45;
     white-space: break-spaces
+  }
+
+  &__faith {
+    display: flex;
+    gap: $space-3;
+    align-items: flex-start;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+
+    input { margin-top: 2px; accent-color: var(--action); }
   }
 
   &__thanks {

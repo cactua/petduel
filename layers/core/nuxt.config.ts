@@ -119,7 +119,12 @@ export default messages
     },
   },
   // Stili in SCSS (Atomic Design + BEM): globali in assets/scss, il resto nei componenti
-  css: [coreDir("./app/assets/scss/main.scss")],
+  // Font serviti dal sito stesso (@fontsource), non da Google: nessun IP di chi visita passa a Google per i font
+  css: [
+    ...["fredoka/500", "fredoka/600", "fredoka/700", "nunito/400", "nunito/600", "nunito/700", "nunito/800"]
+      .map(f => `@fontsource/${f}.css`),
+    coreDir("./app/assets/scss/main.scss"),
+  ],
   // Componenti divisi in atoms/molecules/organisms senza cambiare i nomi usati nei template
   components: [{ path: coreDir("./app/components"), pathPrefix: false }],
   vite: {
@@ -139,24 +144,27 @@ export default messages
           content: "width=device-width, initial-scale=1, viewport-fit=cover",
         },
       ],
-      link: [
-        { rel: "preconnect", href: "https://fonts.googleapis.com" },
-        {
-          rel: "preconnect",
-          href: "https://fonts.gstatic.com",
-          crossorigin: "",
-        },
-        {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap",
-        },
-      ],
     },
   },
 
   runtimeConfig: {
     // Da .env: NUXT_VOTE_SECRET
     voteSecret: "",
+    // IP di chi visita dietro un proxy (vedi server/utils/clientIp.ts). Da .env: NUXT_CLIENT_IP_HEADER
+    // (es. cf-connecting-ip) oppure NUXT_TRUSTED_PROXY_HOPS (es. 1). Vuoti = indirizzo della connessione
+    clientIpHeader: "",
+    trustedProxyHops: 0,
+    // Da quale rete arrivano paese e città di chi visita (pubblicità mirate, classifica per città).
+    // Da .env: NUXT_GEO_HEADERS=cloudflare oppure vercel. Vuoto = posizione sconosciuta (in sviluppo: NUXT_DEV_GEO)
+    geoHeaders: "",
+    // Invio delle email (verifica dell'indirizzo, recupero password) con un server SMTP qualsiasi.
+    // Da .env: NUXT_SMTP_URL (smtps://utente:password@host:465) e NUXT_SMTP_FROM ("PetDuel <noreply@dominio>").
+    // Senza, in sviluppo il link si scrive nel log del server; in produzione le email non partono
+    smtpUrl: "",
+    smtpFrom: "",
+    // Indirizzo pubblico del sito per i link nelle email (https://furduel.it). Da .env: NUXT_SITE_URL.
+    // Non si prende dalla richiesta: un Host falso manderebbe il link per la nuova password a un altro sito
+    siteUrl: "",
     public: {
       // Chi gestisce il sito e l'email per la privacy, mostrati nelle pagine legali.
       // Da .env: NUXT_PUBLIC_LEGAL_OWNER, NUXT_PUBLIC_LEGAL_EMAIL
@@ -195,10 +203,9 @@ export default messages
       contentSecurityPolicy: {
         // Le immagini degli annunci Google arrivano dai loro domini (i riquadri sono iframe, non limitati)
         "img-src": ["'self'", "data:", "blob:", MAP_TILES_ORIGIN, ...GOOGLE_ADS],
-        "font-src": ["'self'", "https://fonts.gstatic.com"],
+        "font-src": ["'self'"],
         "style-src": [
           "'self'",
-          "https://fonts.googleapis.com",
           "'unsafe-inline'",
         ],
         "frame-ancestors": ["'none'"],

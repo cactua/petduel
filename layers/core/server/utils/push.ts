@@ -4,6 +4,7 @@ import site from '#site'
 import { pushSubscriptions } from '../db/schema'
 import { useDb } from './db'
 import { notificationPushText } from './pushText'
+import { isPushEndpoint } from './pushEndpoint'
 
 // Notifiche push: arrivano sul telefono o sul computer anche a sito chiuso.
 // Si attivano solo se nel file .env ci sono le chiavi VAPID (vedi nuxt.config.ts)
@@ -17,11 +18,13 @@ export function pushConfigured() {
 export async function sendPush(userId: number, n: { emoji: string, text: string, params: string | null, link: string | null, key: string }) {
   if (!pushConfigured()) return
   const db = await useDb()
-  const subs = await db.select().from(pushSubscriptions).where(eq(pushSubscriptions.userId, userId))
-  if (!subs.length) return
+  const all = await db.select().from(pushSubscriptions).where(eq(pushSubscriptions.userId, userId))
+  // Iscrizioni salvate prima del controllo sull'indirizzo: quelle fuori dai servizi push si tolgono
+  const gone: number[] = all.filter(s => !isPushEndpoint(s.endpoint)).map(s => s.id)
+  const subs = all.filter(s => isPushEndpoint(s.endpoint))
+  if (!subs.length && !gone.length) return
 
   const c = useRuntimeConfig()
-  const gone: number[] = []
   await Promise.all(subs.map(async (s) => {
     const payload = JSON.stringify({
       title: site.name,

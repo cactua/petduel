@@ -1,5 +1,6 @@
+import { createHmac } from 'node:crypto'
 import { sql } from 'drizzle-orm'
-import type { H3Event } from 'h3'
+import { getRequestHeader, type H3Event } from 'h3'
 import {
   AD_DEAL_DEFAULT, AD_LANGS, AD_TARGETING_DEFAULT, SPECIES, adDealSchema, adTargetingSchema, adTextFor, adTranslationsSchema,
   type AdDeal, type AdLang, type AdTargeting, type AdTranslations, type Species,
@@ -14,8 +15,8 @@ const TZ = 'Europe/Rome'
  * o Vercel (x-vercel-ip-*). Senza, la posizione è sconosciuta.
  * In sviluppo, senza proxy, si fa finta di essere in Italia (senza città);
  * per provare una zona precisa: NUXT_DEV_GEO="IT|Torino|45.07|7.69" nel file .env.
- * Gli header arrivano dal proxy: se il sito non è dietro uno dei due, chi vota potrebbe falsificarli
- * (al massimo si fa mostrare un annuncio di un'altra zona).
+ * Gli header si leggono solo se nel .env si dice quale rete c'è davanti (NUXT_GEO_HEADERS=cloudflare oppure
+ * vercel): senza un proxy che li riscrive, chi visita potrebbe inventarli e falsare statistiche e campagne.
  */
 export interface VisitorGeo {
   country: string | null
@@ -27,14 +28,14 @@ export interface VisitorGeo {
   simulated?: boolean
 }
 
-export function visitorGeo(event: H3Event): VisitorGeo {
-  const header = (...names: string[]) => {
-    for (const n of names) {
-      const v = getRequestHeader(event, n)?.trim()
-      if (v) return v
-    }
-    return null
-  }
+const GEO_HEADERS = {
+  cloudflare: { country: 'cf-ipcountry', city: 'cf-ipcity', lat: 'cf-iplatitude', lng: 'cf-iplongitude', timezone: 'cf-timezone' },
+  vercel: { country: 'x-vercel-ip-country', city: 'x-vercel-ip-city', lat: 'x-vercel-ip-latitude', lng: 'x-vercel-ip-longitude', timezone: 'x-vercel-ip-timezone' },
+} as const
+
+export function visitorGeo(event: H3Event, provider: string = String(useRuntimeConfig().geoHeaders ?? '')): VisitorGeo {
+  const names = GEO_HEADERS[provider.trim().toLowerCase() as keyof typeof GEO_HEADERS]
+  const header = (key: keyof (typeof GEO_HEADERS)['cloudflare']) => (names && getRequestHeader(event, names[key])?.trim()) || null
   const decode = (v: string | null) => {
     if (!v) return null
     try {
@@ -46,11 +47,11 @@ export function visitorGeo(event: H3Event): VisitorGeo {
   }
   const num = (v: string | null) => (v && Number.isFinite(Number(v)) ? Number(v) : null)
 
-  let country = header('cf-ipcountry', 'x-vercel-ip-country')?.toUpperCase() ?? null
-  let city = decode(header('cf-ipcity', 'x-vercel-ip-city'))
-  let lat = num(header('cf-iplatitude', 'x-vercel-ip-latitude'))
-  let lng = num(header('cf-iplongitude', 'x-vercel-ip-longitude'))
-  const timezone = header('cf-timezone', 'x-vercel-ip-timezone')
+  let country = header('country')?.toUpperCase() ?? null
+  let city = decode(header('city'))
+  let lat = num(header('lat'))
+  let lng = num(header('lng'))
+  const timezone = header('timezone')
 
   let simulated = false
   if (!country && import.meta.dev) {
@@ -170,6 +171,15 @@ export function adMatches(t: AdTargeting, v: AdVisitor) {
 }
 
 /**
+ * Codice con cui si salvano visualizzazioni e clic degli annunci: un'impronta del codice dei voti (o dell'account),
+ * diversa da quella usata altrove. Serve solo a contare le persone e il tetto al giorno, non dice chi sei
+ */
+export function adViewer(voterId: string) {
+  const secret = useRuntimeConfig().voteSecret
+  return `h:${createHmac('sha256', `${secret}:annunci`).update(voterId).digest('base64url').slice(0, 16)}`
+}
+
+/**
  * Campagne che hanno raggiunto un tetto: visualizzazioni o clic totali,
  * o il massimo di volte al giorno (ora italiana) per questa persona
  */
@@ -182,7 +192,7 @@ export async function cappedAds(list: { ad: Ad, deal: AdDeal }[], voterId: strin
     select ad_id,
       count(*) filter (where type = 'view')::int as views,
       count(*) filter (where type = 'click')::int as clicks,
-      count(*) filter (where type = 'view' and voter_id = ${voterId}
+      count(*) filter (where type = 'view' and voter_id = ${adViewer(voterId)}
         and created_at >= (date_trunc('day', now() at time zone ${TZ}) at time zone ${TZ}))::int as mine
     from ad_events where ad_id in (${ids}) group by ad_id
   `)

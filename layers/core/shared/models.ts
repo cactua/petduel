@@ -72,9 +72,11 @@ export const registerSchema = z.object({
   username: usernameSchema,
   password: passwordSchema,
 })
-/** Iscrizione dal sito: in più va accettato il regolamento della community (/rules) */
+/** Iscrizione dal sito: in più va accettato il regolamento della community (/rules) e confermata l'età minima */
+export const MIN_AGE = 14
 export const signupSchema = registerSchema.extend({
   rules: z.boolean().refine(v => v, 'validation.rules'),
+  age: z.boolean().refine(v => v, 'validation.age'),
 })
 export const loginSchema = z.object({
   email: emailSchema,
@@ -414,9 +416,17 @@ export const USER_REPORT_REASONS = ['hateful', 'spam', 'impersonation', 'other']
 export type ReportReason = (typeof PHOTO_REPORT_REASONS)[number] | (typeof USER_REPORT_REASONS)[number]
 export type ReportStatus = 'open' | 'resolved' | 'dismissed'
 
+// Chi segnala senza account (DSA, art. 16) lascia un'email per sapere com'è finita, spiega il motivo
+// e dichiara di farlo in buona fede; chi ha un account non ne ha bisogno
+const reporterFields = {
+  email: z.union([z.literal(''), emailSchema]).default(''),
+  goodFaith: z.boolean().default(false),
+  locale: z.string().max(5).optional(),
+}
+export const REPORT_NOTE_MIN_ANONYMOUS = 10
 export const reportSchema = z.discriminatedUnion('target', [
-  z.object({ target: z.literal('photo'), id: z.number().int().positive(), reason: z.enum(PHOTO_REPORT_REASONS), note: text(300).default('') }),
-  z.object({ target: z.literal('user'), username: z.string().trim().toLowerCase().max(30), reason: z.enum(USER_REPORT_REASONS), note: text(300).default('') }),
+  z.object({ target: z.literal('photo'), id: z.number().int().positive(), reason: z.enum(PHOTO_REPORT_REASONS), note: text(300).default(''), ...reporterFields }),
+  z.object({ target: z.literal('user'), username: z.string().trim().toLowerCase().max(30), reason: z.enum(USER_REPORT_REASONS), note: text(300).default(''), ...reporterFields }),
 ])
 export type ReportInput = z.input<typeof reportSchema>
 
@@ -525,6 +535,15 @@ export const MAX_NEEDS = 12
 
 const coord = (max: number) => z.number().min(-max).max(max).nullable().default(null)
 
+/** Controllo dell'IBAN (ISO 13616): i primi 4 caratteri vanno in fondo, le lettere diventano numeri, resto 1 su 97 */
+export function isValidIban(iban: string) {
+  if (!/^[A-Z]{2}\d{2}[A-Z0-9]{10,30}$/.test(iban)) return false
+  const digits = (iban.slice(4) + iban.slice(0, 4)).replace(/[A-Z]/g, c => String(c.charCodeAt(0) - 55))
+  let rest = 0
+  for (const d of digits) rest = (rest * 10 + Number(d)) % 97
+  return rest === 1
+}
+
 /** Tutto quello che un rifugio verificato può cambiare da solo (nome, città e codice fiscale no) */
 export const shelterProfileSchema = z.object({
   description: shelterFieldsSchema.shape.description,
@@ -541,9 +560,10 @@ export const shelterProfileSchema = z.object({
   publicPhone: phoneSchema,
   socials: z.object(Object.fromEntries(SOCIALS.map(s => [s, optionalUrl])) as Record<Social, typeof optionalUrl>),
   donateUrl: optionalUrl,
-  // IBAN senza spazi: controllo leggero di forma (paese, cifre di controllo, conto)
+  // IBAN senza spazi: forma (paese, cifre di controllo, conto) e cifre di controllo giuste (mod 97),
+  // così un errore di battitura non manda le donazioni a un conto sbagliato
   iban: z.string().trim().toUpperCase().transform(v => v.replace(/\s+/g, ''))
-    .refine(v => !v || /^[A-Z]{2}\d{2}[A-Z0-9]{10,30}$/.test(v), 'validation.iban').default(''),
+    .refine(v => !v || isValidIban(v), 'validation.iban').default(''),
   // Privati: per i moderatori
   contactEmail: shelterFieldsSchema.shape.contactEmail,
   phone: phoneSchema,
@@ -611,7 +631,11 @@ export interface AdoptionRequestItem {
 }
 
 export interface MyShelter {
-  shelter: (PublicShelter & ShelterProfile & { status: ShelterStatus, rejectReason: string | null, taxCode: string }) | null
+  // pendingDonateUrl/pendingIban: modifiche salvate ma non ancora controllate (null = nessuna)
+  shelter: (PublicShelter & ShelterProfile & {
+    status: ShelterStatus, rejectReason: string | null, taxCode: string
+    pendingDonateUrl: string | null, pendingIban: string | null
+  }) | null
   requests: AdoptionRequestItem[]
 }
 
@@ -627,6 +651,11 @@ export interface ShelterReviewItem {
   phone: string
   owner: string
   createdAt: string
+  // Dati per le donazioni: quelli pubblici e quelli nuovi da controllare (null = nessuna modifica)
+  donateUrl: string
+  iban: string
+  pendingDonateUrl: string | null
+  pendingIban: string | null
 }
 
 export interface AdoptablePet extends PublicPet {

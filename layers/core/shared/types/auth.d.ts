@@ -8,6 +8,10 @@ declare module '#auth-utils' {
     // Versione delle sessioni dell'account (users.session_version): se nel database è più alta, questa non vale più.
     // Assente nelle sessioni aperte prima che esistesse: vale 0
     sessionVersion?: number
+    // Ha confermato l'email aprendo il link ricevuto. Assente nelle sessioni aperte prima: si aggiorna alla prossima lettura
+    emailVerified?: boolean
+    // Codice della sessione, per chiuderla all'uscita. Assente nelle sessioni aperte prima: valgono fino alla scadenza
+    sid?: string
   }
 
   interface UserSession {

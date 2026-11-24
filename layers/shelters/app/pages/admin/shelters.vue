@@ -34,6 +34,28 @@ async function review(item: ShelterReviewItem, action: 'approve' | 'reject' | 'r
     busy.value = null
   }
 }
+// Link per le donazioni e IBAN cambiati da rifugi già verificati
+const paymentChanges = computed(() => data.value?.approved.filter(s => s.pendingIban !== null || s.pendingDonateUrl !== null) ?? [])
+async function reviewPayment(item: ShelterReviewItem, approve: boolean) {
+  busy.value = item.id
+  error.value = ''
+  try {
+    await $fetch(`/api/admin/shelters/${item.id}`, {
+      method: 'POST',
+      body: approve
+        ? { action: 'approvePayment', pendingIban: item.pendingIban, pendingDonateUrl: item.pendingDonateUrl }
+        : { action: 'rejectPayment' },
+    })
+    await refresh()
+    refreshNuxtData('admin-todo')
+  }
+  catch (e) {
+    error.value = errorMessage(e)
+  }
+  finally {
+    busy.value = null
+  }
+}
 const when = (iso: string) => new Date(iso).toLocaleDateString('it-IT', { dateStyle: 'medium' })
 </script>
 
@@ -71,6 +93,34 @@ const when = (iso: string) => new Date(iso).toLocaleDateString('it-IT', { dateSt
         </div>
       </article>
     </div>
+
+    <template v-if="paymentChanges.length">
+      <h2 class="admin-page__heading">Dati per le donazioni cambiati</h2>
+      <p class="admin-page__lead">
+        Finché non approvi, la pagina del rifugio mostra i dati di prima. Prima di approvare chiedi conferma al rifugio
+        con un contatto che conosci già (email o telefono della verifica): se l'account è stato rubato, le donazioni andrebbero a qualcun altro.
+      </p>
+      <div class="admin-page__list">
+        <article v-for="s in paymentChanges" :key="s.id" class="admin-page__item">
+          <h3 class="shelter-review__name"><NuxtLink :to="`/shelters/${s.slug}`" class="shelter-review__name-link">{{ s.name }}</NuxtLink></h3>
+          <p class="shelter-review__meta">@{{ s.owner }} · {{ s.contactEmail }}<template v-if="s.phone"> · {{ s.phone }}</template></p>
+          <dl class="shelter-review__facts">
+            <template v-if="s.pendingIban !== null">
+              <dt>IBAN prima</dt><dd><code>{{ s.iban || '—' }}</code></dd>
+              <dt>IBAN nuovo</dt><dd><code>{{ s.pendingIban }}</code></dd>
+            </template>
+            <template v-if="s.pendingDonateUrl !== null">
+              <dt>Link prima</dt><dd>{{ s.donateUrl || '—' }}</dd>
+              <dt>Link nuovo</dt><dd><a :href="s.pendingDonateUrl" target="_blank" rel="noopener noreferrer nofollow" class="shelter-review__link">{{ s.pendingDonateUrl }}</a></dd>
+            </template>
+          </dl>
+          <div class="admin-page__actions">
+            <button type="button" class="btn btn--ok shelter-review__button" :disabled="busy === s.id" @click="reviewPayment(s, true)">Approva</button>
+            <button type="button" class="btn btn--primary shelter-review__button" :disabled="busy === s.id" @click="reviewPayment(s, false)">Rifiuta</button>
+          </div>
+        </article>
+      </div>
+    </template>
 
     <h2 class="admin-page__heading">Verificati</h2>
     <p v-if="data && !data.approved.length" class="admin-page__empty">Ancora nessun rifugio verificato.</p>

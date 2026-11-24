@@ -4,7 +4,7 @@ import { pushSubscriptions } from '../../db/schema'
 
 const bodySchema = z.object({
   // Indirizzo del servizio push del browser (Google, Mozilla, Apple, Microsoft): sempre https
-  endpoint: z.url({ protocol: /^https$/ }).max(1000),
+  endpoint: z.url({ protocol: /^https$/ }).max(1000).refine(isPushEndpoint),
   keys: z.object({ p256dh: z.string().min(20).max(200), auth: z.string().min(8).max(100) }),
   locale: z.enum(LANGUAGES.map(l => l.code) as [string, ...string[]]).catch('it'),
 })

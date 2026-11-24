@@ -4,8 +4,9 @@ import { loginSchema, signupSchema } from '#shared/models'
 const props = defineProps<{ mode: 'login' | 'register' }>()
 
 const route = useRoute()
+const { locale } = useI18n()
 const { fetch: refreshSession } = useUserSession()
-const form = reactive({ email: '', username: '', password: '', rules: false })
+const form = reactive({ email: '', username: '', password: '', rules: false, age: false })
 const error = ref('')
 const sending = ref(false)
 const isRegister = computed(() => props.mode === 'register')
@@ -20,7 +21,7 @@ async function submit() {
   sending.value = true
   error.value = ''
   try {
-    await $fetch(isRegister.value ? '/api/auth/register' : '/api/auth/login', { method: 'POST', body: check.data })
+    await $fetch(isRegister.value ? '/api/auth/register' : '/api/auth/login', { method: 'POST', body: { ...check.data, locale: locale.value } })
     await refreshSession()
     await navigateTo(safeRedirect(route.query.redirect))
   }
@@ -57,12 +58,17 @@ async function submit() {
         :autocomplete="isRegister ? 'new-password' : 'current-password'"
       >
       <small v-if="isRegister" class="auth-form__help">{{ $t('auth.passwordHelp') }}</small>
+      <NuxtLink v-else to="/forgot-password" class="auth-form__forgot">{{ $t('auth.forgotLink') }}</NuxtLink>
 
       <label v-if="isRegister" class="auth-form__rules">
         <input v-model="form.rules" type="checkbox" class="auth-form__rules-check">
         <i18n-t keypath="auth.rulesAccept" tag="span" scope="global">
           <template #rules><NuxtLink to="/rules" target="_blank">{{ $t('rules.link') }}</NuxtLink></template>
         </i18n-t>
+      </label>
+      <label v-if="isRegister" class="auth-form__rules">
+        <input v-model="form.age" type="checkbox" class="auth-form__rules-check">
+        <span>{{ $t('auth.ageConfirm') }}</span>
       </label>
       <p v-if="error" class="error auth-form__error" role="alert">{{ error }}</p>
       <i18n-t v-if="isRegister" keypath="auth.legal" tag="p" class="auth-form__legal" scope="global">
@@ -105,6 +111,8 @@ async function submit() {
   &__input { padding: 12px 14px; background: var(--surface); }
 
   &__help { color: var(--muted); font-size: 12px; }
+
+  &__forgot { align-self: flex-end; color: var(--coral-deep); font-size: 14px; font-weight: 700; }
 
   &__error { color: var(--coral); margin-top: $space-2; }
 

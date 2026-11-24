@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const [ad] = await db.select().from(ads).where(eq(ads.id, id))
   if (!ad) throw createError({ statusCode: 404 })
   const { voterId, user } = await getUserSession(event)
-  await db.insert(adEvents).values({ adId: id, type: 'click', voterId: user ? `u:${user.id}` : voterId ?? 'anonimo', ...adEventPlace(event) })
+  await db.insert(adEvents).values({ adId: id, type: 'click', voterId: adViewer(user ? `u:${user.id}` : voterId ?? 'anonimo'), ...adEventPlace(event) })
   setResponseHeader(event, 'cache-control', 'no-store')
   // Il link può cambiare con la lingua di chi clicca
   return sendRedirect(event, withUtm(adLocalized(ad, visitorLang(event)).url, ad), 302)

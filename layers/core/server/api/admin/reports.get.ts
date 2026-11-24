@@ -9,7 +9,7 @@ export default defineEventHandler(async (event): Promise<ReportGroup[]> => {
   const db = await useDb()
   const reporter = alias(users, 'reporter')
   const rows = await db.select({ r: reports, reporter: reporter.username })
-    .from(reports).innerJoin(reporter, eq(reporter.id, reports.reporterId))
+    .from(reports).leftJoin(reporter, eq(reporter.id, reports.reporterId))
     .where(eq(reports.status, 'open')).orderBy(asc(reports.createdAt)).limit(500)
 
   const photoIds = [...new Set(rows.flatMap(x => (x.r.photoId ? [x.r.photoId] : [])))]
@@ -47,7 +47,7 @@ export default defineEventHandler(async (event): Promise<ReportGroup[]> => {
       groups.set(key, group)
     }
     const artistId = r.photoId ? photoById.get(r.photoId)?.artistId : null
-    group.reports.push({ reason: r.reason, note: r.note, reporter: by, createdAt: r.createdAt.toISOString(), byArtist: !!artistId && artistId === r.reporterId })
+    group.reports.push({ reason: r.reason, note: r.note, reporter: by ? `@${by}` : `${r.reporterEmail ?? '?'} (senza account)`, createdAt: r.createdAt.toISOString(), byArtist: !!artistId && artistId === r.reporterId })
   }
   // Prima ciò che l'artista stesso dice di non aver autorizzato, poi le cose segnalate da più persone
   return [...groups.values()].sort((a, b) =>

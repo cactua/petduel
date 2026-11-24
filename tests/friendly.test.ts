@@ -48,8 +48,12 @@ describe('iscrizione e regole', () => {
     expect(signupSchema.safeParse(base).success).toBe(false)
   })
 
-  it('accettandole sì', () => {
-    expect(signupSchema.safeParse({ ...base, rules: true }).success).toBe(true)
+  it('senza confermare i 14 anni non ci si iscrive', () => {
+    expect(signupSchema.safeParse({ ...base, rules: true, age: false }).success).toBe(false)
+  })
+
+  it('accettando le regole e confermando l\'età sì', () => {
+    expect(signupSchema.safeParse({ ...base, rules: true, age: true }).success).toBe(true)
   })
 })
 

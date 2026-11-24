@@ -11,6 +11,6 @@ export default defineEventHandler(async (event) => {
   const db = await useDb()
   const [ad] = await db.select({ id: ads.id }).from(ads).where(eq(ads.id, id))
   if (!ad) throw createError({ statusCode: 404 })
-  await db.insert(adEvents).values({ adId: id, type: 'view', voterId, ...adEventPlace(event) })
+  await db.insert(adEvents).values({ adId: id, type: 'view', voterId: adViewer(voterId), ...adEventPlace(event) })
   return { ok: true }
 })

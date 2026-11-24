@@ -72,7 +72,9 @@
     "reportResolved": "Hemos revisado tu denuncia y hemos actuado. ¡Gracias!",
     "reportDismissed": "Hemos revisado tu denuncia: por ahora no va contra las normas. ¡Gracias de todos modos!",
     "compliment": "{name} ha recibido nuevos cumplidos 💌",
-    "followNew": "Novedades de {'@'}{user}: échales un vistazo"
+    "followNew": "Novedades de {'@'}{user}: échales un vistazo",
+    "paymentApproved": "Los nuevos datos para donaciones se han aprobado y ya están en la página de {name}",
+    "paymentRejected": "Los nuevos datos para donaciones de {name} no se han aprobado: en la página siguen los anteriores. Para más información escribe a los moderadores"
   },
   "time": {
     "now": "ahora",
@@ -100,7 +102,10 @@
     "phone": "Teléfono no válido",
     "check": "Revisa los campos",
     "rules": "Para registrarte acepta las normas de la comunidad",
-    "color": "Usa un color como #ff8800"
+    "color": "Usa un color como #ff8800",
+    "age": "Para registrarte debes tener al menos 14 años",
+    "reportNote": "Explica en pocas palabras qué pasa (al menos 10 caracteres)",
+    "goodFaith": "Confirma que denuncias de buena fe"
   },
   "errors": {
     "generic": "Algo ha salido mal, inténtalo de nuevo",
@@ -158,7 +163,9 @@
     "reportOwn": "No puedes denunciar tus propias cosas",
     "blocked": "No es posible para este usuario",
     "tooManyLogins": "Demasiados intentos fallidos: vuelve a intentarlo en 15 minutos",
-    "tooManySignups": "Hoy se han creado muchas cuentas desde esta red: inténtalo mañana"
+    "tooManySignups": "Hoy se han creado muchas cuentas desde esta red: inténtalo mañana",
+    "linkExpired": "Este enlace ya no es válido: ha caducado o ya se ha usado. Pide uno nuevo.",
+    "mailUnavailable": "Ahora mismo no podemos enviar el correo. Inténtalo más tarde."
   },
   "auth": {
     "registerTitle": "Crea tu cuenta",
@@ -175,8 +182,28 @@
     "password": "Contraseña",
     "email": "Email",
     "username": "Usuario",
-    "legal": "Al registrarte aceptas las {terms} y confirmas haber leído la política de {privacy}. Debes tener al menos 14 años.",
-    "rulesAccept": "He leído y acepto las {rules}"
+    "legal": "Al registrarte aceptas las {terms} y confirmas haber leído la política de {privacy}.",
+    "rulesAccept": "He leído y acepto las {rules}",
+    "forgotLink": "¿Has olvidado la contraseña?",
+    "forgotTitle": "Contraseña olvidada",
+    "forgotLead": "Escribe el correo de tu cuenta y te enviaremos un enlace para elegir una nueva.",
+    "forgotSend": "Envíame el enlace",
+    "forgotSent": "Si hay una cuenta con este correo, en breve te llegará un enlace. Vale una hora; revisa también el spam.",
+    "backToLogin": "Volver al inicio de sesión",
+    "resetTitle": "Elige una contraseña nueva",
+    "resetLead": "Al guardarla cerraremos tu sesión en todos los demás dispositivos.",
+    "resetSave": "Guardar y entrar",
+    "resetInvalid": "Este enlace ya no es válido: ha caducado o ya se ha usado.",
+    "resetRequestNew": "Pide un enlace nuevo",
+    "verifyTitle": "Confirmar correo",
+    "verifyWorking": "Confirmando tu correo…",
+    "verifyDone": "¡Correo confirmado, gracias! 🎉",
+    "verifyGoHome": "Ir al sitio",
+    "verifyBar": "Confirma tu correo abriendo el enlace que te hemos enviado. Lo necesitarás si olvidas la contraseña.",
+    "verifyResend": "Enviarlo otra vez",
+    "verifySent": "Hecho: revisa tu correo (también el spam).",
+    "verifyHide": "Ocultar",
+    "ageConfirm": "Tengo al menos 14 años"
   },
   "ad": {
     "label": "Publicidad",
@@ -409,7 +436,10 @@
   },
   "credits": {
     "title": "Créditos de las fotos",
-    "lead": "El contenido de ejemplo usa imágenes con licencia libre. Gracias a quienes las crearon y compartieron."
+    "lead": "El contenido de ejemplo usa imágenes con licencia libre. Gracias a quienes las crearon y compartieron.",
+    "license": "Texto de la licencia",
+    "modified": "recortada",
+    "modifiedNote": "Las fotos de Wikimedia Commons se han recortado y redimensionado para el sitio. El nombre lleva a la página original y «Texto de la licencia» a las condiciones de uso."
   },
   "ranking": {
     "notFound": "Ranking no encontrado",
@@ -594,7 +624,11 @@
     "notePlaceholder": "Por ejemplo: dónde está el original",
     "hint": "Solo los moderadores leen las denuncias: quien la publicó no sabrá que fuiste tú.",
     "send": "Enviar denuncia",
-    "thanks": "¡Gracias! Un moderador la revisará pronto y recibirás un aviso."
+    "thanks": "¡Gracias! Un moderador la revisará pronto y recibirás un aviso.",
+    "anonymousLead": "Puedes denunciar sin cuenta. Te escribiremos al correo que indiques para contarte el resultado y solo lo usaremos para eso.",
+    "email": "Tu correo",
+    "goodFaith": "Declaro de buena fe que lo que he escrito es correcto y completo.",
+    "thanksEmail": "¡Gracias! Un moderador la revisará pronto y te escribiremos con el resultado."
   },
   "reasonTips": {
     "0": "Prueba con una imagen en la que el protagonista se vea bien.",
@@ -800,5 +834,13 @@
     "failed": "No se han podido activar. Inténtalo de nuevo en un momento.",
     "install": "Instalar la app",
     "unavailable": "Las notificaciones no están disponibles en este sitio."
+  },
+  "mail": {
+    "verifySubject": "Confirma tu correo en {site}",
+    "verifyText": "Hola {username}:\n\npara confirmar la dirección de correo de tu cuenta en {site}, abre este enlace:\n\n{link}\n\nEl enlace vale 48 horas. Si no te has registrado tú, ignora este correo: sin confirmación la dirección no se usará.\n\n{site}",
+    "resetSubject": "Contraseña nueva para {site}",
+    "resetText": "Hola {username}:\n\nhas pedido cambiar la contraseña de tu cuenta en {site}. Para elegir una nueva, abre este enlace:\n\n{link}\n\nEl enlace vale una hora y solo se puede usar una vez. Si no has sido tú, ignora este correo: tu contraseña no cambia.\n\n{site}",
+    "reportSubject": "Tu denuncia en {site}",
+    "reportText": "Hola:\n\nte escribimos por la denuncia que enviaste en {site}.\n\n{outcome}\n\nSi no estás de acuerdo con la decisión, puedes responder a este correo y explicarnos por qué.\n\n{site}"
   }
 }

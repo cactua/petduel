@@ -21,6 +21,8 @@ export const users = pgTable('users', {
   commissionsUrl: text('commissions_url').notNull().default(''),
   // Cresce quando si esce da tutti i dispositivi o si cambia password: le sessioni con un numero vecchio non valgono più
   sessionVersion: integer('session_version').notNull().default(0),
+  // Quando ha confermato l'email aprendo il link ricevuto; vuoto = non ancora confermata
+  emailVerifiedAt: timestamp('email_verified_at', { withTimezone: true }),
   // Due righe su di sé e pronomi, mostrati sul profilo (facoltativi)
   bio: text('bio').notNull().default(''),
   pronouns: text('pronouns').notNull().default(''),
@@ -89,6 +91,10 @@ export const shelters = pgTable('shelters', {
   socials: jsonb('socials').$type<ShelterSocials>().notNull().default({}),
   donateUrl: text('donate_url').notNull().default(''),
   iban: text('iban').notNull().default(''),
+  // Link per le donazioni e IBAN nuovi, in attesa che un moderatore li controlli: fino ad allora
+  // la pagina pubblica mostra quelli di prima. null = nessuna modifica in attesa
+  pendingDonateUrl: text('pending_donate_url'),
+  pendingIban: text('pending_iban'),
   rejectReason: text('reject_reason'),
   reviewedBy: integer('reviewed_by').references(() => users.id, { onDelete: 'set null' }),
   reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
@@ -196,7 +202,10 @@ export const notifications = pgTable('notifications', {
 // Una persona segnala la stessa cosa una volta sola; chiusa da un admin (resolved: si è intervenuti, dismissed: niente da fare)
 export const reports = pgTable('reports', {
   id: serial('id').primaryKey(),
-  reporterId: integer('reporter_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  // Vuoto per chi segnala senza account: in quel caso ci sono la sua email e la lingua per la risposta
+  reporterId: integer('reporter_id').references(() => users.id, { onDelete: 'cascade' }),
+  reporterEmail: text('reporter_email'),
+  reporterLocale: text('reporter_locale'),
   photoId: integer('photo_id').references(() => photos.id, { onDelete: 'cascade' }),
   userId: integer('user_id').references(() => users.id, { onDelete: 'cascade' }),
   reason: text('reason').$type<ReportReason>().notNull(),
@@ -331,6 +340,35 @@ export type Ad = typeof ads.$inferSelect
 export type Report = typeof reports.$inferSelect
 
 // Tenuto allineato a mano con le tabelle sopra finché non introduciamo drizzle-kit
+// Link mandati per email: conferma dell'indirizzo e nuova password. Si salva solo l'impronta (sha256)
+// del codice, che vale una volta sola e per poco tempo
+export const emailTokens = pgTable('email_tokens', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  kind: text('kind').$type<'verify' | 'reset'>().notNull(),
+  tokenHash: text('token_hash').notNull().unique(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+})
+export type EmailTokenKind = 'verify' | 'reset'
+
+// Sessioni chiuse con "Esci", fino alla scadenza naturale del cookie (poi si tolgono)
+export const revokedSessions = pgTable('revoked_sessions', {
+  sid: text('sid').primaryKey(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+})
+
+// Registro delle azioni degli admin: chi ha fatto cosa e quando (non si modifica dal sito)
+export const adminLog = pgTable('admin_log', {
+  id: serial('id').primaryKey(),
+  adminId: integer('admin_id').references(() => users.id, { onDelete: 'set null' }),
+  adminName: text('admin_name').notNull(),
+  action: text('action').notNull(),
+  target: text('target').notNull().default(''),
+  detail: text('detail').notNull().default(''),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+})
+
 export const CREATE_TABLES_SQL = `
 CREATE TABLE IF NOT EXISTS users (
   id serial PRIMARY KEY,
@@ -623,4 +661,33 @@ CREATE TABLE IF NOT EXISTS push_subscriptions (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS push_subscriptions_user ON push_subscriptions (user_id);
+ALTER TABLE shelters ADD COLUMN IF NOT EXISTS pending_donate_url text;
+ALTER TABLE shelters ADD COLUMN IF NOT EXISTS pending_iban text;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS email_verified_at timestamptz;
+CREATE TABLE IF NOT EXISTS email_tokens (
+  id serial PRIMARY KEY,
+  user_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  kind text NOT NULL,
+  token_hash text NOT NULL UNIQUE,
+  expires_at timestamptz NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS email_tokens_user ON email_tokens (user_id, kind);
+CREATE TABLE IF NOT EXISTS revoked_sessions (
+  sid text PRIMARY KEY,
+  expires_at timestamptz NOT NULL
+);
+CREATE TABLE IF NOT EXISTS admin_log (
+  id serial PRIMARY KEY,
+  admin_id integer REFERENCES users (id) ON DELETE SET NULL,
+  admin_name text NOT NULL,
+  action text NOT NULL,
+  target text NOT NULL DEFAULT '',
+  detail text NOT NULL DEFAULT '',
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS admin_log_created ON admin_log (created_at);
+ALTER TABLE reports ALTER COLUMN reporter_id DROP NOT NULL;
+ALTER TABLE reports ADD COLUMN IF NOT EXISTS reporter_email text;
+ALTER TABLE reports ADD COLUMN IF NOT EXISTS reporter_locale text;
 `

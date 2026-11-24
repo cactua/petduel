@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto'
 import { and, desc, eq, inArray, sql } from 'drizzle-orm'
 import { adEvents, adNetworkViews, adoptionRequests, blocks, challengeEntries, challengeVotes, challenges, compliments, favorites, follows, notifications, pets, photos, reports, shelters, users, votes } from '../db/schema'
 import { imageUrl, useDb } from './db'
+import { adViewer } from './adAudience'
 import { removeImage } from './photos'
 import { removeShelterImage } from './shelterImages'
 import { removeProfileImage } from './profileImages'
@@ -23,8 +24,9 @@ export async function deleteAccount(userId: number) {
     const anon = `d:${randomUUID()}`
     await tx.update(votes).set({ voterId: anon }).where(eq(votes.voterId, was))
     await tx.update(challengeVotes).set({ voterId: anon }).where(eq(challengeVotes.voterId, was))
-    await tx.update(adEvents).set({ voterId: anon }).where(eq(adEvents.voterId, was))
-    await tx.update(adNetworkViews).set({ voterId: anon }).where(eq(adNetworkViews.voterId, was))
+    // Gli annunci usano un'impronta del codice (adViewer); le righe più vecchie il codice in chiaro
+    await tx.update(adEvents).set({ voterId: anon }).where(inArray(adEvents.voterId, [was, adViewer(was)]))
+    await tx.update(adNetworkViews).set({ voterId: anon }).where(inArray(adNetworkViews.voterId, [was, adViewer(was)]))
     // Disegni di altri dove era indicato come artista: il disegno resta, il suo nome no
     await tx.update(photos).set({ credit: null, creditUrl: null, artistId: null }).where(eq(photos.artistId, userId))
     // Il resto se ne va a cascata con l'utente (pet, foto, rifugio, richieste, avvisi)
