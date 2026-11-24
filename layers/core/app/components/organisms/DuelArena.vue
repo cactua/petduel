@@ -97,10 +97,27 @@ const stampOpacity = (i: number) => (winner.value === i ? 1 : drag.index === i ?
 const cardOpacity = (i: number) => (drag.index === 1 - i ? 1 - p.value * 0.35 : undefined)
 const vsOpacity = computed(() => (winner.value !== null ? 0 : drag.index >= 0 ? 1 - p.value : 1))
 
+// Tastiera: frecce per votare; 1 e 2 tenuti premuti ingrandiscono la prima o la seconda foto, come il dito
+const PEEK_KEYS: Record<string, number> = { 1: 0, 2: 1 }
+function typing(e: KeyboardEvent) {
+  return e.ctrlKey || e.metaKey || e.altKey || (e.target instanceof Element && !!e.target.closest('input, textarea, select, [contenteditable]'))
+}
 function onKey(e: KeyboardEvent) {
+  if (typing(e)) return
+  const zoom = PEEK_KEYS[e.key]
+  if (zoom !== undefined) {
+    if (!e.repeat && winner.value === null) peek.value = zoom
+    return
+  }
+  if (peek.value !== null) return
   if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') decide(0)
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown') decide(1)
 }
+function onKeyUp(e: KeyboardEvent) {
+  if (PEEK_KEYS[e.key] === peek.value) peek.value = null
+}
+// Se la finestra perde il fuoco con il tasto ancora giù, il keyup non arriva: la foto si chiude lo stesso
+const onBlur = () => (peek.value = null)
 
 // Demo iniziale: la prima card accenna il gesto finché non si tocca qualcosa
 let coachAnim: Animation | null = null
@@ -111,6 +128,8 @@ function stopCoach() {
 
 onMounted(() => {
   window.addEventListener('keydown', onKey)
+  window.addEventListener('keyup', onKeyUp)
+  window.addEventListener('blur', onBlur)
   if (props.coach && !prefersLessMotion()) {
     const g0 = geometry(0)
     coachAnim = cards.value[0]!.animate(
@@ -121,6 +140,8 @@ onMounted(() => {
 })
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKey)
+  window.removeEventListener('keyup', onKeyUp)
+  window.removeEventListener('blur', onBlur)
   stopCoach()
   cancelPeek()
 })

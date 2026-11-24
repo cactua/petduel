@@ -36,10 +36,22 @@ const weightTimes = Math.round(1 / ANON_VOTE_WEIGHT)
 // Barra spaziatrice = Salta (le frecce votano, vedi DuelArena). Non quando il fuoco è su un pulsante,
 // un link o un campo: lì lo spazio fa già la sua cosa
 const canSkip = computed(() => !props.ad && !!props.duel?.pets && !props.result && !props.hint)
+// "?" apre e chiude la legenda delle scorciatoie, Esc la chiude
+const keysOpen = ref(false)
 function onSkipKey(e: KeyboardEvent) {
-  if (e.key !== ' ' || e.repeat || e.ctrlKey || e.metaKey || e.altKey || !canSkip.value) return
+  if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return
   const el = e.target
-  if (el instanceof Element && el.closest('button, a, input, textarea, select, summary, [contenteditable], [role="button"], [role="menu"], dialog')) return
+  if (el instanceof Element && el.closest('input, textarea, select, [contenteditable]')) return
+  if (e.key === '?') {
+    keysOpen.value = !keysOpen.value
+    return
+  }
+  if (e.key === 'Escape' && keysOpen.value) {
+    keysOpen.value = false
+    return
+  }
+  if (e.key !== ' ' || !canSkip.value) return
+  if (el instanceof Element && el.closest('button, a, summary, [role="button"], [role="menu"], dialog')) return
   e.preventDefault()
   emit('skip')
 }
@@ -100,10 +112,18 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
         <template v-else-if="hint">{{ hint }}</template>
         <template v-else>
           {{ $t('duel.orDrag') }}<span class="duel-panel__hint-more"> · {{ $t('duel.hintHold') }}</span>
-          <!-- Con mouse e tastiera: le frecce votano (vedi DuelArena) -->
-          <span v-if="duel?.pets" class="duel-panel__hint-keys"> · <kbd>←</kbd> <kbd>→</kbd> {{ $t('duel.hintKeys') }}</span>
         </template>
       </p>
+      <!-- Con mouse e tastiera: la legenda delle scorciatoie (i tasti li gestiscono DuelArena e questo componente) -->
+      <details v-if="duel?.pets && !ad" class="duel-panel__keys" :open="keysOpen" @toggle="keysOpen = ($event.target as HTMLDetailsElement).open">
+        <summary class="duel-panel__keys-toggle" aria-keyshortcuts="?">⌨ {{ $t('duel.keys.title') }}</summary>
+        <dl class="duel-panel__keys-list">
+          <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>{{ $t('duel.keys.vote') }}</dd></div>
+          <div><dt><kbd>{{ $t('duel.keySpace') }}</kbd></dt><dd>{{ $t('duel.keys.skip') }}</dd></div>
+          <div><dt><kbd>1</kbd> <kbd>2</kbd></dt><dd>{{ $t('duel.keys.zoom') }}</dd></div>
+          <div><dt><kbd>?</kbd></dt><dd>{{ $t('duel.keys.help') }}</dd></div>
+        </dl>
+      </details>
     </div>
     <Transition name="pop">
       <div v-if="toast" class="duel-panel__toast" role="status">{{ toast }}</div>
@@ -191,23 +211,63 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
     @media (hover: hover) and (pointer: fine) { @include mq(lg) { display: inline-block; } }
   }
 
-  // Le frecce solo con mouse (dove c'è una tastiera) e su schermi larghi
-  &__hint-keys {
+  // Legenda delle scorciatoie: solo con mouse (dove c'è una tastiera) e su schermi larghi.
+  // Si apre sopra il pulsante, senza spostare le card
+  &__keys {
     display: none;
+    position: relative;
 
-    @media (hover: hover) and (pointer: fine) { @include mq(lg) { display: inline; } }
+    @media (hover: hover) and (pointer: fine) { @include mq(lg) { display: block; } }
 
     kbd {
       display: inline-block;
-      min-width: 22px;
-      padding: 1px 5px;
+      min-width: 24px;
+      padding: 1px 6px;
       border-radius: 6px;
-      background: var(--surface);
+      background: var(--bg);
       box-shadow: inset 0 -2px 0 var(--line);
       color: var(--ink);
       font: inherit;
+      font-weight: 800;
       text-align: center;
     }
+  }
+
+  &__keys-toggle {
+    list-style: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 800;
+    padding: 6px 10px;
+    border-radius: $radius-pill;
+
+    &::-webkit-details-marker { display: none; }
+
+    &:hover, &:focus-visible { color: var(--ink); background: var(--surface); }
+  }
+
+  &__keys-list {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 8px);
+    z-index: 8;
+    margin: 0;
+    width: max-content;
+    max-width: min(440px, 90vw);
+    display: grid;
+    gap: $space-2;
+    padding: $space-4;
+    background: var(--surface);
+    border-radius: $radius-md;
+    box-shadow: 0 14px 30px -12px var(--shadow);
+    font-size: 14px;
+
+    div { display: grid; grid-template-columns: 88px 1fr; align-items: center; gap: $space-3; }
+
+    dt { white-space: nowrap; }
+
+    dd { margin: 0; color: var(--ink); }
   }
 
   @include mq(lg) { &__hint { font-size: 14px; } }

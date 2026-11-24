@@ -219,7 +219,6 @@
     "hint": "Trascina il tuo preferito {over} per farlo vincere",
     "hintOver": "sopra l'altro",
     "hintHold": "tieni premuto per ingrandire",
-    "hintKeys": "per scegliere",
     "keySpace": "Spazio",
     "makeWin": "Fai vincere {name}",
     "wins": "Vince!",
@@ -232,7 +231,14 @@
     "skip": "Salta",
     "choose": "Scegli",
     "chosen": "Scelto",
-    "orDrag": "Oppure trascina il preferito sopra l'altro"
+    "orDrag": "Oppure trascina il preferito sopra l'altro",
+    "keys": {
+      "title": "Scorciatoie",
+      "vote": "scegli quella a sinistra o a destra",
+      "skip": "salta questo duello",
+      "zoom": "tieni premuto per ingrandire la prima o la seconda foto",
+      "help": "mostra o nascondi questo elenco"
+    }
   },
   "upload": {
     "noClipboardPhoto": "Negli appunti non c'è una foto: copiala e riprova",

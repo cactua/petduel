@@ -219,7 +219,6 @@
     "hint": "Fais glisser ton préféré {over} pour le faire gagner",
     "hintOver": "sur l'autre",
     "hintHold": "appuie longuement pour agrandir",
-    "hintKeys": "pour choisir",
     "keySpace": "Espace",
     "makeWin": "Faire gagner {name}",
     "wins": "Gagne !",
@@ -232,7 +231,14 @@
     "skip": "Passer",
     "choose": "Choisir",
     "chosen": "Choisi",
-    "orDrag": "Ou fais glisser l'un sur l'autre"
+    "orDrag": "Ou fais glisser l'un sur l'autre",
+    "keys": {
+      "title": "Raccourcis",
+      "vote": "choisis celle de gauche ou de droite",
+      "skip": "passe ce duel",
+      "zoom": "maintiens pour agrandir la première ou la deuxième photo",
+      "help": "affiche ou masque cette liste"
+    }
   },
   "upload": {
     "noClipboardPhoto": "Il n'y a pas de photo dans le presse-papiers : copie-la et réessaie",

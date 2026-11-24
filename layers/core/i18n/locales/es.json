@@ -219,7 +219,6 @@
     "hint": "Arrastra tu favorito {over} para que gane",
     "hintOver": "encima del otro",
     "hintHold": "mantén pulsado para ampliar",
-    "hintKeys": "para elegir",
     "keySpace": "Espacio",
     "makeWin": "Haz ganar a {name}",
     "wins": "¡Gana!",
@@ -232,7 +231,14 @@
     "skip": "Saltar",
     "choose": "Elegir",
     "chosen": "Elegido",
-    "orDrag": "O arrastra uno encima del otro"
+    "orDrag": "O arrastra uno encima del otro",
+    "keys": {
+      "title": "Atajos",
+      "vote": "elige la de la izquierda o la de la derecha",
+      "skip": "salta este duelo",
+      "zoom": "mantén pulsado para ampliar la primera o la segunda foto",
+      "help": "muestra u oculta esta lista"
+    }
   },
   "upload": {
     "noClipboardPhoto": "No hay ninguna foto en el portapapeles: cópiala y vuelve a intentarlo",

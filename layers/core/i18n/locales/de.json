@@ -219,7 +219,6 @@
     "hint": "Zieh deinen Favoriten {over}, damit er gewinnt",
     "hintOver": "auf den anderen",
     "hintHold": "gedrückt halten zum Vergrößern",
-    "hintKeys": "zum Wählen",
     "keySpace": "Leertaste",
     "makeWin": "{name} gewinnen lassen",
     "wins": "Gewinnt!",
@@ -232,7 +231,14 @@
     "skip": "Überspringen",
     "choose": "Wählen",
     "chosen": "Gewählt",
-    "orDrag": "Oder zieh eins auf das andere"
+    "orDrag": "Oder zieh eins auf das andere",
+    "keys": {
+      "title": "Tastenkürzel",
+      "vote": "wähle das linke oder das rechte",
+      "skip": "dieses Duell überspringen",
+      "zoom": "gedrückt halten, um das erste oder zweite Foto zu vergrößern",
+      "help": "diese Liste ein- oder ausblenden"
+    }
   },
   "upload": {
     "noClipboardPhoto": "In der Zwischenablage ist kein Foto: Kopiere eins und versuch es erneut",

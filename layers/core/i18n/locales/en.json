@@ -219,7 +219,6 @@
     "hint": "Drag your favorite {over} to make it win",
     "hintOver": "onto the other one",
     "hintHold": "press and hold to zoom",
-    "hintKeys": "to pick",
     "keySpace": "Space",
     "makeWin": "Make {name} win",
     "wins": "Wins!",
@@ -232,7 +231,14 @@
     "skip": "Skip",
     "choose": "Pick",
     "chosen": "Picked",
-    "orDrag": "Or drag your favorite onto the other"
+    "orDrag": "Or drag your favorite onto the other",
+    "keys": {
+      "title": "Shortcuts",
+      "vote": "pick the left or the right one",
+      "skip": "skip this duel",
+      "zoom": "hold to enlarge the first or second photo",
+      "help": "show or hide this list"
+    }
   },
   "upload": {
     "noClipboardPhoto": "There's no photo on the clipboard: copy one and try again",
