@@ -23,7 +23,7 @@ export default defineEventHandler(async (event): Promise<Duel> => {
   ])
 
   const pair = pickPair(candidates, new Set(voted.map(v => v.key)), recent)
-  if (!pair) return { pets: null, token: null }
+  if (!pair) return { pets: null, token: null, viewer: userId ?? null }
 
   const [a, b] = pair
   const [images, owners] = await Promise.all([
@@ -40,5 +40,6 @@ export default defineEventHandler(async (event): Promise<Duel> => {
   return {
     pets: [toPet(a), toPet(b)],
     token: issueDuelToken(voterId, [a.id, b.id]),
+    viewer: userId ?? null,
   }
 })

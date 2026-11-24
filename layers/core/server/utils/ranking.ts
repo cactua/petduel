@@ -10,6 +10,7 @@ export function eloDelta(winnerElo: number, loserElo: number) {
 
 interface Candidate {
   id: number
+  ownerId: number
   species: string
   elo: number
   wins: number
@@ -18,12 +19,13 @@ interface Candidate {
 
 /**
  * Coppia "quasi casuale": stessa specie, Elo vicino, più spazio a chi ha pochi
- * duelli, mai una coppia già votata e quasi mai un pet visto da poco.
+ * duelli, mai una coppia già votata, mai due pet dello stesso proprietario (non si
+ * sfida da solo) e quasi mai un pet visto da poco.
  * O(n²) sui candidati: va bene finché i pet sono qualche migliaio.
  */
 export function pickPair<T extends Candidate>(pets: T[], voted: Set<string>, recent: number[]): [T, T] | null {
   const exposure = (p: T) => (recent.includes(p.id) ? 0.05 : 1) * (1 + 3 / (1 + p.wins + p.losses))
-  const rivalsOf = (a: T) => pets.filter(q => q.id !== a.id && q.species === a.species && !voted.has(pairKey(a.id, q.id)))
+  const rivalsOf = (a: T) => pets.filter(q => q.id !== a.id && q.ownerId !== a.ownerId && q.species === a.species && !voted.has(pairKey(a.id, q.id)))
 
   const a = weighted(pets.filter(p => rivalsOf(p).length > 0), exposure)
   if (!a) return null

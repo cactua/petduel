@@ -142,6 +142,9 @@ export interface Leaderboard {
 export interface Duel {
   pets: [PublicPet, PublicPet] | null
   token: string | null
+  // Per chi il server ha scelto la coppia (id dell'account, null senza accesso): se la pagina crede di essere
+  // un altro account (accesso o uscita in un'altra scheda) rilegge la sessione e chiede una coppia nuova
+  viewer?: number | null
 }
 
 export interface PetPhoto {

@@ -30,9 +30,9 @@ export default defineEventHandler(async (event): Promise<Duel> => {
   ])
 
   // In una sfida tutti competono con tutti, anche tra specie diverse se la sfida è aperta
-  const candidates = entries.map(e => ({ ...e.entry, species: 'sfida', row: e }))
+  const candidates = entries.map(e => ({ ...e.entry, ownerId: e.pet.ownerId, species: 'sfida', row: e }))
   const pair = pickPair(candidates, new Set(voted.map(v => v.key)), [])
-  if (!pair) return { pets: null, token: null }
+  if (!pair) return { pets: null, token: null, viewer: userId ?? null }
 
   const toPet = ({ row }: (typeof candidates)[number]): PublicPet => ({
     id: row.entry.id,
@@ -49,5 +49,6 @@ export default defineEventHandler(async (event): Promise<Duel> => {
   return {
     pets: [toPet(a), toPet(b)],
     token: issueDuelToken(voterId, [a.id, b.id], `c:${challenge.id}`),
+    viewer: userId ?? null,
   }
 })

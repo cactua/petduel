@@ -14,7 +14,7 @@ describe('Elo nascosto (serve solo ad abbinare i duelli)', () => {
 })
 
 describe('abbinamento dei duelli', () => {
-  const pet = (id: number, species: string, elo = 1500) => ({ id, species, elo, wins: 0, losses: 0 })
+  const pet = (id: number, species: string, elo = 1500, ownerId = id) => ({ id, ownerId, species, elo, wins: 0, losses: 0 })
 
   it('la chiave della coppia non dipende dall\'ordine', () => {
     expect(pairKey(3, 7)).toBe(pairKey(7, 3))
@@ -35,6 +35,16 @@ describe('abbinamento dei duelli', () => {
       const [a, b] = pickPair(pets, voted, [])!
       expect(pairKey(a.id, b.id)).toBe(pairKey(2, 3))
     }
+  })
+
+  it('non mette uno contro l\'altro due pet dello stesso proprietario', () => {
+    const pets = [pet(1, 'cane', 1500, 9), pet(2, 'cane', 1500, 9), pet(3, 'cane', 1500, 4)]
+    for (let i = 0; i < 50; i++) {
+      const [a, b] = pickPair(pets, new Set(), [])!
+      expect(a.ownerId).not.toBe(b.ownerId)
+    }
+    // Se restano solo pet dello stesso proprietario non c'è duello
+    expect(pickPair([pet(1, 'cane', 1500, 9), pet(2, 'cane', 1500, 9)], new Set(), [])).toBeNull()
   })
 
   it('senza coppie possibili non propone nulla', () => {

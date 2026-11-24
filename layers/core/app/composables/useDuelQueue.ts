@@ -17,7 +17,19 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
   const { t } = useI18n()
   const { haptics } = useA11yPrefs()
   const current = ref<Duel | null>(null)
-  const votes = ref(0)
+  // Voti dati in tutto, condivisi tra home e sfide: il cuore nella testata non riparte da zero cambiando pagina.
+  // Si chiedono al server una volta per visita e di nuovo se cambia l'account (anche entrando da /login,
+  // quando questa pagina non c'era): votesOf dice per chi è il numero, poi cresce a ogni voto
+  const { user, fetch: refreshSession } = useUserSession()
+  const voterKey = () => String(user.value?.id ?? 'anon')
+  const votes = useState('duel-votes', () => 0)
+  const votesOf = useState<string | null>('duel-votes-of', () => null)
+  const loadVotes = async () => {
+    const key = voterKey()
+    const { count } = await $fetch<{ count: number }>('/api/me/vote-count', { cache: 'no-store' })
+    votes.value = count
+    votesOf.value = key
+  }
   const toast = ref('')
   const hint = ref('')
   const failed = ref(false)
@@ -57,10 +69,22 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
     return $fetch<Duel>(duelUrl, { query, cache: 'no-store' })
   }
 
-  async function load() {
+  async function load(retried = false) {
     try {
       failed.value = false
-      current.value = await (next ?? fetchDuel())
+      // Il totale arriva insieme alla prima coppia: così la guida "trascina sulla foto" non compare a chi ha già votato
+      const [duel] = await Promise.all([next ?? fetchDuel(), votesOf.value === voterKey() ? null : loadVotes().catch(() => {})])
+      // La sessione è cambiata in un'altra scheda (accesso, uscita, altro account): la pagina mostrerebbe un account
+      // e il server sceglierebbe le coppie per un altro, comprese le tue foto. Si rilegge la sessione (testata e menu
+      // si aggiornano) e si ricomincia la coda, con il totale dei voti del nuovo votante. Una volta sola per giro
+      if (duel.viewer !== undefined && duel.viewer !== (user.value?.id ?? null)) {
+        next = null
+        current.value = null
+        await refreshSession()
+        if (retried || duel.viewer !== (user.value?.id ?? null)) throw new Error('sessione diversa dal server')
+        return await load(true)
+      }
+      current.value = duel
       next = current.value.pets ? fetchDuel() : null
     }
     catch {
@@ -78,7 +102,6 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
 
   // Il token di ogni coppia è legato al votante: entrando o uscendo dall'account cambia,
   // e le coppie già in pagina (anche quella precaricata) non si possono più votare
-  const { user } = useUserSession()
   watch(() => user.value?.id, (now, before) => {
     if (now !== before && (current.value || failed.value)) reset()
   })
