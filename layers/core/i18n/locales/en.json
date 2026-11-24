@@ -165,7 +165,11 @@
     "tooManyLogins": "Too many wrong attempts: try again in 15 minutes",
     "tooManySignups": "Many accounts were created from this network today: try again tomorrow",
     "linkExpired": "This link is no longer valid: it has expired or was already used. Ask for a new one.",
-    "mailUnavailable": "We can't send the email right now. Please try again later."
+    "mailUnavailable": "We can't send the email right now. Please try again later.",
+    "wrongCode": "Wrong or already used code. Try again with the new one.",
+    "totpRequired": "Two-step verification is required to use the admin panel.",
+    "totpAlreadyOn": "Two-step verification is already on.",
+    "totpNoSetup": "Start the setup again from the beginning."
   },
   "auth": {
     "registerTitle": "Create your account",
@@ -203,7 +207,9 @@
     "verifyResend": "Send it again",
     "verifySent": "Done: check your inbox (and spam).",
     "verifyHide": "Hide",
-    "ageConfirm": "I am at least 14 years old"
+    "ageConfirm": "I am at least 14 years old",
+    "totpCode": "Verification code",
+    "totpHelp": "The 6 digits from your authenticator app, or a recovery code."
   },
   "ad": {
     "label": "Advertisement",
@@ -842,5 +848,31 @@
     "resetText": "Hi {username},\n\nyou asked to change the password of your {site} account. To choose a new one, open this link:\n\n{link}\n\nThe link is valid for one hour and works only once. If it wasn't you, ignore this email: your password stays the same.\n\n{site}",
     "reportSubject": "Your report on {site}",
     "reportText": "Hi,\n\nwe're writing about the report you sent on {site}.\n\n{outcome}\n\nIf you disagree with the decision, you can reply to this email and tell us why.\n\n{site}"
+  },
+  "totp": {
+    "title": "Two-step verification",
+    "offText": "When you sign in, besides your password we ask for a code from an authenticator app on your phone (Google Authenticator, Microsoft Authenticator, 2FAS, Aegis…). A stolen password is not enough.",
+    "onText": "On: when you sign in we also ask for the app code. Recovery codes left: {n}.",
+    "requiredAdmin": "You are an admin: turn on two-step verification to use the panel.",
+    "enable": "Turn on",
+    "next": "Next",
+    "disable": "Turn off",
+    "renew": "New recovery codes",
+    "passwordLead": "First, confirm your password.",
+    "scanLead": "Scan the QR code with your authenticator app, then type the 6-digit code it shows.",
+    "qrLabel": "QR code to scan with the authenticator app",
+    "manual": "Can't scan it? Add an account manually in the app with this key:",
+    "openApp": "I'm on my phone: open the app",
+    "codeLabel": "6-digit code",
+    "codeOrRecovery": "App code or recovery code",
+    "codesTitle": "Recovery codes.",
+    "codesText": "Keep them somewhere safe (a password manager, a printed sheet): each works once and lets you in if you lose your phone. We won't show them again.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "codesSaved": "I saved them",
+    "enabledDone": "Two-step verification is on. Your other devices were signed out.",
+    "disableLead": "To turn it off you need your password and an app or recovery code.",
+    "renewLead": "Type an app code: the old recovery codes will stop working.",
+    "disabled": "Two-step verification turned off."
   }
 }

@@ -165,6 +165,12 @@ export default messages
     // Indirizzo pubblico del sito per i link nelle email (https://furduel.it). Da .env: NUXT_SITE_URL.
     // Non si prende dalla richiesta: un Host falso manderebbe il link per la nuova password a un altro sito
     siteUrl: "",
+    // Verifica in due passaggi: obbligatoria per gli admin (le API admin rispondono 403 finché non la
+    // attivano da /account). Da .env: NUXT_REQUIRE_ADMIN_TOTP=false per spegnere l'obbligo (sconsigliato).
+    // NUXT_TOTP_KEY cifra i segreti nel database; vuota = si usa NUXT_SESSION_PASSWORD (cambiandola,
+    // chi ha la verifica attiva deve entrare con un codice di emergenza e riattivarla)
+    requireAdminTotp: true,
+    totpKey: "",
     public: {
       // Chi gestisce il sito e l'email per la privacy, mostrati nelle pagine legali.
       // Da .env: NUXT_PUBLIC_LEGAL_OWNER, NUXT_PUBLIC_LEGAL_EMAIL

@@ -165,7 +165,11 @@
     "tooManyLogins": "Trop de tentatives incorrectes : réessaie dans 15 minutes",
     "tooManySignups": "Beaucoup de comptes ont été créés depuis ce réseau aujourd'hui : réessaie demain",
     "linkExpired": "Ce lien n'est plus valide : il a expiré ou a déjà été utilisé. Demandes-en un nouveau.",
-    "mailUnavailable": "Impossible d'envoyer l'e-mail pour le moment. Réessaie plus tard."
+    "mailUnavailable": "Impossible d'envoyer l'e-mail pour le moment. Réessaie plus tard.",
+    "wrongCode": "Code incorrect ou déjà utilisé. Réessaie avec le nouveau.",
+    "totpRequired": "La vérification en deux étapes est nécessaire pour utiliser le panneau admin.",
+    "totpAlreadyOn": "La vérification en deux étapes est déjà active.",
+    "totpNoSetup": "Recommence l'activation depuis le début."
   },
   "auth": {
     "registerTitle": "Crée ton compte",
@@ -203,7 +207,9 @@
     "verifyResend": "Le renvoyer",
     "verifySent": "C'est fait : regarde ta boîte mail (et les spams).",
     "verifyHide": "Masquer",
-    "ageConfirm": "J'ai au moins 14 ans"
+    "ageConfirm": "J'ai au moins 14 ans",
+    "totpCode": "Code de vérification",
+    "totpHelp": "Les 6 chiffres de ton application d'authentification, ou un code de secours."
   },
   "ad": {
     "label": "Publicité",
@@ -842,5 +848,31 @@
     "resetText": "Bonjour {username},\n\ntu as demandé à changer le mot de passe de ton compte {site}. Pour en choisir un nouveau, ouvre ce lien :\n\n{link}\n\nLe lien est valable une heure et ne fonctionne qu'une fois. Si ce n'était pas toi, ignore cet e-mail : ton mot de passe ne change pas.\n\n{site}",
     "reportSubject": "Ton signalement sur {site}",
     "reportText": "Bonjour,\n\nnous t'écrivons au sujet du signalement envoyé sur {site}.\n\n{outcome}\n\nSi tu n'es pas d'accord avec la décision, tu peux répondre à cet e-mail pour nous expliquer pourquoi.\n\n{site}"
+  },
+  "totp": {
+    "title": "Vérification en deux étapes",
+    "offText": "À la connexion, en plus du mot de passe, nous demandons un code de l'application d'authentification de ton téléphone (Google Authenticator, Microsoft Authenticator, 2FAS, Aegis…). Un mot de passe volé ne suffit pas.",
+    "onText": "Active : à la connexion nous demandons aussi le code de l'application. Codes de secours restants : {n}.",
+    "requiredAdmin": "Tu es admin : pour utiliser le panneau, active la vérification en deux étapes.",
+    "enable": "Activer",
+    "next": "Suivant",
+    "disable": "Désactiver",
+    "renew": "Nouveaux codes de secours",
+    "passwordLead": "Confirme d'abord ton mot de passe.",
+    "scanLead": "Scanne le QR code avec l'application d'authentification, puis saisis le code à 6 chiffres qu'elle affiche.",
+    "qrLabel": "QR code à scanner avec l'application d'authentification",
+    "manual": "Impossible de le scanner ? Dans l'application, ajoute un compte à la main avec cette clé :",
+    "openApp": "Je suis sur mon téléphone : ouvrir l'application",
+    "codeLabel": "Code à 6 chiffres",
+    "codeOrRecovery": "Code de l'application ou de secours",
+    "codesTitle": "Codes de secours.",
+    "codesText": "Garde-les en lieu sûr (gestionnaire de mots de passe, feuille imprimée) : chacun marche une fois et te permet d'entrer si tu perds ton téléphone. Nous ne les afficherons plus.",
+    "copy": "Copier",
+    "copied": "Copiés",
+    "codesSaved": "Je les ai enregistrés",
+    "enabledDone": "Vérification en deux étapes active. Tes autres appareils ont été déconnectés.",
+    "disableLead": "Pour la désactiver, il faut ton mot de passe et un code de l'application ou de secours.",
+    "renewLead": "Saisis un code de l'application : les anciens codes de secours ne marcheront plus.",
+    "disabled": "Vérification en deux étapes désactivée."
   }
 }

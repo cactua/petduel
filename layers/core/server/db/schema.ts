@@ -23,6 +23,13 @@ export const users = pgTable('users', {
   sessionVersion: integer('session_version').notNull().default(0),
   // Quando ha confermato l'email aprendo il link ricevuto; vuoto = non ancora confermata
   emailVerifiedAt: timestamp('email_verified_at', { withTimezone: true }),
+  // Verifica in due passaggi (app di autenticazione): segreto cifrato, quello in attesa di conferma durante
+  // l'attivazione, ultimo passo usato (un codice vale una volta) e impronte dei codici di emergenza rimasti
+  totpSecret: text('totp_secret'),
+  totpPendingSecret: text('totp_pending_secret'),
+  totpEnabledAt: timestamp('totp_enabled_at', { withTimezone: true }),
+  totpLastStep: integer('totp_last_step'),
+  totpRecovery: jsonb('totp_recovery').$type<string[]>().notNull().default([]),
   // Due righe su di sé e pronomi, mostrati sul profilo (facoltativi)
   bio: text('bio').notNull().default(''),
   pronouns: text('pronouns').notNull().default(''),
@@ -688,6 +695,11 @@ CREATE TABLE IF NOT EXISTS admin_log (
 );
 CREATE INDEX IF NOT EXISTS admin_log_created ON admin_log (created_at);
 ALTER TABLE reports ALTER COLUMN reporter_id DROP NOT NULL;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS totp_secret text;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS totp_pending_secret text;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS totp_enabled_at timestamptz;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS totp_last_step integer;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS totp_recovery jsonb NOT NULL DEFAULT '[]'::jsonb;
 ALTER TABLE reports ADD COLUMN IF NOT EXISTS reporter_email text;
 ALTER TABLE reports ADD COLUMN IF NOT EXISTS reporter_locale text;
 `

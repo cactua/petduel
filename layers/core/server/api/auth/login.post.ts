@@ -12,7 +12,7 @@ const MAX_FAILS_PER_NETWORK = 30
 export default defineEventHandler(async (event) => {
   const parsed = loginSchema.safeParse(await readBody(event))
   if (!parsed.success) throw createError({ statusCode: 400, statusMessage: INVALID })
-  const { email, password } = parsed.data
+  const { email, password, code } = parsed.data
 
   const accountKey = `login:account:${email}`
   const networkKey = `login:network:${networkOf(event)}`
@@ -31,8 +31,18 @@ export default defineEventHandler(async (event) => {
     await Promise.all([hitLimit(accountKey, WINDOW_MS), hitLimit(networkKey, WINDOW_MS)])
     throw createError({ statusCode: 401, statusMessage: INVALID })
   }
-  await clearLimit(accountKey)
   if (user.bannedAt) throw createError({ statusCode: 403, statusMessage: 'errors.banned' })
+
+  // Verifica in due passaggi: password giusta, ora serve il codice. I codici sbagliati contano
+  // come password sbagliate, così non si possono provare tutti
+  if (user.totpEnabledAt) {
+    if (!code) return { totp: true }
+    if (!await consumeSecondFactor(user, code)) {
+      await Promise.all([hitLimit(accountKey, WINDOW_MS), hitLimit(networkKey, WINDOW_MS)])
+      throw createError({ statusCode: 401, statusMessage: 'errors.wrongCode' })
+    }
+  }
+  await clearLimit(accountKey)
 
   if (passwordNeedsReHash(user.passwordHash)) {
     await db.update(users).set({ passwordHash: await hashPassword(password) }).where(eq(users.id, user.id))

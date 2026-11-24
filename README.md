@@ -43,6 +43,7 @@ npm run upload-to-r2 -- furry
 1. Registrati dal sito.
 2. Ferma il server e lancia `npm run make-admin -- <tuo-username>` (per un altro sito: `npm run make-admin -- <tuo-username> <sito>`).
 3. Riavvia, esci e rientra: compare la voce **Moderazione** (su mobile si apre dal profilo, insieme a **Gestisci sfide**).
+4. Il pannello si apre solo con la **verifica in due passaggi**: attivala da `/account` con un'app di autenticazione (Google Authenticator, 2FAS, Aegis…) e salva i 10 codici di emergenza. Se perdi telefono e codici, a server fermo: `UPDATE users SET totp_secret = NULL, totp_enabled_at = NULL, totp_recovery = '[]' WHERE username = '<tuo-username>';` e riattivala.
 
 ## Come funziona
 
@@ -75,8 +76,9 @@ npm run upload-to-r2 -- furry
 | Password rubate dal DB | Hash scrypt (`nuxt-auth-utils`), mai salvate in chiaro |
 | Brute force sul login | Al massimo 8 tentativi sbagliati ogni 15 minuti per account e 30 per rete, contati nel database ([server/utils/rateLimit.ts](layers/core/server/utils/rateLimit.ts)); in più 10 richieste ogni 15 minuti per IP su `/api/auth/*`. Stesso messaggio e stesso tempo di risposta che l'email esista o no. Al massimo 8 account nuovi al giorno dalla stessa rete |
 | Furto di sessione | Cookie cifrato, `HttpOnly`, `SameSite=Lax`, `Secure` in produzione. In `/account` si cambia la password o si esce dagli altri dispositivi: le altre sessioni smettono subito di valere (`users.session_version`). Anche la conferma della password dentro l'account ha un limite di tentativi |
+| Password di un admin rubata | Verifica in due passaggi obbligatoria per gli admin: le API admin rispondono 403 finché non è attiva, e attivarla chiude le altre sessioni. Codici TOTP (RFC 6238) usabili una volta sola, segreto cifrato nel database con `NUXT_TOTP_KEY` (o la chiave delle sessioni), 10 codici di emergenza salvati come impronte ([server/utils/totp.ts](layers/core/server/utils/totp.ts)). I codici sbagliati contano come password sbagliate. Facoltativa per tutti gli altri |
 | CSRF | Ogni POST/DELETE su `/api` deve avere `Origin` uguale al sito ([server/middleware/origin.ts](layers/core/server/middleware/origin.ts)) |
-| XSS | Vue fa l'escape di tutto, niente `v-html`; CSP con nonce, `X-Frame-Options: DENY`, `nosniff` (`nuxt-security`) |
+| XSS | Vue fa l'escape di tutto, `v-html` solo per il QR della verifica in due passaggi (SVG fatto dal server); CSP con nonce, `X-Frame-Options: DENY`, `nosniff` (`nuxt-security`) |
 | SQL injection | Solo query parametrizzate (Drizzle) |
 | File malevoli | Si accettano solo JPEG, PNG, WebP e HEIC/AVIF, riconosciuti dai primi byte prima di aprirli: SVG, TIFF, GIF e PDF non arrivano mai ai decoder ([server/utils/uploadFormat.ts](layers/core/server/utils/uploadFormat.ts)). Poi `sharp` decodifica e ricodifica in WebP: metadati (GPS compreso) e payload nascosti spariscono. Limite 10 MB e 50 megapixel |
 | Foto non approvate | Servite solo a proprietario e moderatori, mai in cache pubblica |
@@ -85,7 +87,7 @@ npm run upload-to-r2 -- furry
 | Brigate di voti | Account con meno di 3 giorni pesano metà; massimo 400 voti al giorno per account e 100 senza account per rete; più di 10 voti in un'ora per lo stesso pet dalla stessa rete non contano e finiscono tra i "Voti sospetti" in `/admin/reports`. I contatori stanno nel database: valgono dopo un riavvio e con più server |
 | Abusi in generale | Rate limit globale per IP (in memoria: contro le raffiche vere serve Cloudflare), limite dimensione richieste; le richieste a `/api` senza `Content-Length` sono rifiutate, così il limite non si aggira ([server/middleware/body-length.ts](layers/core/server/middleware/body-length.ts)) |
 
-Da fare prima di andare online: HTTPS, Postgres gestito con backup, verifica email e recupero password (serve un servizio email), Cloudflare davanti al sito, `npm audit` periodico.
+Da fare prima di andare online: HTTPS, Postgres gestito con backup, un servizio email per verifica dell'indirizzo e recupero password (`NUXT_SMTP_URL`), verifica in due passaggi attiva sugli account admin, Cloudflare davanti al sito, `npm audit` periodico.
 
 **Proxy davanti al server.** I limiti per rete usano l'indirizzo della connessione. Dietro un proxy va detto nel `.env` da dove prendere l'IP vero: `NUXT_CLIENT_IP_HEADER` (es. `cf-connecting-ip` con Cloudflare) oppure `NUXT_TRUSTED_PROXY_HOPS` (quanti proxy aggiungono il loro pezzo in fondo a `X-Forwarded-For`). Il server deve essere raggiungibile solo dal proxy, che riscrive quegli header: altrimenti chiunque potrebbe mandarli falsi. Il controllo CSRF confronta `Origin` con `X-Forwarded-Host`, che va quindi riscritto dal proxy.
 

@@ -165,7 +165,11 @@
     "tooManyLogins": "Troppi tentativi sbagliati: riprova tra 15 minuti",
     "tooManySignups": "Da questa rete sono stati creati molti account oggi: riprova domani",
     "linkExpired": "Il link non è più valido: è scaduto o è già stato usato. Chiedine uno nuovo.",
-    "mailUnavailable": "Non riesco a mandare l'email in questo momento. Riprova più tardi."
+    "mailUnavailable": "Non riesco a mandare l'email in questo momento. Riprova più tardi.",
+    "wrongCode": "Codice sbagliato o già usato. Riprova con quello nuovo.",
+    "totpRequired": "Per usare il pannello admin serve la verifica in due passaggi.",
+    "totpAlreadyOn": "La verifica in due passaggi è già attiva.",
+    "totpNoSetup": "Ricomincia l'attivazione dall'inizio."
   },
   "auth": {
     "registerTitle": "Crea il tuo account",
@@ -203,7 +207,9 @@
     "verifyResend": "Mandalo di nuovo",
     "verifySent": "Fatto: controlla la posta (anche lo spam).",
     "verifyHide": "Nascondi",
-    "ageConfirm": "Ho almeno 14 anni"
+    "ageConfirm": "Ho almeno 14 anni",
+    "totpCode": "Codice di verifica",
+    "totpHelp": "Le 6 cifre dell'app di autenticazione, oppure un codice di emergenza."
   },
   "ad": {
     "label": "Pubblicità",
@@ -842,5 +848,31 @@
     "resetText": "Ciao {username},\n\nhai chiesto di cambiare la password del tuo account su {site}. Per sceglierne una nuova apri questo link:\n\n{link}\n\nIl link vale un'ora e si può usare una volta sola. Se non sei stato tu, ignora questa email: la password resta quella di prima.\n\n{site}",
     "reportSubject": "La tua segnalazione su {site}",
     "reportText": "Ciao,\n\nti scriviamo per la segnalazione che hai inviato su {site}.\n\n{outcome}\n\nSe non sei d'accordo con la decisione puoi rispondere a questa email spiegandoci perché.\n\n{site}"
+  },
+  "totp": {
+    "title": "Verifica in due passaggi",
+    "offText": "Quando entri, oltre alla password ti chiediamo un codice dall'app di autenticazione del telefono (Google Authenticator, Microsoft Authenticator, 2FAS, Aegis…). Così una password rubata non basta.",
+    "onText": "Attiva: quando entri ti chiediamo anche il codice dell'app. Codici di emergenza rimasti: {n}.",
+    "requiredAdmin": "Sei admin: per usare il pannello devi attivare la verifica in due passaggi.",
+    "enable": "Attiva",
+    "next": "Avanti",
+    "disable": "Spegni",
+    "renew": "Nuovi codici di emergenza",
+    "passwordLead": "Prima conferma la tua password.",
+    "scanLead": "Inquadra il QR con l'app di autenticazione, poi scrivi il codice di 6 cifre che ti mostra.",
+    "qrLabel": "QR code da inquadrare con l'app di autenticazione",
+    "manual": "Non puoi inquadrarlo? Nell'app aggiungi un account a mano con questa chiave:",
+    "openApp": "Sono sul telefono: apri l'app",
+    "codeLabel": "Codice di 6 cifre",
+    "codeOrRecovery": "Codice dell'app o di emergenza",
+    "codesTitle": "Codici di emergenza.",
+    "codesText": "Salvali in un posto sicuro (un gestore di password, un foglio stampato): ognuno vale una volta e ti fa entrare se perdi il telefono. Non li mostreremo più.",
+    "copy": "Copia",
+    "copied": "Copiati",
+    "codesSaved": "Li ho salvati",
+    "enabledDone": "Verifica in due passaggi attiva. Gli altri dispositivi sono stati disconnessi.",
+    "disableLead": "Per spegnerla servono la password e un codice dell'app o di emergenza.",
+    "renewLead": "Scrivi un codice dell'app: i codici di emergenza vecchi non varranno più.",
+    "disabled": "Verifica in due passaggi spenta."
   }
 }

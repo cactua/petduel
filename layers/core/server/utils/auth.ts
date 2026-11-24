@@ -18,6 +18,9 @@ export async function requireUser(event: H3Event) {
 export async function requireAdmin(event: H3Event) {
   const user = await requireUser(event)
   if (user.role !== 'admin') throw createError({ statusCode: 403, statusMessage: 'errors.adminOnly' })
+  // Chi gestisce il sito entra solo con la verifica in due passaggi: una password rubata non basta.
+  // Attivarla chiude le altre sessioni, quindi ogni sessione con totp è passata dal codice
+  if (adminNeedsTotp() && !user.totp) throw createError({ statusCode: 403, statusMessage: 'errors.totpRequired' })
   // Per il registro delle azioni admin (plugin adminLog)
   event.context.admin = { id: user.id, username: user.username }
   return user
@@ -27,7 +30,7 @@ export async function loadSessionUser(user: { id: number, username: string, sess
   const db = await useDb()
   const [row] = await db.select({
     id: users.id, username: users.username, role: users.role, bannedAt: users.bannedAt, rulesAcceptedAt: users.rulesAcceptedAt,
-    sessionVersion: users.sessionVersion, emailVerifiedAt: users.emailVerifiedAt,
+    sessionVersion: users.sessionVersion, emailVerifiedAt: users.emailVerifiedAt, totpEnabledAt: users.totpEnabledAt,
     // Sessione chiusa con "Esci": il cookie non vale più neanche se qualcuno ne aveva una copia
     revoked: user.sid
       ? sql<boolean>`exists (select 1 from ${revokedSessions} where ${revokedSessions.sid} = ${user.sid})`
@@ -36,7 +39,7 @@ export async function loadSessionUser(user: { id: number, username: string, sess
   // Un account sospeso perde subito la sessione, e così una sessione chiusa da "Esci da tutti i dispositivi"
   if (!row || row.username !== user.username || row.bannedAt) return null
   if ((user.sessionVersion ?? 0) !== row.sessionVersion || row.revoked) return null
-  return { id: row.id, username: row.username, role: row.role, needsRules: !row.rulesAcceptedAt, sessionVersion: row.sessionVersion, emailVerified: !!row.emailVerifiedAt, sid: user.sid }
+  return { id: row.id, username: row.username, role: row.role, needsRules: !row.rulesAcceptedAt, sessionVersion: row.sessionVersion, emailVerified: !!row.emailVerifiedAt, totp: !!row.totpEnabledAt, sid: user.sid }
 }
 
 /**
@@ -59,7 +62,7 @@ export async function isAdmin(userId: number) {
 export async function startSession(event: H3Event, user: User) {
   await replaceUserSession(event, {
     // sid: codice di questa sessione, per poterla chiudere da sola all'uscita (non serve ad accedere)
-    user: { id: user.id, username: user.username, role: user.role, needsRules: !user.rulesAcceptedAt, sessionVersion: user.sessionVersion, emailVerified: !!user.emailVerifiedAt, sid: randomUUID() },
+    user: { id: user.id, username: user.username, role: user.role, needsRules: !user.rulesAcceptedAt, sessionVersion: user.sessionVersion, emailVerified: !!user.emailVerifiedAt, totp: !!user.totpEnabledAt, sid: randomUUID() },
     loggedInAt: Date.now(),
     voterId: `u:${user.id}`,
     recent: [],

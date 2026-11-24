@@ -165,7 +165,11 @@
     "tooManyLogins": "Zu viele falsche Versuche: versuch es in 15 Minuten wieder",
     "tooManySignups": "Aus diesem Netzwerk wurden heute viele Konten erstellt: versuch es morgen wieder",
     "linkExpired": "Dieser Link ist nicht mehr gültig: Er ist abgelaufen oder wurde schon benutzt. Fordere einen neuen an.",
-    "mailUnavailable": "Die E-Mail kann gerade nicht gesendet werden. Versuche es später noch einmal."
+    "mailUnavailable": "Die E-Mail kann gerade nicht gesendet werden. Versuche es später noch einmal.",
+    "wrongCode": "Falscher oder bereits benutzter Code. Versuche es mit dem neuen.",
+    "totpRequired": "Für das Admin-Panel ist die Bestätigung in zwei Schritten nötig.",
+    "totpAlreadyOn": "Die Bestätigung in zwei Schritten ist schon aktiv.",
+    "totpNoSetup": "Starte die Einrichtung noch einmal von vorn."
   },
   "auth": {
     "registerTitle": "Erstelle dein Konto",
@@ -203,7 +207,9 @@
     "verifyResend": "Nochmal schicken",
     "verifySent": "Erledigt: Schau in dein Postfach (auch im Spam).",
     "verifyHide": "Ausblenden",
-    "ageConfirm": "Ich bin mindestens 14 Jahre alt"
+    "ageConfirm": "Ich bin mindestens 14 Jahre alt",
+    "totpCode": "Bestätigungscode",
+    "totpHelp": "Die 6 Ziffern aus deiner Authenticator-App oder ein Notfallcode."
   },
   "ad": {
     "label": "Werbung",
@@ -842,5 +848,31 @@
     "resetText": "Hallo {username},\n\ndu hast darum gebeten, das Passwort deines Kontos bei {site} zu ändern. Um ein neues zu wählen, öffne diesen Link:\n\n{link}\n\nDer Link gilt eine Stunde und funktioniert nur einmal. Wenn du das nicht warst, ignoriere diese E-Mail: Dein Passwort bleibt unverändert.\n\n{site}",
     "reportSubject": "Deine Meldung bei {site}",
     "reportText": "Hallo,\n\nwir schreiben dir wegen der Meldung, die du bei {site} geschickt hast.\n\n{outcome}\n\nWenn du mit der Entscheidung nicht einverstanden bist, antworte auf diese E-Mail und sag uns warum.\n\n{site}"
+  },
+  "totp": {
+    "title": "Bestätigung in zwei Schritten",
+    "offText": "Beim Anmelden fragen wir außer dem Passwort nach einem Code aus einer Authenticator-App auf deinem Handy (Google Authenticator, Microsoft Authenticator, 2FAS, Aegis…). So reicht ein gestohlenes Passwort nicht.",
+    "onText": "Aktiv: Beim Anmelden fragen wir auch nach dem App-Code. Übrige Notfallcodes: {n}.",
+    "requiredAdmin": "Du bist Admin: Für das Panel musst du die Bestätigung in zwei Schritten einschalten.",
+    "enable": "Einschalten",
+    "next": "Weiter",
+    "disable": "Ausschalten",
+    "renew": "Neue Notfallcodes",
+    "passwordLead": "Bestätige zuerst dein Passwort.",
+    "scanLead": "Scanne den QR-Code mit der Authenticator-App und gib den 6-stelligen Code ein, den sie zeigt.",
+    "qrLabel": "QR-Code zum Scannen mit der Authenticator-App",
+    "manual": "Scannen klappt nicht? Füge in der App ein Konto manuell mit diesem Schlüssel hinzu:",
+    "openApp": "Ich bin am Handy: App öffnen",
+    "codeLabel": "6-stelliger Code",
+    "codeOrRecovery": "App-Code oder Notfallcode",
+    "codesTitle": "Notfallcodes.",
+    "codesText": "Bewahre sie sicher auf (Passwort-Manager, ausgedrucktes Blatt): Jeder gilt einmal und lässt dich rein, wenn du dein Handy verlierst. Wir zeigen sie nicht noch einmal.",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "codesSaved": "Ich habe sie gespeichert",
+    "enabledDone": "Bestätigung in zwei Schritten aktiv. Deine anderen Geräte wurden abgemeldet.",
+    "disableLead": "Zum Ausschalten brauchst du dein Passwort und einen App- oder Notfallcode.",
+    "renewLead": "Gib einen App-Code ein: Die alten Notfallcodes gelten dann nicht mehr.",
+    "disabled": "Bestätigung in zwei Schritten ausgeschaltet."
   }
 }

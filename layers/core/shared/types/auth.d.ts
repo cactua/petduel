@@ -10,6 +10,8 @@ declare module '#auth-utils' {
     sessionVersion?: number
     // Ha confermato l'email aprendo il link ricevuto. Assente nelle sessioni aperte prima: si aggiorna alla prossima lettura
     emailVerified?: boolean
+    // Ha attivato la verifica in due passaggi (obbligatoria per gli admin)
+    totp?: boolean
     // Codice della sessione, per chiuderla all'uscita. Assente nelle sessioni aperte prima: valgono fino alla scadenza
     sid?: string
   }

@@ -3,7 +3,7 @@ definePageMeta({ middleware: 'admin' })
 
 // Cornice comune di tutte le pagine admin: menu con i numeri di ciò che aspetta.
 // Le pagine figlie lo aggiornano con refreshNuxtData('admin-todo') dopo un'azione
-const { data: todo, refresh } = await useFetch<{ photos: number, shelters: number, reports: number }>('/api/admin/todo', { key: 'admin-todo' })
+const { data: todo, refresh, error } = await useFetch<{ photos: number, shelters: number, reports: number }>('/api/admin/todo', { key: 'admin-todo' })
 const route = useRoute()
 watch(() => route.path, () => refresh())
 const { features } = useAppConfig()
@@ -18,11 +18,18 @@ const items = computed(() => [
   { to: '/admin/ads', label: 'Pubblicità', emoji: '📣' },
   { to: '/admin/log', label: 'Registro', emoji: '📜' },
 ])
+// Senza verifica in due passaggi le API admin rispondono 403: si spiega dove attivarla
+const needsTotp = computed(() => (error.value?.data as { statusMessage?: string } | undefined)?.statusMessage === 'errors.totpRequired')
 const isActive = (to: string, exact?: boolean) => (exact ? route.path === to : route.path.startsWith(to))
 </script>
 
 <template>
-  <div class="admin-shell">
+  <div v-if="needsTotp" class="admin-shell__totp" role="alert">
+    <h1 class="admin-shell__totp-title">🔐 Serve la verifica in due passaggi</h1>
+    <p>Per usare il pannello admin bisogna attivarla: così una password rubata non basta per entrare.</p>
+    <NuxtLink to="/account#two-factor" class="btn btn--primary">Attivala dal tuo account</NuxtLink>
+  </div>
+  <div v-else class="admin-shell">
     <nav class="admin-shell__menu" aria-label="Sezioni admin">
       <NuxtLink
         v-for="i in items" :key="i.to" :to="i.to" class="admin-shell__link" :class="{ 'is-active': isActive(i.to, i.exact) }"
@@ -91,5 +98,19 @@ const isActive = (to: string, exact?: boolean) => (exact ? route.path === to : r
   }
 
   &__content { min-width: 0; flex: 1; }
+
+  &__totp {
+    @include stack($space-4);
+    align-items: flex-start;
+    max-width: 560px;
+    padding: 24px;
+    border-radius: 20px;
+    background: var(--surface);
+    box-shadow: $shadow-flat;
+
+    p { margin: 0; line-height: 1.5; }
+  }
+
+  &__totp-title { margin: 0; font-size: 22px; }
 }
 </style>

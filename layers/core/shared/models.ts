@@ -81,6 +81,8 @@ export const signupSchema = registerSchema.extend({
 export const loginSchema = z.object({
   email: emailSchema,
   password: z.string().min(1).max(128),
+  // Codice dell'app di autenticazione o di emergenza, chiesto dopo la password a chi ha la verifica in due passaggi
+  code: z.string().trim().max(20).optional(),
 })
 /** Razza e città si chiedono solo se il sito le usa (breedAndCity in site.config.ts) */
 export const HAS_BREED_CITY = site.breedAndCity !== false

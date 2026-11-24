@@ -165,7 +165,11 @@
     "tooManyLogins": "Demasiados intentos fallidos: vuelve a intentarlo en 15 minutos",
     "tooManySignups": "Hoy se han creado muchas cuentas desde esta red: inténtalo mañana",
     "linkExpired": "Este enlace ya no es válido: ha caducado o ya se ha usado. Pide uno nuevo.",
-    "mailUnavailable": "Ahora mismo no podemos enviar el correo. Inténtalo más tarde."
+    "mailUnavailable": "Ahora mismo no podemos enviar el correo. Inténtalo más tarde.",
+    "wrongCode": "Código incorrecto o ya usado. Inténtalo con el nuevo.",
+    "totpRequired": "Para usar el panel de admin hace falta la verificación en dos pasos.",
+    "totpAlreadyOn": "La verificación en dos pasos ya está activa.",
+    "totpNoSetup": "Vuelve a empezar la activación desde el principio."
   },
   "auth": {
     "registerTitle": "Crea tu cuenta",
@@ -203,7 +207,9 @@
     "verifyResend": "Enviarlo otra vez",
     "verifySent": "Hecho: revisa tu correo (también el spam).",
     "verifyHide": "Ocultar",
-    "ageConfirm": "Tengo al menos 14 años"
+    "ageConfirm": "Tengo al menos 14 años",
+    "totpCode": "Código de verificación",
+    "totpHelp": "Los 6 dígitos de tu app de autenticación, o un código de emergencia."
   },
   "ad": {
     "label": "Publicidad",
@@ -842,5 +848,31 @@
     "resetText": "Hola {username}:\n\nhas pedido cambiar la contraseña de tu cuenta en {site}. Para elegir una nueva, abre este enlace:\n\n{link}\n\nEl enlace vale una hora y solo se puede usar una vez. Si no has sido tú, ignora este correo: tu contraseña no cambia.\n\n{site}",
     "reportSubject": "Tu denuncia en {site}",
     "reportText": "Hola:\n\nte escribimos por la denuncia que enviaste en {site}.\n\n{outcome}\n\nSi no estás de acuerdo con la decisión, puedes responder a este correo y explicarnos por qué.\n\n{site}"
+  },
+  "totp": {
+    "title": "Verificación en dos pasos",
+    "offText": "Al entrar, además de la contraseña te pedimos un código de la app de autenticación del móvil (Google Authenticator, Microsoft Authenticator, 2FAS, Aegis…). Así una contraseña robada no basta.",
+    "onText": "Activa: al entrar también te pedimos el código de la app. Códigos de emergencia restantes: {n}.",
+    "requiredAdmin": "Eres admin: para usar el panel tienes que activar la verificación en dos pasos.",
+    "enable": "Activar",
+    "next": "Siguiente",
+    "disable": "Desactivar",
+    "renew": "Nuevos códigos de emergencia",
+    "passwordLead": "Primero confirma tu contraseña.",
+    "scanLead": "Escanea el QR con la app de autenticación y escribe el código de 6 cifras que te muestra.",
+    "qrLabel": "Código QR para escanear con la app de autenticación",
+    "manual": "¿No puedes escanearlo? En la app añade una cuenta a mano con esta clave:",
+    "openApp": "Estoy en el móvil: abrir la app",
+    "codeLabel": "Código de 6 cifras",
+    "codeOrRecovery": "Código de la app o de emergencia",
+    "codesTitle": "Códigos de emergencia.",
+    "codesText": "Guárdalos en un lugar seguro (un gestor de contraseñas, una hoja impresa): cada uno vale una vez y te deja entrar si pierdes el móvil. No los volveremos a mostrar.",
+    "copy": "Copiar",
+    "copied": "Copiados",
+    "codesSaved": "Los he guardado",
+    "enabledDone": "Verificación en dos pasos activa. Se ha cerrado la sesión en tus otros dispositivos.",
+    "disableLead": "Para desactivarla necesitas la contraseña y un código de la app o de emergencia.",
+    "renewLead": "Escribe un código de la app: los códigos de emergencia anteriores dejarán de valer.",
+    "disabled": "Verificación en dos pasos desactivada."
   }
 }

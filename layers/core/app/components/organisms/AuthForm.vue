@@ -6,7 +6,10 @@ const props = defineProps<{ mode: 'login' | 'register' }>()
 const route = useRoute()
 const { locale } = useI18n()
 const { fetch: refreshSession } = useUserSession()
-const form = reactive({ email: '', username: '', password: '', rules: false, age: false })
+const form = reactive({ email: '', username: '', password: '', rules: false, age: false, code: '' })
+// Password giusta e verifica in due passaggi attiva: si chiede il codice dell'app
+const askCode = ref(false)
+const codeInput = ref<HTMLInputElement>()
 const error = ref('')
 const sending = ref(false)
 const isRegister = computed(() => props.mode === 'register')
@@ -21,7 +24,13 @@ async function submit() {
   sending.value = true
   error.value = ''
   try {
-    await $fetch(isRegister.value ? '/api/auth/register' : '/api/auth/login', { method: 'POST', body: { ...check.data, locale: locale.value } })
+    const res = await $fetch<{ totp?: boolean }>(isRegister.value ? '/api/auth/register' : '/api/auth/login', { method: 'POST', body: { ...check.data, locale: locale.value } })
+    if (res?.totp) {
+      askCode.value = true
+      await nextTick()
+      codeInput.value?.focus()
+      return
+    }
     await refreshSession()
     await navigateTo(safeRedirect(route.query.redirect))
   }
@@ -59,6 +68,15 @@ async function submit() {
       >
       <small v-if="isRegister" class="auth-form__help">{{ $t('auth.passwordHelp') }}</small>
       <NuxtLink v-else to="/forgot-password" class="auth-form__forgot">{{ $t('auth.forgotLink') }}</NuxtLink>
+
+      <template v-if="askCode">
+        <label for="totp-code" class="label auth-form__label">{{ $t('auth.totpCode') }}</label>
+        <input
+          id="totp-code" ref="codeInput" v-model="form.code" class="input auth-form__input"
+          autocomplete="one-time-code" maxlength="12" required
+        >
+        <small class="auth-form__help">{{ $t('auth.totpHelp') }}</small>
+      </template>
 
       <label v-if="isRegister" class="auth-form__rules">
         <input v-model="form.rules" type="checkbox" class="auth-form__rules-check">
