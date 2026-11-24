@@ -3,6 +3,7 @@ import { entryUrl, TOP_RANK, type ChallengeTranslations, type Species } from '#s
 import { notifications } from '../db/schema'
 import { ensureChallenges } from './challenges'
 import { useDb } from './db'
+import { sendPush } from './push'
 
 const TZ = 'Europe/Rome'
 // Risultati delle sfide finite da non più di tanti giorni
@@ -19,7 +20,12 @@ const lastRefresh = new Map<number, number>()
  */
 export async function notify(userId: number, key: string, n: { emoji: string, text: string, params: Record<string, string | number>, link?: string | null }) {
   const db = await useDb()
-  await db.insert(notifications).values({ userId, key, emoji: n.emoji, text: n.text, params: JSON.stringify(n.params), link: n.link ?? null }).onConflictDoNothing()
+  const [row] = await db.insert(notifications)
+    .values({ userId, key, emoji: n.emoji, text: n.text, params: JSON.stringify(n.params), link: n.link ?? null })
+    .onConflictDoNothing()
+    .returning({ id: notifications.id })
+  // Solo gli avvisi nuovi arrivano anche come notifica push; senza aspettarla
+  if (row) sendPush(userId, { key, emoji: n.emoji, text: n.text, params: JSON.stringify(n.params), link: n.link ?? null }).catch(e => console.error('[push]', e))
 }
 
 const place = (rank: number) => (rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '🏁')

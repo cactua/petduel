@@ -311,6 +311,18 @@ export const settings = pgTable('settings', {
   value: text('value').notNull(),
 })
 
+// Dispositivi su cui mandare le notifiche push (uno per browser o app installata).
+// locale: la lingua scelta quando si sono attivate, per scrivere la notifica senza aprire il sito
+export const pushSubscriptions = pgTable('push_subscriptions', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  endpoint: text('endpoint').notNull().unique(),
+  p256dh: text('p256dh').notNull(),
+  auth: text('auth').notNull(),
+  locale: text('locale').notNull().default('it'),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+})
+
 export type Pet = typeof pets.$inferSelect
 export type Challenge = typeof challenges.$inferSelect
 export type User = typeof users.$inferSelect
@@ -601,4 +613,14 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_image text;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_crop jsonb;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS banner_image text;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS banner_crop jsonb;
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+  id serial PRIMARY KEY,
+  user_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  endpoint text NOT NULL UNIQUE,
+  p256dh text NOT NULL,
+  auth text NOT NULL,
+  locale text NOT NULL DEFAULT 'it',
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS push_subscriptions_user ON push_subscriptions (user_id);
 `

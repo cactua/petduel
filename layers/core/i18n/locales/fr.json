@@ -781,5 +781,18 @@
       "body": "Une phrase sur ce que vous proposez et pourquoi ça vaut le coup.",
       "cta": "En savoir plus"
     }
+  },
+  "push": {
+    "title": "Notifications sur l'appareil",
+    "offer": "Reçois les alertes (photos approuvées, résultats des défis, cœurs de la semaine) même quand le site est fermé.",
+    "enable": "Activer les notifications",
+    "disable": "Désactiver sur cet appareil",
+    "on": "Activées sur cet appareil.",
+    "denied": "Les notifications sont bloquées pour ce site : réactive-les dans les réglages du navigateur.",
+    "iosInstall": "Sur iPhone, les notifications n'arrivent que dans l'app : touche Partager, puis « Sur l'écran d'accueil », et active-les depuis là.",
+    "unsupported": "Ce navigateur ne reçoit pas de notifications.",
+    "failed": "Impossible de les activer. Réessaie dans un instant.",
+    "install": "Installer l'app",
+    "unavailable": "Les notifications ne sont pas disponibles sur ce site."
   }
 }

@@ -72,6 +72,7 @@ const ago = timeAgo
           </li>
         </ul>
         <p v-else class="notification-bell__empty">{{ $t('notif.empty') }}</p>
+        <PushToggle compact />
       </div>
     </Transition>
   </div>

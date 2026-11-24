@@ -7,12 +7,19 @@ const querySchema = z.object({
 })
 
 // /card/<id>.png?format=story|og&challenge=<slug>: immagine da condividere, solo per pet pubblici
+// /card/site.png: anteprima della home e delle pagine senza un'immagine propria
 export default defineEventHandler(async (event) => {
-  const match = /^(\d{1,9})\.png$/.exec(getRouterParam(event, 'name') ?? '')
-  if (!match) throw createError({ statusCode: 404 })
-  const { format, challenge } = await getValidatedQuery(event, querySchema.parse)
+  const name = getRouterParam(event, 'name') ?? ''
+  const match = /^(\d{1,9})\.png$/.exec(name)
+  if (!match && name !== 'site.png') throw createError({ statusCode: 404 })
+  const host = getRequestURL(event).host
 
-  const png = await renderPetCard(Number(match[1]), format, getRequestURL(event).host, challenge)
+  let png: Buffer
+  if (match) {
+    const { format, challenge } = await getValidatedQuery(event, querySchema.parse)
+    png = await renderPetCard(Number(match[1]), format, host, challenge)
+  }
+  else png = await renderSiteCard(host)
   setResponseHeaders(event, {
     'content-type': 'image/png',
     'cache-control': 'public, max-age=600',

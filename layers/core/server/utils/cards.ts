@@ -301,3 +301,97 @@ export async function renderPetCard(petId: number, format: CardFormat, host: str
   cache.set(key, png)
   return png
 }
+
+// ── Anteprime dei link per la home (e le pagine senza un'immagine propria) e per le sfide ──
+
+/** Una foto in cornice bianca, senza collare: per le card con più soggetti */
+const snapshot = (photo: string, w: number, h: number, u: number, rot = 0) => box({
+  flexShrink: 0, padding: u, background: C.white, borderRadius: u * 3.6, transform: `rotate(${rot}deg)`,
+  boxShadow: `0 ${u * 2}px ${u * 4}px -${u * 2}px ${C.glow}`,
+}, img(photo, { width: w, height: h, borderRadius: u * 2.6, objectFit: 'cover' }))
+
+const vsPatch = (size: number) => box({
+  width: size, height: size, borderRadius: 999, background: C.coral, border: `${size * 0.07}px solid ${C.white}`,
+  alignItems: 'center', justifyContent: 'center', color: C.white, fontFamily: 'Fredoka', fontSize: size * 0.34, transform: 'rotate(-10deg)',
+}, 'VS')
+
+async function renderTree(tree: Node, key: string) {
+  const hit = cache.get(key)
+  if (hit) return hit
+  const { width, height } = CARD_FORMATS.og
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const svg = await satori(tree as any, { width, height, fonts: await loadFonts() })
+  const png = new Resvg(svg, { fitTo: { mode: 'width', value: width } }).render().asPng()
+  if (cache.size >= CACHE_MAX) cache.delete(cache.keys().next().value!)
+  cache.set(key, png)
+  return png
+}
+
+const OG_BLOBS = () => [blob(40, 40, 170, BLOB_1), blob(1180, 330, 200, BLOB_2), blob(560, 660, 150, BLOB_3)]
+
+/** Card del sito: la domanda dei duelli con i due partecipanti con più cuori, uno contro l'altro */
+export async function renderSiteCard(host: string) {
+  const db = await useDb()
+  // Due foto diverse (la stessa immagine caricata per due personaggi non fa un duello)
+  // Il join fa scrivere a drizzle "pets"."id" per intero: senza, dentro coverImage "id" sarebbe quello delle foto
+  const rows = await db.select({ id: pets.id, wins: pets.wins, image: coverImage }).from(pets)
+    .innerJoin(users, eq(users.id, pets.ownerId))
+    .where(and(hasApprovedPhoto, inRankings))
+    .orderBy(sql`${pets.wins} desc`, pets.id)
+    .limit(8)
+  const top = rows.filter((r, i) => rows.findIndex(o => o.image === r.image) === i).slice(0, 2)
+  const key = JSON.stringify(['site', host, top])
+  const cached = cache.get(key)
+  if (cached) return cached
+
+  const photos = await Promise.all(top.map(p => photoDataUri(p.image, 270, 320)))
+  const duel = photos.length === 2
+    ? box({ position: 'relative', alignItems: 'center', gap: 30, flexShrink: 0 },
+        snapshot(photos[0]!, 270, 320, 10, -4),
+        snapshot(photos[1]!, 270, 320, 10, 4),
+        box({ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, alignItems: 'center', justifyContent: 'center' }, vsPatch(92)))
+    : null
+
+  return renderTree(page(
+    OG_BLOBS(),
+    { alignItems: 'center', gap: 40, padding: '40px 50px 30px 64px' },
+    box({ flex: 1, flexDirection: 'column', alignItems: 'flex-start', gap: 26, minWidth: 0 },
+      logo(52),
+      ask(38),
+      cta(`Vota su ${host}`, 30)),
+    duel,
+  ), key)
+}
+
+/** Card di una sfida: titolo, stato e i primi tre (o il vincitore) */
+export async function renderChallengeCard(slug: string, host: string) {
+  const challenge = await getChallenge(slug)
+  const status = challengeStatus(challenge)
+  const top = status === 'upcoming' ? [] : (await loadStandings(challenge.id, 3)).filter(s => s.score > 0 || status === 'active')
+  const key = JSON.stringify(['challenge', host, challenge.id, challenge.title, status, top.map(s => [s.id, s.image, s.score])])
+  const cached = cache.get(key)
+  if (cached) return cached
+
+  const winner = status === 'ended' ? top[0] : undefined
+  const label = status === 'upcoming' ? 'Sfida in arrivo' : status === 'active' ? 'Sfida in corso' : winner ? `Ha vinto ${winner.name}` : 'Sfida conclusa'
+  const action = status === 'active' ? 'Vota su' : status === 'upcoming' ? 'Partecipa su' : 'Guarda su'
+
+  const shots = await Promise.all((winner ? [winner] : top).map(s => photoDataUri(s.image.replace(/^\/img\//, ''), winner ? 340 : 230, winner ? 380 : 270)))
+  const ROT = [-6, 3, 8]
+  const pictures = shots.length
+    ? box({ alignItems: 'center' }, ...shots.map((p, i) => box({ marginLeft: i ? -60 : 0 }, snapshot(p, winner ? 340 : 230, winner ? 380 : 270, 9, winner ? 3 : ROT[i]!))))
+    // Nessuna foto ancora: la coccarda d'oro (satori non ha un font per le emoji del tema)
+    : box({ width: 300, height: 300, borderRadius: 999, background: C.white, alignItems: 'center', justifyContent: 'center', flexShrink: 0 },
+        img(ROSETTES[1], { width: 160, height: 208, transform: 'rotate(8deg)' }))
+
+  return renderTree(page(
+    OG_BLOBS(),
+    { alignItems: 'center', gap: 44, padding: '40px 60px 30px 70px' },
+    box({ flex: 1, flexDirection: 'column', alignItems: 'flex-start', gap: 22, minWidth: 0 },
+      logo(40),
+      box({ background: C.sun, color: C.ink, fontWeight: 800, fontSize: 24, padding: '6px 18px', borderRadius: 999 }, label),
+      box({ fontFamily: 'Fredoka', fontSize: nameSize(challenge.title, 62), lineHeight: 1.1 }, challenge.title),
+      cta(`${action} ${host}`, 28)),
+    pictures,
+  ), key)
+}

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import site from '#site'
 import { shelterImageSources } from '#shared/images'
 import { HAS_ARTISTS, HAS_SONA, entryUrl, type AdoptionStatus, type PetGallery as Gallery, type Profile } from '#shared/models'
 
@@ -10,6 +11,13 @@ const { data: profile, error, refresh } = await useFetch<Profile>(() => `/api/us
 
 const { t } = useI18n()
 useHead({ title: () => (profile.value?.shelter?.name ?? (profile.value ? `@${profile.value.username}` : t('nav.profile'))) })
+// Anteprima del link del profilo: la card del suo primo personaggio pubblico (altrimenti resta quella del sito)
+const origin = useRequestURL().origin
+const ogPet = computed(() => profile.value?.shelter ? undefined : profile.value?.pets.find(p => p.photos.some(ph => ph.status === 'approved')))
+useSeoMeta({
+  ogTitle: () => (profile.value ? `@${profile.value.username} · ${site.name}` : undefined),
+  ogImage: () => (ogPet.value ? `${origin}/card/${ogPet.value.id}.png?format=og` : undefined),
+})
 
 const since = computed(() => profile.value
   ? new Date(profile.value.memberSince).toLocaleDateString(intlLocale(), { month: 'long', year: 'numeric' })

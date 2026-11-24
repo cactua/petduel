@@ -781,5 +781,18 @@
       "body": "Una frase che dice cosa offri e perché conviene.",
       "cta": "Scopri di più"
     }
+  },
+  "push": {
+    "title": "Notifiche sul dispositivo",
+    "offer": "Ricevi gli avvisi (foto approvate, risultati delle sfide, cuori della settimana) anche quando il sito è chiuso.",
+    "enable": "Attiva le notifiche",
+    "disable": "Spegni su questo dispositivo",
+    "on": "Attive su questo dispositivo.",
+    "denied": "Le notifiche sono bloccate per questo sito: riattivale dalle impostazioni del browser.",
+    "iosInstall": "Su iPhone le notifiche arrivano solo dall'app: tocca Condividi, poi \"Aggiungi alla schermata Home\", e attivale da lì.",
+    "unsupported": "Questo browser non riceve notifiche.",
+    "failed": "Non è stato possibile attivarle. Riprova tra poco.",
+    "install": "Installa l'app",
+    "unavailable": "Le notifiche non sono disponibili su questo sito."
   }
 }

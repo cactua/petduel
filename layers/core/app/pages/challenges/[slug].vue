@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import site from '#site'
 import type { ChallengeDetail } from '#shared/models'
 
 const TABS = [
@@ -15,6 +16,13 @@ const { data: challenge, error, refresh } = await useFetch<ChallengeDetail>(() =
 const { t } = useI18n()
 const text = computed(() => (challenge.value ? challengeText(challenge.value) : { title: '', description: '' }))
 useHead({ title: () => (challenge.value ? `${text.value.title}` : `${t('nav.challenges')}`) })
+// Anteprima del link della sfida: titolo, stato e i primi in classifica
+const origin = useRequestURL().origin
+useSeoMeta({
+  ogTitle: () => (challenge.value ? `${text.value.title} · ${site.name}` : undefined),
+  ogDescription: () => text.value.description || undefined,
+  ogImage: () => (challenge.value ? `${origin}/card/challenge/${slug.value}.png` : undefined),
+})
 
 const isActive = computed(() => challenge.value?.status === 'active')
 const tab = computed<Tab>(() => {

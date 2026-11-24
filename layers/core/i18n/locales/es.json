@@ -781,5 +781,18 @@
       "body": "Una frase sobre lo que ofreces y por qué vale la pena.",
       "cta": "Más información"
     }
+  },
+  "push": {
+    "title": "Notificaciones en el dispositivo",
+    "offer": "Recibe los avisos (fotos aprobadas, resultados de los retos, corazones de la semana) aunque el sitio esté cerrado.",
+    "enable": "Activar notificaciones",
+    "disable": "Desactivar en este dispositivo",
+    "on": "Activadas en este dispositivo.",
+    "denied": "Las notificaciones están bloqueadas para este sitio: vuelve a activarlas en los ajustes del navegador.",
+    "iosInstall": "En iPhone las notificaciones solo llegan a la app: toca Compartir, luego \"Añadir a pantalla de inicio\", y actívalas desde allí.",
+    "unsupported": "Este navegador no recibe notificaciones.",
+    "failed": "No se han podido activar. Inténtalo de nuevo en un momento.",
+    "install": "Instalar la app",
+    "unavailable": "Las notificaciones no están disponibles en este sitio."
   }
 }

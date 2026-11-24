@@ -781,5 +781,18 @@
       "body": "Ein Satz dazu, was du anbietest und warum es sich lohnt.",
       "cta": "Mehr erfahren"
     }
+  },
+  "push": {
+    "title": "Benachrichtigungen auf dem Gerät",
+    "offer": "Erhalte Hinweise (freigegebene Fotos, Ergebnisse der Challenges, Herzen der Woche) auch bei geschlossener Seite.",
+    "enable": "Benachrichtigungen einschalten",
+    "disable": "Auf diesem Gerät ausschalten",
+    "on": "Auf diesem Gerät eingeschaltet.",
+    "denied": "Benachrichtigungen sind für diese Seite blockiert: schalte sie in den Browser-Einstellungen wieder ein.",
+    "iosInstall": "Auf dem iPhone kommen Benachrichtigungen nur in der App an: tippe auf Teilen, dann „Zum Home-Bildschirm“, und schalte sie dort ein.",
+    "unsupported": "Dieser Browser kann keine Benachrichtigungen empfangen.",
+    "failed": "Einschalten hat nicht geklappt. Versuch es gleich noch einmal.",
+    "install": "App installieren",
+    "unavailable": "Benachrichtigungen sind auf dieser Seite nicht verfügbar."
   }
 }

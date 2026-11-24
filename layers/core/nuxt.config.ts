@@ -64,6 +64,22 @@ export default messages
       });
       nuxt.options.alias["#site-it"] = template.dst;
 
+      // "#site-messages": i testi di tutte le lingue (nucleo + sito), per quello che il server scrive da solo
+      // nella lingua di chi legge, come le notifiche push
+      const allFiles = LANGUAGES.flatMap(l => [coreDir(`./i18n/locales/${l.code}.json`), join(nuxt.options.rootDir, `i18n/locales/${l.code}.json`)]);
+      const messagesTemplate = addTemplate({
+        filename: "site-messages.ts",
+        write: true,
+        getContents: () => {
+          const read = (f: string) => { try { return JSON.parse(readFileSync(f, "utf8")) as Messages; } catch { return {}; } };
+          const all = Object.fromEntries(LANGUAGES.map(l => [l.code, mergeMessages(read(coreDir(`./i18n/locales/${l.code}.json`)), read(join(nuxt.options.rootDir, `i18n/locales/${l.code}.json`)))]));
+          return `const messages: Record<string, Record<string, any>> = ${JSON.stringify(all)}
+export default messages
+`;
+        },
+      });
+      nuxt.options.alias["#site-messages"] = messagesTemplate.dst;
+
       // La pagina di un partecipante si chiama come vuole il sito (site.entryPath): /pet/<id> diventa per esempio
       // /character/<id>, e i vecchi /pet/<id> ci portano con un redirect
       const { entryPath: entry } = (await createJiti(import.meta.url).import<{ default: { entryPath?: string } }>(nuxt.options.alias["#site"])).default;
@@ -77,8 +93,9 @@ export default messages
         });
       }
       nuxt.hook("builder:watch", (_event, path) => {
-        if (files.some(f => f.replaceAll("\\", "/").endsWith(path.replaceAll("\\", "/")))) {
-          return updateTemplates({ filter: t => t.filename === "site-it.ts" });
+        const same = (f: string) => f.replaceAll("\\", "/").endsWith(path.replaceAll("\\", "/"));
+        if (allFiles.some(same)) {
+          return updateTemplates({ filter: t => t.filename === "site-it.ts" || t.filename === "site-messages.ts" });
         }
       });
     },
@@ -157,7 +174,13 @@ export default messages
       // Email per chi vuole fare pubblicità (pagina /advertise); vuota = quella delle pagine legali.
       // Da .env: NUXT_PUBLIC_ADS_EMAIL
       adsEmail: "",
+      // Notifiche push: chiave pubblica VAPID (da .env: NUXT_PUBLIC_VAPID_PUBLIC_KEY). Vuota = push spente
+      vapidPublicKey: "",
     },
+    // Chiave privata VAPID e contatto per i servizi push (da .env: NUXT_VAPID_PRIVATE_KEY, NUXT_VAPID_SUBJECT
+    // come "mailto:indirizzo"). Le chiavi si creano con: npx web-push generate-vapid-keys
+    vapidPrivateKey: "",
+    vapidSubject: "",
     session: {
       // Sessione di 30 giorni; cookie httpOnly, SameSite=Lax, Secure in produzione
       password: "", // da .env: NUXT_SESSION_PASSWORD

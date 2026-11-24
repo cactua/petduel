@@ -38,7 +38,15 @@ export interface SiteBrand {
    * Senza: il sito non ha mascotte
    */
   mascotSvg?: string
+  /**
+   * Simbolo dell'icona dell'app installata (schermata Home) e delle notifiche: contenuto di un <svg viewBox="0 0 24 24">,
+   * disegnato in bianco sul colore principale. Se manca: la zampa
+   */
+  appIcon?: string
 }
+
+/** La zampa del nucleo, come AppIcon "paw" */
+export const PAW_APP_ICON = '<g fill="#fff"><ellipse cx="12" cy="15.5" rx="5" ry="4.2"/><circle cx="6" cy="9.5" r="2.2"/><circle cx="9.8" cy="6" r="2.2"/><circle cx="14.2" cy="6" r="2.2"/><circle cx="18" cy="9.5" r="2.2"/></g>'
 
 export interface SiteConfig {
   id: string

@@ -56,6 +56,11 @@ async function remove() {
     </article>
 
     <article class="account-page__card">
+      <h2 class="account-page__card-title">🔔 {{ $t('push.title') }}</h2>
+      <PushToggle />
+    </article>
+
+    <article class="account-page__card">
       <h2 class="account-page__card-title">🔒 {{ $t('account.securityTitle') }}</h2>
       <AccountSecurity />
     </article>

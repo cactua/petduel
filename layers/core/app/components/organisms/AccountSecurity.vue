@@ -42,7 +42,8 @@ async function signOutOthers() {
   done.value = ''
   busy.value = true
   try {
-    await $fetch('/api/me/sessions', { method: 'DELETE' })
+    // Le notifiche push restano solo su questo dispositivo
+    await $fetch('/api/me/sessions', { method: 'DELETE', body: { keepPush: await currentPushEndpoint() } })
     await refreshSession()
     done.value = 'account.signedOutOthers'
   }

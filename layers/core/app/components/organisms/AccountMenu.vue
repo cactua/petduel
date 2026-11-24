@@ -30,8 +30,13 @@ const SWITCHES = [
   { key: 'haptics', label: 'menu.haptics', on: haptics },
 ]
 
+const { canInstall, install } = useInstallApp()
+
 async function logout() {
   open.value = false
+  // Chi esce non riceve più le notifiche push su questo dispositivo
+  const endpoint = await currentPushEndpoint().catch(() => undefined)
+  if (endpoint) await $fetch('/api/me/push', { method: 'DELETE', body: { endpoint } }).catch(() => {})
   await $fetch('/api/auth/logout', { method: 'POST' })
   await refreshSession()
   await navigateTo('/')
@@ -146,6 +151,8 @@ const initial = computed(() => user.value?.username.charAt(0).toUpperCase() ?? '
           <NuxtLink to="/accessibility" class="account-menu__legal-link" @click="close">{{ $t('legal.accessibility') }}</NuxtLink>
           <NuxtLink to="/advertise" class="account-menu__legal-link" @click="close">{{ $t('advertise.link') }}</NuxtLink>
         </nav>
+        <!-- Solo dove il browser offre l'installazione (Chrome, Edge); su iPhone si usa Condividi → Aggiungi alla schermata Home -->
+        <button v-if="canInstall" type="button" class="account-menu__link account-menu__link--footer" @click="close(); install()"><span class="account-menu__emoji" aria-hidden="true">📲</span>{{ $t('push.install') }}</button>
         <button type="button" class="account-menu__link account-menu__link--footer" @click="openConsent(); close()"><span class="account-menu__emoji" aria-hidden="true">🍪</span>{{ $t('consent.title') }}</button>
         <button v-if="loggedIn" type="button" class="account-menu__link account-menu__link--footer" @click="logout"><AppIcon name="login" />{{ $t('nav.logout') }}</button>
       </div>

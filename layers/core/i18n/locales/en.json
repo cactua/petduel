@@ -781,5 +781,18 @@
       "body": "One sentence on what you offer and why it’s worth it.",
       "cta": "Learn more"
     }
+  },
+  "push": {
+    "title": "Device notifications",
+    "offer": "Get alerts (approved photos, challenge results, weekly hearts) even when the site is closed.",
+    "enable": "Turn on notifications",
+    "disable": "Turn off on this device",
+    "on": "On for this device.",
+    "denied": "Notifications are blocked for this site: turn them back on in your browser settings.",
+    "iosInstall": "On iPhone, notifications only work in the app: tap Share, then \"Add to Home Screen\", and turn them on from there.",
+    "unsupported": "This browser can't receive notifications.",
+    "failed": "Couldn't turn them on. Please try again shortly.",
+    "install": "Install the app",
+    "unavailable": "Notifications aren't available on this site."
   }
 }
