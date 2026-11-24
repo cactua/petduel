@@ -16,7 +16,7 @@ export default defineSite({
   entryPath: 'character',
   // Profilo con le schede delle sona: specie, pronomi, colori e regole per chi le disegna
   sona: true,
-  // Come app/assets/theme.scss. Niente mascotte (mascotSvg), come in app/components/SiteMascot.vue
+  // Come app/assets/theme.scss. Niente mascotte (mascotSvg), come in app/components/atoms/SiteMascot.vue
   brand: {
     accent: '#c2410c',
     glow: 'rgba(217,72,15,.4)',

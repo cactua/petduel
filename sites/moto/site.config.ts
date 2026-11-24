@@ -36,7 +36,7 @@ export default defineSite({
   entryPath: 'bike',
   // Una moto vista di lato in una card verticale si vede solo a metà
   wideMedia: true,
-  // Come app/assets/theme.scss. Niente mascotte (mascotSvg), come in app/components/SiteMascot.vue
+  // Come app/assets/theme.scss. Niente mascotte (mascotSvg), come in app/components/atoms/SiteMascot.vue
   brand: {
     accent: '#f26b1d',
     glow: 'rgba(242,107,29,.45)',
@@ -44,7 +44,7 @@ export default defineSite({
     ink: '#24262b',
     muted: '#6b6f78',
     blobs: ['#ffe1cc', '#dfe4ea', '#fff0c2'],
-    // Come SiteIcon.vue: la moto vista di lato al posto della zampa
+    // Come atoms/SiteIcon.vue: la moto vista di lato al posto della zampa
     appIcon: '<g fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="15.5" r="3.5"/><circle cx="18.5" cy="15.5" r="3.5"/><path d="M5.5 15.5 9 10h5.5l4 5.5M9 10 7.5 7H5.5M14.5 10l2-3.5h2.5M10 13.5h4"/></g>',
   },
 })

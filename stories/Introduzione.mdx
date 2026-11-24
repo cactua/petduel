@@ -1,0 +1,55 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Introduzione" />
+
+# Libreria dei componenti
+
+Qui ci sono **tutti i componenti dell'app**, gli stessi file `.vue` e gli stessi stili usati dai siti
+(nessuna copia): cambiare un componente nell'app lo cambia anche qui.
+
+## Atomic Design
+
+I componenti sono divisi come nelle cartelle dell'app:
+
+| Livello | Cosa contiene | Dove sta nel codice |
+| --- | --- | --- |
+| **Fondamenta** | Colori, font, raggi, spaziature (token) | `layers/core/app/assets/scss/abstracts` e `base` |
+| **Atomi** | Pezzi minimi: icone, bottoni, etichette, campi | `components/atoms` e `assets/scss/atoms` (classi `.btn`, `.badge`, `.chip`, `.input`…) |
+| **Molecole** | Più atomi con un compito solo: un filtro, un bottone con il suo foglio | `components/molecules` e `assets/scss/molecules` |
+| **Organismi** | Sezioni intere con dati e azioni: il duello, la galleria, il menu | `components/organisms` |
+| **Template** | La struttura della pagina: testata, contenuto, barra in basso | `layouts/default.vue` e `assets/scss/templates` |
+
+Il nucleo è in `layers/core`, i rifugi in `layers/shelters` (solo PetDuel), i componenti che un sito
+sostituisce in `sites/<sito>/app/components` (per esempio la moto di BikeDuel al posto della zampa).
+Le classi seguono **BEM**: `blocco__elemento--variante`.
+
+## Siti, lingue e tema
+
+Dalla barra in alto:
+
+- **Sito** — PetDuel (`pets`), FurDuel (`furry`), BikeDuel (`moto`). Cambia tutto quello che cambia
+  davvero tra i siti: palette (`sites/<sito>/app/assets/theme.scss`), configurazione (`site.config.ts`:
+  categorie, sfide, indirizzo delle pagine, scheda del personaggio…), testi e componenti sostituiti
+  (mascotte, icona del sito, scheda di adozione). L'anteprima si ricarica con il sito nuovo, così ogni
+  componente vede esattamente i valori che vedrebbe in produzione.
+- **Lingua** — italiano, inglese, spagnolo, francese, tedesco.
+- **Tema** — chiaro, scuro o come il sistema (`data-theme` su `<html>`, come la scelta dal menu).
+
+Alcune storie valgono solo per un sito (i rifugi esistono solo su PetDuel, la scheda del personaggio solo
+su FurDuel): in quelle il sito è fissato e la barra lo mostra.
+
+## Dati finti
+
+Le storie non chiamano il server. Le risposte delle API arrivano da `parameters.api`, l'utente collegato da
+`parameters.user`; ogni chiamata compare nel pannello **Actions** come `$fetch`. I dati di esempio sono in
+`stories/fixtures.ts`: per PetDuel e BikeDuel sono i partecipanti e le foto del seed del database.
+
+## Aggiungere un componente
+
+1. Crea il file nella cartella del suo livello (`atoms`, `molecules`, `organisms`): il nome resta
+   quello del file, senza prefisso della cartella.
+2. Aggiungi `stories/<livello>/<Nome>.stories.ts` con `tags: ['autodocs']`, una descrizione del
+   componente e una storia per ogni stato che conta (vuoto, caricamento, errore, proprietario…).
+3. Controlla la storia nei tre siti e nel tema scuro.
+
+Avvio: `npm run storybook` (porta 6006). Versione statica: `npm run build-storybook`.

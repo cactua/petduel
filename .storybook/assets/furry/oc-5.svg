@@ -1,0 +1,13 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 1200' width='900' height='1200'>
+<rect width='900' height='1200' fill='#e0e7ff'/>
+<circle cx='510' cy='220' r='120' fill='#fff' opacity='.5'/>
+<path d='M180 1200 C200 900 300 820 450 820 C600 820 700 900 720 1200Z' fill='#e11d48'/>
+<path d='M360 1200 C370 980 410 900 450 900 C490 900 530 980 540 1200Z' fill='#ffe4e6'/>
+<path d='M230 330 L300 640 L400 520Z' fill='#e11d48'/><path d='M670 330 L600 640 L500 520Z' fill='#e11d48'/>
+<path d='M265 400 L310 590 L370 520Z' fill='#4c0519' opacity='.6'/><path d='M635 400 L590 590 L530 520Z' fill='#4c0519' opacity='.6'/>
+<ellipse cx='450' cy='640' rx='230' ry='210' fill='#e11d48'/>
+<path d='M450 700 C350 700 300 800 450 860 C600 800 550 700 450 700Z' fill='#ffe4e6'/>
+<ellipse cx='370' cy='610' rx='30' ry='40' fill='#4c0519'/><ellipse cx='530' cy='610' rx='30' ry='40' fill='#4c0519'/>
+<circle cx='380' cy='598' r='10' fill='#fff'/><circle cx='540' cy='598' r='10' fill='#fff'/>
+<ellipse cx='450' cy='720' rx='26' ry='18' fill='#4c0519'/>
+</svg>

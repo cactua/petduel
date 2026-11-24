@@ -22,7 +22,9 @@
     "lint": "eslint .",
     "typecheck": "nuxi typecheck sites/pets && nuxi typecheck sites/furry && nuxi typecheck sites/moto",
     "test": "vitest run",
-    "smoke": "node scripts/smoke-community.mjs"
+    "smoke": "node scripts/smoke-community.mjs",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build -o storybook-static"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.13",
@@ -46,12 +48,16 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.17.0",
+    "@storybook/addon-a11y": "^10.6.8",
+    "@storybook/addon-docs": "^10.6.8",
+    "@storybook/vue3-vite": "^10.6.8",
     "@types/leaflet": "^1.9.22",
     "@types/node": "^22.20.5",
     "@types/pg": "^8.23.1",
     "@types/web-push": "^3.6.4",
     "eslint": "^10.14.0",
     "sass-embedded": "^1.107.1",
+    "storybook": "^10.6.8",
     "typescript": "^6.0.3",
     "vitest": "^5.0.5",
     "vue-tsc": "^3.3.14"
