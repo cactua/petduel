@@ -507,7 +507,10 @@
     "inDuelsHint": "Desmarca las imágenes que solo quieras en tu perfil (bocetos, referencias, recuerdos): siguen visibles para todos, pero no entran en los duelos.",
     "duelCount": "{done} de {total} imagen en duelos | {done} de {total} imágenes en duelos",
     "noDuelPhoto": "Ninguna imagen pública de {name} está en los duelos: por ahora no aparecerá en los enfrentamientos.",
-    "profileOnly": "Solo perfil"
+    "profileOnly": "Solo perfil",
+    "noArtist": "Sin artista",
+    "editArtist": "Cambiar",
+    "addArtist": "Indica el artista"
   },
   "consent": {
     "title": "Cookies y anuncios",

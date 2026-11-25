@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { HAS_BREED_CITY, SPECIES, petFieldsSchema, type PetGallery } from '#shared/models'
+import { HAS_ARTISTS, HAS_BREED_CITY, SPECIES, petFieldsSchema, type PetGallery } from '#shared/models'
 import { HEART_TIERS } from '#shared/badges'
 
 const props = defineProps<{ pet: PetGallery, editable?: boolean, linkTitle?: boolean, hero?: boolean }>()
@@ -52,6 +52,34 @@ async function setInDuels(photoId: number, value: boolean) {
     togglingDuel.value = null
   }
 }
+// Artista di un'immagine già caricata (solo sui siti che lo chiedono): stessi campi del caricamento
+const creditEditing = ref<number | null>(null)
+const creditForm = reactive({ credit: '', creditUrl: '', artist: '' })
+const creditSaving = ref(false)
+function editCredit(photo: { id: number, credit: { text: string, url: string | null } | null }) {
+  const c = photo.credit
+  const registered = !!c?.url?.startsWith('/u/')
+  Object.assign(creditForm, { artist: registered ? c!.text.replace(/^@/, '') : '', credit: registered ? '' : c?.text ?? '', creditUrl: registered ? '' : c?.url ?? '' })
+  creditEditing.value = photo.id
+  error.value = ''
+}
+async function saveCredit() {
+  if (creditEditing.value === null) return
+  creditSaving.value = true
+  error.value = ''
+  try {
+    await $fetch(`/api/photos/${creditEditing.value}`, { method: 'PATCH', body: { credit: { ...creditForm } } })
+    creditEditing.value = null
+    emit('changed')
+  }
+  catch (e) {
+    error.value = errorMessage(e)
+  }
+  finally {
+    creditSaving.value = false
+  }
+}
+
 // Riepilogo: quante immagini girano nei duelli (le rifiutate non contano)
 const usable = computed(() => props.pet.photos.filter(p => p.status !== 'rejected'))
 const duelCount = computed(() => usable.value.filter(isInDuels).length)
@@ -198,10 +226,25 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
               >
               {{ $t('gallery.inDuels') }}
             </label>
+            <!-- Artista: si può aggiungere o correggere anche dopo il caricamento -->
+            <button
+              v-if="HAS_ARTISTS && photo.status !== 'rejected' && creditEditing !== photo.id" type="button" class="pet-gallery__row-artist"
+              @click="editCredit(photo)"
+            >
+              <span>🎨 {{ photo.credit ? photo.credit.text : $t('gallery.noArtist') }}</span>
+              <span class="pet-gallery__row-artist-edit">{{ photo.credit ? $t('gallery.editArtist') : $t('gallery.addArtist') }}</span>
+            </button>
           </div>
           <button type="button" class="pet-gallery__row-remove" :class="{ 'is-confirming': confirming === photo.id }" @click="remove(photo.id)">
             {{ confirming === photo.id ? $t('common.confirm') : $t('common.delete') }}
           </button>
+          <form v-if="creditEditing === photo.id" class="pet-gallery__row-credit" novalidate @submit.prevent="saveCredit">
+            <CreditFields v-model="creditForm" />
+            <div class="pet-gallery__tools">
+              <button type="button" class="btn btn--ghost btn--sm" @click="creditEditing = null">{{ $t('common.cancel') }}</button>
+              <button type="submit" class="btn btn--primary btn--sm" :disabled="creditSaving">{{ $t('common.save') }}</button>
+            </div>
+          </form>
         </li>
       </ul>
       <p class="pet-gallery__hint">{{ $t('gallery.inDuelsHint') }}</p>
@@ -467,6 +510,7 @@ $scrim: rgba(30, 15, 5, .7);
 
   &__row {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: $space-3;
     padding: 8px;
@@ -511,6 +555,27 @@ $scrim: rgba(30, 15, 5, .7);
 
   // Tutta la scritta è cliccabile: bersaglio alto 44px
   &__row-duel { display: inline-flex; align-items: center; gap: $space-2; min-height: 44px; font-weight: 800; font-size: 15px; cursor: pointer; }
+
+  &__row-artist {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px $space-3;
+    max-width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  &__row-artist-edit { color: var(--coral-deep); font-weight: 900; text-decoration: underline; text-underline-offset: 2px; }
+
+  &__row-credit { flex-basis: 100%; @include stack($space-3); padding: $space-3 $space-2 $space-2; border-top: 2px dashed var(--line); }
 
   &__row-box { width: 22px; height: 22px; margin: 0; accent-color: var(--action); cursor: pointer; }
 

@@ -58,6 +58,10 @@ watch(() => index.value !== null, (open) => {
   else returnFocus?.focus()
 })
 
+// Il link all'artista cambia pagina: il visore si chiude (sulla stessa pagina resterebbe aperto)
+const route = useRoute()
+watch(() => route.fullPath, close)
+
 onMounted(() => window.addEventListener('keydown', onKey))
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKey)
@@ -82,7 +86,11 @@ onBeforeUnmount(() => {
           </template>
           <div class="photo-viewer__foot">
             <span v-if="many">{{ index! + 1 }} / {{ photos.length }}</span>
-            <CreditLink v-if="photo.credit" :url="photo.credit.url" class="photo-viewer__credit">{{ $t('photo.credit', { text: photo.credit.text }) }}</CreditLink>
+            <!-- Autore in evidenza: con un link è un bottone (al profilo dell'artista sul sito, o fuori) -->
+            <CreditLink
+              v-if="photo.credit" :url="photo.credit.url" class="photo-viewer__artist"
+              :class="{ 'photo-viewer__artist--link': photo.credit.url }"
+            >{{ $t('photo.credit', { text: photo.credit.text }) }}<span v-if="photo.credit.url" aria-hidden="true" class="photo-viewer__artist-go">{{ photo.credit.url.startsWith('/') ? '→' : '↗' }}</span></CreditLink>
             <a v-if="licenseUrl(photo.credit?.text)" :href="licenseUrl(photo.credit?.text)!" target="_blank" rel="noopener noreferrer license" class="photo-viewer__credit">{{ $t('credits.license') }}</a>
             <span v-if="isCommonsCredit(photo.credit?.text)">{{ $t('credits.modified') }}</span>
             <ReportButton v-if="photo.id" :key="photo.id" :photo-id="photo.id" />
@@ -155,6 +163,30 @@ onBeforeUnmount(() => {
     font-weight: 800;
     text-align: center;
   }
+
+  &__artist {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    max-width: 100%;
+    @include pill(7px, 14px);
+    background: rgba(255, 255, 255, .14);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.3;
+    text-decoration: none;
+
+    // Colori fissi: il visore è scuro in entrambi i temi
+    &--link {
+      background: #fff;
+      color: rgb(24, 13, 8);
+
+      &:hover, &:focus-visible { background: #ffe3d6; }
+    }
+  }
+
+  &__artist-go { flex-shrink: 0; }
 
   &__credit { color: rgba(255, 255, 255, .75); font-size: 11px; font-weight: 600; text-decoration: none; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }

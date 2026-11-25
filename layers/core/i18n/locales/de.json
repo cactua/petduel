@@ -507,7 +507,10 @@
     "inDuelsHint": "Entferne das Häkchen bei Bildern, die nur im Profil erscheinen sollen (Skizzen, Refs, Erinnerungen): Alle sehen sie weiterhin, aber sie kommen nicht in Duelle.",
     "duelCount": "{done} von {total} Bild in Duellen | {done} von {total} Bildern in Duellen",
     "noDuelPhoto": "Kein öffentliches Bild von {name} ist in Duellen – vorerst erscheint es in keinem Duell.",
-    "profileOnly": "Nur Profil"
+    "profileOnly": "Nur Profil",
+    "noArtist": "Kein*e Künstler*in",
+    "editArtist": "Ändern",
+    "addArtist": "Künstler*in angeben"
   },
   "consent": {
     "title": "Cookies und Werbung",

@@ -507,7 +507,10 @@
     "inDuelsHint": "Décoche les images que tu veux seulement sur ton profil (croquis, refs, souvenirs) : tout le monde les voit encore, mais elles n’entrent pas dans les duels.",
     "duelCount": "{done} sur {total} image dans les duels | {done} sur {total} images dans les duels",
     "noDuelPhoto": "Aucune image publique de {name} n’est dans les duels : il n’apparaîtra pas dans les affrontements pour l’instant.",
-    "profileOnly": "Profil seulement"
+    "profileOnly": "Profil seulement",
+    "noArtist": "Aucun artiste",
+    "editArtist": "Modifier",
+    "addArtist": "Indiquer l'artiste"
   },
   "consent": {
     "title": "Cookies et publicités",

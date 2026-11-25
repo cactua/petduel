@@ -71,6 +71,31 @@ export async function writeSeedImage(image: string, data: Buffer, crops: Crops) 
   await writeVariants(image, source, crops)
 }
 
+export interface CreditColumns { credit: string | null, creditUrl: string | null, artistId: number | null }
+const NO_CREDIT: CreditColumns = { credit: null, creditUrl: null, artistId: null }
+
+/**
+ * Dai campi del modulo (artista registrato, oppure nome e link scritti a mano) alle colonne della foto.
+ * La usano il caricamento e la modifica dell'artista di una foto già caricata
+ */
+export async function resolveCredit(event: H3Event, input: unknown): Promise<CreditColumns> {
+  const parsed = photoCreditSchema.safeParse(input)
+  if (!parsed.success) throw createError({ statusCode: 400, statusMessage: parsed.error.issues[0]?.message ?? 'validation.check' })
+  if (parsed.data.artist) {
+    const db = await useDb()
+    const [artist] = await db.select({ id: users.id, username: users.username }).from(users)
+      .where(and(eq(users.username, parsed.data.artist.replace(/^@/, '').toLowerCase()), eq(users.isArtist, true), sql`${users.bannedAt} is null`))
+    // Chi ha bloccato chi carica risulta "non trovato", come nella ricerca
+    const user = await optionalUser(event)
+    if (!artist || (user && await isBlockedBetween(artist.id, user.id))) throw createError({ statusCode: 400, statusMessage: 'errors.artistNotFound' })
+    // Nome e link copiati qui: tutte le liste degli autori li leggono già da queste due colonne
+    return { credit: artist.username, creditUrl: `/u/${artist.username}`, artistId: artist.id }
+  }
+  // Il link senza un nome non si mostrerebbe da nessuna parte
+  if (parsed.data.credit) return { credit: parsed.data.credit, creditUrl: parsed.data.creditUrl || null, artistId: null }
+  return { ...NO_CREDIT }
+}
+
 /**
  * Legge un upload multipart: restituisce i campi testuali e salva la foto con i ritagli scelti
  * (campo "crops", JSON) in tutte le varianti. La ricodifica scarta qualsiasi contenuto nascosto
@@ -104,23 +129,9 @@ export async function readPhotoUpload(event: H3Event) {
   delete fields.crops
 
   // Artista, solo sui siti che lo chiedono; controllato prima di salvare l'immagine
-  let credit: { credit: string | null, creditUrl: string | null, artistId: number | null } = { credit: null, creditUrl: null, artistId: null }
-  if (site.askCredit) {
-    const parsed = photoCreditSchema.safeParse({ credit: fields.credit ?? '', creditUrl: fields.creditUrl ?? '', artist: fields.artist ?? '' })
-    if (!parsed.success) throw createError({ statusCode: 400, statusMessage: parsed.error.issues[0]?.message ?? 'validation.check' })
-    if (parsed.data.artist) {
-      const db = await useDb()
-      const [artist] = await db.select({ id: users.id, username: users.username }).from(users)
-        .where(and(eq(users.username, parsed.data.artist.toLowerCase()), eq(users.isArtist, true), sql`${users.bannedAt} is null`))
-      // Chi ha bloccato chi carica risulta "non trovato", come nella ricerca
-      const user = await optionalUser(event)
-      if (!artist || (user && await isBlockedBetween(artist.id, user.id))) throw createError({ statusCode: 400, statusMessage: 'errors.artistNotFound' })
-      // Nome e link copiati qui: tutte le liste degli autori li leggono già da queste due colonne
-      credit = { credit: artist.username, creditUrl: `/u/${artist.username}`, artistId: artist.id }
-    }
-    // Il link senza un nome non si mostrerebbe da nessuna parte
-    else if (parsed.data.credit) credit = { credit: parsed.data.credit, creditUrl: parsed.data.creditUrl || null, artistId: null }
-  }
+  const credit = site.askCredit
+    ? await resolveCredit(event, { credit: fields.credit ?? '', creditUrl: fields.creditUrl ?? '', artist: fields.artist ?? '' })
+    : { ...NO_CREDIT }
   delete fields.credit
   delete fields.creditUrl
   delete fields.artist

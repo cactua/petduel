@@ -507,7 +507,10 @@
     "inDuelsHint": "Togli la spunta per le immagini che vuoi solo nel profilo (schizzi, reference, foto ricordo): restano visibili a tutti, ma non entrano nei duelli.",
     "duelCount": "{done} di {total} immagine nei duelli | {done} di {total} immagini nei duelli",
     "noDuelPhoto": "Nessuna immagine pubblica di {name} è nei duelli: per ora non comparirà nelle sfide.",
-    "profileOnly": "Solo profilo"
+    "profileOnly": "Solo profilo",
+    "noArtist": "Nessun artista",
+    "editArtist": "Cambia",
+    "addArtist": "Indica l'artista"
   },
   "consent": {
     "title": "Cookie e annunci",

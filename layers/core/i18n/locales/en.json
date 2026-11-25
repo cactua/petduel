@@ -507,7 +507,10 @@
     "inDuelsHint": "Untick images you only want on your profile (sketches, refs, keepsakes): everyone can still see them, but they stay out of duels.",
     "duelCount": "{done} of {total} image in duels | {done} of {total} images in duels",
     "noDuelPhoto": "No public image of {name} is in duels, so it won’t show up in matchups for now.",
-    "profileOnly": "Profile only"
+    "profileOnly": "Profile only",
+    "noArtist": "No artist",
+    "editArtist": "Change",
+    "addArtist": "Add the artist"
   },
   "consent": {
     "title": "Cookies and ads",
