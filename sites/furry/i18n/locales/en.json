@@ -188,5 +188,8 @@
   },
   "voted": {
     "lead": "The characters you picked in your latest duels: open the uploader's profile to see their others, or the artist's page."
+  },
+  "ad": {
+    "houseBody": "Add your ad here, get seen by the people voting on @:{'site.name'}."
   }
 }

@@ -188,5 +188,8 @@
   },
   "voted": {
     "lead": "Los personajes que elegiste en tus últimos duelos: abre el perfil de quien los subió para ver los demás, o la página del artista."
+  },
+  "ad": {
+    "houseBody": "Añade tu publicidad aquí, hazte ver por quien vota en @:{'site.name'}."
   }
 }

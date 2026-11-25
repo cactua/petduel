@@ -188,5 +188,8 @@
   },
   "voted": {
     "lead": "Die Charaktere, die du in deinen letzten Duellen gewählt hast: Öffne das Profil der Person, die sie hochgeladen hat, oder die Seite der Künstler*in."
+  },
+  "ad": {
+    "houseBody": "Platziere hier deine Werbung, lass dich von den Leuten sehen, die auf @:{'site.name'} abstimmen."
   }
 }
