@@ -68,6 +68,8 @@ export const useRuntimeConfig = () => ({
 export const useAppConfig = () => ({ features: { shelters: SITES_WITH_SHELTERS.includes(currentSiteId()) } })
 export const defineAppConfig = <T>(c: T) => c
 export const defineNuxtComponent = defineComponent
+// Le pagine dichiarano middleware e layout: in Storybook non servono
+export const definePageMeta = (_meta?: unknown) => {}
 
 // ── Stato condiviso, cookie, head: in memoria, si azzerano a ogni storia ──
 const states = new Map<string, Ref>()

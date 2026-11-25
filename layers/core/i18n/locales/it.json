@@ -169,7 +169,9 @@
     "wrongCode": "Codice sbagliato o già usato. Riprova con quello nuovo.",
     "totpRequired": "Per usare il pannello admin serve la verifica in due passaggi.",
     "totpAlreadyOn": "La verifica in due passaggi è già attiva.",
-    "totpNoSetup": "Ricomincia l'attivazione dall'inizio."
+    "totpNoSetup": "Ricomincia l'attivazione dall'inizio.",
+    "challengeStarted": "La sfida è già iniziata: la data non si può più cambiare",
+    "challengeEntriesLock": "La sfida ha già dei partecipanti: per chi è aperta non si può più cambiare"
   },
   "auth": {
     "registerTitle": "Crea il tuo account",

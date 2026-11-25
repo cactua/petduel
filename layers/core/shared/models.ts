@@ -250,6 +250,7 @@ export const challengeFieldsSchema = z.object({
   // Data di inizio (YYYY-MM-DD): la sfida dura 7 giorni da mezzanotte, ora italiana
   startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Data non valida'),
 })
+export type ChallengeFields = z.infer<typeof challengeFieldsSchema>
 
 export interface Profile {
   username: string

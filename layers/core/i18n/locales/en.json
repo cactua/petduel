@@ -169,7 +169,9 @@
     "wrongCode": "Wrong or already used code. Try again with the new one.",
     "totpRequired": "Two-step verification is required to use the admin panel.",
     "totpAlreadyOn": "Two-step verification is already on.",
-    "totpNoSetup": "Start the setup again from the beginning."
+    "totpNoSetup": "Start the setup again from the beginning.",
+    "challengeStarted": "The challenge has already started: its date can no longer change",
+    "challengeEntriesLock": "The challenge already has entries: who can join can no longer change"
   },
   "auth": {
     "registerTitle": "Create your account",

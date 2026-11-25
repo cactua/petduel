@@ -169,7 +169,9 @@
     "wrongCode": "Falscher oder bereits benutzter Code. Versuche es mit dem neuen.",
     "totpRequired": "Für das Admin-Panel ist die Bestätigung in zwei Schritten nötig.",
     "totpAlreadyOn": "Die Bestätigung in zwei Schritten ist schon aktiv.",
-    "totpNoSetup": "Starte die Einrichtung noch einmal von vorn."
+    "totpNoSetup": "Starte die Einrichtung noch einmal von vorn.",
+    "challengeStarted": "Die Challenge hat schon begonnen: das Datum lässt sich nicht mehr ändern",
+    "challengeEntriesLock": "Die Challenge hat bereits Teilnehmer: wer mitmachen darf, lässt sich nicht mehr ändern"
   },
   "auth": {
     "registerTitle": "Erstelle dein Konto",

@@ -40,15 +40,25 @@ const mailto = computed(() => email
       <p class="advertise__eyebrow">{{ $t('advertise.eyebrow') }}</p>
       <h1 class="advertise__title">{{ $t('advertise.title') }}</h1>
       <p class="advertise__lead">{{ $t('advertise.lead') }}</p>
-      <a v-if="mailto" :href="mailto" class="btn btn--primary btn--lg advertise__cta">{{ $t('advertise.contact.button') }}</a>
+      <a v-if="mailto" :href="mailto" class="btn btn--primary btn--lg advertise__cta">{{ $t('advertise.contact.button')
+      }}</a>
     </header>
 
     <section v-if="stats && stats.votes" class="advertise__section" aria-labelledby="ad-numbers">
       <h2 id="ad-numbers" class="advertise__heading">{{ $t('advertise.numbers.title') }}</h2>
       <dl class="advertise__stats">
-        <div class="advertise__stat"><dt>{{ $t('advertise.numbers.votes') }}</dt><dd>{{ compact(stats.votes) }}</dd></div>
-        <div class="advertise__stat"><dt>{{ $t('advertise.numbers.voters') }}</dt><dd>{{ compact(stats.voters) }}</dd></div>
-        <div class="advertise__stat"><dt>{{ $t('advertise.numbers.entries') }}</dt><dd>{{ compact(stats.entries) }}</dd></div>
+        <div class="advertise__stat">
+          <dt>{{ $t('advertise.numbers.votes') }}</dt>
+          <dd>{{ compact(stats.votes) }}</dd>
+        </div>
+        <div class="advertise__stat">
+          <dt>{{ $t('advertise.numbers.voters') }}</dt>
+          <dd>{{ compact(stats.voters) }}</dd>
+        </div>
+        <div class="advertise__stat">
+          <dt>{{ $t('advertise.numbers.entries') }}</dt>
+          <dd>{{ compact(stats.entries) }}</dd>
+        </div>
       </dl>
       <p v-if="stats.every" class="advertise__note">{{ $t('advertise.numbers.every', { n: stats.every }) }}</p>
     </section>
@@ -97,7 +107,8 @@ const mailto = computed(() => email
       <p>{{ $t('advertise.contact.text') }}</p>
       <template v-if="mailto">
         <a :href="mailto" class="btn btn--primary btn--lg advertise__cta">{{ $t('advertise.contact.button') }}</a>
-        <p class="advertise__note">{{ $t('advertise.contact.or') }} <a :href="`mailto:${email}`" class="advertise__mail">{{ email }}</a></p>
+        <p class="advertise__note">{{ $t('advertise.contact.or') }} <a :href="`mailto:${email}`"
+            class="advertise__mail">{{ email }}</a></p>
       </template>
       <!-- Solo finché nel file .env manca l'email -->
       <p v-else class="advertise__note">[{{ $t('advertise.contact.missing') }}: NUXT_PUBLIC_ADS_EMAIL]</p>
@@ -109,28 +120,56 @@ const mailto = computed(() => email
 // Pagina: fare pubblicità sul sito
 .advertise {
   @include stack($space-6);
-  max-width: 860px;
   padding-bottom: 12px;
 
-  p { margin: 0; max-width: 65ch; line-height: 1.55; }
+  p {
+    margin: 0;
+    max-width: 65ch;
+    line-height: 1.55;
+  }
 
-  &__hero { @include card(24px, $radius-xl); @include stack($space-3); }
+  &__hero {
+    @include card(24px, $radius-xl);
+    @include stack($space-3);
+  }
 
-  &__eyebrow { @include eyebrow(12px); }
+  &__eyebrow {
+    @include eyebrow(12px);
+  }
 
-  &__title { font-size: clamp(26px, 5vw, 36px); line-height: 1.15; }
+  &__title {
+    font-size: clamp(26px, 5vw, 36px);
+    line-height: 1.15;
+  }
 
-  &__lead { font-size: 17px; }
+  &__lead {
+    font-size: 17px;
+  }
 
-  &__cta { align-self: flex-start; margin-top: $space-2; }
+  &__cta {
+    align-self: flex-start;
+    margin-top: $space-2;
+  }
 
-  &__section { @include stack($space-3); }
+  &__section {
+    @include stack($space-3);
+  }
 
-  &__heading { font-size: 21px; }
+  &__heading {
+    font-size: 21px;
+  }
 
-  &__note { color: var(--muted); font-size: 14px; }
+  &__note {
+    color: var(--muted);
+    font-size: 14px;
+  }
 
-  &__stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: $space-3; margin: 0; }
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: $space-3;
+    margin: 0;
+  }
 
   &__stat {
     background: var(--surface);
@@ -138,30 +177,77 @@ const mailto = computed(() => email
     padding: $space-4;
     box-shadow: $shadow-flat;
 
-    dt { color: var(--muted); font-size: 14px; font-weight: 700; }
+    dt {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
 
-    dd { margin: 0; font-family: var(--display); font-size: 30px; font-weight: 800; }
+    dd {
+      margin: 0;
+      font-family: var(--display);
+      font-size: 30px;
+      font-weight: 800;
+    }
   }
 
   // Testo e anteprima affiancati da tablet in su
   &__how {
-    @include mq(md) { display: grid; grid-template-columns: 1fr 320px; gap: $space-6; align-items: start; }
+    @include mq(md) {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: $space-6;
+      align-items: start;
+    }
   }
 
-  &__how-text { @include stack($space-3); }
+  &__how-text {
+    @include stack($space-3);
+  }
 
-  &__preview { display: flex; height: 440px; margin-top: $space-3; @include mq(md) { margin-top: 0; } }
+  &__preview {
+    display: flex;
+    height: 440px;
+    margin-top: $space-3;
 
-  &__list { margin: 0; padding-left: 1.2em; @include stack($space-2); line-height: 1.5; }
+    @include mq(md) {
+      margin-top: 0;
+    }
+  }
 
-  &__prices { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: $space-3; }
+  &__list {
+    margin: 0;
+    padding-left: 1.2em;
+    @include stack($space-2);
+    line-height: 1.5;
+  }
 
-  &__price { background: var(--surface); border-radius: $radius-md; padding: $space-4; box-shadow: $shadow-flat; @include stack($space-2); }
+  &__prices {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $space-3;
+  }
 
-  &__price-title { font-size: 17px; }
+  &__price {
+    background: var(--surface);
+    border-radius: $radius-md;
+    padding: $space-4;
+    box-shadow: $shadow-flat;
+    @include stack($space-2);
+  }
 
-  &__contact { @include card(24px, $radius-xl); }
+  &__price-title {
+    font-size: 17px;
+  }
 
-  &__mail { color: var(--ink); font-weight: 700; overflow-wrap: anywhere; }
+  &__contact {
+    @include card(24px, $radius-xl);
+  }
+
+  &__mail {
+    color: var(--ink);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
 }
 </style>

@@ -59,7 +59,7 @@ const config: StorybookConfig = {
           imports: [
             ...['useNuxtApp', 'useRuntimeConfig', 'useAppConfig', 'useFetch', 'useLazyFetch', 'useUserSession', 'useCookie',
               'useState', 'useHead', 'useSeoMeta', 'useRequestURL', 'navigateTo', 'useRoute', 'useRouter', 'useI18n',
-              'defineNuxtComponent', 'defineAppConfig', 'clearNuxtData', 'refreshNuxtData'].map(name => ({ name, from: root('.storybook/nuxt/app.ts') })),
+              'defineNuxtComponent', 'defineAppConfig', 'clearNuxtData', 'refreshNuxtData', 'definePageMeta'].map(name => ({ name, from: root('.storybook/nuxt/app.ts') })),
             { name: '$fetch', from: root('.storybook/nuxt/fetch.ts') },
           ],
         }),

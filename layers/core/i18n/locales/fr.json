@@ -169,7 +169,9 @@
     "wrongCode": "Code incorrect ou déjà utilisé. Réessaie avec le nouveau.",
     "totpRequired": "La vérification en deux étapes est nécessaire pour utiliser le panneau admin.",
     "totpAlreadyOn": "La vérification en deux étapes est déjà active.",
-    "totpNoSetup": "Recommence l'activation depuis le début."
+    "totpNoSetup": "Recommence l'activation depuis le début.",
+    "challengeStarted": "Le défi a déjà commencé : sa date ne peut plus changer",
+    "challengeEntriesLock": "Le défi a déjà des participants : on ne peut plus changer qui peut participer"
   },
   "auth": {
     "registerTitle": "Crée ton compte",

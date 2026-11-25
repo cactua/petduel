@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SPECIES, TRANSLATED_LOCALES, challengeFieldsSchema, type ChallengeList, type ChallengeSummary, type Species } from '#shared/models'
+import { SPECIES, TRANSLATED_LOCALES, challengeFieldsSchema, type ChallengeFields, type ChallengeList, type ChallengeSummary, type Species } from '#shared/models'
 import { LANGUAGES } from '../../../i18n/languages'
 import { speciesName } from '#shared/speciesNames'
 
@@ -21,10 +21,44 @@ function nextMonday() {
 const otherLanguages = LANGUAGES.filter(l => (TRANSLATED_LOCALES as string[]).includes(l.code))
 const emptyTranslations = () => Object.fromEntries(TRANSLATED_LOCALES.map(c => [c, { title: '', description: '' }]))
 
-const form = reactive({ title: '', description: '', translations: emptyTranslations(), emoji: '', species: null as Species | null, adoptionOnly: false, startDate: nextMonday() })
+const blank = () => ({ title: '', description: '', translations: emptyTranslations(), emoji: '', species: null as Species | null, adoptionOnly: false, startDate: nextMonday() })
+const form = reactive(blank())
 const error = ref('')
 const notice = ref('')
 const sending = ref(false)
+
+// Sfida in modifica: lo stesso modulo, riempito con i suoi campi. La data si blocca quando è iniziata,
+// specie e "solo rifugi" quando ha partecipanti
+const editing = ref<{ id: number, title: string, started: boolean, entries: number } | null>(null)
+const formEl = ref<HTMLFormElement>()
+const loadingId = ref<number | null>(null)
+
+async function edit(c: ChallengeSummary) {
+  error.value = ''
+  notice.value = ''
+  loadingId.value = c.id
+  try {
+    const fields = await $fetch<ChallengeFields & { started: boolean }>(`/api/admin/challenges/${c.id}`)
+    const { started, ...rest } = fields
+    Object.assign(form, blank(), rest, { translations: { ...emptyTranslations(), ...rest.translations } })
+    editing.value = { id: c.id, title: c.title, started, entries: c.entries }
+    await nextTick()
+    formEl.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    formEl.value?.querySelector<HTMLInputElement>('#c-title')?.focus({ preventScroll: true })
+  }
+  catch (e) {
+    error.value = errorMessage(e)
+  }
+  finally {
+    loadingId.value = null
+  }
+}
+
+function cancelEdit() {
+  editing.value = null
+  error.value = ''
+  Object.assign(form, blank())
+}
 
 async function create() {
   error.value = ''
@@ -39,6 +73,14 @@ async function create() {
   }
   sending.value = true
   try {
+    if (editing.value) {
+      await $fetch(`/api/admin/challenges/${editing.value.id}`, { method: 'PATCH', body: check.data })
+      notice.value = `Sfida “${check.data.title}” aggiornata.`
+      editing.value = null
+      Object.assign(form, blank())
+      await refresh()
+      return
+    }
     const res = await $fetch<{ slug: string, overlapping: number }>('/api/admin/challenges', { method: 'POST', body: check.data })
     notice.value = res.overlapping
       ? `Sfida creata. Nello stesso periodo ci sono altre ${res.overlapping} sfide: si giocheranno in parallelo.`
@@ -87,14 +129,24 @@ const scheduled = computed(() => [...(data.value?.current ?? []), ...(data.value
     <div class="challenge-admin__list">
       <div v-for="c in scheduled" :key="c.id" class="challenge-admin__item">
         <ChallengeCard :challenge="c" />
-        <button v-if="!c.entries" type="button" class="btn btn--danger btn--sm challenge-admin__remove" @click="remove(c)">
-          {{ confirming === c.id ? 'Conferma eliminazione' : 'Elimina' }}
-        </button>
+        <div class="challenge-admin__actions">
+          <button type="button" class="btn btn--ghost btn--sm" :aria-label="`Modifica ${c.title}`" :aria-pressed="editing?.id === c.id" :disabled="loadingId === c.id" @click="edit(c)">
+            {{ editing?.id === c.id ? 'In modifica' : 'Modifica' }}
+          </button>
+          <button v-if="!c.entries" type="button" class="btn btn--danger btn--sm" @click="remove(c)">
+            {{ confirming === c.id ? 'Conferma eliminazione' : 'Elimina' }}
+          </button>
+        </div>
       </div>
     </div>
 
-    <h2 class="admin-page__heading">Nuova sfida</h2>
-    <form class="challenge-admin__form" novalidate @submit.prevent="create">
+    <h2 id="c-form-title" class="admin-page__heading">{{ editing ? `Modifica: ${editing.title}` : 'Nuova sfida' }}</h2>
+    <form ref="formEl" class="challenge-admin__form" aria-labelledby="c-form-title" novalidate @submit.prevent="create">
+      <p v-if="editing && (editing.started || editing.entries)" class="challenge-admin__lock">
+        {{ editing.started ? 'È già iniziata: la data resta quella.' : '' }}
+        {{ editing.entries ? 'Ha già partecipanti: specie e rifugi restano quelli.' : '' }}
+        Titolo, descrizione, traduzioni ed emoji si possono sempre cambiare; l'indirizzo della sfida non cambia.
+      </p>
       <div class="challenge-admin__row">
         <div class="field challenge-admin__emoji">
           <label for="c-emoji" class="label">Emoji</label>
@@ -117,20 +169,23 @@ const scheduled = computed(() => [...(data.value?.current ?? []), ...(data.value
       <div class="challenge-admin__row">
         <div v-if="SPECIES.length" class="field challenge-admin__grow">
           <label for="c-species" class="label">Per chi</label>
-          <select id="c-species" v-model="form.species" class="input">
+          <select id="c-species" v-model="form.species" class="input" :disabled="!!editing?.entries">
             <option :value="null">Tutte le specie</option>
             <option v-for="s in SPECIES" :key="s" :value="s">Solo {{ speciesName(s, 'many').toLowerCase() }}</option>
           </select>
         </div>
         <div class="field challenge-admin__grow">
           <label for="c-start" class="label">Inizio (dura 7 giorni)</label>
-          <input id="c-start" v-model="form.startDate" type="date" class="input">
+          <input id="c-start" v-model="form.startDate" type="date" class="input" :disabled="editing?.started">
         </div>
       </div>
-      <label v-if="features.shelters" class="label challenge-admin__check"><input v-model="form.adoptionOnly" type="checkbox" class="challenge-admin__checkbox"> Solo per i pet dei rifugi che cercano casa</label>
+      <label v-if="features.shelters" class="label challenge-admin__check"><input v-model="form.adoptionOnly" type="checkbox" class="challenge-admin__checkbox" :disabled="!!editing?.entries"> Solo per i pet dei rifugi che cercano casa</label>
       <p v-if="error" class="error" role="alert">{{ error }}</p>
       <p v-if="notice" class="admin-page__notice" role="status">{{ notice }}</p>
-      <button type="submit" class="btn btn--primary btn--lg challenge-admin__submit" :disabled="sending">{{ sending ? 'Salvataggio…' : 'Programma la sfida' }}</button>
+      <div class="challenge-admin__submit">
+        <button type="submit" class="btn btn--primary btn--lg" :disabled="sending">{{ sending ? 'Salvataggio…' : editing ? 'Salva le modifiche' : 'Programma la sfida' }}</button>
+        <button v-if="editing" type="button" class="btn btn--ghost btn--lg" @click="cancelEdit">Annulla</button>
+      </div>
     </form>
   </section>
 </template>
@@ -142,7 +197,9 @@ const scheduled = computed(() => [...(data.value?.current ?? []), ...(data.value
 
   &__item { @include stack($space-2); }
 
-  &__remove { align-self: flex-start; }
+  &__actions { @include cluster($space-2); }
+
+  &__lock { margin: 0 0 $space-2; padding: $space-3 $space-4; border-radius: $radius-md; background: color-mix(in srgb, var(--line) 50%, var(--surface)); font-size: 14px; }
 
   &__form { @include card(18px, 24px); @include stack($space-2); max-width: 620px; }
 
@@ -162,6 +219,6 @@ const scheduled = computed(() => [...(data.value?.current ?? []), ...(data.value
 
   &__checkbox { width: 20px; height: 20px; margin: 0; padding: 0; accent-color: var(--coral); }
 
-  &__submit { margin-top: $space-3; }
+  &__submit { @include cluster($space-3); margin-top: $space-3; }
 }
 </style>

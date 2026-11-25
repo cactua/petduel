@@ -169,7 +169,9 @@
     "wrongCode": "Código incorrecto o ya usado. Inténtalo con el nuevo.",
     "totpRequired": "Para usar el panel de admin hace falta la verificación en dos pasos.",
     "totpAlreadyOn": "La verificación en dos pasos ya está activa.",
-    "totpNoSetup": "Vuelve a empezar la activación desde el principio."
+    "totpNoSetup": "Vuelve a empezar la activación desde el principio.",
+    "challengeStarted": "El reto ya ha empezado: la fecha ya no se puede cambiar",
+    "challengeEntriesLock": "El reto ya tiene participantes: ya no se puede cambiar quién puede participar"
   },
   "auth": {
     "registerTitle": "Crea tu cuenta",
