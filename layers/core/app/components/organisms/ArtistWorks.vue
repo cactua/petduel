@@ -3,7 +3,8 @@ import type { Artwork } from '#shared/models'
 
 // Organismo: immagini caricate da altri che indicano questa persona come artista.
 // Sul proprio profilo si può togliere il proprio nome ("non sono io") o segnalare un caricamento senza permesso
-const props = defineProps<{ artworks: Artwork[], isMe: boolean }>()
+// heading: false quando sta in una scheda del profilo che ha già il suo nome (il titolo resta per i lettori di schermo)
+const props = withDefaults(defineProps<{ artworks: Artwork[], isMe: boolean, heading?: boolean }>(), { heading: true })
 const emit = defineEmits<{ changed: [] }>()
 
 const confirming = ref<number | null>(null)
@@ -30,7 +31,7 @@ async function untag(a: Artwork) {
 
 <template>
   <section class="artist-works" aria-labelledby="artist-works-title">
-    <h2 id="artist-works-title" class="artist-works__title">🎨 {{ $t('artist.works', props.artworks.length) }}</h2>
+    <h2 id="artist-works-title" class="artist-works__title" :class="{ 'u-visually-hidden': !heading }">🎨 {{ $t('artist.works', props.artworks.length) }}</h2>
     <p v-if="isMe" class="artist-works__help">{{ $t('artist.worksHelp') }}</p>
     <p v-if="error" class="error" role="alert">{{ error }}</p>
     <ul class="artist-works__grid">

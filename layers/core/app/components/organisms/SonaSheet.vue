@@ -5,7 +5,9 @@ import { MAX_SONA_COLORS, type PetGallery, type SonaSheet } from '#shared/models
  * Scheda del personaggio (siti con site.sona): reference, descrizione, colori da copiare e regole per chi lo disegna.
  * Il proprietario la modifica qui sotto; gli altri vedono solo le parti compilate.
  */
-const props = defineProps<{ pet: PetGallery, editable?: boolean }>()
+// embedded: nella pagina del personaggio, sotto la galleria che ha già immagine, nome e Condividi:
+// qui resta solo la scheda (e la reference solo se scelta ed è diversa dalla copertina)
+const props = defineProps<{ pet: PetGallery, editable?: boolean, embedded?: boolean }>()
 const emit = defineEmits<{ changed: [] }>()
 const { t } = useI18n()
 
@@ -20,6 +22,8 @@ const facts = computed(() => [
   { k: t('sona.pronouns'), v: sona.value.pronouns },
   { k: t('sona.traits'), v: sona.value.traits },
 ].filter(f => f.v))
+const cover = computed(() => props.pet.photos.find(p => p.status === 'approved' && p.image) ?? null)
+const showRef = computed(() => !!ref_.value && (!props.embedded || (!!sona.value.refPhotoId && ref_.value.id !== cover.value?.id)))
 const hasSheet = computed(() => facts.value.length || sona.value.about || sona.value.palette.length || sona.value.yes.length || sona.value.no.length)
 
 // Visore a tutto schermo per la reference
@@ -71,8 +75,8 @@ const addColor = () => draft.palette.length < MAX_SONA_COLORS && draft.palette.p
 </script>
 
 <template>
-  <article class="sona" :aria-labelledby="`sona-${pet.id}`">
-    <div v-if="ref_" class="sona__ref">
+  <article v-if="!embedded || hasSheet || editable" class="sona" :aria-labelledby="`sona-${pet.id}`">
+    <div v-if="showRef && ref_" class="sona__ref">
       <!-- Versione adatta al riquadro: orizzontale su computer, verticale su telefono, alla larghezza giusta -->
       <picture><source v-for="s in photoSources(ref_.image, 'v', '(min-width: 1040px) 1000px, 92vw', 'h')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="ref_.image" :alt="$t('pet.photoOf', { name: pet.name })" class="sona__ref-img" loading="lazy"></picture>
       <span v-if="ref_.credit" class="sona__ref-credit">{{ $t('sona.refBy', { artist: ref_.credit.text }) }}</span>
@@ -83,8 +87,8 @@ const addColor = () => draft.palette.length < MAX_SONA_COLORS && draft.palette.p
 
     <div class="sona__body">
       <div class="sona__head">
-        <h2 :id="`sona-${pet.id}`" class="sona__name">{{ pet.name }}</h2>
-        <ShareCard :pet-id="pet.id" :pet-name="pet.name" />
+        <h2 :id="`sona-${pet.id}`" class="sona__name" :class="{ 'sona__name--small': embedded }">{{ embedded ? $t('sona.sheet') : pet.name }}</h2>
+        <ShareCard v-if="!embedded" :pet-id="pet.id" :pet-name="pet.name" />
       </div>
 
       <template v-if="!editing">
@@ -216,7 +220,12 @@ const addColor = () => draft.palette.length < MAX_SONA_COLORS && draft.palette.p
 
   &__head { display: flex; align-items: center; justify-content: space-between; gap: $space-4; flex-wrap: wrap; }
 
-  &__name { margin: 0; font-size: 26px; }
+  &__name {
+    margin: 0;
+    font-size: 26px;
+
+    &--small { font-size: 20px; }
+  }
 
   &__about { margin: 0; font-size: 16px; line-height: 1.5; white-space: pre-line; }
 

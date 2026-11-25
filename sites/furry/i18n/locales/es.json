@@ -98,7 +98,8 @@
       "other": "Otros personajes"
     },
     "addGuestHint": "Sube los dibujos de un nuevo personaje",
-    "pending": "{n} imagen está pendiente de aprobación: solo la ves tú hasta que un moderador la revise. | {n} imágenes están pendientes de aprobación: solo las ves tú hasta que un moderador las revise."
+    "pending": "{n} imagen está pendiente de aprobación: solo la ves tú hasta que un moderador la revise. | {n} imágenes están pendientes de aprobación: solo las ves tú hasta que un moderador las revise.",
+    "petCount": "{n} personaje | {n} personajes"
   },
   "challenges": {
     "lead": "Retos temáticos: inscribe a tu personaje con el dibujo adecuado, vota a los demás y gana el trofeo."

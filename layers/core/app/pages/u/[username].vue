@@ -98,18 +98,59 @@ async function shareProfile() {
   catch { /* condivisione annullata */ }
 }
 
-// --- Siti con le sona (furry): schede Personaggi, Galleria, Per altri ---
+// --- Testata: chi è, in una riga; i numeri che contano per chi visita, gli altri solo al proprietario ---
+const approvedCount = (p: Gallery) => p.photos.filter(ph => ph.status === 'approved').length
+const trophies = computed(() => pets.value.reduce((n, p) => n + p.trophies.length, 0))
+const subLine = computed(() => [
+  profile.value?.artist ? t('artist.badge') : '',
+  profile.value?.pronouns ?? '',
+  pets.value.length ? t('profile.petCount', { n: pets.value.length }, pets.value.length) : '',
+  trophies.value ? t('profile.trophyCount', { n: trophies.value }, trophies.value) : '',
+].filter(Boolean).join(' · '))
+// Al proprietario: cuori, chi lo segue, voti dati. Non stanno nella testata che vedono tutti
+const myStats = computed(() => profile.value?.isMe
+  ? [
+      { value: pets.value.reduce((n, p) => n + (p.wins ?? 0), 0), label: t('profile.statWins') },
+      { value: profile.value.followers ?? 0, label: t('follow.followers') },
+      { value: profile.value.votes, label: t('profile.statVotes') },
+    ]
+  : [])
+// Bio lunga: tre righe, poi "Altro"
+const bioOpen = ref(false)
+const bioLong = computed(() => (profile.value?.bio.length ?? 0) > 160 || (profile.value?.bio.split('\n').length ?? 0) > 3)
+const menuOpen = ref(false)
+
+// --- Siti con le sona (furry): un artista apre sui suoi disegni, gli altri sui personaggi ---
 const sonaMode = computed(() => HAS_SONA && !shelter.value)
-type Tab = 'characters' | 'gallery' | 'forOthers'
+type Tab = 'art' | 'characters' | 'gallery'
 const tabs = computed<Tab[]>(() => [
+  ...(profile.value?.artist && (profile.value.artworks.length || profile.value.isMe) ? ['art' as const] : []),
   ...(pets.value.length || profile.value?.isMe ? ['characters' as const] : []),
-  ...(pets.value.length ? ['gallery' as const] : []),
-  ...(profile.value?.artworks.length ? ['forOthers' as const] : []),
+  // Per un artista le immagini dei suoi personaggi stanno nelle loro pagine: la scheda Disegni basta
+  ...(!profile.value?.artist && pets.value.some(p => approvedCount(p)) ? ['gallery' as const] : []),
 ])
-const tab = ref<Tab>('characters')
+const tab = ref<Tab>(tabs.value[0] ?? 'characters')
+// Passando da un profilo a un altro (la pagina resta la stessa) si riparte dalla prima scheda
+watch(() => profile.value?.username, () => {
+  tab.value = tabs.value[0] ?? 'characters'
+})
 watchEffect(() => {
   if (tabs.value.length && !tabs.value.includes(tab.value)) tab.value = tabs.value[0]!
 })
+// Disegni: quelli per altri e quelli dei suoi personaggi
+const ownIds = computed(() => new Set(pets.value.map(p => p.id)))
+const artFilter = ref<'all' | 'others' | 'own'>('all')
+const artOthers = computed(() => profile.value?.artworks.filter(a => !ownIds.value.has(a.petId)) ?? [])
+const artOwn = computed(() => profile.value?.artworks.filter(a => ownIds.value.has(a.petId)) ?? [])
+const artItems = computed(() => artFilter.value === 'others' ? artOthers.value : artFilter.value === 'own' ? artOwn.value : profile.value?.artworks ?? [])
+const tabCount = (k: Tab) => k === 'art'
+  ? profile.value?.artworks.length ?? 0
+  : k === 'characters' ? pets.value.length : pets.value.reduce((n, p) => n + approvedCount(p), 0)
+
+// I vecchi link a un personaggio aperto nel profilo (?c=<id>) portano alla sua pagina
+if (HAS_SONA && route.query.c && pets.value.some(p => p.id === Number(route.query.c))) {
+  await navigateTo(entryUrl(Number(route.query.c)), { replace: true })
+}
 // Frecce sinistra/destra tra le schede, come si aspetta chi usa la tastiera
 const tabRefs = ref<HTMLButtonElement[]>([])
 function onTabKey(e: KeyboardEvent, i: number) {
@@ -119,14 +160,6 @@ function onTabKey(e: KeyboardEvent, i: number) {
   const next = (i + step + tabs.value.length) % tabs.value.length
   tab.value = tabs.value[next]!
   tabRefs.value[next]?.focus()
-}
-
-// Personaggio aperto: dal link (?c=<id>) o il primo
-const selectedId = ref<number | null>(Number(route.query.c) || null)
-const selected = computed(() => pets.value.find(p => p.id === selectedId.value) ?? pets.value[0] ?? null)
-function pick(id: number) {
-  selectedId.value = id
-  history.replaceState(history.state, '', `?c=${id}`)
 }
 
 // Galleria: tutte le immagini pubblicate dei suoi personaggi, filtrabili per personaggio
@@ -182,51 +215,82 @@ const viewerPhotos = computed(() => galleryItems.value.map(g => ({ image: g.imag
       <header v-else class="profile__card profile__hero" :class="{ 'profile__hero--banner': profile.banner || profile.isMe }">
         <ProfileMedia :profile="profile" @saved="refresh()">
           <div class="profile__names">
-            <span v-if="profile.artist" class="badge badge--soft">🎨 {{ $t('artist.badge') }}</span>
             <h1 class="profile__title">@{{ profile.username }}</h1>
-            <p class="profile__sub">{{ [profile.pronouns, $t('profile.since', { date: since })].filter(Boolean).join(' · ') }}</p>
+            <p v-if="subLine" class="profile__sub">
+              <span v-if="profile.artist" aria-hidden="true">🎨 </span>{{ subLine }}
+            </p>
           </div>
         </ProfileMedia>
-        <p v-if="profile.bio" class="profile__bio">{{ profile.bio }}</p>
+        <div v-if="profile.bio" class="profile__about">
+          <p :id="`bio-${profile.username}`" class="profile__bio" :class="{ 'is-clamped': bioLong && !bioOpen }">{{ profile.bio }}</p>
+          <button
+            v-if="bioLong" type="button" class="profile__more" :aria-expanded="bioOpen" :aria-controls="`bio-${profile.username}`"
+            @click="bioOpen = !bioOpen"
+          >
+            {{ bioOpen ? $t('profile.bioLess') : $t('profile.bioMore') }}
+          </button>
+        </div>
+
+        <!-- Commissioni: aperte in evidenza, con il bottone per chiederle; chiuse in una riga -->
+        <div v-if="profile.artist?.commissions === 'open'" class="profile__commissions">
+          <b class="profile__commissions-state">● {{ $t('artist.commissions.open') }}</b>
+          <a
+            v-if="profile.artist.commissionsUrl" :href="profile.artist.commissionsUrl" target="_blank" rel="noopener noreferrer nofollow ugc"
+            class="profile__commissions-ask"
+          >{{ $t('artist.ask') }} ↗</a>
+        </div>
+        <p v-else-if="profile.artist?.commissions === 'closed'" class="profile__sub">● {{ $t('artist.commissions.closed') }}</p>
         <!-- Pagine social dell'artista: link scritti da lui, quindi niente "follow" -->
         <ul v-if="profile.artist?.links.length" class="profile__links" :aria-label="$t('artist.links')">
           <li v-for="link in profile.artist.links" :key="link">
             <a :href="link" target="_blank" rel="noopener noreferrer nofollow ugc" class="btn btn--ghost profile__link">{{ linkLabel(link) }} ↗</a>
           </li>
         </ul>
-        <!-- Commissioni: aperte con il link per chiederle, o chiuse -->
-        <p v-if="profile.artist?.commissions" class="profile__commissions" :class="`profile__commissions--${profile.artist.commissions}`">
-          <a
-            v-if="profile.artist.commissions === 'open' && profile.artist.commissionsUrl" :href="profile.artist.commissionsUrl"
-            target="_blank" rel="noopener noreferrer nofollow ugc"
-          >● {{ $t('artist.commissions.open') }} ↗</a>
-          <span v-else>● {{ $t(`artist.commissions.${profile.artist.commissions}`) }}</span>
-        </p>
-        <dl class="profile__stats">
-          <div v-for="s in stats" :key="s.label" class="profile__stat"><dt class="profile__stat-label">{{ s.label }}</dt><dd class="profile__stat-value">{{ s.value }}</dd></div>
-        </dl>
-        <nav v-if="profile.isMe" class="profile__actions">
-          <NuxtLink to="/upload" class="btn btn--primary">+ {{ $t('profile.newPet') }}</NuxtLink>
-          <NuxtLink v-if="user?.role === 'admin'" to="/admin" class="btn btn--ghost">{{ $t('profile.admin') }}</NuxtLink>
-          <NuxtLink v-if="HAS_ARTISTS" to="/account" class="btn btn--ghost">🎨 {{ profile.artist ? $t('artist.edit') : $t('artist.become') }}</NuxtLink>
-          <NuxtLink to="/account#bio" class="btn btn--ghost">{{ $t('profile.aboutTitle') }}</NuxtLink>
-          <button type="button" class="btn btn--ghost" @click="shareProfile">{{ $t('profile.share') }}</button>
-        </nav>
-        <nav v-if="!profile.isMe && !profile.blocked" class="profile__actions">
-          <button type="button" class="btn" :class="following ? 'btn--ghost' : 'btn--primary'" :aria-pressed="following" :disabled="followBusy" @click="toggleFollow">
+
+        <!-- Azioni: una principale, condividi, e il resto (segnala, blocca) nel menu ⋯ -->
+        <div class="profile__actions">
+          <template v-if="profile.isMe">
+            <NuxtLink to="/upload" class="btn btn--primary">+ {{ $t('profile.newPet') }}</NuxtLink>
+            <NuxtLink to="/account#bio" class="btn btn--ghost">{{ $t('profile.edit') }}</NuxtLink>
+          </template>
+          <button
+            v-else-if="!profile.blocked" type="button" class="btn" :class="following ? 'btn--ghost' : 'btn--primary'" :aria-pressed="following" :disabled="followBusy"
+            @click="toggleFollow"
+          >
             {{ following ? `✓ ${$t('follow.following')}` : `+ ${$t('follow.follow')}` }}
           </button>
-          <button type="button" class="btn btn--ghost" @click="shareProfile">{{ $t('profile.share') }}</button>
-        </nav>
-        <p v-if="shareStatus" class="profile__sub" role="status">{{ shareStatus }}</p>
-        <div v-if="!profile.isMe" class="profile__report">
-          <ReportButton :username="profile.username" />
-          <button v-if="user" type="button" class="profile__block" @click="toggleBlock">
-            {{ profile.blocked ? $t('block.unblock') : confirmBlock ? $t('block.confirm') : $t('block.block') }}
+          <button type="button" class="profile__icon-btn" :aria-label="$t('profile.share')" :title="$t('profile.share')" @click="shareProfile">
+            <AppIcon name="share" />
           </button>
+          <!-- Si apre verso l'alto: la scheda della testata taglia ciò che esce (angoli arrotondati del banner) -->
+          <AppPopover v-if="!profile.isMe" v-model:open="menuOpen" role="group" align="end" placement="top" :label="$t('profile.more')">
+            <template #trigger="{ toggle, attrs }">
+              <button type="button" class="profile__icon-btn" :aria-label="$t('profile.more')" :title="$t('profile.more')" v-bind="attrs" @click="toggle">
+                <AppIcon name="more" />
+              </button>
+            </template>
+            <span class="profile__menu">
+              <ReportButton :username="profile.username" class="profile__menu-item" />
+              <button v-if="user" type="button" class="profile__menu-item profile__block" @click="toggleBlock">
+                {{ profile.blocked ? $t('block.unblock') : confirmBlock ? $t('block.confirm') : $t('block.block') }}
+              </button>
+            </span>
+          </AppPopover>
         </div>
+        <p v-if="shareStatus" class="profile__sub" role="status">{{ shareStatus }}</p>
         <p v-if="profile.blocked && !profile.isMe" class="profile__blocked" role="status">🚫 {{ $t('block.active') }}</p>
       </header>
+
+      <!-- Solo al proprietario: numeri e scorciatoie che agli altri non servono -->
+      <section v-if="profile.isMe && !shelter" class="profile__mine" :aria-label="$t('profile.mine')">
+        <dl class="profile__mine-stats">
+          <div v-for="s in myStats" :key="s.label" class="profile__mine-stat"><dt>{{ s.label }}</dt><dd>{{ s.value }}</dd></div>
+        </dl>
+        <nav class="profile__mine-links">
+          <NuxtLink v-if="HAS_ARTISTS" to="/account">🎨 {{ profile.artist ? $t('artist.edit') : $t('artist.become') }}</NuxtLink>
+          <NuxtLink v-if="user?.role === 'admin'" to="/admin">{{ $t('profile.admin') }}</NuxtLink>
+        </nav>
+      </section>
 
       <!-- Solo per chi gestisce il rifugio: tutto quello che serve, a un tocco -->
       <section v-if="profile.isMe && manage?.status === 'approved'" class="profile__card profile__manage" aria-labelledby="manage-title">
@@ -270,7 +334,7 @@ const viewerPhotos = computed(() => galleryItems.value.map(g => ({ image: g.imag
         {{ $t('profile.pending', pending) }}
       </p>
 
-      <!-- Siti con le sona: tre schede invece della lista lunga -->
+      <!-- Siti con le sona: due schede, che restano in alto mentre si scorre -->
       <template v-if="sonaMode">
         <div v-if="tabs.length > 1" role="tablist" :aria-label="$t('sona.tabs.label')" class="profile__tabs">
           <button
@@ -278,26 +342,41 @@ const viewerPhotos = computed(() => galleryItems.value.map(g => ({ image: g.imag
             :aria-selected="tab === k" :aria-controls="`panel-${k}`" :tabindex="tab === k ? 0 : -1"
             @click="tab = k" @keydown="onTabKey($event, i)"
           >
-            {{ $t(`sona.tabs.${k}`) }}
-            <span v-if="k === 'gallery'" class="profile__tab-count">{{ pets.reduce((n, p) => n + p.photos.filter(ph => ph.status === 'approved').length, 0) }}</span>
+            {{ $t(`sona.tabs.${k}`) }} <span class="profile__tab-count">{{ tabCount(k) }}</span>
           </button>
         </div>
 
-        <section v-if="tab === 'characters'" id="panel-characters" role="tabpanel" aria-labelledby="tab-characters" class="profile__panel">
-          <div v-if="pets.length > 1" role="group" :aria-label="$t('sona.pick')" class="profile__chars">
-            <button
-              v-for="p in pets" :key="p.id" type="button" class="profile__char" :aria-pressed="selected?.id === p.id"
-              @click="pick(p.id)"
-            >
-              <picture v-if="thumb(p)"><source v-for="s in photoSources(thumb(p), 's', '34px')" :key="s.type" v-bind="s"><img :src="thumb(p)" alt="" class="profile__char-thumb"></picture>
-              <span v-else class="profile__char-thumb profile__char-thumb--empty" aria-hidden="true">{{ p.name[0] }}</span>
-              {{ p.name }}
-            </button>
+        <!-- Disegni dell'artista: per altri e per i suoi personaggi -->
+        <section v-if="tab === 'art'" id="panel-art" role="tabpanel" aria-labelledby="tab-art" class="profile__panel">
+          <div v-if="artOthers.length && artOwn.length" role="group" :aria-label="$t('sona.tabs.art')" class="profile__filter">
+            <button type="button" class="chip" :aria-pressed="artFilter === 'all'" @click="artFilter = 'all'">{{ $t('sona.all') }}</button>
+            <button type="button" class="chip" :aria-pressed="artFilter === 'others'" @click="artFilter = 'others'">{{ $t('sona.artOthers') }} <span class="profile__filter-count">{{ artOthers.length }}</span></button>
+            <button type="button" class="chip" :aria-pressed="artFilter === 'own'" @click="artFilter = 'own'">{{ profile.isMe ? $t('sona.artOwnMine') : $t('sona.artOwn') }} <span class="profile__filter-count">{{ artOwn.length }}</span></button>
           </div>
-          <template v-if="selected">
-            <SonaSheet :key="selected.id" :pet="selected" :editable="profile.isMe" @changed="refresh()" />
-            <PetGallery :id="`pet-${selected.id}`" :key="`g${selected.id}`" :pet="selected" :editable="profile.isMe" link-title class="profile__pet" @changed="refresh()" @deleted="refresh()" />
-          </template>
+          <ArtistWorks v-if="artItems.length" :artworks="artItems" :is-me="profile.isMe" :heading="false" @changed="refresh()" />
+          <p v-else class="profile__empty">{{ $t('sona.artEmpty') }}</p>
+          <p v-if="profile.isMe" class="hint">💡 {{ $t('sona.artHint') }}</p>
+        </section>
+
+        <!-- Personaggi: un indice; scheda, immagini e gestione stanno nella pagina di ognuno -->
+        <section v-else-if="tab === 'characters'" id="panel-characters" role="tabpanel" aria-labelledby="tab-characters" class="profile__panel">
+          <ul v-if="pets.length" class="profile__chars">
+            <li v-for="p in pets" :key="p.id">
+              <NuxtLink :to="entryUrl(p.id)" class="profile__char">
+                <picture v-if="thumb(p)"><source v-for="s in photoSources(thumb(p), 'v', '(min-width: 760px) 240px, 46vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="thumb(p)" alt="" loading="lazy" class="profile__char-img"></picture>
+                <span v-else class="profile__char-img profile__char-img--empty" aria-hidden="true">{{ p.name[0] }}</span>
+                <span class="profile__char-text">
+                  <b class="profile__char-name">{{ p.name }}</b>
+                  <small class="profile__char-meta">{{ [p.sona?.species, p.sona?.pronouns, $t('sona.imageCount', { n: approvedCount(p) }, approvedCount(p))].filter(Boolean).join(' · ') }}</small>
+                  <small v-if="profile.isMe && p.photos.some(ph => ph.status === 'pending')" class="profile__char-pending">{{ $t('sona.inReview', { n: p.photos.filter(ph => ph.status === 'pending').length }) }}</small>
+                  <small v-else-if="p.badges[0]" class="profile__char-badge"><span aria-hidden="true">{{ p.badges[0].emoji }}</span> {{ $t(`badges.${p.badges[0].key}.name`) }}</small>
+                </span>
+              </NuxtLink>
+            </li>
+            <li v-if="profile.isMe">
+              <NuxtLink to="/upload" class="profile__char profile__char--add">+ {{ $t('profile.newPet') }}</NuxtLink>
+            </li>
+          </ul>
           <div v-else class="profile__empty">
             <p>{{ profile.isMe ? $t('profile.noPetsMine') : $t('profile.noPets') }}</p>
             <NuxtLink v-if="profile.isMe" to="/upload" class="btn btn--primary btn--lg">{{ $t('profile.uploadFirst') }}</NuxtLink>
@@ -322,10 +401,6 @@ const viewerPhotos = computed(() => galleryItems.value.map(g => ({ image: g.imag
           </ul>
           <p v-else class="profile__empty">{{ $t('sona.galleryEmpty') }}</p>
           <PhotoViewer v-model="viewing" :photos="viewerPhotos" />
-        </section>
-
-        <section v-else-if="tab === 'forOthers'" id="panel-forOthers" role="tabpanel" aria-labelledby="tab-forOthers" class="profile__panel">
-          <ArtistWorks :artworks="profile.artworks" :is-me="profile.isMe" class="profile__card" @changed="refresh()" />
         </section>
       </template>
 
@@ -369,6 +444,7 @@ const viewerPhotos = computed(() => galleryItems.value.map(g => ({ image: g.imag
       </div>
       </template>
 
+      <p v-if="!shelter" class="profile__since">{{ $t('profile.since', { date: since }) }}</p>
       <!-- Invito discreto per chi non gestisce ancora un rifugio -->
       <NuxtLink v-if="profile.isMe && !manage && features.shelters" to="/my-shelter" class="profile__become">🏠 {{ $t('profile.becomeShelter') }} →</NuxtLink>
     </template>
@@ -465,7 +541,46 @@ $adoption-dots: (
 
   &__stat-label { @include eyebrow; }
 
-  &__actions { @include cluster($space-3); }
+  &__actions { display: flex; flex-wrap: wrap; align-items: center; gap: $space-3; }
+
+  // Condividi e ⋯: tondi, 44px come gli altri bottoni
+  &__icon-btn {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 2px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+
+    &:hover, &:focus-visible, &[aria-expanded="true"] { border-color: var(--ink); }
+  }
+
+  // Menu ⋯: Segnala e Blocca, uno sotto l'altro
+  &__menu { display: flex; flex-direction: column; align-items: stretch; gap: 2px; min-width: 150px; }
+
+  &__menu-item {
+    :deep(.report-button__open), &.profile__block {
+      width: 100%;
+      min-height: 40px;
+      padding: 6px 8px;
+      border: 0;
+      border-radius: 8px;
+      background: none;
+      color: inherit;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      text-align: left;
+      opacity: 1;
+      cursor: pointer;
+
+      &:hover, &:focus-visible { background: color-mix(in srgb, var(--bg) 18%, transparent); text-decoration: none; }
+    }
+  }
 
   &__links {
     @include cluster($space-2);
@@ -492,28 +607,110 @@ $adoption-dots: (
     &:hover, &:focus-visible { opacity: 1; text-decoration: underline; }
   }
 
+  // Commissioni aperte: un riquadro verde con il bottone per chiederle
   &__commissions {
-    margin: 0;
-    font-weight: 800;
-    font-size: 14px;
-
-    a { color: inherit; }
-
-    &--open { color: color-mix(in srgb, var(--mint) 60%, var(--ink)); }
-
-    &--closed { color: var(--muted); }
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-3;
+    padding: 10px 10px 10px 14px;
+    border-radius: $radius-md;
+    background: color-mix(in srgb, var(--mint) 16%, var(--surface));
+    // Su computer non a tutta larghezza: è un riquadro, non una barra
+    max-width: 520px;
   }
 
-  &__bio { margin: 0; font-size: 16px; line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
+  &__commissions-state { font-size: 15px; color: color-mix(in srgb, var(--mint) 45%, var(--ink)); }
+
+  &__commissions-ask {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: $radius-pill;
+    // Testo bianco: verde scurito per restare sopra 4.5:1
+    background: color-mix(in srgb, var(--mint) 55%, #000);
+    color: #fff;
+    font-weight: 900;
+    font-size: 14px;
+    text-decoration: none;
+
+    &:hover, &:focus-visible { background: color-mix(in srgb, var(--mint) 40%, #000); }
+  }
+
+  &__about { @include stack($space-1); align-items: flex-start; }
+
+  &__bio {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+
+    &.is-clamped { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  }
+
+  &__more {
+    padding: 4px 0;
+    min-height: 32px;
+    border: 0;
+    background: none;
+    color: var(--link);
+    font: inherit;
+    font-weight: 900;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  // Solo al proprietario: numeri in una riga e scorciatoie
+  &__mine {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-3 $space-6;
+    padding: 10px 14px;
+    border-radius: $radius-md;
+    border: 2px dashed var(--line);
+  }
+
+  &__mine-stats { display: flex; flex-wrap: wrap; gap: $space-6; margin: 0; }
+
+  &__mine-stat {
+    display: flex;
+    flex-direction: column-reverse;
+
+    dt { @include eyebrow; }
+
+    dd { margin: 0; font-family: var(--display); font-weight: 700; font-size: 20px; color: var(--coral); font-variant-numeric: tabular-nums; }
+  }
+
+  &__mine-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2 $space-5;
+
+    a { color: var(--link); font-weight: 800; font-size: 14px; }
+  }
+
+  &__since { margin: 0; text-align: center; color: var(--muted); font-size: 13px; font-weight: 700; }
 
   // Schede (siti con le sona)
+  // Restano in alto mentre si scorre: si cambia scheda senza tornare su
   &__tabs {
+    position: sticky;
+    top: 8px;
+    z-index: 5;
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
     padding: 4px;
     border-radius: $radius-pill;
-    background: color-mix(in srgb, var(--line) 70%, var(--bg));
+    background: var(--surface);
+    box-shadow: 0 10px 24px -16px var(--shadow);
   }
 
   &__tab {
@@ -527,52 +724,82 @@ $adoption-dots: (
     font-size: 15px;
     cursor: pointer;
 
-    &[aria-selected="true"] { background: var(--surface); box-shadow: 0 1px 4px var(--shadow); }
+    &[aria-selected="true"] { background: var(--ink); color: var(--bg); }
   }
 
-  &__tab-count { color: var(--muted); font-weight: 700; }
+  &__tab-count {
+    color: var(--muted);
+    font-weight: 700;
+
+    [aria-selected="true"] > & { color: inherit; opacity: .75; }
+  }
 
   &__panel { @include stack($space-6); }
 
-  &__chars { @include cluster($space-3); }
-
-  &__char {
-    display: inline-flex;
-    align-items: center;
-    gap: $space-3;
-    min-height: 44px;
-    padding: 4px 14px 4px 4px;
-    border-radius: $radius-pill;
-    border: 2px solid var(--line);
-    background: var(--surface);
-    color: var(--ink);
-    font: inherit;
-    font-weight: 800;
-    font-size: 14px;
-    cursor: pointer;
-
-    &[aria-pressed="true"] { border-color: var(--action); box-shadow: inset 0 0 0 1px var(--action); }
-  }
-
-  &__char-thumb {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    object-fit: cover;
-
-    &--empty { display: grid; place-items: center; background: var(--coral-soft); }
-  }
-
-  &__grid {
+  // Personaggi: una griglia di schede che portano alla pagina di ognuno
+  &__chars {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(46%, 220px), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(46%, 200px), 1fr));
     gap: $space-4;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  &__tile-art { @include card(6px, $radius-lg); @include stack($space-2); }
+  &__char {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: $shadow-card;
+    @include plain-link(var(--ink));
+
+    &:hover .profile__char-name, &:focus-visible .profile__char-name { color: var(--link); }
+
+    &--add {
+      min-height: 180px;
+      align-items: center;
+      justify-content: center;
+      padding: $space-5;
+      background: transparent;
+      box-shadow: none;
+      border: 2px dashed var(--line);
+      color: var(--link);
+      font-weight: 900;
+      text-align: center;
+    }
+  }
+
+  &__char-img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    background: var(--bg);
+
+    &--empty { display: grid; place-items: center; font-family: var(--display); font-size: 40px; color: var(--muted); }
+  }
+
+  &__char-text { @include stack(1px); padding: 10px 12px 12px; min-width: 0; }
+
+  &__char-name { font-family: var(--display); font-weight: 600; font-size: 18px; line-height: 1.15; overflow-wrap: anywhere; }
+
+  &__char-meta { color: var(--muted); font-size: 13px; font-weight: 700; }
+
+  &__char-badge, &__char-pending { font-size: 12px; font-weight: 800; color: var(--ink); }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(31%, 180px), 1fr));
+    gap: $space-2;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__tile-art { @include stack($space-1); min-width: 0; }
 
   &__art-open { border: 0; padding: 0; background: none; cursor: zoom-in; border-radius: $radius-md; }
 
@@ -652,7 +879,16 @@ $adoption-dots: (
 
   &__pets-title { font-size: 22px; }
 
-  &__filter { @include cluster($space-2); }
+  // Filtri: una fila che scorre sui telefoni invece di andare a capo
+  &__filter {
+    display: flex;
+    gap: $space-2;
+    @include scroll-row;
+
+    > * { flex-shrink: 0; }
+
+    @include mq(md) { flex-wrap: wrap; overflow: visible; }
+  }
 
   &__filter-count {
     color: var(--muted);

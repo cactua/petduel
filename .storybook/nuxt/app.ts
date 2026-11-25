@@ -10,7 +10,8 @@ import { SITES_WITH_SHELTERS, currentSiteId } from './site'
 // ── Router: una sola rotta che accetta tutto, così i link interni funzionano senza pagine ──
 export const router = createRouter({
   history: createMemoryHistory(),
-  routes: [{ path: '/:path(.*)*', component: { render: () => null } }],
+  // /u/<utente>: le storie delle pagine profilo leggono il nome da route.params, come in Nuxt
+  routes: [{ path: '/u/:username', component: { render: () => null } }, { path: '/:path(.*)*', component: { render: () => null } }],
 })
 export const useRoute = vueUseRoute
 export const useRouter = vueUseRouter

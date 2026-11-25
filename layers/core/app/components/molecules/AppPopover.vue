@@ -6,7 +6,11 @@ const props = withDefaults(defineProps<{
   placement?: 'bottom' | 'top'
   /** Etichetta accessibile del fumetto */
   label?: string
-}>(), { placement: 'bottom', label: undefined })
+  /** "status" per un testo che si legge; "group" quando dentro ci sono bottoni (un piccolo menu) */
+  role?: 'status' | 'group'
+  /** Da che lato si allinea il fumetto: al centro del bottone o al suo bordo destro (bottoni in fondo alla riga) */
+  align?: 'center' | 'end'
+}>(), { placement: 'bottom', label: undefined, role: 'status', align: 'center' })
 
 const open = defineModel<boolean>('open', { default: false })
 
@@ -35,7 +39,8 @@ function onPointerDown(e: PointerEvent) {
   if (root.value && !root.value.contains(e.target as Node)) close()
 }
 function onKey(e: KeyboardEvent) {
-  if (e.key !== 'Escape') return
+  // Con un foglio aperto da dentro il fumetto (es. Segnala) Esc chiude prima quello
+  if (e.key !== 'Escape' || document.querySelector('dialog[open]')) return
   close()
   root.value?.querySelector<HTMLElement>('[aria-controls]')?.focus()
 }
@@ -57,11 +62,11 @@ onBeforeUnmount(() => listen(false))
 </script>
 
 <template>
-  <span ref="root" class="app-popover" :class="`app-popover--${props.placement}`">
+  <span ref="root" class="app-popover" :class="[`app-popover--${props.placement}`, `app-popover--${props.align}`]">
     <slot name="trigger" :open="open" :toggle="toggle" :attrs="{ 'aria-expanded': open, 'aria-controls': id }" />
     <Transition name="app-popover">
       <span
-        v-if="open" :id="id" ref="bubble" class="app-popover__bubble" role="status" :aria-label="label"
+        v-if="open" :id="id" ref="bubble" class="app-popover__bubble" :role="props.role" :aria-label="label"
         :style="{ '--shift': `${shift}px` }"
       >
         <slot />
@@ -111,6 +116,15 @@ onBeforeUnmount(() => listen(false))
     top: calc(100% + var(--gap));
 
     &::before { top: -5px; }
+  }
+
+  // Allineato al bordo destro del bottone: la freccia resta sul bottone
+  &--end &__bubble {
+    left: auto;
+    right: 0;
+    transform: translateX(var(--shift, 0px));
+
+    &::before { left: auto; right: calc(var(--anchor, 22px) - 6px - var(--shift, 0px)); }
   }
 
   &--top &__bubble {

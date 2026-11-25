@@ -432,7 +432,15 @@
       "needCharacter": "To upload an image, create a character first.",
       "addTo": "Add it to",
       "reviewHint": "The image is reviewed like the others (kept out of duels): others will see it once it’s approved."
-    }
+    },
+    "more": "More actions",
+    "edit": "Edit profile",
+    "mine": "Only you can see this",
+    "petCount": "{n} entry | {n} entries",
+    "trophyCount": "{n} challenge won | {n} challenges won",
+    "bioMore": "More",
+    "bioLess": "Less",
+    "addNew": "Add"
   },
   "challenges": {
     "title": "Weekly challenges",
@@ -611,7 +619,8 @@
       "open": "Commissions open",
       "closed": "Commissions closed",
       "url": "Where to ask (link)"
-    }
+    },
+    "ask": "Ask"
   },
   "report": {
     "open": "Report",
@@ -731,8 +740,9 @@
     "tabs": {
       "label": "Profile sections",
       "characters": "Characters",
-      "gallery": "Gallery",
-      "forOthers": "For others"
+      "gallery": "All images",
+      "forOthers": "For others",
+      "art": "Artwork"
     },
     "pick": "Choose the character",
     "species": "Species",
@@ -762,7 +772,15 @@
     "refPick": "Image to use as reference",
     "refAuto": "The most recent",
     "galleryEmpty": "No images yet.",
-    "all": "All"
+    "all": "All",
+    "artOthers": "For others",
+    "artOwn": "Own characters",
+    "artOwnMine": "Your characters",
+    "artEmpty": "No artwork yet.",
+    "artHint": "These are the images that name you as the artist. Did you draw one of your own characters? Open the character, tap Manage and name yourself as the artist.",
+    "imageCount": "{n} image | {n} images",
+    "inReview": "{n} in review",
+    "sheet": "Character sheet"
   },
   "advertise": {
     "link": "Advertise",

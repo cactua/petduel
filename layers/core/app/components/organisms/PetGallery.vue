@@ -573,7 +573,7 @@ $scrim: rgba(30, 15, 5, .7);
     cursor: pointer;
   }
 
-  &__row-artist-edit { color: var(--coral-deep); font-weight: 900; text-decoration: underline; text-underline-offset: 2px; }
+  &__row-artist-edit { color: var(--link); font-weight: 900; text-decoration: underline; text-underline-offset: 2px; }
 
   &__row-credit { flex-basis: 100%; @include stack($space-3); padding: $space-3 $space-2 $space-2; border-top: 2px dashed var(--line); }
 

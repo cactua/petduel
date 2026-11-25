@@ -432,7 +432,15 @@
       "needCharacter": "Pour envoyer une image, crée d’abord un personnage.",
       "addTo": "L’ajouter à",
       "reviewHint": "L’image est vérifiée comme les autres (hors des duels) : les autres la verront une fois approuvée."
-    }
+    },
+    "more": "Autres actions",
+    "edit": "Modifier le profil",
+    "mine": "Visible par toi seulement",
+    "petCount": "{n} participant | {n} participants",
+    "trophyCount": "{n} défi gagné | {n} défis gagnés",
+    "bioMore": "Plus",
+    "bioLess": "Moins",
+    "addNew": "Ajouter"
   },
   "challenges": {
     "title": "Défis hebdomadaires",
@@ -611,7 +619,8 @@
       "open": "Commissions ouvertes",
       "closed": "Commissions fermées",
       "url": "Où les demander (lien)"
-    }
+    },
+    "ask": "Demander"
   },
   "report": {
     "open": "Signaler",
@@ -731,8 +740,9 @@
     "tabs": {
       "label": "Sections du profil",
       "characters": "Personnages",
-      "gallery": "Galerie",
-      "forOthers": "Pour d'autres"
+      "gallery": "Toutes les images",
+      "forOthers": "Pour d'autres",
+      "art": "Dessins"
     },
     "pick": "Choisis le personnage",
     "species": "Espèce",
@@ -762,7 +772,15 @@
     "refPick": "Image à utiliser comme référence",
     "refAuto": "La plus récente",
     "galleryEmpty": "Pas encore d'images.",
-    "all": "Tous"
+    "all": "Tous",
+    "artOthers": "Pour d'autres",
+    "artOwn": "Ses personnages",
+    "artOwnMine": "Tes personnages",
+    "artEmpty": "Pas encore de dessins.",
+    "artHint": "Voici les images qui t'indiquent comme artiste. Tu as dessiné un de tes personnages ? Ouvre le personnage, touche Gérer et indique-toi comme artiste.",
+    "imageCount": "{n} image | {n} images",
+    "inReview": "{n} en vérification",
+    "sheet": "Fiche du personnage"
   },
   "advertise": {
     "link": "Publicité",

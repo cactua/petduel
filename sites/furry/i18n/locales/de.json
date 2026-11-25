@@ -98,7 +98,8 @@
       "other": "Weitere Charaktere"
     },
     "addGuestHint": "Zeichnungen eines neuen Charakters hochladen",
-    "pending": "{n} Bild wartet auf Freigabe: Nur du siehst es, bis ein Moderator es prüft. | {n} Bilder warten auf Freigabe: Nur du siehst sie, bis ein Moderator sie prüft."
+    "pending": "{n} Bild wartet auf Freigabe: Nur du siehst es, bis ein Moderator es prüft. | {n} Bilder warten auf Freigabe: Nur du siehst sie, bis ein Moderator sie prüft.",
+    "petCount": "{n} Charakter | {n} Charaktere"
   },
   "challenges": {
     "lead": "Challenges mit Thema: Melde deinen Charakter mit der passenden Zeichnung an, stimm für die anderen ab und hol dir die Trophäe."

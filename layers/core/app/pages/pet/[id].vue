@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import site from '#site'
-import { rankingPath, type MyShelter, type PetGallery } from '#shared/models'
+import { HAS_SONA, rankingPath, type MyShelter, type PetGallery } from '#shared/models'
 
 const route = useRoute()
 const { data: pet, error, refresh } = await useFetch<PetGallery & { isMine: boolean, speciesRank: number | null }>(
@@ -71,6 +71,8 @@ useSeoMeta({
           </div>
         </template>
       </PetGallery>
+      <!-- Siti con le sona: la scheda del personaggio (reference, colori, regole) sta qui, non più nel profilo -->
+      <SonaSheet v-if="HAS_SONA" :pet="pet" :editable="pet.isMine" embedded @changed="refresh()" />
       <PetCompliments v-if="isPublic" :pet-id="pet.id" />
       <AdoptionCard :pet="pet" :manage="manage" @changed="refresh()" />
     </template>

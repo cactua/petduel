@@ -98,7 +98,8 @@
       "other": "Other characters"
     },
     "addGuestHint": "Upload drawings of a new character",
-    "pending": "{n} image is awaiting approval: only you can see it until a moderator checks it. | {n} images are awaiting approval: only you can see them until a moderator checks them."
+    "pending": "{n} image is awaiting approval: only you can see it until a moderator checks it. | {n} images are awaiting approval: only you can see them until a moderator checks them.",
+    "petCount": "{n} character | {n} characters"
   },
   "challenges": {
     "lead": "Themed challenges: enter your character with the right drawing, vote for the others and win the trophy."

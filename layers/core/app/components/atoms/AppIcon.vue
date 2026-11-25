@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Icone disegnate a mano per PetDuel: tratto arrotondato, colore dal testo
-defineProps<{ name: 'paw' | 'flag' | 'podium' | 'camera' | 'face' | 'share' | 'login' | 'shield' | 'sun' | 'moon' | 'home' | 'bell' | 'auto' | 'heart' | 'star' | 'sparkle' }>()
+defineProps<{ name: 'paw' | 'flag' | 'podium' | 'camera' | 'face' | 'share' | 'login' | 'shield' | 'sun' | 'moon' | 'home' | 'bell' | 'auto' | 'heart' | 'star' | 'sparkle' | 'more' }>()
 </script>
 
 <template>
@@ -26,6 +26,7 @@ defineProps<{ name: 'paw' | 'flag' | 'podium' | 'camera' | 'face' | 'share' | 'l
     <path v-else-if="name === 'home'" d="M4 11 12 4l8 7M6 9.5V20h12V9.5M10 20v-5h4v5" />
     <path v-else-if="name === 'bell'" d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20.5a2 2 0 0 0 4 0" />
     <g v-else-if="name === 'auto'"><circle cx="12" cy="12" r="8" /><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" /></g>
+    <g v-else-if="name === 'more'" fill="currentColor" stroke="none"><circle cx="5" cy="12" r="2" /><circle cx="12" cy="12" r="2" /><circle cx="19" cy="12" r="2" /></g>
     <path v-else-if="name === 'moon'" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />
   </svg>
 </template>

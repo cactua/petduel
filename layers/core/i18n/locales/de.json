@@ -432,7 +432,15 @@
       "needCharacter": "Um ein Bild hochzuladen, erstelle zuerst einen Charakter.",
       "addTo": "Hinzufügen zu",
       "reviewHint": "Das Bild wird wie die anderen geprüft (nicht in Duellen): Andere sehen es nach der Freigabe."
-    }
+    },
+    "more": "Weitere Aktionen",
+    "edit": "Profil bearbeiten",
+    "mine": "Nur für dich sichtbar",
+    "petCount": "{n} Teilnehmer*in | {n} Teilnehmende",
+    "trophyCount": "{n} Challenge gewonnen | {n} Challenges gewonnen",
+    "bioMore": "Mehr",
+    "bioLess": "Weniger",
+    "addNew": "Hinzufügen"
   },
   "challenges": {
     "title": "Wöchentliche Challenges",
@@ -611,7 +619,8 @@
       "open": "Aufträge offen",
       "closed": "Aufträge geschlossen",
       "url": "Wo man anfragt (Link)"
-    }
+    },
+    "ask": "Anfragen"
   },
   "report": {
     "open": "Melden",
@@ -731,8 +740,9 @@
     "tabs": {
       "label": "Profilbereiche",
       "characters": "Charaktere",
-      "gallery": "Galerie",
-      "forOthers": "Für andere"
+      "gallery": "Alle Bilder",
+      "forOthers": "Für andere",
+      "art": "Zeichnungen"
     },
     "pick": "Charakter wählen",
     "species": "Spezies",
@@ -762,7 +772,15 @@
     "refPick": "Bild als Referenz",
     "refAuto": "Das neueste",
     "galleryEmpty": "Noch keine Bilder.",
-    "all": "Alle"
+    "all": "Alle",
+    "artOthers": "Für andere",
+    "artOwn": "Eigene Charaktere",
+    "artOwnMine": "Deine Charaktere",
+    "artEmpty": "Noch keine Zeichnungen.",
+    "artHint": "Hier sind die Bilder, die dich als Künstler*in nennen. Hast du einen eigenen Charakter gezeichnet? Öffne den Charakter, tippe auf Verwalten und gib dich selbst als Künstler*in an.",
+    "imageCount": "{n} Bild | {n} Bilder",
+    "inReview": "{n} in Prüfung",
+    "sheet": "Charakterbogen"
   },
   "advertise": {
     "link": "Werbung",

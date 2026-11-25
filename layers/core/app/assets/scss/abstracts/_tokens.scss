@@ -8,6 +8,8 @@ $theme-light: (
   coral: #ff6f61,
   coral-deep: #e85a4c,
   coral-soft: #ffe3dc,
+  // Testo-link e piccole scritte d'accento: almeno 4.5:1 sullo sfondo di ogni tema
+  link: #b3402f,
   // Corallo più deciso per i pulsanti con testo bianco: contrasto almeno 4.5:1
   action: #d2412f,
   sun: #ffc83d,
@@ -39,6 +41,7 @@ $theme-dark: (
   coral: #ff7f72,
   coral-deep: #c94c40,
   coral-soft: #4a2a27,
+  link: #ff9b8f,
   action: #c94c40,
   sun: #ffd15c,
   sun-deep: #b98500,
