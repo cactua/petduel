@@ -123,7 +123,7 @@ async function removePet() {
 }
 
 // Prossima fascia di cuori da raggiungere (la vede solo il proprietario)
-// Traguardo aperto: un tocco ne mostra la spiegazione (il title non basta sui telefoni)
+// Traguardo aperto: un tocco ne mostra la spiegazione in un fumetto (il title non basta sui telefoni)
 const openBadge = ref<string | null>(null)
 const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.min))
 </script>
@@ -154,12 +154,16 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
         </div>
         <ul v-if="pet.badges.length" class="pet-gallery__badges" :aria-label="$t('badges.title')">
           <li v-for="b in pet.badges" :key="b.key">
-            <button type="button" class="pet-gallery__badge" :class="{ 'is-active': openBadge === b.key }" :aria-expanded="openBadge === b.key" @click="openBadge = openBadge === b.key ? null : b.key">
-              <span aria-hidden="true">{{ b.emoji }}</span> {{ $t(`badges.${b.key}.name`) }}<template v-if="b.times && b.times > 1"> ×{{ b.times }}</template>
-            </button>
+            <AppPopover :open="openBadge === b.key" @update:open="(v: boolean) => openBadge = v ? b.key : (openBadge === b.key ? null : openBadge)">
+              <template #trigger="{ toggle, attrs }">
+                <button type="button" class="pet-gallery__badge" :class="{ 'is-active': openBadge === b.key }" v-bind="attrs" @click="toggle">
+                  <span aria-hidden="true">{{ b.emoji }}</span> {{ $t(`badges.${b.key}.name`) }}<template v-if="b.times && b.times > 1"> ×{{ b.times }}</template>
+                </button>
+              </template>
+              {{ $t(`badges.${b.key}.desc`) }}
+            </AppPopover>
           </li>
         </ul>
-        <p v-if="openBadge" class="pet-gallery__badge-desc" role="status">{{ $t(`badges.${openBadge}.desc`) }}</p>
         <!-- Prossimo traguardo di cuori: un obiettivo, solo per il proprietario -->
         <p v-if="editable && nextTier" class="pet-gallery__next">
           {{ $t('badges.next', { emoji: nextTier.emoji, name: $t(`badges.${nextTier.key}.name`), n: nextTier.min - (pet.wins ?? 0) }, nextTier.min - (pet.wins ?? 0)) }}
@@ -336,8 +340,6 @@ $scrim: rgba(30, 15, 5, .7);
 
     &.is-active { border-color: var(--coral-deep); }
   }
-
-  &__badge-desc { margin: 0; font-size: 13px; font-weight: 700; color: var(--ink); }
 
   &__next { margin: 0; font-size: 12px; font-weight: 800; color: var(--muted); }
 

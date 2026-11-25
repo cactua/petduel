@@ -546,7 +546,7 @@ $medals: (
     .duel-arena__card--first & {
       bottom: 54px;
 
-      @include mq(md) { top: 32%; bottom: auto; left: auto; right: 14px; margin-left: 0; transform: rotate(-90deg); }
+      @include mq(md) { top: calc(50% - 27px); bottom: auto; left: auto; right: 14px; margin-left: 0; transform: rotate(-90deg); }
     }
 
     // Stessa distanza dal VS della prima card (che deve stare sopra il collare): le due frecce si specchiano
@@ -554,7 +554,7 @@ $medals: (
       top: 58px;
       transform: rotate(180deg);
 
-      @include mq(md) { top: 32%; left: 14px; margin-left: 0; transform: rotate(90deg); }
+      @include mq(md) { top: calc(50% - 27px); left: 14px; margin-left: 0; transform: rotate(90deg); }
     }
 
     .is-dragging &, .is-winner &, .is-loser & { opacity: 0; }
