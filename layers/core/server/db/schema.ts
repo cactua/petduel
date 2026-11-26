@@ -702,4 +702,24 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS totp_last_step integer;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS totp_recovery jsonb NOT NULL DEFAULT '[]'::jsonb;
 ALTER TABLE reports ADD COLUMN IF NOT EXISTS reporter_email text;
 ALTER TABLE reports ADD COLUMN IF NOT EXISTS reporter_locale text;
+-- Categorie salvate con nomi italiani, ora in inglese (2026-11-26). Ogni sito ha il suo database e i vecchi nomi
+-- non si ripetono tra i siti (furry non ha categorie), quindi una sola tabella vale per tutti: "altro" di PetDuel
+-- e "altra" di BikeDuel diventano entrambi "other". Si possono ripetere a ogni avvio
+CREATE TEMP TABLE IF NOT EXISTS species_renames (old text PRIMARY KEY, new text NOT NULL);
+INSERT INTO species_renames VALUES ('cane', 'dog'), ('gatto', 'cat'), ('coniglio', 'rabbit'), ('roditore', 'rodent'),
+  ('uccello', 'bird'), ('rettile', 'reptile'), ('altro', 'other'), ('sportiva', 'sport'), ('epoca', 'vintage'), ('altra', 'other')
+  ON CONFLICT DO NOTHING;
+UPDATE pets p SET species = m.new FROM species_renames m WHERE p.species = m.old;
+UPDATE challenges c SET species = m.new FROM species_renames m WHERE c.species = m.old;
+-- Pubblico delle campagne (JSON in testo): l'elenco "species"
+UPDATE ads SET targeting = jsonb_set(targeting::jsonb, '{species}', (
+    SELECT coalesce(jsonb_agg(coalesce(m.new, s.v) ORDER BY s.i), '[]'::jsonb)
+    FROM jsonb_array_elements_text(targeting::jsonb -> 'species') WITH ORDINALITY AS s(v, i)
+    LEFT JOIN species_renames m ON m.old = s.v))::text
+  WHERE targeting LIKE '%"species"%' AND jsonb_typeof(targeting::jsonb -> 'species') = 'array'
+    AND EXISTS (SELECT 1 FROM jsonb_array_elements_text(targeting::jsonb -> 'species') v JOIN species_renames m ON m.old = v);
+-- Parametri degli avvisi di classifica (JSON in testo): "species"
+UPDATE notifications n SET params = jsonb_set(n.params::jsonb, '{species}', to_jsonb(m.new))::text
+  FROM species_renames m WHERE n.params LIKE '%"species"%' AND n.params::jsonb ->> 'species' = m.old;
+DROP TABLE species_renames;
 `

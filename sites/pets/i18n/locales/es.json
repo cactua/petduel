@@ -91,37 +91,37 @@
   },
   "species": {
     "filter": "Filtrar por especie",
-    "cane": {
+    "dog": {
       "one": "Perro",
       "many": "Perros",
       "among": "entre los perros"
     },
-    "gatto": {
+    "cat": {
       "one": "Gato",
       "many": "Gatos",
       "among": "entre los gatos"
     },
-    "coniglio": {
+    "rabbit": {
       "one": "Conejo",
       "many": "Conejos",
       "among": "entre los conejos"
     },
-    "roditore": {
+    "rodent": {
       "one": "Roedor",
       "many": "Roedores",
       "among": "entre los roedores"
     },
-    "uccello": {
+    "bird": {
       "one": "Pájaro",
       "many": "Pájaros",
       "among": "entre los pájaros"
     },
-    "rettile": {
+    "reptile": {
       "one": "Reptil",
       "many": "Reptiles",
       "among": "entre los reptiles"
     },
-    "altro": {
+    "other": {
       "one": "Otro",
       "many": "Otros",
       "among": "entre los demás animales"

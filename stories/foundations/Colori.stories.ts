@@ -7,7 +7,7 @@ const GROUPS: { title: string, note: string, vars: string[] }[] = [
   { title: 'Azione', note: 'Accento del sito. --action è il colore dei pulsanti con testo bianco (contrasto almeno 4.5:1)', vars: ['coral', 'coral-deep', 'coral-soft', 'action', 'glow'] },
   { title: 'Premi, cuori, conferme', note: 'Giallo medaglietta per premi e sfide, rosa per i voti, verde per le conferme', vars: ['sun', 'sun-deep', 'sun-ink', 'heart', 'heart-soft', 'mint'] },
   { title: 'Sfondo a macchie', note: 'Le tre macchie sfumate dietro la pagina', vars: ['blob-1', 'blob-2', 'blob-3'] },
-  { title: 'Categorie (PetDuel)', note: 'Tinte delle categorie degli animali: chip e cornici', vars: ['t-cane', 't-gatto', 't-coniglio', 't-roditore', 't-uccello', 't-rettile', 't-altro'] },
+  { title: 'Categorie (PetDuel)', note: 'Tinte delle categorie degli animali: chip e cornici', vars: ['t-dog', 't-cat', 't-rabbit', 't-rodent', 't-bird', 't-reptile', 't-other'] },
 ]
 
 const Palette = defineComponent({

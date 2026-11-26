@@ -108,7 +108,7 @@
   "species": {
     "filter": "Filtra per tipo",
     "all": "Tutte",
-    "sportiva": {
+    "sport": {
       "one": "Sportiva",
       "many": "Sportive",
       "among": "tra le sportive"
@@ -138,12 +138,12 @@
       "many": "Scooter",
       "among": "tra gli scooter"
     },
-    "epoca": {
+    "vintage": {
       "one": "D'epoca",
       "many": "D'epoca",
       "among": "tra le moto d'epoca"
     },
-    "altra": {
+    "other": {
       "one": "Altra",
       "many": "Altre",
       "among": "tra le altre moto"

@@ -49,7 +49,7 @@ let ready: Promise<void> | undefined
 async function prepare() {
   await exec(schema.CREATE_TABLES_SQL)
   // Sui siti senza razza e città (furry) i due campi restano vuoti anche per i pet salvati prima che si spegnessero,
-  // altrimenti un vecchio valore ("gatto") ricompare nelle card e nelle classifiche
+  // altrimenti un vecchio valore ("Persiano") ricompare nelle card e nelle classifiche
   if (!HAS_BREED_CITY) await exec(`update pets set breed = '', city = '' where breed <> '' or city <> ''`)
   // I partecipanti di esempio solo in sviluppo: con un database vero servono SEED_DEMO=1
   const [row] = await db.select({ count: sql<number>`count(*)::int` }).from(schema.pets)

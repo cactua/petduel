@@ -1,7 +1,7 @@
 [
   {
     "name": "Biscotto",
-    "species": "cane",
+    "species": "dog",
     "breed": "Meticcio",
     "city": "Torino",
     "photos": [
@@ -11,7 +11,7 @@
   },
   {
     "name": "Nala",
-    "species": "cane",
+    "species": "dog",
     "breed": "Incrocio husky",
     "city": "Trento",
     "photos": [
@@ -20,7 +20,7 @@
   },
   {
     "name": "Bruno",
-    "species": "cane",
+    "species": "dog",
     "breed": "Labrador",
     "city": "Verona",
     "photos": [
@@ -29,7 +29,7 @@
   },
   {
     "name": "Sole",
-    "species": "cane",
+    "species": "dog",
     "breed": "Golden retriever",
     "city": "Bologna",
     "photos": [
@@ -40,7 +40,7 @@
   },
   {
     "name": "Milù",
-    "species": "cane",
+    "species": "dog",
     "breed": "Maltipoo",
     "city": "Roma",
     "photos": [
@@ -49,7 +49,7 @@
   },
   {
     "name": "Fiocco",
-    "species": "cane",
+    "species": "dog",
     "breed": "West Highland terrier",
     "city": "Bergamo",
     "photos": [
@@ -58,7 +58,7 @@
   },
   {
     "name": "Riccio",
-    "species": "cane",
+    "species": "dog",
     "breed": "Barboncino",
     "city": "Firenze",
     "photos": [
@@ -68,7 +68,7 @@
   },
   {
     "name": "Neve",
-    "species": "cane",
+    "species": "dog",
     "breed": "Pastore svizzero",
     "city": "Aosta",
     "photos": [
@@ -77,7 +77,7 @@
   },
   {
     "name": "Ambra",
-    "species": "cane",
+    "species": "dog",
     "breed": "Golden retriever",
     "city": "Padova",
     "photos": [
@@ -86,7 +86,7 @@
   },
   {
     "name": "Barbarella",
-    "species": "cane",
+    "species": "dog",
     "breed": "Cane nudo cinese",
     "city": "Milano",
     "photos": [
@@ -95,7 +95,7 @@
   },
   {
     "name": "Pongo",
-    "species": "cane",
+    "species": "dog",
     "breed": "Meticcio",
     "city": "Lecce",
     "photos": [
@@ -104,7 +104,7 @@
   },
   {
     "name": "Tramonto",
-    "species": "cane",
+    "species": "dog",
     "breed": "Meticcio",
     "city": "Cagliari",
     "photos": [
@@ -113,7 +113,7 @@
   },
   {
     "name": "Grigio",
-    "species": "gatto",
+    "species": "cat",
     "breed": "Certosino",
     "city": "Genova",
     "photos": [
@@ -122,7 +122,7 @@
   },
   {
     "name": "Tigro",
-    "species": "gatto",
+    "species": "cat",
     "breed": "Europeo tigrato",
     "city": "Bari",
     "photos": [
@@ -133,7 +133,7 @@
   },
   {
     "name": "Pepe",
-    "species": "gatto",
+    "species": "cat",
     "breed": "Bianco e nero",
     "city": "Napoli",
     "photos": [
@@ -142,7 +142,7 @@
   },
   {
     "name": "Mascherina",
-    "species": "gatto",
+    "species": "cat",
     "breed": "Bianco e nero",
     "city": "Palermo",
     "photos": [
@@ -151,7 +151,7 @@
   },
   {
     "name": "Naro",
-    "species": "gatto",
+    "species": "cat",
     "breed": "Incrocio siamese",
     "city": "Pisa",
     "photos": [
@@ -160,7 +160,7 @@
   },
   {
     "name": "Zar",
-    "species": "gatto",
+    "species": "cat",
     "breed": "Siberiano",
     "city": "Udine",
     "photos": [
@@ -169,7 +169,7 @@
   },
   {
     "name": "Dobby",
-    "species": "gatto",
+    "species": "cat",
     "breed": "Sphynx",
     "city": "Milano",
     "photos": [
@@ -179,7 +179,7 @@
   },
   {
     "name": "Zucca",
-    "species": "gatto",
+    "species": "cat",
     "breed": "Rosso tigrato",
     "city": "Modena",
     "photos": [
@@ -188,7 +188,7 @@
   },
   {
     "name": "Luna",
-    "species": "gatto",
+    "species": "cat",
     "breed": "Europeo grigio",
     "city": "Parma",
     "photos": [
@@ -197,7 +197,7 @@
   },
   {
     "name": "Oreo",
-    "species": "gatto",
+    "species": "cat",
     "breed": "Bianco e nero",
     "city": "Ancona",
     "photos": [
@@ -206,7 +206,7 @@
   },
   {
     "name": "Cuoricino",
-    "species": "gatto",
+    "species": "cat",
     "breed": "Bianco e nero",
     "city": "Siracusa",
     "photos": [
@@ -216,7 +216,7 @@
   },
   {
     "name": "Macchia",
-    "species": "coniglio",
+    "species": "rabbit",
     "breed": "Coniglio pezzato",
     "city": "Vicenza",
     "photos": [
@@ -225,7 +225,7 @@
   },
   {
     "name": "Caramella",
-    "species": "coniglio",
+    "species": "rabbit",
     "breed": "Coniglio fulvo",
     "city": "Rimini",
     "photos": [
@@ -234,7 +234,7 @@
   },
   {
     "name": "Nuvola",
-    "species": "coniglio",
+    "species": "rabbit",
     "breed": "Coniglio grigio",
     "city": "Brescia",
     "photos": [
@@ -243,7 +243,7 @@
   },
   {
     "name": "Batuffolo",
-    "species": "coniglio",
+    "species": "rabbit",
     "breed": "Testa di leone",
     "city": "Como",
     "photos": [
@@ -252,7 +252,7 @@
   },
   {
     "name": "Cocco",
-    "species": "coniglio",
+    "species": "rabbit",
     "breed": "Coniglio nano",
     "city": "Roma",
     "photos": [
@@ -262,7 +262,7 @@
   },
   {
     "name": "Ombra",
-    "species": "coniglio",
+    "species": "rabbit",
     "breed": "Orecchie lunghe",
     "city": "Livorno",
     "photos": [
@@ -271,7 +271,7 @@
   },
   {
     "name": "Pallino",
-    "species": "coniglio",
+    "species": "rabbit",
     "breed": "Coniglio pezzato",
     "city": "Treviso",
     "photos": [
@@ -280,7 +280,7 @@
   },
   {
     "name": "Domino",
-    "species": "coniglio",
+    "species": "rabbit",
     "breed": "Bianco e nero",
     "city": "Salerno",
     "photos": [
@@ -289,7 +289,7 @@
   },
   {
     "name": "Biscottina",
-    "species": "coniglio",
+    "species": "rabbit",
     "breed": "Coniglio rosso",
     "city": "Pescara",
     "photos": [
@@ -298,7 +298,7 @@
   },
   {
     "name": "Cioccolata",
-    "species": "roditore",
+    "species": "rodent",
     "breed": "Porcellino d'India",
     "city": "Torino",
     "photos": [
@@ -308,7 +308,7 @@
   },
   {
     "name": "Pirata",
-    "species": "roditore",
+    "species": "rodent",
     "breed": "Porcellino d'India",
     "city": "Milano",
     "photos": [
@@ -317,7 +317,7 @@
   },
   {
     "name": "Arancino",
-    "species": "roditore",
+    "species": "rodent",
     "breed": "Porcellino d'India",
     "city": "Catania",
     "photos": [
@@ -326,7 +326,7 @@
   },
   {
     "name": "Arya",
-    "species": "roditore",
+    "species": "rodent",
     "breed": "Porcellino d'India",
     "city": "Bologna",
     "photos": [
@@ -335,7 +335,7 @@
   },
   {
     "name": "Tricolore",
-    "species": "roditore",
+    "species": "rodent",
     "breed": "Porcellino d'India",
     "city": "Reggio Emilia",
     "photos": [
@@ -344,7 +344,7 @@
   },
   {
     "name": "Rossella",
-    "species": "roditore",
+    "species": "rodent",
     "breed": "Porcellino d'India",
     "city": "Lucca",
     "photos": [
@@ -353,7 +353,7 @@
   },
   {
     "name": "Gemelli",
-    "species": "roditore",
+    "species": "rodent",
     "breed": "Porcellini d'India",
     "city": "Verona",
     "photos": [
@@ -362,7 +362,7 @@
   },
   {
     "name": "Panna",
-    "species": "roditore",
+    "species": "rodent",
     "breed": "Porcellino d'India",
     "city": "Trieste",
     "photos": [
@@ -371,7 +371,7 @@
   },
   {
     "name": "Celeste",
-    "species": "uccello",
+    "species": "bird",
     "breed": "Pappagallino ondulato",
     "city": "Venezia",
     "photos": [
@@ -380,7 +380,7 @@
   },
   {
     "name": "Azzurro",
-    "species": "uccello",
+    "species": "bird",
     "breed": "Pappagallino ondulato",
     "city": "Ferrara",
     "photos": [
@@ -389,7 +389,7 @@
   },
   {
     "name": "Limone",
-    "species": "uccello",
+    "species": "bird",
     "breed": "Pappagallino ondulato",
     "city": "Sorrento",
     "photos": [
@@ -399,7 +399,7 @@
   },
   {
     "name": "Trio",
-    "species": "uccello",
+    "species": "bird",
     "breed": "Pappagallini ondulati",
     "city": "Mantova",
     "photos": [
@@ -408,7 +408,7 @@
   },
   {
     "name": "Blu",
-    "species": "uccello",
+    "species": "bird",
     "breed": "Pappagallino ondulato",
     "city": "Novara",
     "photos": [
@@ -417,7 +417,7 @@
   },
   {
     "name": "Kiwi",
-    "species": "uccello",
+    "species": "bird",
     "breed": "Pappagallino ondulato",
     "city": "Napoli",
     "photos": [
@@ -427,7 +427,7 @@
   },
   {
     "name": "Banana",
-    "species": "uccello",
+    "species": "bird",
     "breed": "Pappagallino ondulato",
     "city": "Taranto",
     "photos": [
@@ -436,7 +436,7 @@
   },
   {
     "name": "Cielo",
-    "species": "uccello",
+    "species": "bird",
     "breed": "Pappagallino ondulato",
     "city": "Imperia",
     "photos": [
@@ -445,7 +445,7 @@
   },
   {
     "name": "Mirtillo",
-    "species": "uccello",
+    "species": "bird",
     "breed": "Pappagallino ondulato",
     "city": "Matera",
     "photos": [
@@ -454,7 +454,7 @@
   },
   {
     "name": "Perla",
-    "species": "uccello",
+    "species": "bird",
     "breed": "Pappagallino ondulato",
     "city": "Siena",
     "photos": [
@@ -463,7 +463,7 @@
   },
   {
     "name": "Ciuffo",
-    "species": "uccello",
+    "species": "bird",
     "breed": "Calopsite",
     "city": "Pisa",
     "photos": [
@@ -472,7 +472,7 @@
   },
   {
     "name": "Tigrotto",
-    "species": "rettile",
+    "species": "reptile",
     "breed": "Geco leopardino",
     "city": "Lecce",
     "photos": [
@@ -481,7 +481,7 @@
   },
   {
     "name": "Leopoldo",
-    "species": "rettile",
+    "species": "reptile",
     "breed": "Geco leopardino",
     "city": "Varese",
     "photos": [
@@ -491,7 +491,7 @@
   },
   {
     "name": "Occhione",
-    "species": "rettile",
+    "species": "reptile",
     "breed": "Geco leopardino",
     "city": "Prato",
     "photos": [
@@ -500,7 +500,7 @@
   },
   {
     "name": "Mango",
-    "species": "rettile",
+    "species": "reptile",
     "breed": "Geco leopardino",
     "city": "Arezzo",
     "photos": [
@@ -509,7 +509,7 @@
   },
   {
     "name": "Gelato",
-    "species": "rettile",
+    "species": "reptile",
     "breed": "Geco leopardino",
     "city": "Rovigo",
     "photos": [
@@ -518,7 +518,7 @@
   },
   {
     "name": "Drago",
-    "species": "rettile",
+    "species": "reptile",
     "breed": "Pogona",
     "city": "Latina",
     "photos": [
@@ -527,7 +527,7 @@
   },
   {
     "name": "Spike",
-    "species": "rettile",
+    "species": "reptile",
     "breed": "Pogona",
     "city": "Londra",
     "photos": [
@@ -537,7 +537,7 @@
   },
   {
     "name": "Sabbia",
-    "species": "rettile",
+    "species": "reptile",
     "breed": "Pogona",
     "city": "Cagliari",
     "photos": [
@@ -547,7 +547,7 @@
   },
   {
     "name": "Furetto",
-    "species": "altro",
+    "species": "other",
     "breed": "Furetto",
     "city": "Torino",
     "photos": [
@@ -556,7 +556,7 @@
   },
   {
     "name": "Birba",
-    "species": "altro",
+    "species": "other",
     "breed": "Furetto",
     "city": "Milano",
     "photos": [
@@ -565,7 +565,7 @@
   },
   {
     "name": "Fantasma",
-    "species": "altro",
+    "species": "other",
     "breed": "Furetto albino",
     "city": "Bolzano",
     "photos": [
@@ -574,7 +574,7 @@
   },
   {
     "name": "Zorro",
-    "species": "altro",
+    "species": "other",
     "breed": "Furetto",
     "city": "Cremona",
     "photos": [
@@ -583,7 +583,7 @@
   },
   {
     "name": "Spillo",
-    "species": "altro",
+    "species": "other",
     "breed": "Riccio africano",
     "city": "Trento",
     "photos": [
@@ -592,7 +592,7 @@
   },
   {
     "name": "Pungolo",
-    "species": "altro",
+    "species": "other",
     "breed": "Riccio africano",
     "city": "Granada",
     "photos": [
@@ -601,7 +601,7 @@
   },
   {
     "name": "Castagna",
-    "species": "altro",
+    "species": "other",
     "breed": "Riccio africano",
     "city": "Avellino",
     "photos": [

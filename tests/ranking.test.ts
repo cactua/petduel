@@ -21,7 +21,7 @@ describe('abbinamento dei duelli', () => {
   })
 
   it('abbina solo pet della stessa specie', () => {
-    const pets = [pet(1, 'cane'), pet(2, 'gatto'), pet(3, 'cane')]
+    const pets = [pet(1, 'dog'), pet(2, 'cat'), pet(3, 'dog')]
     for (let i = 0; i < 50; i++) {
       const [a, b] = pickPair(pets, new Set(), [])!
       expect(a.species).toBe(b.species)
@@ -29,7 +29,7 @@ describe('abbinamento dei duelli', () => {
   })
 
   it('non ripropone una coppia già votata', () => {
-    const pets = [pet(1, 'cane'), pet(2, 'cane'), pet(3, 'cane')]
+    const pets = [pet(1, 'dog'), pet(2, 'dog'), pet(3, 'dog')]
     const voted = new Set([pairKey(1, 2), pairKey(1, 3)])
     for (let i = 0; i < 50; i++) {
       const [a, b] = pickPair(pets, voted, [])!
@@ -38,16 +38,16 @@ describe('abbinamento dei duelli', () => {
   })
 
   it('non mette uno contro l\'altro due pet dello stesso proprietario', () => {
-    const pets = [pet(1, 'cane', 1500, 9), pet(2, 'cane', 1500, 9), pet(3, 'cane', 1500, 4)]
+    const pets = [pet(1, 'dog', 1500, 9), pet(2, 'dog', 1500, 9), pet(3, 'dog', 1500, 4)]
     for (let i = 0; i < 50; i++) {
       const [a, b] = pickPair(pets, new Set(), [])!
       expect(a.ownerId).not.toBe(b.ownerId)
     }
     // Se restano solo pet dello stesso proprietario non c'è duello
-    expect(pickPair([pet(1, 'cane', 1500, 9), pet(2, 'cane', 1500, 9)], new Set(), [])).toBeNull()
+    expect(pickPair([pet(1, 'dog', 1500, 9), pet(2, 'dog', 1500, 9)], new Set(), [])).toBeNull()
   })
 
   it('senza coppie possibili non propone nulla', () => {
-    expect(pickPair([pet(1, 'cane'), pet(2, 'gatto')], new Set(), [])).toBeNull()
+    expect(pickPair([pet(1, 'dog'), pet(2, 'cat')], new Set(), [])).toBeNull()
   })
 })

@@ -2,14 +2,14 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import PetEars from '@core/app/components/atoms/PetEars.vue'
 import { entry } from '../fixtures'
 
-const SPECIES = ['cane', 'gatto', 'coniglio', 'roditore', 'uccello', 'rettile', 'altro']
+const SPECIES = ['dog', 'cat', 'rabbit', 'rodent', 'bird', 'reptile', 'other']
 
 const meta = {
   title: 'Atomi/PetEars',
   component: PetEars,
   tags: ['autodocs'],
-  args: { species: 'gatto' },
-  argTypes: { species: { control: 'select', options: [...SPECIES, 'sportiva', ''], description: 'Categoria del partecipante. Solo quelle degli animali hanno orecchie: le altre (moto, personaggi) non disegnano niente' } },
+  args: { species: 'cat' },
+  argTypes: { species: { control: 'select', options: [...SPECIES, 'sport', ''], description: 'Categoria del partecipante. Solo quelle degli animali hanno orecchie: le altre (moto, personaggi) non disegnano niente' } },
   // Il genitore deve essere position: relative; --ear regola la misura
   render: args => ({
     components: { PetEars },
@@ -32,8 +32,8 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Gatto: Story = {}
-export const Cane: Story = { args: { species: 'cane' } }
-export const Coniglio: Story = { args: { species: 'coniglio' } }
+export const Cane: Story = { args: { species: 'dog' } }
+export const Coniglio: Story = { args: { species: 'rabbit' } }
 export const Tutte: Story = {
   render: () => ({
     components: { PetEars },
