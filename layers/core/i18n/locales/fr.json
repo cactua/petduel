@@ -907,12 +907,33 @@
     "unavailable": "Les notifications ne sont pas disponibles sur ce site."
   },
   "mail": {
-    "verifySubject": "Confirme ton e-mail sur {site}",
-    "verifyText": "Bonjour {username},\n\npour confirmer l'adresse e-mail de ton compte {site}, ouvre ce lien :\n\n{link}\n\nLe lien est valable 48 heures. Si tu ne t'es pas inscrit, ignore cet e-mail : sans confirmation, l'adresse ne sera pas utilisée.\n\n{site}",
-    "resetSubject": "Nouveau mot de passe pour {site}",
-    "resetText": "Bonjour {username},\n\ntu as demandé à changer le mot de passe de ton compte {site}. Pour en choisir un nouveau, ouvre ce lien :\n\n{link}\n\nLe lien est valable une heure et ne fonctionne qu'une fois. Si ce n'était pas toi, ignore cet e-mail : ton mot de passe ne change pas.\n\n{site}",
-    "reportSubject": "Ton signalement sur {site}",
-    "reportText": "Bonjour,\n\nnous t'écrivons au sujet du signalement envoyé sur {site}.\n\n{outcome}\n\nSi tu n'es pas d'accord avec la décision, tu peux répondre à cet e-mail pour nous expliquer pourquoi.\n\n{site}"
+    "hello": "Bonjour {username},",
+    "helloAnon": "Bonjour,",
+    "fallback": "Si le bouton ne fonctionne pas, copie cette adresse dans ton navigateur :",
+    "footer": "E-mail automatique de {site}. Si tu as besoin d'aide, tu peux répondre à ce message.",
+    "verify": {
+      "subject": "Confirme ton e-mail sur {site}",
+      "preheader": "Un clic pour confirmer ton adresse.",
+      "title": "Confirme ton e-mail",
+      "intro": "Pour confirmer l'adresse e-mail de ton compte {site}, utilise le lien ci-dessous.",
+      "button": "Confirmer l'e-mail",
+      "note": "Le lien est valable 48 heures. Si tu ne t'es pas inscrit, ignore cet e-mail : sans confirmation, l'adresse ne sera pas utilisée."
+    },
+    "reset": {
+      "subject": "Nouveau mot de passe pour {site}",
+      "preheader": "Ton lien pour choisir un nouveau mot de passe, valable une heure.",
+      "title": "Choisis un nouveau mot de passe",
+      "intro": "Tu as demandé à changer le mot de passe de ton compte {site}. Pour en choisir un nouveau, utilise le lien ci-dessous.",
+      "button": "Choisir le mot de passe",
+      "note": "Le lien est valable une heure et ne fonctionne qu'une fois. Si ce n'était pas toi, ignore cet e-mail : ton mot de passe ne change pas."
+    },
+    "report": {
+      "subject": "Ton signalement sur {site}",
+      "preheader": "Nous avons examiné ton signalement.",
+      "title": "Ton signalement",
+      "intro": "Nous t'écrivons au sujet du signalement envoyé sur {site}.",
+      "note": "Si tu n'es pas d'accord avec la décision, tu peux répondre à cet e-mail pour nous expliquer pourquoi."
+    }
   },
   "totp": {
     "title": "Vérification en deux étapes",

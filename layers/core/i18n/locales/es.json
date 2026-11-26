@@ -907,12 +907,33 @@
     "unavailable": "Las notificaciones no están disponibles en este sitio."
   },
   "mail": {
-    "verifySubject": "Confirma tu correo en {site}",
-    "verifyText": "Hola {username}:\n\npara confirmar la dirección de correo de tu cuenta en {site}, abre este enlace:\n\n{link}\n\nEl enlace vale 48 horas. Si no te has registrado tú, ignora este correo: sin confirmación la dirección no se usará.\n\n{site}",
-    "resetSubject": "Contraseña nueva para {site}",
-    "resetText": "Hola {username}:\n\nhas pedido cambiar la contraseña de tu cuenta en {site}. Para elegir una nueva, abre este enlace:\n\n{link}\n\nEl enlace vale una hora y solo se puede usar una vez. Si no has sido tú, ignora este correo: tu contraseña no cambia.\n\n{site}",
-    "reportSubject": "Tu denuncia en {site}",
-    "reportText": "Hola:\n\nte escribimos por la denuncia que enviaste en {site}.\n\n{outcome}\n\nSi no estás de acuerdo con la decisión, puedes responder a este correo y explicarnos por qué.\n\n{site}"
+    "hello": "Hola {username}:",
+    "helloAnon": "Hola:",
+    "fallback": "Si el botón no funciona, copia esta dirección en el navegador:",
+    "footer": "Correo automático de {site}. Si necesitas ayuda, puedes responder a este mensaje.",
+    "verify": {
+      "subject": "Confirma tu correo en {site}",
+      "preheader": "Un clic para confirmar tu dirección.",
+      "title": "Confirma tu correo",
+      "intro": "Para confirmar la dirección de correo de tu cuenta en {site}, usa el enlace de abajo.",
+      "button": "Confirmar correo",
+      "note": "El enlace vale 48 horas. Si no te has registrado tú, ignora este correo: sin confirmación la dirección no se usará."
+    },
+    "reset": {
+      "subject": "Contraseña nueva para {site}",
+      "preheader": "Tu enlace para elegir una contraseña nueva, válido una hora.",
+      "title": "Elige una contraseña nueva",
+      "intro": "Has pedido cambiar la contraseña de tu cuenta en {site}. Para elegir una nueva, usa el enlace de abajo.",
+      "button": "Elegir contraseña",
+      "note": "El enlace vale una hora y solo se puede usar una vez. Si no has sido tú, ignora este correo: tu contraseña no cambia."
+    },
+    "report": {
+      "subject": "Tu denuncia en {site}",
+      "preheader": "Hemos revisado tu denuncia.",
+      "title": "Tu denuncia",
+      "intro": "Te escribimos por la denuncia que enviaste en {site}.",
+      "note": "Si no estás de acuerdo con la decisión, puedes responder a este correo y explicarnos por qué."
+    }
   },
   "totp": {
     "title": "Verificación en dos pasos",

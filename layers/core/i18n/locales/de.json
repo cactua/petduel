@@ -907,12 +907,33 @@
     "unavailable": "Benachrichtigungen sind auf dieser Seite nicht verfügbar."
   },
   "mail": {
-    "verifySubject": "Bestätige deine E-Mail bei {site}",
-    "verifyText": "Hallo {username},\n\num die E-Mail-Adresse deines Kontos bei {site} zu bestätigen, öffne diesen Link:\n\n{link}\n\nDer Link gilt 48 Stunden. Wenn du dich nicht angemeldet hast, ignoriere diese E-Mail: Ohne Bestätigung wird die Adresse nicht verwendet.\n\n{site}",
-    "resetSubject": "Neues Passwort für {site}",
-    "resetText": "Hallo {username},\n\ndu hast darum gebeten, das Passwort deines Kontos bei {site} zu ändern. Um ein neues zu wählen, öffne diesen Link:\n\n{link}\n\nDer Link gilt eine Stunde und funktioniert nur einmal. Wenn du das nicht warst, ignoriere diese E-Mail: Dein Passwort bleibt unverändert.\n\n{site}",
-    "reportSubject": "Deine Meldung bei {site}",
-    "reportText": "Hallo,\n\nwir schreiben dir wegen der Meldung, die du bei {site} geschickt hast.\n\n{outcome}\n\nWenn du mit der Entscheidung nicht einverstanden bist, antworte auf diese E-Mail und sag uns warum.\n\n{site}"
+    "hello": "Hallo {username},",
+    "helloAnon": "Hallo,",
+    "fallback": "Falls der Button nicht funktioniert, kopiere diese Adresse in deinen Browser:",
+    "footer": "Automatische E-Mail von {site}. Wenn du Hilfe brauchst, kannst du auf diese Nachricht antworten.",
+    "verify": {
+      "subject": "Bestätige deine E-Mail bei {site}",
+      "preheader": "Ein Klick, um deine Adresse zu bestätigen.",
+      "title": "Bestätige deine E-Mail",
+      "intro": "Um die E-Mail-Adresse deines Kontos bei {site} zu bestätigen, nutze den Link unten.",
+      "button": "E-Mail bestätigen",
+      "note": "Der Link gilt 48 Stunden. Wenn du dich nicht angemeldet hast, ignoriere diese E-Mail: Ohne Bestätigung wird die Adresse nicht verwendet."
+    },
+    "reset": {
+      "subject": "Neues Passwort für {site}",
+      "preheader": "Dein Link für ein neues Passwort, eine Stunde gültig.",
+      "title": "Wähle ein neues Passwort",
+      "intro": "Du hast darum gebeten, das Passwort deines Kontos bei {site} zu ändern. Um ein neues zu wählen, nutze den Link unten.",
+      "button": "Passwort wählen",
+      "note": "Der Link gilt eine Stunde und funktioniert nur einmal. Wenn du das nicht warst, ignoriere diese E-Mail: Dein Passwort bleibt unverändert."
+    },
+    "report": {
+      "subject": "Deine Meldung bei {site}",
+      "preheader": "Wir haben deine Meldung geprüft.",
+      "title": "Deine Meldung",
+      "intro": "Wir schreiben dir wegen der Meldung, die du bei {site} geschickt hast.",
+      "note": "Wenn du mit der Entscheidung nicht einverstanden bist, antworte auf diese E-Mail und sag uns warum."
+    }
   },
   "totp": {
     "title": "Bestätigung in zwei Schritten",

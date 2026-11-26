@@ -34,6 +34,17 @@
       "port": 3000
     },
     {
+      "name": "mailpit",
+      "runtimeExecutable": "C:\\Users\\VGit\\AppData\\Local\\Programs\\mailpit\\mailpit.exe",
+      "runtimeArgs": [
+        "--listen",
+        "127.0.0.1:8025",
+        "--smtp",
+        "127.0.0.1:1025"
+      ],
+      "port": 8025
+    },
+    {
       "name": "storybook",
       "runtimeExecutable": "npm",
       "runtimeArgs": [

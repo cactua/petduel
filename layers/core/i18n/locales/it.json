@@ -907,12 +907,33 @@
     "unavailable": "Le notifiche non sono disponibili su questo sito."
   },
   "mail": {
-    "verifySubject": "Conferma la tua email su {site}",
-    "verifyText": "Ciao {username},\n\nper confermare l'indirizzo email del tuo account su {site} apri questo link:\n\n{link}\n\nIl link vale 48 ore. Se non ti sei iscritto tu, ignora questa email: senza conferma l'indirizzo non viene usato.\n\n{site}",
-    "resetSubject": "Password nuova per {site}",
-    "resetText": "Ciao {username},\n\nhai chiesto di cambiare la password del tuo account su {site}. Per sceglierne una nuova apri questo link:\n\n{link}\n\nIl link vale un'ora e si può usare una volta sola. Se non sei stato tu, ignora questa email: la password resta quella di prima.\n\n{site}",
-    "reportSubject": "La tua segnalazione su {site}",
-    "reportText": "Ciao,\n\nti scriviamo per la segnalazione che hai inviato su {site}.\n\n{outcome}\n\nSe non sei d'accordo con la decisione puoi rispondere a questa email spiegandoci perché.\n\n{site}"
+    "hello": "Ciao {username},",
+    "helloAnon": "Ciao,",
+    "fallback": "Se il pulsante non funziona, copia questo indirizzo nel browser:",
+    "footer": "Email automatica di {site}. Se ti serve aiuto puoi rispondere a questo messaggio.",
+    "verify": {
+      "subject": "Conferma la tua email su {site}",
+      "preheader": "Un clic per confermare il tuo indirizzo.",
+      "title": "Conferma la tua email",
+      "intro": "Per confermare l'indirizzo email del tuo account su {site} usa il link qui sotto.",
+      "button": "Conferma l'email",
+      "note": "Il link vale 48 ore. Se non ti sei iscritto tu, ignora questa email: senza conferma l'indirizzo non viene usato."
+    },
+    "reset": {
+      "subject": "Password nuova per {site}",
+      "preheader": "Il link per scegliere una password nuova, valido per un'ora.",
+      "title": "Scegli una password nuova",
+      "intro": "Hai chiesto di cambiare la password del tuo account su {site}. Per sceglierne una nuova usa il link qui sotto.",
+      "button": "Scegli la password",
+      "note": "Il link vale un'ora e si può usare una volta sola. Se non sei stato tu, ignora questa email: la password resta quella di prima."
+    },
+    "report": {
+      "subject": "La tua segnalazione su {site}",
+      "preheader": "Abbiamo esaminato la tua segnalazione.",
+      "title": "La tua segnalazione",
+      "intro": "Ti scriviamo per la segnalazione che hai inviato su {site}.",
+      "note": "Se non sei d'accordo con la decisione puoi rispondere a questa email spiegandoci perché."
+    }
   },
   "totp": {
     "title": "Verifica in due passaggi",

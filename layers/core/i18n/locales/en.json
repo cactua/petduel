@@ -907,12 +907,33 @@
     "unavailable": "Notifications aren't available on this site."
   },
   "mail": {
-    "verifySubject": "Confirm your email on {site}",
-    "verifyText": "Hi {username},\n\nto confirm the email address of your {site} account, open this link:\n\n{link}\n\nThe link is valid for 48 hours. If you didn't sign up, ignore this email: without confirmation the address won't be used.\n\n{site}",
-    "resetSubject": "New password for {site}",
-    "resetText": "Hi {username},\n\nyou asked to change the password of your {site} account. To choose a new one, open this link:\n\n{link}\n\nThe link is valid for one hour and works only once. If it wasn't you, ignore this email: your password stays the same.\n\n{site}",
-    "reportSubject": "Your report on {site}",
-    "reportText": "Hi,\n\nwe're writing about the report you sent on {site}.\n\n{outcome}\n\nIf you disagree with the decision, you can reply to this email and tell us why.\n\n{site}"
+    "hello": "Hi {username},",
+    "helloAnon": "Hi,",
+    "fallback": "If the button doesn't work, copy this address into your browser:",
+    "footer": "Automatic email from {site}. If you need help, you can reply to this message.",
+    "verify": {
+      "subject": "Confirm your email on {site}",
+      "preheader": "One click to confirm your address.",
+      "title": "Confirm your email",
+      "intro": "To confirm the email address of your {site} account, use the link below.",
+      "button": "Confirm email",
+      "note": "The link is valid for 48 hours. If you didn't sign up, ignore this email: without confirmation the address won't be used."
+    },
+    "reset": {
+      "subject": "New password for {site}",
+      "preheader": "Your link to choose a new password, valid for one hour.",
+      "title": "Choose a new password",
+      "intro": "You asked to change the password of your {site} account. To choose a new one, use the link below.",
+      "button": "Choose password",
+      "note": "The link is valid for one hour and works only once. If it wasn't you, ignore this email: your password stays the same."
+    },
+    "report": {
+      "subject": "Your report on {site}",
+      "preheader": "We reviewed your report.",
+      "title": "Your report",
+      "intro": "We're writing about the report you sent on {site}.",
+      "note": "If you disagree with the decision, you can reply to this email and tell us why."
+    }
   },
   "totp": {
     "title": "Two-step verification",

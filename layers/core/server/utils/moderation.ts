@@ -1,8 +1,7 @@
 import { and, eq, inArray } from 'drizzle-orm'
-import site from '#site'
 import { challengeEntries, challenges, follows, photos, pets, reports, users } from '../db/schema'
 import { useDb } from './db'
-import { sendMail } from './mail'
+import { sendSiteMail } from './mail'
 import { notify } from './notifications'
 import { removeImage } from './photos'
 import { serverT } from './pushText'
@@ -82,11 +81,7 @@ export async function closeReports(adminId: number, target: 'photo' | 'user', id
   await Promise.all(closed.map(r => r.reporterId
     ? notify(r.reporterId, `report:${r.id}`, { emoji: '🛡️', text, params: {} })
     : r.email
-      ? sendMail({
-          to: r.email,
-          subject: serverT(r.locale ?? 'it', 'mail.reportSubject', { site: site.name }),
-          text: serverT(r.locale ?? 'it', 'mail.reportText', { site: site.name, outcome: serverT(r.locale ?? 'it', text) }),
-        })
+      ? sendSiteMail(r.email, { kind: 'report', locale: r.locale ?? 'it', message: serverT(r.locale ?? 'it', text) })
       : null))
   return closed.length
 }

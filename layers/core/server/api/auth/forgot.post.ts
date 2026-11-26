@@ -1,6 +1,5 @@
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
-import site from '#site'
 import { users } from '../../db/schema'
 import { emailSchema } from '#shared/models'
 
@@ -34,11 +33,8 @@ export default defineEventHandler(async (event) => {
     return { ok: true }
   }
   const token = await createEmailToken(user.id, 'reset')
-  const params = { site: site.name, username: user.username, link: `${origin}/reset-password?token=${token}` }
-  await sendMail({
-    to: user.email,
-    subject: serverT(locale, 'mail.resetSubject', params),
-    text: serverT(locale, 'mail.resetText', params),
-  })
+  await sendSiteMail(user.email, {
+    kind: 'reset', locale, username: user.username, link: `${origin}/reset-password?token=${token}`,
+  }, origin)
   return { ok: true }
 })
