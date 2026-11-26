@@ -152,7 +152,7 @@ const showBanner = computed(() => !!props.profile.banner || props.profile.isMe)
       <span v-if="profile.isMe && profile.banner?.pending && !editing" class="profile-media__pending">{{ $t('profile.media.pending') }}</span>
       <button
         v-if="profile.isMe && !editing" :id="`${uid}-edit-banner`" type="button" class="profile-media__edit profile-media__edit--banner"
-        :aria-label="$t('profile.media.editBanner')" :title="$t('profile.media.editBanner')" @click="start('banner')"
+        :aria-label="banner ? $t('profile.media.editBanner') : $t('profile.media.addBanner')" :title="banner ? $t('profile.media.editBanner') : undefined" @click="start('banner')"
       >
         <AppIcon name="camera" /><span v-if="!banner" class="profile-media__edit-text">{{ $t('profile.media.addBanner') }}</span>
       </button>

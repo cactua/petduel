@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
       sql`${shelters.pendingIban} is not distinct from ${row.pendingIban}`,
       sql`${shelters.pendingDonateUrl} is not distinct from ${row.pendingDonateUrl}`,
     ))
-    await notify(row.userId, `donazioni:${row.id}:${Date.now()}`, {
+    await notify(row.userId, `donations:${row.id}:${Date.now()}`, {
       emoji: approve ? '✅' : '⚠️',
       text: approve ? 'notif.paymentApproved' : 'notif.paymentRejected',
       params: { name: row.name },

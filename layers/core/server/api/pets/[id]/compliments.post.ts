@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
     const day = new Date().toISOString().slice(0, 10)
     const note = { emoji: '💌', text: 'notif.compliment', params: { name: readers.name }, link: entryUrl(id) }
     await Promise.all([readers.ownerId, ...readers.artistIds].filter(r => r !== user.id)
-      .map(r => notify(r, `complimenti:${id}:${day}`, note)))
+      .map(r => notify(r, `compliments:${id}:${day}`, note)))
   }
   return { ok: true }
 })

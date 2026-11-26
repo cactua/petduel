@@ -28,11 +28,11 @@ export const Consenso: Story = {
 }
 export const ConsensoRiaperto: Story = {
   name: 'ConsentBanner (riaperto dopo aver accettato)',
-  parameters: { state: { 'cookie:consenso': 'ads', 'consent-open': true } },
+  parameters: { state: { 'cookie:consent': 'ads', 'consent-open': true } },
   render: () => ({ components: { ConsentBanner }, template: '<div style="min-height:380px"><ConsentBanner /></div>' }),
 }
 export const Regole: Story = {
   name: 'RulesPrompt',
-  parameters: { user: { ...USER, needsRules: true }, state: { 'cookie:consenso': 'none' }, api: { 'POST /api/me/rules': {} } },
+  parameters: { user: { ...USER, needsRules: true }, state: { 'cookie:consent': 'none' }, api: { 'POST /api/me/rules': {} } },
   render: () => ({ components: { RulesPrompt }, template: '<div style="min-height:380px"><RulesPrompt /></div>' }),
 }

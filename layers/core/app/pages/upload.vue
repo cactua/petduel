@@ -30,6 +30,18 @@ watchEffect(() => {
   if (profile.value && target.value !== 'new' && !profile.value.pets.some(p => p.id === target.value)) target.value = 'new'
 })
 
+// Limiti decisi dall'admin: si avvisa prima, e le scelte che non si possono fare restano visibili ma spente
+const limits = useSiteLimits()
+const petCount = computed(() => profile.value?.pets.length ?? 0)
+const canCreate = computed(() => !limits.petsFull(petCount.value))
+const openPets = computed(() => profile.value?.pets.filter(p => !limits.photosFull(p)) ?? [])
+// Niente da fare: nessuna voce nuova e tutte quelle che ha sono piene
+const nothingLeft = computed(() => !canCreate.value && !openPets.value.length)
+watchEffect(() => {
+  const full = target.value === 'new' ? !canCreate.value : profile.value?.pets.some(p => p.id === target.value && limits.photosFull(p))
+  if (full && openPets.value[0]) target.value = openPets.value[0].id
+})
+
 // Miniatura del pet nella scelta: la prima foto approvata, altrimenti la più recente
 const thumb = (p: PetGallery) => p.photos.find(ph => ph.status === 'approved')?.image ?? p.photos[0]?.image
 const targetPet = computed(() => profile.value?.pets.find(p => p.id === target.value))
@@ -122,30 +134,54 @@ function again() {
     <!-- Su telefono una colonna: per quale pet, la foto, i dati del nuovo pet.
          Su computer la foto va a sinistra e il resto in una card a destra.
          I numeri dei passi li mette il CSS, così restano in ordine anche quando un blocco manca -->
-    <form v-else class="upload-page__form" @submit.prevent="submit">
+    <form v-else class="upload-page__form" :class="{ 'upload-page__form--blocked': nothingLeft || limits.uploadsClosed.value }" @submit.prevent="submit">
       <header class="upload-page__intro">
         <h1 class="upload-page__title">{{ $t('nav.uploadPhoto') }}</h1>
         <p class="upload-page__lead">{{ $t('upload.intro') }}</p>
+        <!-- Limiti attivi: si dice subito quanti se ne possono ancora caricare -->
+        <div v-if="limits.uploadsClosed.value || limits.maxPets.value !== null || limits.maxPhotos.value !== null" class="upload-page__limits" role="status">
+          <span class="upload-page__limits-icon" aria-hidden="true">ℹ️</span>
+          <div class="upload-page__limits-text">
+            <p v-if="limits.uploadsClosed.value">{{ $t('limits.closed') }}</p>
+            <template v-else>
+              <p v-if="nothingLeft">{{ $t('limits.allFull', { max: limits.maxPets.value }) }}</p>
+              <p v-else-if="limits.maxPets.value !== null">
+                {{ canCreate ? $t('limits.pets', { max: limits.maxPets.value, n: petCount }) : $t('limits.petsFull', { max: limits.maxPets.value }) }}
+              </p>
+              <p v-if="!nothingLeft && limits.maxPhotos.value !== null && targetPet">
+                {{ limits.photosFull(targetPet)
+                  ? $t('limits.photosFull', { name: targetPet.name, max: limits.maxPhotos.value })
+                  : $t('limits.photos', { max: limits.maxPhotos.value, name: targetPet.name, n: limits.photoCount(targetPet) }) }}
+              </p>
+            </template>
+          </div>
+        </div>
       </header>
 
       <div v-if="profile?.pets.length" class="upload-page__col upload-page__col--who">
         <h2 id="who-title" class="upload-page__step-title"><span class="upload-page__step" /> {{ $t('upload.forWhich') }}</h2>
         <div class="upload-page__targets" role="radiogroup" aria-labelledby="who-title">
-          <label v-for="p in profile.pets" :key="p.id" class="upload-page__option upload-page__option--target" :class="{ 'is-active': target === p.id }">
-            <input v-model="target" type="radio" name="target" :value="p.id" class="upload-page__hidden-input">
+          <label
+            v-for="p in profile.pets" :key="p.id" class="upload-page__option upload-page__option--target"
+            :class="{ 'is-active': target === p.id, 'is-disabled': limits.photosFull(p) }"
+          >
+            <input v-model="target" type="radio" name="target" :value="p.id" class="upload-page__hidden-input" :disabled="limits.photosFull(p)">
             <img v-if="thumb(p)" :src="thumb(p)" alt="" class="upload-page__thumb">
             <span v-else class="upload-page__thumb upload-page__thumb--empty" aria-hidden="true">{{ SPECIES_EMOJI[p.species] ?? '🐾' }}</span>
             <b class="upload-page__target-name">{{ p.name }}</b>
+            <small v-if="limits.maxPhotos.value !== null" class="upload-page__target-count">{{ limits.photoCount(p) }}/{{ limits.maxPhotos.value }}</small>
           </label>
-          <label class="upload-page__option upload-page__option--target" :class="{ 'is-active': target === 'new' }">
-            <input v-model="target" type="radio" name="target" value="new" class="upload-page__hidden-input">
+          <label class="upload-page__option upload-page__option--target" :class="{ 'is-active': target === 'new', 'is-disabled': !canCreate }">
+            <input v-model="target" type="radio" name="target" value="new" class="upload-page__hidden-input" :disabled="!canCreate">
             <span class="upload-page__thumb upload-page__thumb--empty" aria-hidden="true">+</span>
             <b class="upload-page__target-name">{{ $t('upload.newPet') }}</b>
+            <small v-if="limits.maxPets.value !== null" class="upload-page__target-count">{{ petCount }}/{{ limits.maxPets.value }}</small>
           </label>
         </div>
       </div>
 
-      <div class="upload-page__col upload-page__col--photo">
+      <!-- Limiti raggiunti o caricamenti chiusi: restano l'avviso e la scelta con i conteggi, senza un modulo che non si può inviare -->
+      <div v-if="!nothingLeft && !limits.uploadsClosed.value" class="upload-page__col upload-page__col--photo">
         <h2 class="upload-page__step-title"><span class="upload-page__step" /> {{ $t('upload.stepPhoto') }}</h2>
         <!-- Scelta la foto, si decide come ritagliarla per ogni forma usata dal sito -->
         <template v-if="preview">
@@ -173,7 +209,7 @@ function again() {
         </div>
       </div>
 
-      <div class="upload-page__col upload-page__col--details" :class="{ 'upload-page__col--alone': !profile?.pets.length }">
+      <div v-if="!nothingLeft && !limits.uploadsClosed.value" class="upload-page__col upload-page__col--details" :class="{ 'upload-page__col--alone': !profile?.pets.length }">
         <template v-if="target === 'new'">
           <h2 class="upload-page__step-title"><span class="upload-page__step" /> {{ $t('upload.stepDetails') }}</h2>
           <div class="field">
@@ -212,7 +248,7 @@ function again() {
 
         <p class="upload-page__rules">{{ $t('upload.rules') }}</p>
         <p v-if="error" class="error" role="alert">{{ error }}</p>
-        <button type="submit" class="btn btn--primary btn--lg btn--block" :disabled="sending">
+        <button type="submit" class="btn btn--primary btn--lg btn--block" :disabled="sending || nothingLeft || limits.uploadsClosed.value">
           {{ sending ? $t('upload.uploading') : $t('upload.submit') }}
         </button>
       </div>
@@ -232,7 +268,7 @@ function again() {
 
     // Computer: foto a sinistra, dati in una card a destra
     @include mq(lg) {
-      max-width: 1000px;
+      max-width: none;
       display: grid;
       gap: 0 32px;
       align-items: start;
@@ -240,6 +276,9 @@ function again() {
       grid-template-rows: auto auto 1fr;
       grid-template-areas: "intro intro" "photo who" "photo details";
     }
+
+    // Niente da caricare: una colonna sola con l'avviso e la scelta
+    &--blocked { @include mq(lg) { grid-template-columns: minmax(0, 560px); grid-template-areas: "intro" "who"; } }
   }
 
   &__intro {
@@ -254,6 +293,26 @@ function again() {
   }
 
   &__lead { margin: $space-1 0 0; color: var(--muted); font-size: 14px; }
+
+  // Avviso dei limiti decisi dall'admin
+  &__limits {
+    display: flex;
+    gap: $space-3;
+    align-items: flex-start;
+    margin-top: $space-3;
+    padding: 10px 14px;
+    border-radius: $radius-md;
+    background: color-mix(in srgb, var(--sun) 18%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--sun-deep) 45%, var(--line));
+    font-size: 14px;
+    font-weight: 700;
+
+    p { margin: 0; }
+  }
+
+  &__limits-text { @include stack(2px); }
+
+  &__target-count { color: var(--muted); font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums; }
 
   &__col {
     @include stack($space-5);
@@ -401,6 +460,11 @@ function again() {
     &:hover { border-color: var(--coral); }
 
     &.is-active, &.is-active:hover { border-color: var(--coral); background: var(--coral-soft); }
+
+    // Piena (limite raggiunto): resta visibile ma non si sceglie
+    &.is-disabled { opacity: .55; cursor: not-allowed; border-style: dashed; }
+
+    &.is-disabled:hover { border-color: var(--line); }
 
     &:has(input:focus-visible) { outline: 2px solid var(--coral); outline-offset: 2px; }
   }

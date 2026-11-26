@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ShelterManage } from '#shared/models'
+import { THEME_COOKIE, type ShelterManage } from '#shared/models'
 
 /**
  * Menu dell'account in alto a destra: profilo, area rifugio, admin, lingua, tema ed esci.
@@ -14,7 +14,7 @@ const root = ref<HTMLElement>()
 
 // Tema: "system" segue il telefono; la scelta resta in un cookie, così il server manda già i colori giusti
 type Theme = 'system' | 'light' | 'dark'
-const themeCookie = useCookie<string | null>('tema', { default: () => null, maxAge: 60 * 60 * 24 * 365, sameSite: 'lax' })
+const themeCookie = useCookie<string | null>(THEME_COOKIE, { default: () => null, maxAge: 60 * 60 * 24 * 365, sameSite: 'lax' })
 const theme = computed<Theme>({
   get: () => (themeCookie.value === 'light' || themeCookie.value === 'dark' ? themeCookie.value : 'system'),
   set: v => (themeCookie.value = v === 'system' ? null : v),

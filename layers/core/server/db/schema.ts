@@ -722,4 +722,14 @@ UPDATE ads SET targeting = jsonb_set(targeting::jsonb, '{species}', (
 UPDATE notifications n SET params = jsonb_set(n.params::jsonb, '{species}', to_jsonb(m.new))::text
   FROM species_renames m WHERE n.params LIKE '%"species"%' AND n.params::jsonb ->> 'species' = m.old;
 DROP TABLE species_renames;
+-- Valori salvati con nomi italiani, ora in inglese (2026-11-26): taglia dei pet e chiavi degli avvisi.
+-- Si possono ripetere a ogni avvio; un avviso già convertito non viene duplicato
+UPDATE pets SET size = CASE size WHEN 'piccola' THEN 'small' WHEN 'media' THEN 'medium' ELSE 'large' END
+  WHERE size IN ('piccola', 'media', 'grande');
+UPDATE notifications n SET key = m.new || substr(n.key, length(m.old) + 1)
+  FROM (VALUES ('complimenti:', 'compliments:'), ('artista:', 'artist:'), ('seguiti:', 'following:'),
+    ('segnalazione:', 'report:'), ('sfida:', 'challenge:'), ('cuori:', 'hearts:'),
+    ('classifica:', 'ranking:'), ('donazioni:', 'donations:')) AS m(old, new)
+  WHERE n.key LIKE m.old || '%' AND NOT EXISTS (
+    SELECT 1 FROM notifications x WHERE x.user_id = n.user_id AND x.key = m.new || substr(n.key, length(m.old) + 1));
 `

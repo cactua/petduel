@@ -3,7 +3,7 @@
 // Sono una base di partenza: prima del lancio vanno fatti controllare da un legale.
 // Un testo o una sezione con "only" si mostra solo sui siti che hanno almeno una di quelle etichette:
 // l'id del sito (pets, furry, moto) o una funzione (shelters = rifugi, artists = artisti indicati, sona = schede dei personaggi)
-export const LEGAL_UPDATED = '2026-11-24'
+export const LEGAL_UPDATED = '2026-11-26'
 
 export type LegalTag = 'pets' | 'furry' | 'moto' | 'shelters' | 'artists' | 'sona'
 export type LegalText = string | { only: LegalTag[], t: string }

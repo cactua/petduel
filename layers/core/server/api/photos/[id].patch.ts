@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
 
   // Un artista aggiunto dopo: se il disegno è già pubblico lo scopre subito, come all'approvazione
   if (credit?.artistId && credit.artistId !== row.artistId && credit.artistId !== row.ownerId && row.status === 'approved') {
-    await notify(credit.artistId, `artista:${id}`, { emoji: '🎨', text: 'notif.artistTagged', params: { name: row.petName }, link: entryUrl(row.petId) })
+    await notify(credit.artistId, `artist:${id}`, { emoji: '🎨', text: 'notif.artistTagged', params: { name: row.petName }, link: entryUrl(row.petId) })
   }
   return { inDuels: body.data.inDuels, credit: credit ? photoCredit(credit.credit, credit.creditUrl) : undefined }
 })

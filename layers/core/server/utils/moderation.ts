@@ -47,7 +47,7 @@ export async function moderatePhoto(adminId: number, id: number, action: PhotoAc
 
   // L'artista lo scopre solo quando il disegno è pubblico; dal profilo può togliere il suo nome o segnalarlo
   if (action === 'approve' && photo.artistId && photo.artistId !== info.ownerId) {
-    await notify(photo.artistId, `artista:${id}`, { emoji: '🎨', text: 'notif.artistTagged', params: { name: info.name }, link: entryUrl(photo.petId) })
+    await notify(photo.artistId, `artist:${id}`, { emoji: '🎨', text: 'notif.artistTagged', params: { name: info.name }, link: entryUrl(photo.petId) })
   }
   if (action === 'approve') await notifyFollowers([info.ownerId, photo.artistId].filter((x): x is number => !!x))
 }
@@ -62,7 +62,7 @@ async function notifyFollowers(authorIds: number[]) {
   const rows = await db.select({ followerId: follows.followerId, author: users.username })
     .from(follows).innerJoin(users, eq(users.id, follows.followedId))
     .where(inArray(follows.followedId, [...new Set(authorIds)]))
-  await Promise.all(rows.map(r => notify(r.followerId, `seguiti:${r.author}:${day}`, {
+  await Promise.all(rows.map(r => notify(r.followerId, `following:${r.author}:${day}`, {
     emoji: '✨', text: 'notif.followNew', params: { user: r.author }, link: '/following',
   })))
 }
@@ -80,7 +80,7 @@ export async function closeReports(adminId: number, target: 'photo' | 'user', id
   const text = outcome === 'resolved' ? 'notif.reportResolved' : 'notif.reportDismissed'
   // Chi aveva un account riceve un avviso; chi ha segnalato senza account, un'email (DSA, art. 16)
   await Promise.all(closed.map(r => r.reporterId
-    ? notify(r.reporterId, `segnalazione:${r.id}`, { emoji: '🛡️', text, params: {} })
+    ? notify(r.reporterId, `report:${r.id}`, { emoji: '🛡️', text, params: {} })
     : r.email
       ? sendMail({
           to: r.email,

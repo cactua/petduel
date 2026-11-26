@@ -11,7 +11,7 @@ import { SITES_WITH_SHELTERS, currentSiteId } from './site'
 export const router = createRouter({
   history: createMemoryHistory(),
   // /u/<utente>: le storie delle pagine profilo leggono il nome da route.params, come in Nuxt
-  routes: [{ path: '/u/:username', component: { render: () => null } }, { path: '/:path(.*)*', component: { render: () => null } }],
+  routes: [{ path: '/u/:username', component: { render: () => null } }, { path: '/admin/challenges/:id', component: { render: () => null } }, { path: '/:path(.*)*', component: { render: () => null } }],
 })
 export const useRoute = vueUseRoute
 export const useRouter = vueUseRouter

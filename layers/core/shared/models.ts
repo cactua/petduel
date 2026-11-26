@@ -219,6 +219,26 @@ export interface ChallengeDetail extends ChallengeSummary {
   myEntries: MyChallengeEntry[]
 }
 
+// Una sfida nel pannello admin: in più se è del calendario automatico e in quali lingue ha i testi
+export interface AdminChallenge extends ChallengeSummary {
+  automatic: boolean
+  translated: string[]
+}
+export interface AdminChallengeList {
+  items: AdminChallenge[]
+  // Il sito ha un calendario di temi: le settimane libere si riempiono da sole
+  hasThemes: boolean
+}
+// Campi di una sfida per il modulo di modifica, con quello che serve per sapere cosa si può ancora cambiare
+export interface AdminChallengeDetail {
+  id: number
+  slug: string
+  status: ChallengeStatus
+  entries: number
+  automatic: boolean
+  fields: ChallengeFields
+}
+
 export interface ChallengeList {
   current: ChallengeSummary[]
   upcoming: ChallengeSummary[]
@@ -369,7 +389,7 @@ export const ADOPTION_LABEL: Record<AdoptionStatus, string> = {
 }
 
 export const PET_SEX = ['m', 'f'] as const
-export const PET_SIZE = ['piccola', 'media', 'grande'] as const
+export const PET_SIZE = ['small', 'medium', 'large'] as const
 export type PetSize = (typeof PET_SIZE)[number]
 
 /** Un partecipante che hai scelto in un duello (pagina "Votati da te"), il voto più recente prima */
@@ -750,6 +770,49 @@ export const adSettingsSchema = z.object({
 })
 export type AdSettings = z.infer<typeof adSettingsSchema>
 
+// --- Impostazioni generali del sito (pannello admin → Impostazioni) ---
+// Ogni sito ha il suo database, quindi le sue impostazioni. null = nessun limite
+const optionalLimit = z.number().int().min(1, 'Il limite minimo è 1').max(10000).nullable()
+export const SITE_SETTINGS_DEFAULT = {
+  maxPetsPerUser: null as number | null,
+  maxPhotosPerPet: null as number | null,
+  maxPendingPerUser: 10,
+  uploadsOpen: true,
+  signupsOpen: true,
+  maxSignupsPerNetwork: 8,
+}
+export const siteSettingsSchema = z.object({
+  // Quanti personaggi/pet/moto può avere un utente
+  maxPetsPerUser: optionalLimit,
+  // Quante immagini (in attesa o approvate) per ognuno
+  maxPhotosPerPet: optionalLimit,
+  // Immagini in attesa di approvazione per utente, tutte insieme
+  maxPendingPerUser: z.number().int().min(1).max(500),
+  // Caricamenti e iscrizioni: si possono chiudere per un po' (es. moderazione indietro)
+  uploadsOpen: z.boolean(),
+  signupsOpen: z.boolean(),
+  // Account nuovi al giorno dalla stessa rete
+  maxSignupsPerNetwork: z.number().int().min(1).max(1000),
+})
+export type SiteSettings = z.infer<typeof siteSettingsSchema>
+// Quello che serve a chi carica: i limiti, e se valgono per lui (admin e rifugi approvati ne sono esclusi)
+export interface SiteLimits {
+  maxPetsPerUser: number | null
+  maxPhotosPerPet: number | null
+  uploadsOpen: boolean
+  signupsOpen: boolean
+  exempt: boolean
+}
+// Nomi delle impostazioni nel registro delle azioni
+export const SITE_SETTING_LABELS: Record<keyof SiteSettings, string> = {
+  maxPetsPerUser: 'Voci per utente',
+  maxPhotosPerPet: 'Immagini per voce',
+  maxPendingPerUser: 'Immagini in attesa per utente',
+  uploadsOpen: 'Caricamenti aperti',
+  signupsOpen: 'Iscrizioni aperte',
+  maxSignupsPerNetwork: 'Iscrizioni al giorno dalla stessa rete',
+}
+
 const httpUrl = z.string().trim().max(500).url('Link non valido').refine(u => /^https?:\/\//.test(u), 'Il link deve iniziare con http:// o https://')
 const optionalDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Data non valida').nullable().default(null)
 
@@ -915,7 +978,10 @@ export interface AdvertiseStats {
 
 // Consenso ai cookie degli annunci Google: senza "ads" lo script di Google non si carica mai.
 // I cookie tecnici del sito (accesso, lingua, tema) non chiedono consenso
-export const CONSENT_COOKIE = 'consenso'
+export const CONSENT_COOKIE = 'consent'
+/** Lingua scelta (la scrive @nuxtjs/i18n: stesso nome in nuxt.config) e tema chiaro/scuro */
+export const LANG_COOKIE = 'lang'
+export const THEME_COOKIE = 'theme'
 export type Consent = 'ads' | 'none'
 
 export interface AdSlot {

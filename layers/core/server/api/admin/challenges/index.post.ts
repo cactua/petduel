@@ -1,5 +1,5 @@
 import { and, gt, lt, sql } from 'drizzle-orm'
-import { challenges } from '../../db/schema'
+import { challenges } from '../../../db/schema'
 import { challengeFieldsSchema } from '#shared/models'
 
 // Programma una sfida di 7 giorni a partire dalla mezzanotte (ora italiana) della data scelta

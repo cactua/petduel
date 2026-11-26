@@ -110,10 +110,10 @@ export default {
             head: ['Name', 'Purpose', 'Duration'],
             rows: [
               ['nuxt-session', 'Keep you logged in and remember your anonymous voting code if you have no account (encrypted)', '30 days'],
-              ['lingua', 'Remember the language you chose', '1 year'],
-              ['tema', 'Remember the light or dark theme', '1 year'],
+              ['lang', 'Remember the language you chose', '1 year'],
+              ['theme', 'Remember the light or dark theme', '1 year'],
               ['a11y-motion, a11y-contrast, a11y-haptics', 'Remember your accessibility choices: less motion, high contrast, vibration off', '1 year'],
-              ['consenso', 'Remember your choice about Google ads', '6 months'],
+              ['consent', 'Remember your choice about Google ads', '6 months'],
             ],
           },
         },
@@ -121,7 +121,7 @@ export default {
           h: 'Other data stored in your browser',
           p: ['Besides cookies, the site stores a few technical details in your browser that never leave your device:'],
           list: [
-            '"petduel:nudge-chiuso" (local storage): remembers that you closed the tip below the duels. It stays until you clear the site\'s data.',
+            '"petduel:nudge-closed" (local storage): remembers that you closed the tip below the duels. It stays until you clear the site\'s data.',
             'A copy of the site for the installable app (service worker and cache): makes the site open faster and lets you receive push notifications, if you turn them on.',
           ],
         },

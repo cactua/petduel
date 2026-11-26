@@ -191,5 +191,9 @@
   },
   "ad": {
     "houseBody": "Añade tu publicidad aquí, hazte ver por quien vota en @:{'site.name'}."
+  },
+  "limits": {
+    "noun": "personajes",
+    "nounOne": "personaje"
   }
 }

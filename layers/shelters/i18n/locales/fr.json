@@ -67,9 +67,9 @@
       "f": "Femelle"
     },
     "size": {
-      "piccola": "petite",
-      "media": "moyenne",
-      "grande": "grande"
+      "small": "petite",
+      "medium": "moyenne",
+      "large": "grande"
     },
     "sizeOf": "Taille {size}",
     "neuteredM": "Stérilisé",

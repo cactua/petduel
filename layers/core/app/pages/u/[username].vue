@@ -10,6 +10,9 @@ const { user } = useUserSession()
 const { data: profile, error, refresh } = await useFetch<Profile>(() => `/api/users/${route.params.username}`)
 
 const { t } = useI18n()
+// Limite di voci per utente (Impostazioni admin): raggiunto, il bottone "Nuovo" lascia il posto all'avviso
+const limits = useSiteLimits()
+const petsFull = computed(() => !!profile.value?.isMe && limits.petsFull(profile.value.pets.length))
 useHead({ title: () => (profile.value?.shelter?.name ?? (profile.value ? `@${profile.value.username}` : t('nav.profile'))) })
 // Anteprima del link del profilo: la card del suo primo personaggio pubblico (altrimenti resta quella del sito)
 const origin = useRequestURL().origin
@@ -250,7 +253,7 @@ const viewerPhotos = computed(() => galleryItems.value.map(g => ({ image: g.imag
         <!-- Azioni: una principale, condividi, e il resto (segnala, blocca) nel menu ⋯ -->
         <div class="profile__actions">
           <template v-if="profile.isMe">
-            <NuxtLink to="/upload" class="btn btn--primary">+ {{ $t('profile.newPet') }}</NuxtLink>
+            <NuxtLink v-if="!petsFull" to="/upload" class="btn btn--primary">+ {{ $t('profile.newPet') }}</NuxtLink>
             <NuxtLink to="/account#bio" class="btn btn--ghost">{{ $t('profile.edit') }}</NuxtLink>
           </template>
           <button
@@ -287,7 +290,7 @@ const viewerPhotos = computed(() => galleryItems.value.map(g => ({ image: g.imag
           <div v-for="s in myStats" :key="s.label" class="profile__mine-stat"><dt>{{ s.label }}</dt><dd>{{ s.value }}</dd></div>
         </dl>
         <nav class="profile__mine-links">
-          <NuxtLink v-if="HAS_ARTISTS" to="/account">🎨 {{ profile.artist ? $t('artist.edit') : $t('artist.become') }}</NuxtLink>
+          <NuxtLink v-if="HAS_ARTISTS" to="/account#artist">🎨 {{ profile.artist ? $t('artist.edit') : $t('artist.become') }}</NuxtLink>
           <NuxtLink v-if="user?.role === 'admin'" to="/admin">{{ $t('profile.admin') }}</NuxtLink>
         </nav>
       </section>
@@ -374,7 +377,8 @@ const viewerPhotos = computed(() => galleryItems.value.map(g => ({ image: g.imag
               </NuxtLink>
             </li>
             <li v-if="profile.isMe">
-              <NuxtLink to="/upload" class="profile__char profile__char--add">+ {{ $t('profile.newPet') }}</NuxtLink>
+              <p v-if="petsFull" class="profile__char profile__char--add profile__char--full">{{ $t('limits.petsFull', { max: limits.maxPets.value }) }}</p>
+              <NuxtLink v-else to="/upload" class="profile__char profile__char--add">+ {{ $t('profile.newPet') }}</NuxtLink>
             </li>
           </ul>
           <div v-else class="profile__empty">
@@ -770,6 +774,9 @@ $adoption-dots: (
       font-weight: 900;
       text-align: center;
     }
+
+    // Limite raggiunto: un avviso al posto di "Nuovo"
+    &--full { margin: 0; color: var(--muted); font-size: 14px; font-weight: 700; line-height: 1.35; }
   }
 
   &__char-img {

@@ -110,10 +110,10 @@ export default {
             head: ['Nom', 'À quoi il sert', 'Durée'],
             rows: [
               ['nuxt-session', 'Te garder connecté et retenir ton code de vote anonyme si tu n\'as pas de compte (chiffré)', '30 jours'],
-              ['lingua', 'Retenir la langue choisie', '1 an'],
-              ['tema', 'Retenir le thème clair ou sombre', '1 an'],
+              ['lang', 'Retenir la langue choisie', '1 an'],
+              ['theme', 'Retenir le thème clair ou sombre', '1 an'],
               ['a11y-motion, a11y-contrast, a11y-haptics', 'Retenir tes préférences d\'accessibilité : moins d\'animations, contraste élevé, vibration désactivée', '1 an'],
-              ['consenso', 'Retenir ton choix sur les publicités Google', '6 mois'],
+              ['consent', 'Retenir ton choix sur les publicités Google', '6 mois'],
             ],
           },
         },
@@ -121,7 +121,7 @@ export default {
           h: 'Autres données enregistrées dans le navigateur',
           p: ['En plus des cookies, le site enregistre dans le navigateur quelques informations techniques qui ne quittent pas ton appareil :'],
           list: [
-            '« petduel:nudge-chiuso » (stockage local) : retient que tu as fermé le conseil sous les duels. Il reste jusqu\'à ce que tu effaces les données du site.',
+            '« petduel:nudge-closed » (stockage local) : retient que tu as fermé le conseil sous les duels. Il reste jusqu\'à ce que tu effaces les données du site.',
             'Une copie du site pour l\'application installable (service worker et cache) : le site s\'ouvre plus vite et tu peux recevoir des notifications push, si tu les actives.',
           ],
         },

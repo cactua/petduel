@@ -38,11 +38,13 @@ export default defineEventHandler(async (event) => {
   let photoId: number
 
   if (getRequestHeader(event, 'content-type')?.startsWith('multipart/form-data')) {
+    await assertUploadsOpen(user)
     await assertPendingQuota(user.id)
     const { fields, image, credit } = await readPhotoUpload(event)
     try {
       petId = idSchema.parse(fields.petId)
       await checkPet(petId)
+      await assertCanAddPhoto(user, petId)
     }
     catch (e) {
       await removeImage(image)

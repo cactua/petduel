@@ -16,6 +16,7 @@ const items = computed(() => [
   ...(features.shelters ? [{ to: '/admin/shelters', label: 'Rifugi', emoji: '🏠', badge: todo.value?.shelters }] : []),
   { to: '/admin/challenges', label: 'Sfide', emoji: '🏁' },
   { to: '/admin/ads', label: 'Pubblicità', emoji: '📣' },
+  { to: '/admin/settings', label: 'Impostazioni', emoji: '⚙️' },
   { to: '/admin/log', label: 'Registro', emoji: '📜' },
 ])
 // Senza verifica in due passaggi le API admin rispondono 403: si spiega dove attivarla

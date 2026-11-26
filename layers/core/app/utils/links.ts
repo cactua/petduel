@@ -22,17 +22,35 @@ const KNOWN_SITES: Record<string, string> = {
   'mastodon.social': 'Mastodon',
 }
 
-export function linkLabel(url: string) {
+/** Sito di un link: il nome noto (FurAffinity, Bluesky…) o il dominio; null se non è un indirizzo http/https */
+export function linkPlatform(url: string): { name: string, known: boolean } | null {
   let host: string
   try {
-    host = new URL(url).hostname.toLowerCase().replace(/^www\./, '')
+    const u = new URL(url)
+    if (u.protocol !== 'http:' && u.protocol !== 'https:') return null
+    host = u.hostname.toLowerCase().replace(/^www\./, '')
   }
   catch {
-    return url
+    return null
   }
+  if (!host.includes('.')) return null
   // Anche i sottodomini: "nome.tumblr.com", "nome.itch.io"
   const known = Object.keys(KNOWN_SITES).find(k => host === k || host.endsWith(`.${k}`))
-  return known ? KNOWN_SITES[known]! : host
+  return known ? { name: KNOWN_SITES[known]!, known: true } : { name: host, known: false }
+}
+
+export function linkLabel(url: string) {
+  return linkPlatform(url)?.name ?? url
+}
+
+/**
+ * Chi scrive "instagram.com/nome" o "www.vgen.co/nome" intende https://: lo aggiungiamo noi.
+ * Il resto resta com'è (il controllo dirà se non va)
+ */
+export function withProtocol(input: string) {
+  const v = input.trim()
+  if (!v || /^[a-z][a-z\d+.-]*:/i.test(v)) return v
+  return /^[\w-]+(\.[\w-]+)+(?:[/?#]\S*)?$/.test(v) ? `https://${v.replace(/^\/+/, '')}` : v
 }
 
 // Pagina di un partecipante (/pet/<id> o come la chiama il sito): disponibile in tutte le pagine e componenti

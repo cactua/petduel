@@ -171,7 +171,11 @@
     "totpAlreadyOn": "Two-step verification is already on.",
     "totpNoSetup": "Start the setup again from the beginning.",
     "challengeStarted": "The challenge has already started: its date can no longer change",
-    "challengeEntriesLock": "The challenge already has entries: who can join can no longer change"
+    "challengeEntriesLock": "The challenge already has entries: who can join can no longer change",
+    "petLimit": "You've reached the maximum of {n} @:{'limits.noun'}",
+    "photoLimit": "You've reached the maximum of {n} images per @:{'limits.nounOne'}",
+    "uploadsClosed": "Uploads are closed for a while. Try again later.",
+    "signupsClosed": "Sign-ups are closed for now. Try again later."
   },
   "auth": {
     "registerTitle": "Create your account",
@@ -442,7 +446,10 @@
     "trophyCount": "{n} challenge won | {n} challenges won",
     "bioMore": "More",
     "bioLess": "Less",
-    "addNew": "Add"
+    "addNew": "Add",
+    "bioCount": "{n}/{max}",
+    "pronounsSuggest": "Pronoun suggestions",
+    "pronounsList": "she/her, he/him, they/them, she/they, he/they"
   },
   "challenges": {
     "title": "Weekly challenges",
@@ -534,6 +541,7 @@
     "more": "Cookie policy"
   },
   "legal": {
+    "contents": "On this page",
     "title": "Legal",
     "privacy": "Privacy",
     "cookie": "Cookies",
@@ -561,7 +569,27 @@
     "changePassword": "Change password",
     "signOutOthers": "Sign out of other devices",
     "passwordChanged": "Password changed. Your other devices have been signed out.",
-    "signedOutOthers": "Done: you're only signed in here now."
+    "signedOutOthers": "Done: you're only signed in here now.",
+    "nav": "Account sections",
+    "viewProfile": "View profile",
+    "sections": {
+      "profile": "Profile",
+      "artist": "Artist",
+      "notifications": "Notifications",
+      "security": "Security",
+      "privacy": "Privacy & data",
+      "delete": "Delete account"
+    },
+    "previewTitle": "Preview",
+    "previewHint": "This is how visitors see the top of your profile. Use the camera to change avatar and banner.",
+    "previewNoBio": "Your bio will appear here.",
+    "unsaved": "Unsaved changes",
+    "unsavedNote": "(unsaved changes)",
+    "unsavedConfirm": "You have unsaved changes to your profile. Leave anyway?",
+    "discard": "Discard",
+    "saveAll": "Save changes",
+    "saved": "Profile saved",
+    "fixErrors": "One field needs fixing | {n} fields need fixing"
   },
   "badges": {
     "title": "Achievements",
@@ -620,9 +648,23 @@
       "none": "Don't say",
       "open": "Commissions open",
       "closed": "Commissions closed",
-      "url": "Where to ask (link)"
+      "url": "Where to ask (link)",
+      "openHint": "A green box with an “Ask” button on your profile",
+      "closedHint": "Visitors know you’re not taking requests right now",
+      "noneHint": "Nothing shows on your profile",
+      "urlHint": "Where to ask: VGen, Ko-fi, a form, your DMs…",
+      "urlMissing": "Without a link the “Ask” button won’t appear."
     },
-    "ask": "Ask"
+    "ask": "Ask",
+    "linksHint": "Instagram, Bluesky, FurAffinity…: we recognise the site for you. You can leave out https://",
+    "linksCount": "{n} of {max}",
+    "detected": "Recognised: {name}",
+    "urlInvalid": "Enter a full address, like https://example.com",
+    "duplicateLink": "This link is already there",
+    "moveUp": "Move link {n} up",
+    "moveDown": "Move link {n} down",
+    "removeLink": "Remove link {n}",
+    "offNote": "You’re not marked as an artist: links and commissions stay saved but don’t show on your profile."
   },
   "report": {
     "open": "Report",
@@ -897,5 +939,16 @@
     "disableLead": "To turn it off you need your password and an app or recovery code.",
     "renewLead": "Type an app code: the old recovery codes will stop working.",
     "disabled": "Two-step verification turned off."
+  },
+  "limits": {
+    "noun": "entries",
+    "nounOne": "entry",
+    "pets": "For now you can have up to {max} @:{'limits.noun'}: you have {n}.",
+    "petsFull": "You've reached the maximum of {max} @:{'limits.noun'} for now. You can still upload more images.",
+    "photos": "Up to {max} images per @:{'limits.nounOne'}: {name} has {n}.",
+    "photosFull": "{name} has reached the maximum of {max} images for now.",
+    "closed": "Uploads are closed for a while. Try again later.",
+    "signupsClosed": "Sign-ups are closed for now. Try again later.",
+    "allFull": "You've reached the maximum of {max} @:{'limits.noun'} and of images for each: you can't upload more for now."
   }
 }

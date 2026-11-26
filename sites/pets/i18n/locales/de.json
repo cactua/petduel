@@ -196,5 +196,9 @@
     "numbers": {
       "entries": "Tiere im Wettbewerb"
     }
+  },
+  "limits": {
+    "noun": "Haustiere",
+    "nounOne": "Haustier"
   }
 }

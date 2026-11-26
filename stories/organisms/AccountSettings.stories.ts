@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AccountSecurity from '@core/app/components/organisms/AccountSecurity.vue'
-import ArtistSettings from '@core/app/components/organisms/ArtistSettings.vue'
-import ProfileAbout from '@core/app/components/organisms/ProfileAbout.vue'
+import ProfileEditor from '@core/app/components/organisms/ProfileEditor.vue'
 import { profile, USER } from '../fixtures'
 
 // Nella pagina /account ognuno sta in una scheda con il suo titolo
@@ -15,7 +14,7 @@ const meta = {
     api: {
       '/api/users/giulia': profile({ isMe: true }),
       'PUT /api/me/profile': {},
-      '/api/me/artist': { links: ['https://www.instagram.com/esempio'], commissionsUrl: '' },
+      '/api/me/artist': { isArtist: true, links: ['https://www.instagram.com/esempio'], commissions: 'open', commissionsUrl: '' },
       'PUT /api/me/artist': ({ body }: { body?: unknown }) => body,
       'POST /api/me/password': {},
       'DELETE /api/me/sessions': {},
@@ -23,8 +22,8 @@ const meta = {
     docs: {
       description: {
         component: 'Organismi della pagina `/account`, ognuno con il suo salvataggio.\n\n'
-          + '- **ProfileAbout**: bio e pronomi del proprio profilo.\n'
-          + '- **ArtistSettings**: segnarsi come artista e scegliere le pagine social e il link per le commissioni (solo sui siti con `askCredit`, cioè FurDuel).\n'
+          + '- **ProfileEditor**: bio, pronomi e (solo sui siti con `askCredit`, cioè FurDuel) profilo da artista con commissioni e pagine social, '
+          + 'con l\'anteprima della testata e un solo salvataggio. La pagina intera è in Template/Modifica profilo.\n'
           + '- **AccountSecurity**: cambio password (con quella attuale) ed "Esci da tutti gli altri dispositivi"; in tutti e due i casi le altre sessioni smettono di valere.',
       },
     },
@@ -33,12 +32,12 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Bio: Story = { name: 'ProfileAbout', render: () => ({ components: { ProfileAbout }, template: card('Su di te', '<ProfileAbout />') }) }
-export const Artista: Story = { name: 'ArtistSettings', render: () => ({ components: { ArtistSettings }, template: card('🎨 Artista', '<ArtistSettings />') }) }
-export const ArtistaNuovo: Story = {
-  name: 'ArtistSettings (non ancora artista)',
-  parameters: { api: { '/api/me/artist': { links: [], commissionsUrl: '' } } },
-  render: () => ({ components: { ArtistSettings }, template: card('🎨 Artista', '<ArtistSettings />') }),
+export const Profilo: Story = { name: 'ProfileEditor', globals: { site: 'furry' }, render: () => ({ components: { ProfileEditor }, template: '<ProfileEditor />' }) }
+export const ProfiloNuovo: Story = {
+  name: 'ProfileEditor (non ancora artista)',
+  globals: { site: 'furry' },
+  parameters: { api: { '/api/users/giulia': profile({ isMe: true }), '/api/me/artist': { isArtist: false, links: [], commissions: '', commissionsUrl: '' } } },
+  render: () => ({ components: { ProfileEditor }, template: '<ProfileEditor />' }),
 }
 export const Sicurezza: Story = { name: 'AccountSecurity', render: () => ({ components: { AccountSecurity }, template: card('🔒 Sicurezza', '<AccountSecurity />') }) }
 export const SicurezzaErrore: Story = {

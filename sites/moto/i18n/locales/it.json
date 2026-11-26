@@ -232,5 +232,9 @@
     "numbers": {
       "entries": "Moto in gara"
     }
+  },
+  "limits": {
+    "noun": "moto",
+    "nounOne": "moto"
   }
 }

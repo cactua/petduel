@@ -27,3 +27,9 @@ type Story = StoryObj<typeof meta>
 
 export const Accedi: Story = {}
 export const Registrati: Story = { args: { mode: 'register' } }
+// Impostazioni admin → Iscrizioni aperte spento: avviso e bottone disattivato
+export const IscrizioniChiuse: Story = {
+  name: 'Iscrizioni chiuse',
+  args: { mode: 'register' },
+  parameters: { api: { '/api/limits': { maxPetsPerUser: null, maxPhotosPerPet: null, uploadsOpen: true, signupsOpen: false, exempt: false } } },
+}

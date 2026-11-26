@@ -11,6 +11,9 @@ const cover = computed(() =>
 
 // Visore a tutto schermo: si sfogliano le foto che hanno un'immagine (al proprietario anche quelle in attesa)
 const { t } = useI18n()
+// Limite di immagini per voce (Impostazioni admin): piena, al posto di "Aggiungi" si dice perché
+const limits = useSiteLimits()
+const full = computed(() => !!props.editable && limits.photosFull(props.pet))
 const viewerPhotos = computed(() => props.pet.photos.filter(p => p.image).map(p => ({
   image: p.image!, alt: t('pet.photoOf', { name: props.pet.name }), credit: p.credit,
   id: !props.editable && p.status === 'approved' ? p.id : undefined,
@@ -248,7 +251,8 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
         </li>
       </ul>
       <p class="pet-gallery__hint">{{ $t('gallery.inDuelsHint') }}</p>
-      <NuxtLink :to="`/upload?pet=${pet.id}`" class="btn btn--ghost btn--sm pet-gallery__add-link">+ {{ $t('pet.addPhoto') }}</NuxtLink>
+      <p v-if="full" class="pet-gallery__full">{{ $t('limits.photosFull', { name: pet.name, max: limits.maxPhotos.value }) }}</p>
+      <NuxtLink v-else :to="`/upload?pet=${pet.id}`" class="btn btn--ghost btn--sm pet-gallery__add-link">+ {{ $t('pet.addPhoto') }}</NuxtLink>
     </div>
 
     <div v-else class="pet-gallery__grid">
@@ -271,7 +275,8 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
       <button v-if="hiddenCount > 0" type="button" class="pet-gallery__tile pet-gallery__tile--more" @click="expanded = true">
         <b>+{{ hiddenCount }}</b>{{ $t('gallery.showAll', { n: pet.photos.length }) }}
       </button>
-      <NuxtLink v-if="editable" :to="`/upload?pet=${pet.id}`" class="pet-gallery__tile pet-gallery__tile--add">+ {{ $t('pet.addPhoto') }}</NuxtLink>
+      <p v-if="full" class="pet-gallery__tile pet-gallery__tile--full">{{ $t('limits.photosFull', { name: pet.name, max: limits.maxPhotos.value }) }}</p>
+      <NuxtLink v-else-if="editable" :to="`/upload?pet=${pet.id}`" class="pet-gallery__tile pet-gallery__tile--add">+ {{ $t('pet.addPhoto') }}</NuxtLink>
     </div>
     <button v-if="expanded && !hero && pet.photos.length > tiles" type="button" class="pet-gallery__less" @click="expanded = false">{{ $t('gallery.showLess') }}</button>
 
@@ -458,6 +463,9 @@ $scrim: rgba(30, 15, 5, .7);
     }
 
     &--add { border: 2px dashed var(--line); color: var(--coral); }
+
+    // Limite di immagini raggiunto
+    &--full { margin: 0; padding: $space-2; border: 2px dashed var(--line); color: var(--muted); font-size: 12px; font-weight: 700; line-height: 1.3; }
   }
 
   &__less { align-self: center; border: 0; background: none; color: var(--coral-deep); font-weight: 800; cursor: pointer; margin-top: -6px; }
@@ -596,6 +604,8 @@ $scrim: rgba(30, 15, 5, .7);
   &__hint { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
 
   &__add-link { align-self: flex-start; }
+
+  &__full { margin: 0; color: var(--muted); font-size: 13px; font-weight: 700; }
 
   &__tools { @include cluster($space-3); justify-content: flex-end; }
 

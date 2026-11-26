@@ -67,9 +67,9 @@
       "f": "Weiblich"
     },
     "size": {
-      "piccola": "klein",
-      "media": "mittel",
-      "grande": "groß"
+      "small": "klein",
+      "medium": "mittel",
+      "large": "groß"
     },
     "sizeOf": "Größe: {size}",
     "neuteredM": "Kastriert",

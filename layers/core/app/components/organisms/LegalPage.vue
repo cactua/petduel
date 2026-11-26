@@ -49,23 +49,33 @@ const others = computed(() => (Object.keys(LINKS) as LegalKey[]).filter(k => k !
       <p class="legal-page__intro">{{ fill(page.intro) }}</p>
     </header>
 
-    <section v-for="s in page.sections" :key="s.h" class="legal-page__section">
-      <h2 class="legal-page__heading">{{ s.h }}</h2>
-      <p v-for="p in s.p" :key="p" class="legal-page__text">{{ fill(p) }}</p>
-      <ul v-if="s.list?.length" class="legal-page__list">
-        <li v-for="item in s.list" :key="item" class="legal-page__text">{{ fill(item) }}</li>
-      </ul>
-      <div v-if="s.table" class="legal-page__table-wrap">
-        <table class="legal-page__table">
-          <thead><tr><th v-for="h in s.table.head" :key="h" scope="col">{{ h }}</th></tr></thead>
-          <tbody>
-            <tr v-for="row in s.table.rows" :key="row[0]">
-              <td v-for="(cell, i) in row" :key="i"><code v-if="i === 0" class="legal-page__code">{{ cell }}</code><template v-else>{{ cell }}</template></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+    <!-- Indice laterale, solo su computer: resta fermo mentre si legge -->
+    <nav class="legal-page__toc" :aria-label="$t('legal.contents')">
+      <p class="legal-page__toc-title">{{ $t('legal.contents') }}</p>
+      <ol class="legal-page__toc-list">
+        <li v-for="(s, i) in page.sections" :key="s.h"><a :href="`#legal-${i + 1}`" class="legal-page__toc-link">{{ s.h }}</a></li>
+      </ol>
+    </nav>
+
+    <div class="legal-page__body">
+      <section v-for="(s, i) in page.sections" :id="`legal-${i + 1}`" :key="s.h" class="legal-page__section">
+        <h2 class="legal-page__heading">{{ s.h }}</h2>
+        <p v-for="p in s.p" :key="p" class="legal-page__text">{{ fill(p) }}</p>
+        <ul v-if="s.list?.length" class="legal-page__list">
+          <li v-for="item in s.list" :key="item" class="legal-page__text">{{ fill(item) }}</li>
+        </ul>
+        <div v-if="s.table" class="legal-page__table-wrap">
+          <table class="legal-page__table">
+            <thead><tr><th v-for="h in s.table.head" :key="h" scope="col">{{ h }}</th></tr></thead>
+            <tbody>
+              <tr v-for="row in s.table.rows" :key="row[0]">
+                <td v-for="(cell, j) in row" :key="j"><code v-if="j === 0" class="legal-page__code">{{ cell }}</code><template v-else>{{ cell }}</template></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
 
     <footer class="legal-page__foot">
       <b>{{ texts.seeAlso }}</b>
@@ -75,15 +85,58 @@ const others = computed(() => (Object.keys(LINKS) as LegalKey[]).filter(k => k !
 </template>
 
 <style lang="scss" scoped>
-// Organismo: pagina legale (privacy, cookie, termini)
+// Organismo: pagina legale (privacy, cookie, termini). Larga quanto l'app; il testo resta a una
+// misura leggibile e su computer accanto c'è l'indice delle sezioni
 .legal-page {
-  max-width: 720px;
   width: 100%;
-  margin: 0 auto;
   @include card(24px clamp(18px, 4vw, 40px) 28px, 28px);
-  @include stack(22px);
+  display: grid;
+  gap: 22px;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "head" "body" "foot";
 
-  &__head { @include stack($space-2); }
+  @include mq(lg) {
+    grid-template-columns: 220px minmax(0, 72ch);
+    grid-template-areas: "head head" "toc body" "foot foot";
+    justify-content: center;
+    gap: 28px 48px;
+  }
+
+  &__head { grid-area: head; @include stack($space-2); max-width: 72ch; }
+
+  &__toc {
+    display: none;
+
+    @include mq(lg) {
+      grid-area: toc;
+      display: block;
+      position: sticky;
+      top: 16px;
+      align-self: start;
+      max-height: calc(100dvh - 32px);
+      overflow-y: auto;
+    }
+  }
+
+  &__toc-title { margin: 0 0 $space-2; @include eyebrow(11px); }
+
+  &__toc-list { margin: 0; padding: 0; list-style: none; @include stack(2px); }
+
+  &__toc-link {
+    display: block;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+    @include plain-link(var(--muted));
+
+    &:hover, &:focus-visible { color: var(--ink); background: var(--bg); }
+  }
+
+  &__body { grid-area: body; min-width: 0; @include stack(22px); }
+
+  &__section { scroll-margin-top: 16px; }
 
   &__title { margin: 0; font-size: clamp(26px, 5vw, 34px); }
 
@@ -113,7 +166,7 @@ const others = computed(() => (Object.keys(LINKS) as LegalKey[]).filter(k => k !
 
   &__code { font-size: 13px; background: var(--bg); padding: 2px 6px; border-radius: 6px; white-space: nowrap; }
 
-  &__foot { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding-top: 14px; border-top: 1px solid var(--line); }
+  &__foot { grid-area: foot; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding-top: 14px; border-top: 1px solid var(--line); }
 
   &__link { color: var(--coral-deep); font-weight: 800; }
 }

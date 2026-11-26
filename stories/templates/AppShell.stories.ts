@@ -11,7 +11,7 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
     user: USER,
-    state: { 'cookie:consenso': 'none' },
+    state: { 'cookie:consent': 'none' },
     api: { '/api/notifications': notifications(), '/api/me/avatar': { id: null }, '/api/challenges': challengeList() },
     docs: {
       story: { inline: false, iframeHeight: 760 },

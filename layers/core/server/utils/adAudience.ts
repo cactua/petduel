@@ -2,7 +2,7 @@ import { createHmac } from 'node:crypto'
 import { sql } from 'drizzle-orm'
 import { getRequestHeader, type H3Event } from 'h3'
 import {
-  AD_DEAL_DEFAULT, AD_LANGS, AD_TARGETING_DEFAULT, SPECIES, adDealSchema, adTargetingSchema, adTextFor, adTranslationsSchema,
+  AD_DEAL_DEFAULT, AD_LANGS, AD_TARGETING_DEFAULT, LANG_COOKIE, SPECIES, adDealSchema, adTargetingSchema, adTextFor, adTranslationsSchema,
   type AdDeal, type AdLang, type AdTargeting, type AdTranslations, type Species,
 } from '#shared/models'
 import type { Ad } from '../db/schema'
@@ -70,7 +70,7 @@ export function visitorGeo(event: H3Event, provider: string = String(useRuntimeC
 /** Lingua del sito per chi vota: il cookie scelto nel menu, se no la prima lingua del browser */
 export function visitorLang(event: H3Event): AdLang | null {
   const isLang = (v: string | undefined): v is AdLang => !!v && (AD_LANGS as readonly string[]).includes(v)
-  const cookie = getCookie(event, 'lingua')
+  const cookie = getCookie(event, LANG_COOKIE)
   if (isLang(cookie)) return cookie
   const first = getRequestHeader(event, 'accept-language')?.split(',')[0]?.split('-')[0]?.trim().toLowerCase()
   return isLang(first) ? first : null

@@ -35,3 +35,9 @@ export const Pubblica: Story = {}
 export const PaginaDelPartecipante: Story = { args: { hero: true } }
 export const NelProfilo: Story = { args: { linkTitle: true } }
 export const Proprietario: Story = { args: { pet: gallery(0, { owner: true }), editable: true } }
+// Impostazioni admin → limite di immagini raggiunto: al posto di "Aggiungi" si dice perché
+export const LimiteImmagini: Story = {
+  name: 'Proprietario, limite di immagini raggiunto',
+  args: { pet: gallery(0, { owner: true }), editable: true },
+  parameters: { api: { '/api/limits': { maxPetsPerUser: null, maxPhotosPerPet: 2, uploadsOpen: true, signupsOpen: true, exempt: false } } },
+}

@@ -196,5 +196,9 @@
     "numbers": {
       "entries": "Animali in gara"
     }
+  },
+  "limits": {
+    "noun": "pet",
+    "nounOne": "pet"
   }
 }

@@ -15,8 +15,10 @@ const RULES = [
 
 <template>
   <article class="rules-page">
-    <h1 class="rules-page__title">{{ $t('rules.title') }}</h1>
-    <p class="rules-page__lead">{{ $t('rules.intro') }}</p>
+    <header class="rules-page__head">
+      <h1 class="rules-page__title">{{ $t('rules.title') }}</h1>
+      <p class="rules-page__lead">{{ $t('rules.intro') }}</p>
+    </header>
     <ol class="rules-page__list">
       <li v-for="r in RULES" :key="r.key" class="rules-page__item">
         <span class="rules-page__emoji" aria-hidden="true">{{ r.emoji }}</span>
@@ -31,21 +33,27 @@ const RULES = [
 </template>
 
 <style lang="scss" scoped>
+// Larga quanto l'app: le regole in una griglia di card (1 colonna sul telefono, 2-3 su computer);
+// introduzione e chiusura restano a una misura leggibile
 .rules-page {
-  max-width: 640px;
   width: 100%;
-  margin: 0 auto;
   @include stack($space-6);
   padding-bottom: 16px;
 
-  &__title { font-family: var(--display); font-size: clamp(26px, 5vw, 34px); text-wrap: balance; }
+  &__head { @include stack($space-3); }
 
-  &__lead, &__outro { margin: 0; line-height: 1.55; }
+  &__title { margin: 0; font-family: var(--display); font-size: clamp(26px, 5vw, 34px); text-wrap: balance; }
+
+  &__lead, &__outro { margin: 0; @include prose; }
+
+  &__lead { font-size: 16px; }
 
   &__outro { color: var(--muted); }
 
   &__list {
-    @include stack($space-4);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: $space-4;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -55,6 +63,7 @@ const RULES = [
     display: flex;
     gap: $space-5;
     align-items: flex-start;
+    min-width: 0;
     @include card(16px 18px, 22px);
   }
 
@@ -62,7 +71,7 @@ const RULES = [
 
   &__text { min-width: 0; @include stack($space-2); }
 
-  &__name { font-size: 18px; }
+  &__name { font-size: 18px; text-wrap: balance; }
 
   &__body { margin: 0; line-height: 1.5; }
 }

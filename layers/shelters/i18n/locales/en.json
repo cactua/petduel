@@ -67,9 +67,9 @@
       "f": "Female"
     },
     "size": {
-      "piccola": "small",
-      "media": "medium",
-      "grande": "large"
+      "small": "small",
+      "medium": "medium",
+      "large": "large"
     },
     "sizeOf": "Size: {size}",
     "neuteredM": "Neutered",

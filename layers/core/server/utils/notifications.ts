@@ -58,7 +58,7 @@ export async function refreshNotifications(userId: number, force = false) {
     ) r
     where r.owner_id = ${userId} and r.rank <= ${TOP_RANK}`)
   for (const r of results) {
-    await notify(userId, `sfida:${r.cid}:${r.pet_id}`, {
+    await notify(userId, `challenge:${r.cid}:${r.pet_id}`, {
       emoji: place(r.rank),
       text: r.rank === 1 ? 'notif.challengeWon' : 'notif.challengePlace',
       params: { name: r.name, challenge: r.title, challengeSlug: r.slug, ...translatedTitles(r.translations), rank: r.rank, total: r.total },
@@ -83,7 +83,7 @@ export async function refreshNotifications(userId: number, force = false) {
       (select sum(n)::int from hearts) as total, id as best_id, name as best_name
     from hearts order by n desc, id limit 1`)
   if (recap?.total) {
-    await notify(userId, `cuori:${recap.week}`, {
+    await notify(userId, `hearts:${recap.week}`, {
       emoji: '❤️',
       text: 'notif.weeklyHearts',
       params: { n: recap.total, name: recap.best_name },
@@ -112,7 +112,7 @@ export async function refreshNotifications(userId: number, force = false) {
   if (!ranks.length) return
   // Soglie già avvisate questa settimana: chi è stato primo e poi scende al secondo posto non riceve "top 3"
   const { rows: sent } = await db.execute<{ key: string }>(sql`
-    select key from ${notifications} where user_id = ${userId} and key like ${`classifica:${ranks[0]!.week}:%`}`)
+    select key from ${notifications} where user_id = ${userId} and key like ${`ranking:${ranks[0]!.week}:%`}`)
   const best = new Map<number, number>()
   for (const { key } of sent) {
     const [, , petId, tier] = key.split(':')
@@ -121,7 +121,7 @@ export async function refreshNotifications(userId: number, force = false) {
   for (const r of ranks) {
     const tier = RANK_TIERS.find(t => r.rank <= t)!
     if ((best.get(r.id) ?? Infinity) <= tier) continue
-    await notify(userId, `classifica:${r.week}:${r.id}:${tier}`, {
+    await notify(userId, `ranking:${r.week}:${r.id}:${tier}`, {
       emoji: tier === 1 ? '👑' : tier === 3 ? '🏆' : '📈',
       text: tier === 1 ? 'notif.rankFirst' : 'notif.rankTop',
       params: { name: r.name, species: r.species, tier },

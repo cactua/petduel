@@ -222,5 +222,9 @@
     "numbers": {
       "entries": "Motorräder im Wettbewerb"
     }
+  },
+  "limits": {
+    "noun": "Motorräder",
+    "nounOne": "Motorrad"
   }
 }

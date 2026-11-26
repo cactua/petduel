@@ -24,6 +24,9 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
   const voterKey = () => String(user.value?.id ?? 'anon')
   const votes = useState('duel-votes', () => 0)
   const votesOf = useState<string | null>('duel-votes-of', () => null)
+  // Voti di questa visita (fino al prossimo caricamento della pagina): la pubblicità conta questi, non il totale,
+  // così "dopo i primi N voti di ogni visita" vale davvero, anche per chi ha già votato tanto o è appena uscito
+  const visitVotes = useState('duel-visit-votes', () => 0)
   const loadVotes = async () => {
     const key = voterKey()
     const { count } = await $fetch<{ count: number }>('/api/me/vote-count', { cache: 'no-store' })
@@ -50,7 +53,7 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
     if (!slot?.ad || !slot.settings.every) return null
     const { every, startAfter, inChallenges } = slot.settings
     if (toValue(source).challenge && !inChallenges) return null
-    const n = votes.value - startAfter
+    const n = visitVotes.value - startAfter
     if (n <= 0 || n % every) return null
     adSlot = fetchAd()
     // L'invito a fare pubblicità qui si vede una volta per visita, non ogni N voti
@@ -126,6 +129,7 @@ export function useDuelQueue(source: MaybeRefOrGetter<{ duelUrl: string, voteUrl
     ])
     if (outcome.status === 'fulfilled') {
       votes.value++
+      visitVotes.value++
       result.value = { index, delta: outcome.value.delta }
       if (haptics.value) navigator.vibrate?.(25)
       if (isMilestone(votes.value)) {

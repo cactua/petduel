@@ -16,10 +16,11 @@ export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hook('afterResponse', async (event) => {
     const admin = event.context.admin as { id: number, username: string } | undefined
     if (!admin || event.method === 'GET' || event.method === 'HEAD' || !event.path.startsWith('/api/admin/')) return
-    if (getResponseStatus(event) >= 400) return
+    if (getResponseStatus(event) >= 400 || event.context.adminLogSkip) return
     try {
-      let detail = ''
-      if (!getRequestHeader(event, 'content-type')?.includes('multipart')) {
+      // Un'API può scrivere da sé cosa annotare (es. le impostazioni: valore di prima e dopo)
+      let detail = typeof event.context.adminLogDetail === 'string' ? event.context.adminLogDetail : ''
+      if (!detail && !getRequestHeader(event, 'content-type')?.includes('multipart')) {
         const body = await readBody(event).catch(() => undefined)
         if (body !== undefined && body !== null) detail = JSON.stringify(redact(body)).slice(0, 1000)
       }

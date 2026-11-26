@@ -67,9 +67,9 @@
       "f": "Hembra"
     },
     "size": {
-      "piccola": "pequeño",
-      "media": "mediano",
-      "grande": "grande"
+      "small": "pequeño",
+      "medium": "mediano",
+      "large": "grande"
     },
     "sizeOf": "Tamaño {size}",
     "neuteredM": "Esterilizado",

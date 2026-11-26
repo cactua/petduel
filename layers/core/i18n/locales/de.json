@@ -171,7 +171,11 @@
     "totpAlreadyOn": "Die Bestätigung in zwei Schritten ist schon aktiv.",
     "totpNoSetup": "Starte die Einrichtung noch einmal von vorn.",
     "challengeStarted": "Die Challenge hat schon begonnen: das Datum lässt sich nicht mehr ändern",
-    "challengeEntriesLock": "Die Challenge hat bereits Teilnehmer: wer mitmachen darf, lässt sich nicht mehr ändern"
+    "challengeEntriesLock": "Die Challenge hat bereits Teilnehmer: wer mitmachen darf, lässt sich nicht mehr ändern",
+    "petLimit": "Du hast das Maximum von {n} @:{'limits.noun'} erreicht",
+    "photoLimit": "Du hast das Maximum von {n} Bildern pro @:{'limits.nounOne'} erreicht",
+    "uploadsClosed": "Uploads sind gerade geschlossen. Versuch es später noch einmal.",
+    "signupsClosed": "Registrierungen sind gerade geschlossen. Versuch es später noch einmal."
   },
   "auth": {
     "registerTitle": "Erstelle dein Konto",
@@ -442,7 +446,10 @@
     "trophyCount": "{n} Challenge gewonnen | {n} Challenges gewonnen",
     "bioMore": "Mehr",
     "bioLess": "Weniger",
-    "addNew": "Hinzufügen"
+    "addNew": "Hinzufügen",
+    "bioCount": "{n}/{max}",
+    "pronounsSuggest": "Vorschläge für Pronomen",
+    "pronounsList": "sie/ihr, er/ihm, they/them, keine"
   },
   "challenges": {
     "title": "Wöchentliche Challenges",
@@ -534,6 +541,7 @@
     "more": "Cookie-Richtlinie"
   },
   "legal": {
+    "contents": "Auf dieser Seite",
     "title": "Rechtliches",
     "privacy": "Datenschutz",
     "cookie": "Cookies",
@@ -561,7 +569,27 @@
     "changePassword": "Passwort ändern",
     "signOutOthers": "Auf anderen Geräten abmelden",
     "passwordChanged": "Passwort geändert. Deine anderen Geräte wurden abgemeldet.",
-    "signedOutOthers": "Erledigt: Du bist jetzt nur noch hier angemeldet."
+    "signedOutOthers": "Erledigt: Du bist jetzt nur noch hier angemeldet.",
+    "nav": "Bereiche des Kontos",
+    "viewProfile": "Profil ansehen",
+    "sections": {
+      "profile": "Profil",
+      "artist": "Künstler*in",
+      "notifications": "Benachrichtigungen",
+      "security": "Sicherheit",
+      "privacy": "Datenschutz & Daten",
+      "delete": "Konto löschen"
+    },
+    "previewTitle": "Vorschau",
+    "previewHint": "So sehen Besucher*innen den Kopf deines Profils. Mit der Kamera änderst du Avatar und Banner.",
+    "previewNoBio": "Hier erscheint deine Bio.",
+    "unsaved": "Ungespeicherte Änderungen",
+    "unsavedNote": "(ungespeicherte Änderungen)",
+    "unsavedConfirm": "Du hast ungespeicherte Änderungen an deinem Profil. Trotzdem verlassen?",
+    "discard": "Verwerfen",
+    "saveAll": "Änderungen speichern",
+    "saved": "Profil gespeichert",
+    "fixErrors": "Ein Feld muss korrigiert werden | {n} Felder müssen korrigiert werden"
   },
   "badges": {
     "title": "Erfolge",
@@ -620,9 +648,23 @@
       "none": "Nicht angeben",
       "open": "Aufträge offen",
       "closed": "Aufträge geschlossen",
-      "url": "Wo man anfragt (Link)"
+      "url": "Wo man anfragt (Link)",
+      "openHint": "Im Profil ein grüner Kasten mit dem Button „Anfragen“",
+      "closedHint": "Besucher*innen sehen, dass du gerade keine Anfragen annimmst",
+      "noneHint": "Im Profil erscheint nichts",
+      "urlHint": "Wo man anfragt: VGen, Ko-fi, ein Formular, deine Nachrichten…",
+      "urlMissing": "Ohne Link erscheint der Button „Anfragen“ nicht."
     },
-    "ask": "Anfragen"
+    "ask": "Anfragen",
+    "linksHint": "Instagram, Bluesky, FurAffinity…: Wir erkennen die Seite selbst. https:// kannst du weglassen",
+    "linksCount": "{n} von {max}",
+    "detected": "Erkannt: {name}",
+    "urlInvalid": "Gib eine vollständige Adresse ein, z. B. https://beispiel.de",
+    "duplicateLink": "Diesen Link gibt es schon",
+    "moveUp": "Link {n} nach oben",
+    "moveDown": "Link {n} nach unten",
+    "removeLink": "Link {n} entfernen",
+    "offNote": "Du bist nicht als Künstler*in markiert: Links und Aufträge bleiben gespeichert, sind im Profil aber nicht sichtbar."
   },
   "report": {
     "open": "Melden",
@@ -897,5 +939,16 @@
     "disableLead": "Zum Ausschalten brauchst du dein Passwort und einen App- oder Notfallcode.",
     "renewLead": "Gib einen App-Code ein: Die alten Notfallcodes gelten dann nicht mehr.",
     "disabled": "Bestätigung in zwei Schritten ausgeschaltet."
+  },
+  "limits": {
+    "noun": "Teilnehmer",
+    "nounOne": "Teilnehmer",
+    "pets": "Vorerst kannst du bis zu {max} @:{'limits.noun'} haben: du hast {n}.",
+    "petsFull": "Du hast vorerst das Maximum von {max} @:{'limits.noun'} erreicht. Weitere Bilder kannst du trotzdem hochladen.",
+    "photos": "Bis zu {max} Bilder pro @:{'limits.nounOne'}: {name} hat {n}.",
+    "photosFull": "{name} hat vorerst das Maximum von {max} Bildern erreicht.",
+    "closed": "Uploads sind gerade geschlossen. Versuch es später noch einmal.",
+    "signupsClosed": "Registrierungen sind gerade geschlossen. Versuch es später noch einmal.",
+    "allFull": "Du hast das Maximum von {max} @:{'limits.noun'} und an Bildern pro Stück erreicht: vorerst kannst du nichts mehr hochladen."
   }
 }

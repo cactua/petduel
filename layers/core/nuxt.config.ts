@@ -113,7 +113,7 @@ export default messages
     locales: LANGUAGES,
     detectBrowserLanguage: {
       useCookie: true,
-      cookieKey: "lingua",
+      cookieKey: "lang", // LANG_COOKIE in shared/models.ts
       fallbackLocale: "en",
       redirectOn: "root",
     },

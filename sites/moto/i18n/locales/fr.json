@@ -232,5 +232,9 @@
     "numbers": {
       "entries": "Motos en compétition"
     }
+  },
+  "limits": {
+    "noun": "motos",
+    "nounOne": "moto"
   }
 }

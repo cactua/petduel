@@ -110,10 +110,10 @@ export default {
             head: ['Nome', 'A cosa serve', 'Durata'],
             rows: [
               ['nuxt-session', 'Tenerti collegato e ricordare il codice anonimo dei voti se non hai un account (cifrato)', '30 giorni'],
-              ['lingua', 'Ricordare la lingua che hai scelto', '1 anno'],
-              ['tema', 'Ricordare il tema chiaro o scuro', '1 anno'],
+              ['lang', 'Ricordare la lingua che hai scelto', '1 anno'],
+              ['theme', 'Ricordare il tema chiaro o scuro', '1 anno'],
               ['a11y-motion, a11y-contrast, a11y-haptics', 'Ricordare le preferenze di accessibilità: meno animazioni, contrasto alto, vibrazione spenta', '1 anno'],
-              ['consenso', 'Ricordare la tua scelta sugli annunci di Google', '6 mesi'],
+              ['consent', 'Ricordare la tua scelta sugli annunci di Google', '6 mesi'],
             ],
           },
         },
@@ -121,7 +121,7 @@ export default {
           h: 'Altri dati salvati nel browser',
           p: ['Oltre ai cookie, il sito salva nel browser qualche informazione tecnica che non esce dal tuo dispositivo:'],
           list: [
-            '«petduel:nudge-chiuso» (memoria locale): ricorda che hai chiuso il suggerimento sotto i duelli. Resta finché non cancelli i dati del sito.',
+            '«petduel:nudge-closed» (memoria locale): ricorda che hai chiuso il suggerimento sotto i duelli. Resta finché non cancelli i dati del sito.',
             'Copia del sito per l\'app installabile (service worker e cache): permette di aprire il sito più in fretta e di ricevere le notifiche push, se le attivi.',
           ],
         },

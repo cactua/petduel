@@ -191,5 +191,9 @@
   },
   "ad": {
     "houseBody": "Platziere hier deine Werbung, lass dich von den Leuten sehen, die auf @:{'site.name'} abstimmen."
+  },
+  "limits": {
+    "noun": "Charaktere",
+    "nounOne": "Charakter"
   }
 }

@@ -1,21 +1,22 @@
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 import { z } from 'zod'
-import { challenges } from '../../../db/schema'
-import { TRANSLATED_LOCALES, type ChallengeFields } from '#shared/models'
+import { challengeEntries, challenges } from '../../../db/schema'
+import { TRANSLATED_LOCALES, type AdminChallengeDetail } from '#shared/models'
 import { challengeTheme } from '#shared/themes'
 
 const paramsSchema = z.object({ id: z.coerce.number().int().positive() })
 
 /**
- * I campi di una sfida per il modulo di modifica. Le sfide automatiche non hanno traduzioni salvate:
- * si parte dai testi del tema nelle varie lingue, così l'admin ritrova quello che vede chi gioca
+ * Una sfida per il modulo di modifica: i campi, lo stato e quanti partecipano (per sapere cosa si può ancora cambiare).
+ * Le sfide automatiche non hanno traduzioni salvate: si parte dai testi del tema nelle varie lingue
  */
-export default defineEventHandler(async (event): Promise<ChallengeFields & { started: boolean }> => {
+export default defineEventHandler(async (event): Promise<AdminChallengeDetail> => {
   await requireAdmin(event)
   const { id } = await getValidatedRouterParams(event, paramsSchema.parse)
   const db = await useDb()
   const [c] = await db.select().from(challenges).where(eq(challenges.id, id))
   if (!c) throw createError({ statusCode: 404, statusMessage: 'errors.challengeNotFound' })
+  const [count] = await db.select({ n: sql<number>`count(*)::int` }).from(challengeEntries).where(eq(challengeEntries.challengeId, id))
 
   const theme = challengeTheme(c)
   const translations = Object.fromEntries(TRANSLATED_LOCALES.map((code) => {
@@ -25,13 +26,19 @@ export default defineEventHandler(async (event): Promise<ChallengeFields & { sta
     return [code, { title: '', description: '' }]
   }))
   return {
-    title: c.title,
-    description: c.description,
-    translations,
-    emoji: c.emoji,
-    species: c.species,
-    adoptionOnly: c.adoptionOnly,
-    startDate: romeDate(c.startsAt),
-    started: c.startsAt <= new Date(),
+    id: c.id,
+    slug: c.slug,
+    status: challengeStatus(c),
+    entries: count?.n ?? 0,
+    automatic: c.createdBy === null,
+    fields: {
+      title: c.title,
+      description: c.description,
+      translations,
+      emoji: c.emoji,
+      species: c.species,
+      adoptionOnly: c.adoptionOnly,
+      startDate: romeDate(c.startsAt),
+    },
   }
 })

@@ -41,7 +41,7 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
     user: USER,
-    state: { 'cookie:consenso': 'none' },
+    state: { 'cookie:consent': 'none' },
     api: api(CAMPAIGN),
     docs: {
       story: { inline: false, iframeHeight: 760 },

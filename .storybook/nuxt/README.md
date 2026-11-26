@@ -34,7 +34,7 @@ parameters: {
   },
   apiDelay: 300,                                        // attesa finta in ms
   route: '/pet/1',                                      // pagina corrente per useRoute
-  state: { 'cookie:consenso': 'ads' },                  // valori iniziali di useState / useCookie
+  state: { 'cookie:consent': 'ads' },                  // valori iniziali di useState / useCookie
 }
 ```
 

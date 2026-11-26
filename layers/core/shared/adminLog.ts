@@ -1,7 +1,8 @@
 // Registro admin: da "POST reports" + {"action":"dismiss",...} a una frase che si legge al volo.
 // Il server salva metodo, percorso e campi inviati; la frase si costruisce qui, così vale anche per le righe vecchie
+import { SITE_SETTING_LABELS, type SiteSettings } from './models'
 
-export type AdminLogKind = 'photos' | 'reports' | 'users' | 'challenges' | 'ads' | 'votes' | 'other'
+export type AdminLogKind = 'photos' | 'reports' | 'users' | 'challenges' | 'ads' | 'votes' | 'settings' | 'other'
 // Colore dell'icona: buono, cattivo o neutro
 export type AdminLogTone = 'ok' | 'bad' | 'neutral'
 
@@ -19,6 +20,7 @@ export const ADMIN_LOG_KINDS: Record<AdminLogKind, string> = {
   challenges: 'Sfide',
   ads: 'Pubblicità',
   votes: 'Voti',
+  settings: 'Impostazioni',
   other: 'Altro',
 }
 
@@ -90,10 +92,22 @@ export function describeAdminAction(action: string, detail: string): AdminLogEnt
       return e('ads', 'bad', '🗑', `Ha eliminato la campagna ${id}`)
     case 'PUT ad-settings':
       return e('ads', 'neutral', '⚙', 'Ha cambiato le impostazioni della pubblicità')
+    case 'PUT settings': {
+      const changes = Array.isArray(b.changes) ? (b.changes as { key: string, from: unknown, to: unknown }[]) : []
+      const list = changes.map(c => `${SITE_SETTING_LABELS[c.key as keyof SiteSettings] ?? c.key}: ${settingValue(c.from)} → ${settingValue(c.to)}`)
+      return e('settings', 'neutral', '⚙', list.length ? `Ha cambiato le impostazioni · ${list.join(' · ')}` : 'Ha cambiato le impostazioni')
+    }
     case 'POST vote-alerts/:id':
       return e('votes', 'neutral', '👁', `Ha segnato come visto l'avviso sui voti ${id}`)
   }
   return e('other', 'neutral', '•', action)
+}
+
+// Valore di un'impostazione in parole: null = nessun limite, sì/no per gli interruttori
+function settingValue(v: unknown) {
+  if (v === null || v === undefined) return 'nessun limite'
+  if (typeof v === 'boolean') return v ? 'sì' : 'no'
+  return String(v)
 }
 
 // "2026-12-07" → "7/12/2026"

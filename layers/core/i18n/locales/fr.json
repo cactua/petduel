@@ -171,7 +171,11 @@
     "totpAlreadyOn": "La vérification en deux étapes est déjà active.",
     "totpNoSetup": "Recommence l'activation depuis le début.",
     "challengeStarted": "Le défi a déjà commencé : sa date ne peut plus changer",
-    "challengeEntriesLock": "Le défi a déjà des participants : on ne peut plus changer qui peut participer"
+    "challengeEntriesLock": "Le défi a déjà des participants : on ne peut plus changer qui peut participer",
+    "petLimit": "Vous avez atteint le maximum de {n} @:{'limits.noun'}",
+    "photoLimit": "Vous avez atteint le maximum de {n} images par @:{'limits.nounOne'}",
+    "uploadsClosed": "Les envois sont fermés pour le moment. Réessayez plus tard.",
+    "signupsClosed": "Les inscriptions sont fermées pour le moment. Réessayez plus tard."
   },
   "auth": {
     "registerTitle": "Crée ton compte",
@@ -442,7 +446,10 @@
     "trophyCount": "{n} défi gagné | {n} défis gagnés",
     "bioMore": "Plus",
     "bioLess": "Moins",
-    "addNew": "Ajouter"
+    "addNew": "Ajouter",
+    "bioCount": "{n}/{max}",
+    "pronounsSuggest": "Suggestions de pronoms",
+    "pronounsList": "elle, il, iel, elle/iel, il/iel"
   },
   "challenges": {
     "title": "Défis hebdomadaires",
@@ -534,6 +541,7 @@
     "more": "Politique cookies"
   },
   "legal": {
+    "contents": "Sur cette page",
     "title": "Mentions légales",
     "privacy": "Confidentialité",
     "cookie": "Cookies",
@@ -561,7 +569,27 @@
     "changePassword": "Changer le mot de passe",
     "signOutOthers": "Déconnecter les autres appareils",
     "passwordChanged": "Mot de passe changé. Tes autres appareils ont été déconnectés.",
-    "signedOutOthers": "C'est fait : tu n'es plus connecté qu'ici."
+    "signedOutOthers": "C'est fait : tu n'es plus connecté qu'ici.",
+    "nav": "Sections du compte",
+    "viewProfile": "Voir le profil",
+    "sections": {
+      "profile": "Profil",
+      "artist": "Artiste",
+      "notifications": "Notifications",
+      "security": "Sécurité",
+      "privacy": "Confidentialité et données",
+      "delete": "Supprimer le compte"
+    },
+    "previewTitle": "Aperçu",
+    "previewHint": "Voici comment les visiteurs voient le haut de ton profil. Avec l’appareil photo, tu changes avatar et bannière.",
+    "previewNoBio": "Ta bio apparaîtra ici.",
+    "unsaved": "Modifications non enregistrées",
+    "unsavedNote": "(modifications non enregistrées)",
+    "unsavedConfirm": "Tu as des modifications non enregistrées sur ton profil. Quitter quand même ?",
+    "discard": "Annuler les modifications",
+    "saveAll": "Enregistrer",
+    "saved": "Profil enregistré",
+    "fixErrors": "Un champ est à corriger | {n} champs sont à corriger"
   },
   "badges": {
     "title": "Trophées",
@@ -620,9 +648,23 @@
       "none": "Ne pas le dire",
       "open": "Commissions ouvertes",
       "closed": "Commissions fermées",
-      "url": "Où les demander (lien)"
+      "url": "Où les demander (lien)",
+      "openHint": "Sur ton profil, un encadré vert avec le bouton « Demander »",
+      "closedHint": "Les visiteurs savent que tu ne prends pas de demandes pour l’instant",
+      "noneHint": "Rien ne s’affiche sur ton profil",
+      "urlHint": "Où les demander : VGen, Ko-fi, un formulaire, tes messages…",
+      "urlMissing": "Sans lien, le bouton « Demander » n’apparaît pas."
     },
-    "ask": "Demander"
+    "ask": "Demander",
+    "linksHint": "Instagram, Bluesky, FurAffinity… : on reconnaît le site tout seuls. Tu peux omettre https://",
+    "linksCount": "{n} sur {max}",
+    "detected": "Reconnu : {name}",
+    "urlInvalid": "Écris une adresse complète, comme https://exemple.fr",
+    "duplicateLink": "Ce lien est déjà là",
+    "moveUp": "Monter le lien {n}",
+    "moveDown": "Descendre le lien {n}",
+    "removeLink": "Retirer le lien {n}",
+    "offNote": "Tu n’es pas marqué comme artiste : liens et commandes restent enregistrés, mais ne s’affichent pas sur ton profil."
   },
   "report": {
     "open": "Signaler",
@@ -897,5 +939,16 @@
     "disableLead": "Pour la désactiver, il faut ton mot de passe et un code de l'application ou de secours.",
     "renewLead": "Saisis un code de l'application : les anciens codes de secours ne marcheront plus.",
     "disabled": "Vérification en deux étapes désactivée."
+  },
+  "limits": {
+    "noun": "participants",
+    "nounOne": "participant",
+    "pets": "Pour l'instant, vous pouvez avoir jusqu'à {max} @:{'limits.noun'} : vous en avez {n}.",
+    "petsFull": "Vous avez atteint le maximum de {max} @:{'limits.noun'} pour l'instant. Vous pouvez quand même ajouter d'autres images.",
+    "photos": "Jusqu'à {max} images par @:{'limits.nounOne'} : {name} en a {n}.",
+    "photosFull": "{name} a atteint le maximum de {max} images pour l'instant.",
+    "closed": "Les envois sont fermés pour le moment. Réessayez plus tard.",
+    "signupsClosed": "Les inscriptions sont fermées pour le moment. Réessayez plus tard.",
+    "allFull": "Vous avez atteint le maximum de {max} @:{'limits.noun'} et d'images pour chacun : pour l'instant, vous ne pouvez plus rien envoyer."
   }
 }

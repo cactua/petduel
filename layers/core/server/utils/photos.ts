@@ -12,8 +12,6 @@ import site from '#site'
 
 const MAX_PHOTO_BYTES = 10 * 1024 * 1024
 const MAX_INPUT_PIXELS = 50_000_000
-// Oltre questo numero di foto in attesa non se ne accettano altre: evita di intasare la coda
-export const MAX_PENDING_PER_USER = 10
 
 // Qualità scelte per il web: AVIF è circa la metà di WebP a parità di resa, WebP resta per i browser vecchi
 const encode = (img: Sharp, format: ImageFormat) =>
@@ -185,8 +183,10 @@ export async function assertPendingQuota(userId: number) {
   const [row] = await db.select({ count: sql<number>`count(*)::int` })
     .from(photos).innerJoin(pets, eq(pets.id, photos.petId))
     .where(and(eq(pets.ownerId, userId), eq(photos.status, 'pending')))
-  if ((row?.count ?? 0) >= MAX_PENDING_PER_USER) {
-    throw createError({ statusCode: 429, statusMessage: 'errors.tooManyPending', data: { params: { n: MAX_PENDING_PER_USER } } })
+  // Oltre questo numero di foto in attesa non se ne accettano altre: evita di intasare la coda (Impostazioni admin)
+  const { maxPendingPerUser: max } = await getSiteSettings()
+  if ((row?.count ?? 0) >= max) {
+    throw createError({ statusCode: 429, statusMessage: 'errors.tooManyPending', data: { params: { n: max } } })
   }
 }
 

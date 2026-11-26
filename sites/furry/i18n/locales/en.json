@@ -191,5 +191,9 @@
   },
   "ad": {
     "houseBody": "Add your ad here, get seen by the people voting on @:{'site.name'}."
+  },
+  "limits": {
+    "noun": "characters",
+    "nounOne": "character"
   }
 }

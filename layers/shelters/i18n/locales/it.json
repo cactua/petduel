@@ -67,9 +67,9 @@
       "f": "Femmina"
     },
     "size": {
-      "piccola": "piccola",
-      "media": "media",
-      "grande": "grande"
+      "small": "piccola",
+      "medium": "media",
+      "large": "grande"
     },
     "sizeOf": "Taglia {size}",
     "neuteredM": "Sterilizzato",

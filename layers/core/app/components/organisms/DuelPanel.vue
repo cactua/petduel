@@ -17,7 +17,7 @@ const emit = defineEmits<{ vote: [index: number], skip: [], retry: [], adContinu
 
 // Chi vota senza account, dopo qualche voto, scopre che con l'account i voti contano di più
 const NUDGE_AFTER = 10
-const NUDGE_KEY = 'petduel:nudge-chiuso'
+const NUDGE_KEY = 'petduel:nudge-closed'
 const { loggedIn } = useUserSession()
 const route = useRoute()
 const nudgeClosed = ref(true)

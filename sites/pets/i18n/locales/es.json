@@ -196,5 +196,9 @@
     "numbers": {
       "entries": "Mascotas en competición"
     }
+  },
+  "limits": {
+    "noun": "mascotas",
+    "nounOne": "mascota"
   }
 }

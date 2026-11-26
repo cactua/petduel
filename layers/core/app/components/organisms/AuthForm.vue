@@ -13,6 +13,9 @@ const codeInput = ref<HTMLInputElement>()
 const error = ref('')
 const sending = ref(false)
 const isRegister = computed(() => props.mode === 'register')
+// Iscrizioni chiuse dall'admin (Impostazioni): lo si dice prima che si compili il modulo
+const limits = useSiteLimits()
+const closed = computed(() => isRegister.value && limits.signupsClosed.value)
 
 async function submit() {
   // Stesse regole del server, così l'errore arriva subito
@@ -51,6 +54,7 @@ async function submit() {
       <p class="auth-form__lead">
         {{ isRegister ? $t('auth.registerLead') : $t('auth.loginLead') }}
       </p>
+      <p v-if="closed" class="auth-form__closed" role="status">{{ $t('limits.signupsClosed') }}</p>
 
       <label for="email" class="label auth-form__label">{{ $t('auth.email') }}</label>
       <input id="email" v-model="form.email" type="email" autocomplete="email" inputmode="email" required class="input auth-form__input">
@@ -93,7 +97,7 @@ async function submit() {
         <template #terms><NuxtLink to="/terms" target="_blank">{{ $t('legal.terms') }}</NuxtLink></template>
         <template #privacy><NuxtLink to="/privacy" target="_blank">{{ $t('legal.privacy') }}</NuxtLink></template>
       </i18n-t>
-      <button type="submit" class="btn btn--primary btn--lg auth-form__submit" :disabled="sending">
+      <button type="submit" class="btn btn--primary btn--lg auth-form__submit" :disabled="sending || closed">
         {{ sending ? $t('auth.wait') : isRegister ? $t('auth.register') : $t('nav.login') }}
       </button>
 
@@ -133,6 +137,16 @@ async function submit() {
   &__forgot { align-self: flex-end; color: var(--coral-deep); font-size: 14px; font-weight: 700; }
 
   &__error { color: var(--coral); margin-top: $space-2; }
+
+  &__closed {
+    margin: $space-2 0 0;
+    padding: 10px 14px;
+    border-radius: $radius-md;
+    background: color-mix(in srgb, var(--sun) 18%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--sun-deep) 45%, var(--line));
+    font-weight: 700;
+    font-size: 14px;
+  }
 
   &__legal {
     margin: 4px 0 0;

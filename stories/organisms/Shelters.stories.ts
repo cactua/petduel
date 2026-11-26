@@ -9,7 +9,7 @@ const adoption = (status: PetAdoption['status']): PetAdoption => ({
   age: '2 anni',
   about: 'Dolcissima e curiosa, va d\'accordo con altri cani. Cerca una famiglia con un giardino o tante passeggiate.',
   sex: 'f',
-  size: 'media',
+  size: 'medium',
   neutered: true,
   hideFromRankings: false,
   shelter: { slug: 'rifugio-esempio', name: 'Rifugio Esempio', city: 'Torino' },

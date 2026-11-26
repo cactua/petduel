@@ -12,6 +12,8 @@ export default defineEventHandler(async (event) => {
   const db = await useDb()
   const [pet] = await db.select({ id: pets.id }).from(pets).where(and(eq(pets.id, id), eq(pets.ownerId, user.id)))
   if (!pet) throw createError({ statusCode: 404, statusMessage: 'errors.petNotFound' })
+  await assertUploadsOpen(user)
+  await assertCanAddPhoto(user, pet.id)
   await assertPendingQuota(user.id)
 
   const { image, credit, inDuels } = await readPhotoUpload(event)

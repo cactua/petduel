@@ -110,10 +110,10 @@ export default {
             head: ['Name', 'Zweck', 'Dauer'],
             rows: [
               ['nuxt-session', 'Dich angemeldet halten und deinen anonymen Abstimmungscode merken, wenn du kein Konto hast (verschlüsselt)', '30 Tage'],
-              ['lingua', 'Die gewählte Sprache merken', '1 Jahr'],
-              ['tema', 'Helles oder dunkles Design merken', '1 Jahr'],
+              ['lang', 'Die gewählte Sprache merken', '1 Jahr'],
+              ['theme', 'Helles oder dunkles Design merken', '1 Jahr'],
               ['a11y-motion, a11y-contrast, a11y-haptics', 'Deine Barrierefreiheits-Einstellungen merken: weniger Animationen, hoher Kontrast, Vibration aus', '1 Jahr'],
-              ['consenso', 'Deine Entscheidung zu Google-Anzeigen merken', '6 Monate'],
+              ['consent', 'Deine Entscheidung zu Google-Anzeigen merken', '6 Monate'],
             ],
           },
         },
@@ -121,7 +121,7 @@ export default {
           h: 'Weitere Daten im Browser',
           p: ['Neben Cookies speichert die Seite einige technische Angaben im Browser, die dein Gerät nicht verlassen:'],
           list: [
-            '„petduel:nudge-chiuso“ (lokaler Speicher): merkt sich, dass du den Tipp unter den Duellen geschlossen hast. Bleibt, bis du die Daten der Seite löschst.',
+            '„petduel:nudge-closed“ (lokaler Speicher): merkt sich, dass du den Tipp unter den Duellen geschlossen hast. Bleibt, bis du die Daten der Seite löschst.',
             'Eine Kopie der Seite für die installierbare App (Service Worker und Cache): Die Seite öffnet sich schneller, und du kannst Push-Benachrichtigungen erhalten, wenn du sie einschaltest.',
           ],
         },

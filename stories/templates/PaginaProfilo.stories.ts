@@ -33,7 +33,7 @@ const meta = {
     // La pagina legge il nome da /u/<utente>
     route: '/u/giulia',
     user: null,
-    state: { 'cookie:consenso': 'none' },
+    state: { 'cookie:consent': 'none' },
     api: api(artist()),
     docs: {
       story: { inline: false, iframeHeight: 820 },

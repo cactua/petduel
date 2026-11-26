@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import site from '#site'
 // autoOpen: si apre da sola (arrivando da un avviso di festa o dal riquadro in classifica)
-const props = defineProps<{ petId: number, petName: string, sfida?: string, label?: string, autoOpen?: boolean }>()
+const props = defineProps<{ petId: number, petName: string, challenge?: string, label?: string, autoOpen?: boolean }>()
 
 const dialog = ref<HTMLDialogElement>()
-const cardUrl = computed(() => `/card/${props.petId}.png${props.sfida ? `?challenge=${props.sfida}` : ''}`)
+const cardUrl = computed(() => `/card/${props.petId}.png${props.challenge ? `?challenge=${props.challenge}` : ''}`)
 const fileName = computed(() => `${props.petName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'pet'}-petduel.png`)
 const { t } = useI18n()
-const text = computed(() => props.sfida
+const text = computed(() => props.challenge
   ? `${t('share.textChallenge', { name: props.petName })} 🏆`
   : `${t('share.text', { name: props.petName })} 🐾`)
 
@@ -18,7 +18,7 @@ const status = ref('')
 
 function link() {
   const url = new URL(entryUrl(props.petId), location.origin)
-  if (props.sfida) url.searchParams.set('challenge', props.sfida)
+  if (props.challenge) url.searchParams.set('challenge', props.challenge)
   return url.toString()
 }
 

@@ -22,3 +22,13 @@ describe('registro admin in parole', () => {
     expect(describeAdminAction('POST nuova-cosa', 'non json')).toMatchObject({ kind: 'other', text: 'POST nuova-cosa' })
   })
 })
+
+describe('impostazioni nel registro', () => {
+  it('dice cosa è cambiato, da cosa a cosa', () => {
+    const detail = JSON.stringify({ changes: [{ key: 'maxPetsPerUser', from: null, to: 3 }, { key: 'uploadsOpen', from: true, to: false }] })
+    expect(describeAdminAction('PUT settings', detail)).toMatchObject({
+      kind: 'settings',
+      text: 'Ha cambiato le impostazioni · Voci per utente: nessun limite → 3 · Caricamenti aperti: sì → no',
+    })
+  })
+})

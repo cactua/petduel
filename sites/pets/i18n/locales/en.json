@@ -196,5 +196,9 @@
     "numbers": {
       "entries": "Pets competing"
     }
+  },
+  "limits": {
+    "noun": "pets",
+    "nounOne": "pet"
   }
 }

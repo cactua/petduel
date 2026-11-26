@@ -18,7 +18,7 @@ async function onDeleted() {
 }
 
 // Link condivisi da una sfida: /pet/<id>?challenge=<slug>
-const sfida = computed(() => {
+const challengeSlug = computed(() => {
   const q = route.query.challenge
   return typeof q === 'string' && /^[a-z0-9-]{1,80}$/.test(q) ? q : undefined
 })
@@ -38,7 +38,7 @@ useSeoMeta({
   // Nelle anteprime dei link il titolo non passa dal titleTemplate: il nome del sito si aggiunge qui
   ogTitle: () => [title(), site.name].filter(Boolean).join(' · '),
   ogDescription: () => (pet.value ? t('pet.ogDescription', { name: pet.value.name }) : ''),
-  ogImage: () => (isPublic.value && pet.value ? `${origin}/card/${pet.value.id}.png?format=og${sfida.value ? `&challenge=${sfida.value}` : ''}` : undefined),
+  ogImage: () => (isPublic.value && pet.value ? `${origin}/card/${pet.value.id}.png?format=og${challengeSlug.value ? `&challenge=${challengeSlug.value}` : ''}` : undefined),
   ogImageWidth: 1200,
   ogImageHeight: 630,
   twitterCard: 'summary_large_image',
@@ -51,7 +51,7 @@ useSeoMeta({
     <p v-if="error" class="pet-page__empty">{{ $t('pet.notFound') }}</p>
     <template v-else-if="pet">
       <NuxtLink :to="`/u/${pet.owner}`" class="pet-page__owner">← @{{ pet.owner }}</NuxtLink>
-      <NuxtLink v-if="sfida" :to="`/challenges/${sfida}`" class="pet-page__challenge">
+      <NuxtLink v-if="challengeSlug" :to="`/challenges/${challengeSlug}`" class="pet-page__challenge">
         🏆 {{ $t('pet.inChallenge', { name: pet.name }) }} →
       </NuxtLink>
       <PetGallery :pet="pet" :editable="pet.isMine" hero @changed="refresh()" @deleted="onDeleted">
@@ -65,7 +65,7 @@ useSeoMeta({
               <PetRosette v-if="pet.speciesRank <= 3" :place="pet.speciesRank" class="pet-page__rosette" />
               {{ $t('pet.rank', { rank: pet.speciesRank, among: speciesText(pet.species, 'among') }) }}
             </NuxtLink>
-            <ShareCard v-if="isPublic" :pet-id="pet.id" :pet-name="pet.name" :sfida="sfida" :auto-open="shareNow" />
+            <ShareCard v-if="isPublic" :pet-id="pet.id" :pet-name="pet.name" :challenge="challengeSlug" :auto-open="shareNow" />
             <FavoriteButton v-if="isPublic && !pet.isMine" :pet-id="pet.id" />
             <ReportButton v-if="coverId && !pet.isMine" :photo-id="coverId" class="pet-page__report" />
           </div>

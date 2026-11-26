@@ -7,6 +7,9 @@
 
   &__header { display: flex; flex-wrap: wrap; align-items: center; gap: $space-4; }
 
+  // Ritorno alla lista (pagine di dettaglio, es. una sfida)
+  &__back { display: inline-flex; align-items: center; min-height: 32px; color: var(--link); font-weight: 800; font-size: 14px; }
+
   &__title { font-size: 24px; margin-right: auto; }
 
   &__heading { font-size: 18px; margin-top: $space-2; }

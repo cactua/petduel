@@ -2,9 +2,6 @@ import { eq, or } from 'drizzle-orm'
 import { users } from '../../db/schema'
 import { signupSchema } from '#shared/models'
 
-// Account nuovi al giorno dalla stessa rete: una famiglia o un ufficio ci stanno, una fabbrica di account no
-const MAX_SIGNUPS_PER_NETWORK = 8
-
 const RESERVED = new Set(['admin', 'administrator', 'moderatore', 'moderazione', 'petduel', 'support', 'staff', 'root'])
 
 export default defineEventHandler(async (event) => {
@@ -14,6 +11,9 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: parsed.error.issues[0]?.message ?? 'Dati non validi' })
   }
   const { email, username, password } = parsed.data
+  // Iscrizioni chiuse dall'admin (Impostazioni)
+  const settings = await getSiteSettings()
+  if (!settings.signupsOpen) throw createError({ statusCode: 403, statusMessage: 'errors.signupsClosed' })
   if (RESERVED.has(username)) throw createError({ statusCode: 400, statusMessage: 'errors.usernameUnavailable' })
   if (password.toLowerCase().includes(username) || password.toLowerCase() === email) {
     throw createError({ statusCode: 400, statusMessage: 'errors.passwordContainsName' })
@@ -25,7 +25,8 @@ export default defineEventHandler(async (event) => {
   if (taken.some(t => t.username === username)) throw createError({ statusCode: 409, statusMessage: 'errors.usernameTaken' })
   if (taken.length) throw createError({ statusCode: 409, statusMessage: 'errors.emailTakenLogin' })
 
-  if (await hitLimit(`signup:network:${networkOf(event)}`, 86_400_000) > MAX_SIGNUPS_PER_NETWORK) {
+  // Account nuovi al giorno dalla stessa rete: una famiglia o un ufficio ci stanno, una fabbrica di account no
+  if (await hitLimit(`signup:network:${networkOf(event)}`, 86_400_000) > settings.maxSignupsPerNetwork) {
     throw createError({ statusCode: 429, statusMessage: 'errors.tooManySignups' })
   }
 

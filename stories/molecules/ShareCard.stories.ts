@@ -10,7 +10,7 @@ const meta = {
   argTypes: {
     petId: { description: 'Partecipante: la card è /card/<id>.png, disegnata dal server' },
     petName: { description: 'Nome nel titolo, nel testo condiviso e nel nome del file' },
-    sfida: { control: 'text', description: 'Slug della sfida: card e link della sfida' },
+    challenge: { control: 'text', description: 'Slug della sfida: card e link della sfida' },
     label: { description: 'Testo del pulsante al posto di "Condividi"' },
     autoOpen: { description: 'Si apre da sola (arrivando da un avviso di festa o dal riquadro in classifica)' },
   },

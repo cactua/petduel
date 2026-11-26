@@ -1,9 +1,11 @@
 import { photos, pets } from '../db/schema'
 import { petFieldsSchema } from '#shared/models'
 
-// Nuovo pet con la sua prima foto, che entra in coda di approvazione
+// Nuovo pet con la sua prima foto, che entra in coda di approvazione (nei limiti delle Impostazioni admin)
 export default defineEventHandler(async (event) => {
   const user = await requireUser(event)
+  await assertUploadsOpen(user)
+  await assertCanCreatePet(user)
   await assertPendingQuota(user.id)
 
   const { fields, image, credit, inDuels } = await readPhotoUpload(event)

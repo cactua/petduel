@@ -22,9 +22,9 @@ describe('a chi si mostra una campagna', () => {
   })
 
   it('filtra per raggio intorno a una città', () => {
-    const milano = { name: 'Milano', lat: 45.46, lng: 9.19, km: 50 }
-    expect(adMatches(targeting({ places: [milano] }), visitor())).toBe(false)
-    expect(adMatches(targeting({ places: [{ ...milano, km: 200 }] }), visitor())).toBe(true)
+    const milan = { name: 'Milano', lat: 45.46, lng: 9.19, km: 50 }
+    expect(adMatches(targeting({ places: [milan] }), visitor())).toBe(false)
+    expect(adMatches(targeting({ places: [{ ...milan, km: 200 }] }), visitor())).toBe(true)
   })
 
   it('filtra per utenti collegati o ospiti', () => {
