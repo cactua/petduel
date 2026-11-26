@@ -5,7 +5,7 @@ import { Resvg } from '@resvg/resvg-js'
 import site from '#site'
 import siteIt from '#site-it'
 import { siteBrand } from '#shared/site'
-import { TOP_RANK, type Species } from '#shared/models'
+import { PET_ART, TOP_RANK, type Species } from '#shared/models'
 import { speciesName } from '#shared/speciesNames'
 import { pets, users } from '../db/schema'
 import { useDb } from './db'
@@ -36,17 +36,17 @@ interface Ear { svg: string, w: number, h: number, top: number, inset: number, r
 const ear = (viewBox: string, body: string) => svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}">${body}</svg>`)
 const roundEar = (fill: string) => ear('0 0 40 40', `<circle cx="20" cy="20" r="18" fill="${fill}"/><circle cx="20" cy="21" r="10" fill="#ffc2c8"/>`)
 const EARS: Record<Species, Ear> = {
-  cane: { svg: ear('0 0 46 70', '<path d="M23 3C39 3 45 20 42 43c-2 17-11 24-20 24C11 67 4 57 4 40 4 18 9 3 23 3z" fill="#c99366"/>'), w: 1, h: 1.52, top: -0.22, inset: -0.28, rot: 14, pair: true },
-  gatto: { svg: ear('0 0 52 46', '<path d="M4 44 18 6c2-4 6-5 9-1l22 36z" fill="#ffc2d1"/><path d="M15 38 22 15l13 22z" fill="#ff9fb6"/>'), w: 1.12, h: 1, top: -0.66, inset: 0.5, rot: -12, pair: true },
-  coniglio: { svg: ear('0 0 40 80', '<path d="M20 78C6 78 2 52 3 32 4 12 11 2 20 2s16 10 17 30c1 20-3 46-17 46z" fill="#f6e1ea"/><path d="M20 70c-6 0-9-20-8-36 1-14 4-24 8-24s7 10 8 24c1 16-2 36-8 36z" fill="#ffb3c8"/>'), w: 0.8, h: 1.6, top: -1.3, inset: 0.8, rot: -10, pair: true },
-  roditore: { svg: roundEar('#e8b98a'), w: 0.78, h: 0.78, top: -0.4, inset: 0.45, rot: 0, pair: true },
-  altro: { svg: roundEar('#d8c6b4'), w: 0.78, h: 0.78, top: -0.4, inset: 0.45, rot: 0, pair: true },
-  uccello: { svg: ear('0 0 50 50', '<g fill="#8fd3a8"><ellipse cx="14" cy="34" rx="5.5" ry="14" transform="rotate(-32 14 34)"/><ellipse cx="36" cy="34" rx="5.5" ry="14" transform="rotate(32 36 34)"/><ellipse cx="25" cy="28" rx="6.5" ry="19"/></g>'), w: 1, h: 1, top: -0.86, inset: 0, rot: 0, pair: false },
-  rettile: { svg: ear('0 0 80 30', '<path d="M2 30 12 6l10 24 9-28 9 28 9-28 9 28 10-24 10 24z" fill="#9fd68a"/>'), w: 1.7, h: 0.62, top: -0.5, inset: 0, rot: 0, pair: false },
+  dog: { svg: ear('0 0 46 70', '<path d="M23 3C39 3 45 20 42 43c-2 17-11 24-20 24C11 67 4 57 4 40 4 18 9 3 23 3z" fill="#c99366"/>'), w: 1, h: 1.52, top: -0.22, inset: -0.28, rot: 14, pair: true },
+  cat: { svg: ear('0 0 52 46', '<path d="M4 44 18 6c2-4 6-5 9-1l22 36z" fill="#ffc2d1"/><path d="M15 38 22 15l13 22z" fill="#ff9fb6"/>'), w: 1.12, h: 1, top: -0.66, inset: 0.5, rot: -12, pair: true },
+  rabbit: { svg: ear('0 0 40 80', '<path d="M20 78C6 78 2 52 3 32 4 12 11 2 20 2s16 10 17 30c1 20-3 46-17 46z" fill="#f6e1ea"/><path d="M20 70c-6 0-9-20-8-36 1-14 4-24 8-24s7 10 8 24c1 16-2 36-8 36z" fill="#ffb3c8"/>'), w: 0.8, h: 1.6, top: -1.3, inset: 0.8, rot: -10, pair: true },
+  rodent: { svg: roundEar('#e8b98a'), w: 0.78, h: 0.78, top: -0.4, inset: 0.45, rot: 0, pair: true },
+  other: { svg: roundEar('#d8c6b4'), w: 0.78, h: 0.78, top: -0.4, inset: 0.45, rot: 0, pair: true },
+  bird: { svg: ear('0 0 50 50', '<g fill="#8fd3a8"><ellipse cx="14" cy="34" rx="5.5" ry="14" transform="rotate(-32 14 34)"/><ellipse cx="36" cy="34" rx="5.5" ry="14" transform="rotate(32 36 34)"/><ellipse cx="25" cy="28" rx="6.5" ry="19"/></g>'), w: 1, h: 1, top: -0.86, inset: 0, rot: 0, pair: false },
+  reptile: { svg: ear('0 0 80 30', '<path d="M2 30 12 6l10 24 9-28 9 28 9-28 9 28 10-24 10 24z" fill="#9fd68a"/>'), w: 1.7, h: 0.62, top: -0.5, inset: 0, rot: 0, pair: false },
 }
 
 // Medaglietta del collare, colorata per specie (come in DuelArena.vue)
-const MEDAL: Record<Species, string> = { cane: '#ffc83d', gatto: '#b9a4ff', coniglio: '#ff9fb6', roditore: '#f5a65b', uccello: '#6cc68f', rettile: '#8cc56a', altro: '#7cc3f0' }
+const MEDAL: Record<Species, string> = { dog: '#ffc83d', cat: '#b9a4ff', rabbit: '#ff9fb6', rodent: '#f5a65b', bird: '#6cc68f', reptile: '#8cc56a', other: '#7cc3f0' }
 
 // Coccarde come PetRosette.vue; il numero lo scrive satori sopra, con il font della card
 const ROSETTE_COLORS = {
@@ -182,7 +182,7 @@ function rosette(d: CardData, width: number) {
 }
 
 function ears(species: Species, s: number): Node[] {
-  const e = EARS[species]
+  const e = PET_ART ? EARS[species] : undefined
   if (!e) return []
   const w = e.w * s
   const h = e.h * s
@@ -201,7 +201,7 @@ function framed(d: CardData, photo: string, p: { width: number, height: number }
   },
   img(photo, { ...p, borderRadius: u * 2.9, objectFit: 'cover' }),
   box({ alignItems: 'center', gap: u, padding: `${u * 0.9}px ${u}px ${u}px ${u * 0.4}px` },
-    box({ width: u * 4.6, height: u * 4.6, flexShrink: 0, borderRadius: 999, background: MEDAL[d.species] ?? C.coral, alignItems: 'center', justifyContent: 'center' },
+    box({ width: u * 4.6, height: u * 4.6, flexShrink: 0, borderRadius: 999, background: (PET_ART && MEDAL[d.species]) || C.coral, alignItems: 'center', justifyContent: 'center' },
       img(PAW_ICON(C.white), { width: u * 2.5, height: u * 2.5 })),
     box({ flex: 1, flexDirection: 'column', minWidth: 0 },
       box({ fontFamily: 'Fredoka', fontSize: nameSize(d.name, u * 5.4), lineHeight: 1.05 }, d.name),

@@ -9,6 +9,8 @@ import { LANGUAGES } from '../i18n/languages'
 export const SPECIES = site.categories.map(c => c.id)
 export type Species = string
 export const NO_SPECIES = ''
+// Orecchie, medaglie e tinte per categoria esistono solo per gli animali di PetDuel: anche BikeDuel ha "other", ma senza disegni
+export const PET_ART = site.id === 'pets'
 
 const pick = (key: 'slug' | 'emoji') =>
   Object.fromEntries(site.categories.map(c => [c.id, c[key]])) as Record<Species, string>
@@ -19,7 +21,7 @@ export const SPECIES_EMOJI = pick('emoji')
 // Classifica di una categoria; i siti senza categorie (es. furry) hanno solo quella generale
 export const rankingPath = (s: Species | null | undefined) => (s && SPECIES_SLUG[s] ? `/leaderboard/${SPECIES_SLUG[s]}` : '/leaderboard')
 
-// "/leaderboard/cats" -> "gatto"
+// "/leaderboard/cats" -> "cat"
 export const speciesFromSlug = (slug: unknown) =>
   site.categories.find(c => c.slug === slug)?.id
 

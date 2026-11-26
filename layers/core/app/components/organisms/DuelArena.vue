@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PublicPet } from '#shared/models'
+import { PET_ART, type PublicPet } from '#shared/models'
 import site from '#site'
 
 const props = defineProps<{ pets: [PublicPet, PublicPet], coach?: boolean, result?: { index: number, delta: number } | null }>()
@@ -193,7 +193,7 @@ onBeforeUnmount(() => {
         </div>
         <!-- Collare con medaglietta: nome, razza e città -->
         <div class="duel-arena__collar">
-          <span class="duel-arena__medal" :class="`duel-arena__medal--${pet.species}`"><SiteIcon /></span>
+          <span class="duel-arena__medal" :class="PET_ART && `duel-arena__medal--${pet.species}`"><SiteIcon /></span>
           <div class="duel-arena__who">
             <b class="duel-arena__name">{{ pet.name }}</b>
             <small class="duel-arena__meta">{{ [pet.breed, pet.city, `@${pet.owner}`].filter(Boolean).join(' · ') }}</small>
@@ -223,13 +223,13 @@ $scrim: rgba(30, 16, 10, .72);
 
 // Colore della medaglietta per specie: sfondo, bordo inferiore, icona
 $medals: (
-  cane: (#ffc83d, #e9a400, #8a5a00),
-  gatto: (#b9a4ff, #8d74e8, #fff),
-  coniglio: (#ff9fb6, #e8728f, #fff),
-  roditore: (#f5a65b, #d9853a, #fff),
-  uccello: (#6cc68f, #45a46b, #fff),
-  rettile: (#8cc56a, #69a347, #fff),
-  altro: (#7cc3f0, #4ea2d6, #fff),
+  dog: (#ffc83d, #e9a400, #8a5a00),
+  cat: (#b9a4ff, #8d74e8, #fff),
+  rabbit: (#ff9fb6, #e8728f, #fff),
+  rodent: (#f5a65b, #d9853a, #fff),
+  bird: (#6cc68f, #45a46b, #fff),
+  reptile: (#8cc56a, #69a347, #fff),
+  other: (#7cc3f0, #4ea2d6, #fff),
 );
 
 // Organismo: le due card del duello, da trascinare una sull'altra per votare

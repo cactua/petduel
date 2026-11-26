@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SPECIES, SPECIES_EMOJI, type Species } from '#shared/models'
+import { PET_ART, SPECIES, SPECIES_EMOJI, type Species } from '#shared/models'
 
 const model = defineModel<Species | undefined>()
 
@@ -33,7 +33,7 @@ onBeforeUnmount(() => observer?.disconnect())
     <button type="button" class="species-chips__chip" :class="{ 'is-active': !model }" :aria-pressed="!model" @click="model = undefined">{{ $t('species.all') }}</button>
     <button
       v-for="s in SPECIES" :key="s" type="button" class="species-chips__chip"
-      :class="[`species-chips__chip--${s}`, { 'is-active': model === s }]" :aria-pressed="model === s" @click="model = s"
+      :class="[PET_ART && `species-chips__chip--${s}`, { 'is-active': model === s }]" :aria-pressed="model === s" @click="model = s"
     >
       <span aria-hidden="true">{{ SPECIES_EMOJI[s] }}</span> {{ speciesText(s, 'many') }}
     </button>
@@ -41,7 +41,7 @@ onBeforeUnmount(() => observer?.disconnect())
 </template>
 
 <style lang="scss" scoped>
-$species: cane, gatto, coniglio, roditore, uccello, rettile, altro;
+$species: dog, cat, rabbit, rodent, bird, reptile, other;
 
 // Molecola: una riga sola che scorre in orizzontale, così 8 voci non rubano spazio alle card
 .species-chips {

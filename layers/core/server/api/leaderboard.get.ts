@@ -74,7 +74,7 @@ async function loadRows(species: Species | undefined, period: Period, city: stri
 // La parte pubblica è uguale per tutti: si ricalcola al massimo una volta al minuto per specie, periodo e città
 const publicRows = defineCachedFunction(
   (species: Species | undefined, period: Period, city: string | undefined) => loadRows(species, period, city, null),
-  { name: 'leaderboard', maxAge: 60, getKey: (species, period, city) => `${species ?? 'tutte'}:${period}:${city?.toLowerCase() ?? ''}` },
+  { name: 'leaderboard', maxAge: 60, getKey: (species, period, city) => `${species ?? 'all'}:${period}:${city?.toLowerCase() ?? ''}` },
 )
 
 export default defineEventHandler(async (event): Promise<Leaderboard> => {

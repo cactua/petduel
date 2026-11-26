@@ -95,6 +95,6 @@ describe('indirizzi', () => {
   it('senza categoria la coccarda porta alla classifica generale', () => {
     expect(rankingPath('' as Species)).toBe('/leaderboard')
     expect(rankingPath(undefined)).toBe('/leaderboard')
-    expect(rankingPath('gatto')).toBe('/leaderboard/cats')
+    expect(rankingPath('cat')).toBe('/leaderboard/cats')
   })
 })

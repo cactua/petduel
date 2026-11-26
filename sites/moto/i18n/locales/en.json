@@ -96,7 +96,7 @@
   },
   "species": {
     "filter": "Filter by type",
-    "sportiva": {
+    "sport": {
       "one": "Sport bike",
       "many": "Sport bikes",
       "among": "among sport bikes"
@@ -126,12 +126,12 @@
       "many": "Scooters",
       "among": "among scooters"
     },
-    "epoca": {
+    "vintage": {
       "one": "Vintage",
       "many": "Vintage",
       "among": "among vintage bikes"
     },
-    "altra": {
+    "other": {
       "one": "Other",
       "many": "Others",
       "among": "among other bikes"

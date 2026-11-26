@@ -2,7 +2,7 @@
 // Etichette e testi delle categorie stanno nei file di lingua (species.<id>.one|many|among)
 
 export interface SiteCategory {
-  /** Valore salvato nel database, es. "gatto" */
+  /** Valore salvato nel database, es. "cat" */
   id: string
   /** Parte dell'indirizzo della classifica, es. "gatti" in /leaderboard/gatti */
   slug: string

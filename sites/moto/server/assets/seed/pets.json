@@ -1,7 +1,7 @@
 [
   {
     "name": "Saetta",
-    "species": "sportiva",
+    "species": "sport",
     "breed": "Ducati 959 Panigale",
     "city": "Bologna",
     "photos": [
@@ -34,7 +34,7 @@
   },
   {
     "name": "Ventuno",
-    "species": "sportiva",
+    "species": "sport",
     "breed": "Ducati Panigale V2",
     "city": "Imola",
     "photos": [
@@ -92,7 +92,7 @@
   },
   {
     "name": "Fulmine",
-    "species": "sportiva",
+    "species": "sport",
     "breed": "Ducati Panigale V4 R",
     "city": "Misano Adriatico",
     "photos": [
@@ -125,7 +125,7 @@
   },
   {
     "name": "Piuma",
-    "species": "sportiva",
+    "species": "sport",
     "breed": "Ducati Panigale V4 Superleggera",
     "city": "Mugello",
     "photos": [
@@ -158,7 +158,7 @@
   },
   {
     "name": "Rossa",
-    "species": "sportiva",
+    "species": "sport",
     "breed": "Ducati Panigale V4 R",
     "city": "Modena",
     "photos": [
@@ -216,7 +216,7 @@
   },
   {
     "name": "Nerofumo",
-    "species": "sportiva",
+    "species": "sport",
     "breed": "Aprilia RSV4",
     "city": "Noale",
     "photos": [
@@ -249,7 +249,7 @@
   },
   {
     "name": "Calabrone",
-    "species": "sportiva",
+    "species": "sport",
     "breed": "BMW S 1000 RR",
     "city": "Monza",
     "photos": [
@@ -1826,7 +1826,7 @@
   },
   {
     "name": "Nonno Rex",
-    "species": "epoca",
+    "species": "vintage",
     "breed": "NSU Standard Rex Sport",
     "city": "Mantova",
     "photos": [
@@ -1859,7 +1859,7 @@
   },
   {
     "name": "Zeta Uno",
-    "species": "epoca",
+    "species": "vintage",
     "breed": "Kawasaki Z1",
     "city": "Reggio Emilia",
     "photos": [
@@ -1892,7 +1892,7 @@
   },
   {
     "name": "Zeta",
-    "species": "epoca",
+    "species": "vintage",
     "breed": "Kawasaki Z900 (1975)",
     "city": "Vicenza",
     "photos": [
@@ -1950,7 +1950,7 @@
   },
   {
     "name": "Vecchio Pope",
-    "species": "epoca",
+    "species": "vintage",
     "breed": "Pope",
     "city": "Siena",
     "photos": [
@@ -1983,7 +1983,7 @@
   },
   {
     "name": "Officina",
-    "species": "epoca",
+    "species": "vintage",
     "breed": "Moto d'epoca",
     "city": "Pavia",
     "photos": [
@@ -2016,7 +2016,7 @@
   },
   {
     "name": "Ruggine",
-    "species": "epoca",
+    "species": "vintage",
     "breed": "Moto d'epoca",
     "city": "Lucca",
     "photos": [
@@ -2049,7 +2049,7 @@
   },
   {
     "name": "Sunbeam",
-    "species": "epoca",
+    "species": "vintage",
     "breed": "Sunbeam (1929)",
     "city": "Torino",
     "photos": [
@@ -2107,7 +2107,7 @@
   },
   {
     "name": "Petrolio",
-    "species": "altra",
+    "species": "other",
     "breed": "Cafe racer",
     "city": "Firenze",
     "photos": [
@@ -2165,7 +2165,7 @@
   },
   {
     "name": "Corvo",
-    "species": "altra",
+    "species": "other",
     "breed": "Ryca CS-1",
     "city": "Treviso",
     "photos": [
@@ -2198,7 +2198,7 @@
   },
   {
     "name": "Caffè",
-    "species": "altra",
+    "species": "other",
     "breed": "Honda CB350 cafe racer",
     "city": "Novara",
     "photos": [
@@ -2231,7 +2231,7 @@
   },
   {
     "name": "Polvere",
-    "species": "altra",
+    "species": "other",
     "breed": "Triumph Scrambler",
     "city": "Asti",
     "photos": [
@@ -2264,7 +2264,7 @@
   },
   {
     "name": "Brigante",
-    "species": "altra",
+    "species": "other",
     "breed": "Triumph Scrambler 900",
     "city": "Matera",
     "photos": [
@@ -2297,7 +2297,7 @@
   },
   {
     "name": "Limone",
-    "species": "altra",
+    "species": "other",
     "breed": "Ducati Scrambler Classic",
     "city": "Sorrento",
     "photos": [
@@ -2330,7 +2330,7 @@
   },
   {
     "name": "Icona",
-    "species": "altra",
+    "species": "other",
     "breed": "Ducati Scrambler Icon",
     "city": "Bologna",
     "photos": [
@@ -2363,7 +2363,7 @@
   },
   {
     "name": "Sabbia",
-    "species": "altra",
+    "species": "other",
     "breed": "Triumph Scrambler",
     "city": "Lecce",
     "photos": [
@@ -2396,7 +2396,7 @@
   },
   {
     "name": "Undici",
-    "species": "altra",
+    "species": "other",
     "breed": "Ducati Scrambler 1100",
     "city": "Ravenna",
     "photos": [

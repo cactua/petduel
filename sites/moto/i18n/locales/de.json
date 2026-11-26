@@ -98,7 +98,7 @@
   },
   "species": {
     "filter": "Nach Art filtern",
-    "sportiva": {
+    "sport": {
       "one": "Sportler",
       "many": "Sportler",
       "among": "unter den Sportlern"
@@ -128,12 +128,12 @@
       "many": "Roller",
       "among": "unter den Rollern"
     },
-    "epoca": {
+    "vintage": {
       "one": "Oldtimer",
       "many": "Oldtimer",
       "among": "unter den Oldtimern"
     },
-    "altra": {
+    "other": {
       "one": "Andere",
       "many": "Andere",
       "among": "unter den anderen Motorrädern"
