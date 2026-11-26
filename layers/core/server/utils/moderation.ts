@@ -5,7 +5,7 @@ import { sendSiteMail } from './mail'
 import { notify } from './notifications'
 import { removeImage } from './photos'
 import { serverT } from './pushText'
-import { entryUrl } from '#shared/models'
+import { entryIdUrl } from '#shared/models'
 
 export type PhotoAction = 'approve' | 'reject' | 'remove'
 
@@ -41,12 +41,12 @@ export async function moderatePhoto(adminId: number, id: number, action: PhotoAc
   const text = `notif.${{ approve: 'photoApproved', remove: 'photoRemoved', reject: 'photoRejected' }[action]}${info.challenge ? 'Challenge' : ''}`
   const params = { name: info.name, reason: reason ?? '', ...(info.challenge && info.slug ? { challenge: info.challenge, challengeSlug: info.slug } : {}) }
   await notify(info.ownerId, `${action === 'remove' ? 'foto-rimossa' : 'foto'}:${id}`, action === 'approve'
-    ? { emoji: '✅', text, params, link: info.slug ? `/challenges/${info.slug}` : entryUrl(photo.petId) }
-    : { emoji: '🚫', text, params, link: entryUrl(photo.petId) })
+    ? { emoji: '✅', text, params, link: info.slug ? `/challenges/${info.slug}` : entryIdUrl(photo.petId) }
+    : { emoji: '🚫', text, params, link: entryIdUrl(photo.petId) })
 
   // L'artista lo scopre solo quando il disegno è pubblico; dal profilo può togliere il suo nome o segnalarlo
   if (action === 'approve' && photo.artistId && photo.artistId !== info.ownerId) {
-    await notify(photo.artistId, `artist:${id}`, { emoji: '🎨', text: 'notif.artistTagged', params: { name: info.name }, link: entryUrl(photo.petId) })
+    await notify(photo.artistId, `artist:${id}`, { emoji: '🎨', text: 'notif.artistTagged', params: { name: info.name }, link: entryIdUrl(photo.petId) })
   }
   if (action === 'approve') await notifyFollowers([info.ownerId, photo.artistId].filter((x): x is number => !!x))
 }

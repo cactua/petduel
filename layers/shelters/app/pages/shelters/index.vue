@@ -39,7 +39,7 @@ const { loggedIn } = useUserSession()
 
     <ol v-if="data?.pets.length" class="shelters-page__grid" :class="{ 'is-loading': pending }" :aria-busy="pending">
       <li v-for="p in data.pets" :key="p.id">
-        <NuxtLink :to="entryUrl(p.id)" class="shelters-page__pet">
+        <NuxtLink :to="entryUrl(p)" class="shelters-page__pet">
           <div class="shelters-page__photo">
             <picture><source v-for="s in photoSources(p.image, 'v', '(min-width: 760px) 240px, 46vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="p.image" :alt="$t('shelters.alt', { name: p.name, species: speciesText(p.species, 'one').toLowerCase() })" loading="lazy" class="shelters-page__img"></picture>
             <span class="shelters-page__ribbon" :class="`shelters-page__ribbon--${p.adoption}`">{{ $t(`adoption.status.${p.adoption}`) }}</span>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import site from '#site'
 // autoOpen: si apre da sola (arrivando da un avviso di festa o dal riquadro in classifica)
-const props = defineProps<{ petId: number, petName: string, challenge?: string, label?: string, autoOpen?: boolean }>()
+// owner: username del proprietario, per il link con il nome (/u/<owner>/<nome>)
+const props = defineProps<{ petId: number, petName: string, owner: string, challenge?: string, label?: string, autoOpen?: boolean }>()
 
 const dialog = ref<HTMLDialogElement>()
 const cardUrl = computed(() => `/card/${props.petId}.png${props.challenge ? `?challenge=${props.challenge}` : ''}`)
@@ -17,7 +18,7 @@ const canShareLink = ref(false)
 const status = ref('')
 
 function link() {
-  const url = new URL(entryUrl(props.petId), location.origin)
+  const url = new URL(entryUrl({ owner: props.owner, name: props.petName }), location.origin)
   if (props.challenge) url.searchParams.set('challenge', props.challenge)
   return url.toString()
 }

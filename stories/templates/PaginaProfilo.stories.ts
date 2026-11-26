@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import DefaultLayout from '@core/app/layouts/default.vue'
-import ProfilePage from '@core/app/pages/u/[username].vue'
+import ProfilePage from '@core/app/pages/u/[username]/index.vue'
 import { artworks, challengeList, gallery, notifications, profile, USER } from '../fixtures'
 import type { Profile } from '#shared/models'
 
@@ -8,7 +8,7 @@ import type { Profile } from '#shared/models'
 const artist = (isMe = false): Profile => {
   const p = profile({ artist: true, isMe })
   const own = gallery(0, { owner: isMe })
-  return { ...p, artworks: [{ photoId: own.photos[0]!.id, petId: own.id, name: own.name, image: own.photos[0]!.image! }, ...artworks()] }
+  return { ...p, artworks: [{ photoId: own.photos[0]!.id, petId: own.id, name: own.name, owner: own.owner, image: own.photos[0]!.image! }, ...artworks()] }
 }
 
 const api = (p: Profile) => ({
@@ -38,7 +38,7 @@ const meta = {
     docs: {
       story: { inline: false, iframeHeight: 820 },
       description: {
-        component: 'Il profilo `/u/<utente>` (`pages/u/[username].vue`) come lo vede chi visita. Testata compatta: nome, una riga con "Artista · pronomi · personaggi", '
+        component: 'Il profilo `/u/<utente>` (`pages/u/[username]/index.vue`) come lo vede chi visita. Testata compatta: nome, una riga con "Artista · pronomi · personaggi", '
           + 'bio di tre righe con "Altro", commissioni aperte in un riquadro con "Chiedi", link dell\'artista; poi Segui, Condividi e il menu ⋯ con Segnala e Blocca. '
           + 'Sui siti con le sona (FurDuel) le schede restano in alto: un artista apre su **Disegni** (per altri e per i suoi personaggi), gli altri su **Personaggi**, '
           + 'una griglia che porta alla pagina di ognuno (scheda, immagini, gestione). Cuori, follower e voti dati li vede solo il proprietario. '

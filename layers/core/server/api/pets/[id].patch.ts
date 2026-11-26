@@ -1,7 +1,7 @@
 import { and, eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { pets } from '../../db/schema'
-import { petFieldsSchema } from '#shared/models'
+import { entryUrl, petFieldsSchema } from '#shared/models'
 
 const paramsSchema = z.object({ id: z.coerce.number().int().positive() })
 
@@ -13,9 +13,12 @@ export default defineEventHandler(async (event) => {
   if (!parsed.success) throw createError({ statusCode: 400, statusMessage: parsed.error.issues[0]?.message ?? 'validation.check' })
 
   const db = await useDb()
-  const [pet] = await db.update(pets).set(parsed.data)
-    .where(and(eq(pets.id, id), eq(pets.ownerId, user.id)))
-    .returning({ id: pets.id })
-  if (!pet) throw createError({ statusCode: 404, statusMessage: 'errors.petNotFound' })
-  return { ok: true }
+  const [before] = await db.select({ name: pets.name }).from(pets).where(and(eq(pets.id, id), eq(pets.ownerId, user.id)))
+  if (!before) throw createError({ statusCode: 404, statusMessage: 'errors.petNotFound' })
+  // Il nome fa parte dell'indirizzo: unico tra i partecipanti dell'utente, e il vecchio indirizzo resta valido
+  await assertPetNameFree(user.id, parsed.data.name, id)
+  await db.update(pets).set(parsed.data).where(and(eq(pets.id, id), eq(pets.ownerId, user.id)))
+  await rememberOldSlug(user.id, id, before.name, parsed.data.name)
+  // Indirizzo nuovo della pagina, per chi la sta guardando
+  return { ok: true, url: entryUrl({ owner: user.username, name: parsed.data.name }) }
 })

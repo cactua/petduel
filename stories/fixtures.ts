@@ -168,7 +168,7 @@ export function profile(opts: { isMe?: boolean, artist?: boolean } = {}): Profil
   }
 }
 
-export const artworks = (): Artwork[] => entries(4, 2).map(p => ({ photoId: p.photoId!, petId: p.id, name: p.name, image: p.image }))
+export const artworks = (): Artwork[] => entries(4, 2).map(p => ({ photoId: p.photoId!, petId: p.id, name: p.name, owner: p.owner, image: p.image }))
 
 export const compliments = (opts: { owner?: boolean } = {}): PetCompliments => ({
   mine: ['love'],

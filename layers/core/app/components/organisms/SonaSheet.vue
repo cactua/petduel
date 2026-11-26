@@ -88,7 +88,7 @@ const addColor = () => draft.palette.length < MAX_SONA_COLORS && draft.palette.p
     <div class="sona__body">
       <div class="sona__head">
         <h2 :id="`sona-${pet.id}`" class="sona__name" :class="{ 'sona__name--small': embedded }">{{ embedded ? $t('sona.sheet') : pet.name }}</h2>
-        <ShareCard v-if="!embedded" :pet-id="pet.id" :pet-name="pet.name" />
+        <ShareCard v-if="!embedded" :pet-id="pet.id" :pet-name="pet.name" :owner="pet.owner" />
       </div>
 
       <template v-if="!editing">

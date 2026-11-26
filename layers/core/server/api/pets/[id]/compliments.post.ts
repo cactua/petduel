@@ -1,7 +1,7 @@
 import { and, count, eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { compliments, photos } from '../../../db/schema'
-import { entryUrl, COMPLIMENTS } from '#shared/models'
+import { entryIdUrl, COMPLIMENTS } from '#shared/models'
 
 const paramsSchema = z.object({ id: z.coerce.number().int().positive() })
 const bodySchema = z.object({ kind: z.enum(COMPLIMENTS), on: z.boolean() })
@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
   const [added] = await db.insert(compliments).values({ petId: id, userId: user.id, kind }).onConflictDoNothing().returning({ id: compliments.id })
   if (added) {
     const day = new Date().toISOString().slice(0, 10)
-    const note = { emoji: '💌', text: 'notif.compliment', params: { name: readers.name }, link: entryUrl(id) }
+    const note = { emoji: '💌', text: 'notif.compliment', params: { name: readers.name }, link: entryIdUrl(id) }
     await Promise.all([readers.ownerId, ...readers.artistIds].filter(r => r !== user.id)
       .map(r => notify(r, `compliments:${id}:${day}`, note)))
   }

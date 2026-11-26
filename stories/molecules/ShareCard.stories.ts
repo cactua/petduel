@@ -6,10 +6,11 @@ const meta = {
   title: 'Molecole/ShareCard',
   component: ShareCard,
   tags: ['autodocs'],
-  args: { petId: CARD_PET_ID, petName: entry(0).name, autoOpen: false },
+  args: { petId: CARD_PET_ID, petName: entry(0).name, owner: entry(0).owner, autoOpen: false },
   argTypes: {
     petId: { description: 'Partecipante: la card è /card/<id>.png, disegnata dal server' },
     petName: { description: 'Nome nel titolo, nel testo condiviso e nel nome del file' },
+    owner: { description: 'Username del proprietario: il link condiviso è /u/<owner>/<nome>' },
     challenge: { control: 'text', description: 'Slug della sfida: card e link della sfida' },
     label: { description: 'Testo del pulsante al posto di "Condividi"' },
     autoOpen: { description: 'Si apre da sola (arrivando da un avviso di festa o dal riquadro in classifica)' },

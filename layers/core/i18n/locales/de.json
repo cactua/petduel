@@ -135,6 +135,7 @@
     "cannotSelf": "Das geht nicht mit deinem eigenen Konto",
     "entryNotFound": "Teilnahme nicht gefunden",
     "petNotFound": "Nicht gefunden",
+    "petNameTaken": "Du hast schon einen Eintrag mit diesem Namen: wähle einen anderen",
     "wrongSpecies": "Diese Challenge ist für eine andere Kategorie",
     "banned": "Dieses Konto wurde gesperrt",
     "alreadyEntered": "Nimmt bereits an der Challenge teil",

@@ -109,7 +109,7 @@ const toTop = (p: RankedPet & { toTop: number }) =>
             v-for="s in podium" :key="s.place" class="ranking__place"
             :class="[`ranking__place--${s.place}`, { 'is-mine': s.pet && isMine(s.pet), 'is-free': !s.pet }]"
           >
-            <NuxtLink v-if="s.pet" :to="entryUrl(s.pet.id)" class="ranking__place-link">
+            <NuxtLink v-if="s.pet" :to="entryUrl(s.pet)" class="ranking__place-link">
               <span class="ranking__photo">
                 <PetEars :species="s.pet.species" />
                 <picture><source v-for="src in photoSources(s.pet.image, 'v', '(min-width: 760px) 300px, 34vw')" :key="`${src.media}${src.type}`" v-bind="src"><img :src="s.pet.image" :alt="s.pet.name" class="ranking__img"></picture>
@@ -144,7 +144,7 @@ const toTop = (p: RankedPet & { toTop: number }) =>
             among: [speciesText(celebrate.pet.species, 'among'), city ? $t('ranking.inCity', { city }) : ''].filter(Boolean).join(' '),
           }) }}
         </p>
-        <ShareCard :pet-id="celebrate.pet.id" :pet-name="celebrate.pet.name" :label="$t('ranking.celebrateShare')" />
+        <ShareCard :pet-id="celebrate.pet.id" :pet-name="celebrate.pet.name" :owner="celebrate.pet.owner" :label="$t('ranking.celebrateShare')" />
       </div>
 
       <section v-if="data?.mine.length" class="ranking__block">

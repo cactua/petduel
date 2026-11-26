@@ -166,10 +166,10 @@ const nextTier = computed(() => HEART_TIERS.find(t => (props.pet.wins ?? 0) < t.
       <div class="pet-gallery__info">
         <div class="pet-gallery__title">
           <component :is="hero ? 'h1' : 'h2'" class="pet-gallery__name">
-            <NuxtLink v-if="linkTitle" :to="entryUrl(pet.id)" class="pet-gallery__name-link">{{ pet.name }}</NuxtLink>
+            <NuxtLink v-if="linkTitle" :to="entryUrl(pet)" class="pet-gallery__name-link">{{ pet.name }}</NuxtLink>
             <template v-else>{{ pet.name }}</template>
           </component>
-          <NuxtLink v-if="adoption && !hero" :to="entryUrl(pet.id)" class="pet-gallery__adopt" :class="`pet-gallery__adopt--${adoption}`">{{ $t(`adoption.status.${adoption}`) }}</NuxtLink>
+          <NuxtLink v-if="adoption && !hero" :to="entryUrl(pet)" class="pet-gallery__adopt" :class="`pet-gallery__adopt--${adoption}`">{{ $t(`adoption.status.${adoption}`) }}</NuxtLink>
           <button
             v-if="editable" type="button" class="pet-gallery__manage" :class="{ 'is-active': managing }" :aria-pressed="managing"
             @click="managing = !managing; confirmingPet = false; confirming = null"
@@ -626,18 +626,22 @@ $scrim: rgba(30, 15, 5, .7);
       align-items: stretch;
       gap: 16px;
 
-      @include mq(md) { flex-direction: row; align-items: center; gap: 28px; }
+      // Dati accanto alla foto, allineati in alto
+      @include mq(md) { flex-direction: row; align-items: flex-start; gap: 28px; }
     }
 
     .pet-gallery__cover {
       --ear: 48px;
-      margin-top: 30px;
       background: var(--surface);
       padding: 7px;
       border-radius: 30px;
       box-shadow: 0 18px 30px -18px var(--glow);
 
       @include mq(md) { width: 340px; --ear: 64px; }
+
+      // Spazio sopra la cornice solo per le orecchie disegnate (PetEars, sul sito degli animali):
+      // altrove la foto sta subito sotto il link "← @utente"
+      &:has(.pet-ears) { margin-top: 30px; }
     }
 
     .pet-gallery__cover-img {

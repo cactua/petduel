@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { COMPLIMENTS, NEW_ACCOUNT_VOTE_WEIGHT, PHOTO_REPORT_REASONS, artistSettingsSchema, entryUrl, rankingPath, reportSchema, signupSchema, type Species } from '#shared/models'
+import { COMPLIMENTS, NEW_ACCOUNT_VOTE_WEIGHT, PHOTO_REPORT_REASONS, artistSettingsSchema, entryIdUrl, entrySlug, entryUrl, rankingPath, reportSchema, signupSchema, type Species } from '#shared/models'
 import { BURST_LIMIT, BURST_WINDOW_MS, NEW_ACCOUNT_DAYS, USER_DAILY_CAP, accountVoteWeight, burstWindow, isBurst } from '#shared/voteRules'
 
 const DAY = 86_400_000
@@ -88,8 +88,24 @@ describe('complimenti', () => {
 })
 
 describe('indirizzi', () => {
-  it('la pagina di un partecipante usa la parola del sito', () => {
-    expect(entryUrl(7)).toBe('/pet/7')
+  it('la pagina di un partecipante ha proprietario e nome, senza numeri', () => {
+    expect(entryUrl({ owner: 'cactua', name: 'Cactua' })).toBe('/u/cactua/cactua')
+    expect(entryUrl({ owner: 'giulia', name: 'Mr. Biscotto Jr' })).toBe('/u/giulia/mr-biscotto-jr')
+  })
+
+  it('il nome nell\x27indirizzo toglie accenti e simboli ma tiene gli altri alfabeti', () => {
+    expect(entrySlug('Ñoño  Pérez!')).toBe('nono-perez')
+    expect(entrySlug('Luna')).toBe(entrySlug('luna'))
+    expect(entrySlug('猫ちゃん')).toBe('猫ちゃん')
+    expect(entryUrl({ owner: 'a', name: '猫' })).toBe('/u/a/%E7%8C%AB')
+  })
+
+  it('un nome di soli simboli usa la parola del sito', () => {
+    expect(entrySlug('🐱🐱')).toBe('pet')
+  })
+
+  it('il vecchio indirizzo con il numero usa la parola del sito', () => {
+    expect(entryIdUrl(7)).toBe('/pet/7')
   })
 
   it('senza categoria la coccarda porta alla classifica generale', () => {

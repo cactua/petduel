@@ -14,6 +14,14 @@ export default defineEventHandler(async (event) => {
     await removeImage(image)
     throw createError({ statusCode: 400, statusMessage: parsed.error.issues[0]?.message ?? 'validation.check' })
   }
+  // Il nome fa parte dell'indirizzo della pagina (/u/<utente>/<nome>): due partecipanti dello stesso utente non lo condividono
+  try {
+    await assertPetNameFree(user.id, parsed.data.name)
+  }
+  catch (e) {
+    await removeImage(image)
+    throw e
+  }
 
   const db = await useDb()
   const pet = await db.transaction(async (tx) => {

@@ -132,7 +132,7 @@ async function submit() {
             <small class="challenge-join__entry-status">{{ $t(`join.status.${e.status}`) }}</small>
           </div>
           <ShareCard
-            v-if="e.status === 'approved'" :pet-id="e.petId" :pet-name="e.petName" :challenge="challenge.slug"
+            v-if="e.status === 'approved' && user" :pet-id="e.petId" :pet-name="e.petName" :owner="user.username" :challenge="challenge.slug"
             :label="$t('join.askVotes')" class="challenge-join__share"
           />
         </div>

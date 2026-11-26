@@ -135,6 +135,7 @@
     "cannotSelf": "Tu ne peux pas faire ça sur ton propre compte",
     "entryNotFound": "Participation introuvable",
     "petNotFound": "Introuvable",
+    "petNameTaken": "Tu as déjà un participant avec ce nom : choisis-en un autre",
     "wrongSpecies": "Ce défi est pour une autre catégorie",
     "banned": "Ce compte a été suspendu",
     "alreadyEntered": "Participe déjà au défi",

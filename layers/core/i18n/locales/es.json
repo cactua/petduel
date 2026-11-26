@@ -135,6 +135,7 @@
     "cannotSelf": "No puedes hacerlo en tu propia cuenta",
     "entryNotFound": "Participación no encontrada",
     "petNotFound": "No encontrado",
+    "petNameTaken": "Ya tienes un participante con este nombre: elige otro",
     "wrongSpecies": "Este reto es para otra categoría",
     "banned": "Esta cuenta ha sido suspendida",
     "alreadyEntered": "Ya participa en el reto",

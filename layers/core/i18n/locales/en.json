@@ -135,6 +135,7 @@
     "cannotSelf": "You can't do this on your own account",
     "entryNotFound": "Entry not found",
     "petNotFound": "Not found",
+    "petNameTaken": "You already have an entry with this name: pick another one",
     "wrongSpecies": "This challenge is for another category",
     "banned": "This account has been suspended",
     "alreadyEntered": "Already in the challenge",

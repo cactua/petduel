@@ -100,6 +100,7 @@ async function submit() {
   try {
     await $fetch(target.value === 'new' ? '/api/pets' : `/api/pets/${target.value}/photos`, { method: 'POST', body })
     done.value = true
+    sentDialog.value?.open()
   }
   catch (e) {
     error.value = errorMessage(e, 'upload.failed')
@@ -109,8 +110,11 @@ async function submit() {
   }
 }
 
+const sentDialog = ref<{ open: () => void }>()
+
 // Si ricomincia da zero: modulo vuoto, e il pet appena creato compare tra quelli già esistenti
 function again() {
+  if (!done.value) return
   done.value = false
   setPhoto(null)
   crops.value = null
@@ -123,18 +127,18 @@ function again() {
 
 <template>
   <section class="upload-page">
-    <div v-if="done" class="upload-page__done">
-      <span class="upload-page__done-icon" aria-hidden="true">🎉</span>
-      <h1 class="upload-page__done-title">{{ $t('upload.sent') }}</h1>
-      <p class="upload-page__done-text">{{ $t('upload.sentHelp') }}</p>
-      <NuxtLink :to="`/u/${user!.username}`" class="btn btn--primary btn--lg">{{ $t('upload.toProfile') }}</NuxtLink>
-      <button type="button" class="btn btn--ghost btn--lg" @click="again">{{ $t('upload.another') }}</button>
-    </div>
+    <!-- Immagine inviata: una modale sopra il modulo. Chiudendola (Esc, fuori, "Carica un'altra") il modulo riparte vuoto -->
+    <ResultDialog ref="sentDialog" icon="🎉" :title="$t('upload.sent')" :text="$t('upload.sentHelp')" @close="again">
+      <template #default="{ close }">
+        <NuxtLink :to="`/u/${user!.username}`" class="btn btn--primary btn--lg" autofocus>{{ $t('upload.toProfile') }}</NuxtLink>
+        <button type="button" class="btn btn--ghost btn--lg" @click="close">{{ $t('upload.another') }}</button>
+      </template>
+    </ResultDialog>
 
     <!-- Su telefono una colonna: per quale pet, la foto, i dati del nuovo pet.
          Su computer la foto va a sinistra e il resto in una card a destra.
          I numeri dei passi li mette il CSS, così restano in ordine anche quando un blocco manca -->
-    <form v-else class="upload-page__form" :class="{ 'upload-page__form--blocked': nothingLeft || limits.uploadsClosed.value }" @submit.prevent="submit">
+    <form class="upload-page__form" :class="{ 'upload-page__form--blocked': nothingLeft || limits.uploadsClosed.value }" @submit.prevent="submit">
       <header class="upload-page__intro">
         <h1 class="upload-page__title">{{ $t('nav.uploadPhoto') }}</h1>
         <p class="upload-page__lead">{{ $t('upload.intro') }}</p>
@@ -493,13 +497,5 @@ function again() {
   }
 
   &__rules { font-size: 13px; color: var(--muted); margin: 0; }
-
-  &__done { max-width: 460px; margin: 24px auto; @include stack($space-4); text-align: center; }
-
-  &__done-icon { font-size: 48px; }
-
-  &__done-title { margin: 0; }
-
-  &__done-text { color: var(--muted); margin: 0 0 8px; }
 }
 </style>

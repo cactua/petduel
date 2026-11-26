@@ -53,5 +53,5 @@ export function withProtocol(input: string) {
   return /^[\w-]+(\.[\w-]+)+(?:[/?#]\S*)?$/.test(v) ? `https://${v.replace(/^\/+/, '')}` : v
 }
 
-// Pagina di un partecipante (/pet/<id> o come la chiama il sito): disponibile in tutte le pagine e componenti
-export { entryUrl } from '#shared/models'
+// Pagina di un partecipante: /u/<proprietario>/<nome> (entryUrl), o con il numero per i link che lo devono tenere (entryIdUrl)
+export { entryIdUrl, entryUrl } from '#shared/models'

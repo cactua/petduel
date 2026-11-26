@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm'
-import { entryUrl, TOP_RANK, type ChallengeTranslations, type Species } from '#shared/models'
+import { entryIdUrl, TOP_RANK, type ChallengeTranslations, type Species } from '#shared/models'
 import { notifications } from '../db/schema'
 import { ensureChallenges } from './challenges'
 import { useDb } from './db'
@@ -63,7 +63,7 @@ export async function refreshNotifications(userId: number, force = false) {
       text: r.rank === 1 ? 'notif.challengeWon' : 'notif.challengePlace',
       params: { name: r.name, challenge: r.title, challengeSlug: r.slug, ...translatedTitles(r.translations), rank: r.rank, total: r.total },
       // Un bel risultato si festeggia: si apre la pagina del pet con la card della sfida pronta da condividere
-      link: `${entryUrl(r.pet_id)}?challenge=${r.slug}&share=1`,
+      link: `${entryIdUrl(r.pet_id)}?challenge=${r.slug}&share=1`,
     })
   }
 
@@ -87,7 +87,7 @@ export async function refreshNotifications(userId: number, force = false) {
       emoji: '❤️',
       text: 'notif.weeklyHearts',
       params: { n: recap.total, name: recap.best_name },
-      link: entryUrl(recap.best_id),
+      link: entryIdUrl(recap.best_id),
     })
   }
 
@@ -125,7 +125,7 @@ export async function refreshNotifications(userId: number, force = false) {
       emoji: tier === 1 ? '👑' : tier === 3 ? '🏆' : '📈',
       text: tier === 1 ? 'notif.rankFirst' : 'notif.rankTop',
       params: { name: r.name, species: r.species, tier },
-      link: `${entryUrl(r.id)}?share=1`,
+      link: `${entryIdUrl(r.id)}?share=1`,
     })
   }
 }

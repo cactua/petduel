@@ -99,7 +99,7 @@ I percorsi qui sotto sono dentro `layers/core/`.
 | --- | --- |
 | `app/pages/index.vue` | Duelli: carica la coppia successiva in anticipo |
 | `app/components/DuelArena.vue` | Gesto "trascina sopra l'altro", frecce animate, demo iniziale, tastiera |
-| `app/pages/u/[username].vue`, `app/components/PetGallery.vue` | Profilo con gallery per pet |
+| `app/pages/u/[username]/index.vue`, `app/components/PetGallery.vue` | Profilo con gallery per pet |
 | `app/pages/upload.vue` | Nuovo pet o nuova foto per un pet esistente |
 | `app/pages/admin.vue`, `app/pages/admin/*` | Pannello admin: panoramica, foto, segnalazioni, utenti, rifugi, sfide, pubblicità |
 | `server/utils/ads.ts`, `app/components/AdCard.vue` | Pubblicità custom tra un duello e l'altro, con visualizzazioni e clic |

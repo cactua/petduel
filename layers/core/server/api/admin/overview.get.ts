@@ -1,6 +1,6 @@
 import { sql } from 'drizzle-orm'
 import type { AdminActivity, AdminDay, AdminOverview } from '#shared/models'
-import { entryUrl } from '#shared/models'
+import { entryIdUrl } from '#shared/models'
 
 const TZ = 'Europe/Rome'
 const DAYS = 14
@@ -75,7 +75,7 @@ export default defineEventHandler(async (event): Promise<AdminOverview> => {
 
   const activity = feed.map((r): AdminActivity | null => {
     const at = new Date(r.at).toISOString()
-    const pet = r.id ? entryUrl(r.id) : null
+    const pet = r.id ? entryIdUrl(r.id) : null
     switch (r.kind) {
       case 'signup': return { at, emoji: '👋', text: `Nuovo utente @${r.a}`, link: `/admin/users?q=${r.a}` }
       case 'upload': return { at, emoji: '📸', text: `@${r.b} ha caricato una foto di ${r.a}`, link: '/admin/photos' }

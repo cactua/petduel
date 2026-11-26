@@ -104,7 +104,7 @@ const viewerPhotos = computed(() => (queue.value ?? []).map(q => ({ image: q.ima
           <picture><source v-for="s in photoSources(item.image, 'v', '140px')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="item.image" :alt="`Foto di ${item.pet.name}`" class="photo-review__img"></picture>
         </button>
         <div class="photo-review__info">
-          <h2 class="photo-review__name"><NuxtLink :to="entryUrl(item.pet.id)" class="photo-review__name-link">{{ item.pet.name }}</NuxtLink></h2>
+          <h2 class="photo-review__name"><NuxtLink :to="entryUrl({ owner: item.owner, name: item.pet.name })" class="photo-review__name-link">{{ item.pet.name }}</NuxtLink></h2>
           <p class="photo-review__line"><template v-if="item.pet.species">{{ speciesName(item.pet.species, 'one') }} · </template><NuxtLink :to="`/admin/users?q=${item.owner}`" class="photo-review__link">@{{ item.owner }}</NuxtLink></p>
           <p class="photo-review__line photo-review__line--small">
             {{ timeAgo(item.createdAt) }} · {{ item.pet.approvedPhotos ? `${item.pet.approvedPhotos} foto già approvate` : 'pet nuovo' }}

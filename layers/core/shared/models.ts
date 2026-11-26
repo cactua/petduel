@@ -336,6 +336,8 @@ export interface Artwork {
   photoId: number
   petId: number
   name: string
+  // Proprietario del personaggio disegnato, per il link alla sua pagina
+  owner: string
   image: string
 }
 
@@ -483,9 +485,25 @@ export const photoCreditSchema = z.object({
 /** Profilo da artista: chi carica un disegno lo può cercare e indicare come autore. Solo dove c'è askCredit */
 export const HAS_ARTISTS = !!site.askCredit
 
-// Pagina di un partecipante: /pet/<id> sul sito degli animali, /character/<id> sul furry (site.entryPath)
+// Pagina di un partecipante: /u/<proprietario>/<nome>, per esempio /u/cactua/cactua o /u/giulia/luna.
+// Il nome nell'indirizzo è quello del partecipante senza accenti né simboli; ogni utente ha nomi diversi tra loro
+// (si controlla quando crea o rinomina), e dopo una rinomina il vecchio indirizzo porta a quello nuovo.
+// I vecchi indirizzi con il numero (/pet/<id>, /character/<id> sul furry: site.entryPath) restano e ci portano qui
 export const ENTRY_PATH = site.entryPath ?? 'pet'
-export const entryUrl = (id: number | string) => `/${ENTRY_PATH}/${id}`
+
+/** Il nome come compare nell'indirizzo: "Mr. Biscotto Jr" → "mr-biscotto-jr", "Ñoño" → "nono". Lettere di altri alfabeti restano */
+export function entrySlug(name: string) {
+  const slug = name.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-+|-+$/g, '')
+  // Un nome fatto solo di simboli o emoji: la parola della pagina, così l'indirizzo non resta vuoto
+  return slug || ENTRY_PATH
+}
+export const entryUrl = (pet: { owner: string, name: string }) => `/u/${pet.owner}/${encodeURIComponent(entrySlug(pet.name))}`
+/**
+ * Indirizzo con il numero, che porta alla pagina con il nome: per i link salvati nel database (avvisi),
+ * che così restano giusti anche se il partecipante cambia nome
+ */
+export const entryIdUrl = (id: number | string) => `/${ENTRY_PATH}/${id}`
 export const MAX_ARTIST_LINKS = 6
 
 // --- Scheda del personaggio (siti con site.sona) ---

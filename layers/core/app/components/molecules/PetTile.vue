@@ -10,11 +10,11 @@ defineProps<{ id: number, name: string, image: string, owner: string, credit: Ph
 
 <template>
   <li class="pet-tile">
-    <NuxtLink :to="entryUrl(id)" :aria-label="name">
+    <NuxtLink :to="entryUrl({ owner, name })" :aria-label="name">
       <picture><source v-for="s in photoSources(image, 'v', '(min-width: 760px) 190px, 46vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="image" :alt="name" loading="lazy" class="pet-tile__img"></picture>
     </NuxtLink>
     <div class="pet-tile__info">
-      <NuxtLink :to="entryUrl(id)" class="pet-tile__name">{{ name }}</NuxtLink>
+      <NuxtLink :to="entryUrl({ owner, name })" class="pet-tile__name">{{ name }}</NuxtLink>
       <NuxtLink :to="`/u/${owner}`" class="pet-tile__line">👤 @{{ owner }}</NuxtLink>
       <CreditLink v-if="credit" :url="credit.url" class="pet-tile__line pet-tile__artist">🎨 {{ credit.text }}</CreditLink>
       <slot />

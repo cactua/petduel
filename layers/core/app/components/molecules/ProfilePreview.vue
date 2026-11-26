@@ -49,7 +49,7 @@ const askUrl = computed(() => props.profile.artist?.commissionsUrl && linkPlatfo
 </template>
 
 <style lang="scss" scoped>
-// Molecola: la testata del profilo in piccolo, con le stesse regole di pages/u/[username].vue
+// Molecola: la testata del profilo in piccolo, con le stesse regole di pages/u/[username]/index.vue
 .profile-preview {
   @include card(18px, $radius-xl);
   @include stack(16px);

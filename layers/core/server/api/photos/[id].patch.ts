@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import site from '#site'
-import { entryUrl } from '#shared/models'
+import { entryIdUrl } from '#shared/models'
 import { photos, pets } from '../../db/schema'
 
 const paramsSchema = z.object({ id: z.coerce.number().int().positive() })
@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
 
   // Un artista aggiunto dopo: se il disegno è già pubblico lo scopre subito, come all'approvazione
   if (credit?.artistId && credit.artistId !== row.artistId && credit.artistId !== row.ownerId && row.status === 'approved') {
-    await notify(credit.artistId, `artist:${id}`, { emoji: '🎨', text: 'notif.artistTagged', params: { name: row.petName }, link: entryUrl(row.petId) })
+    await notify(credit.artistId, `artist:${id}`, { emoji: '🎨', text: 'notif.artistTagged', params: { name: row.petName }, link: entryIdUrl(row.petId) })
   }
   return { inDuels: body.data.inDuels, credit: credit ? photoCredit(credit.credit, credit.creditUrl) : undefined }
 })

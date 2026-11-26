@@ -125,7 +125,7 @@ const when = (iso: string) => new Date(iso).toLocaleString(intlLocale(), { dateS
       <article v-for="r in requests" :key="r.id" class="shelter-area__request" :class="`shelter-area__request--${r.status}`">
         <header class="shelter-area__request-head">
           <span class="badge">{{ $t(`area.status.${r.status}`) }}</span>
-          <b>{{ $t('area.for') }} <NuxtLink :to="entryUrl(r.pet.id)" class="shelter-area__link">{{ r.pet.name }}</NuxtLink></b>
+          <b>{{ $t('area.for') }} <NuxtLink :to="entryUrl({ owner: user?.username ?? '', name: r.pet.name })" class="shelter-area__link">{{ r.pet.name }}</NuxtLink></b>
           <small class="u-muted shelter-area__when">{{ when(r.createdAt) }}</small>
         </header>
         <p class="shelter-area__msg">{{ r.message }}</p>

@@ -152,7 +152,7 @@ const tabCount = (k: Tab) => k === 'art'
 
 // I vecchi link a un personaggio aperto nel profilo (?c=<id>) portano alla sua pagina
 if (HAS_SONA && route.query.c && pets.value.some(p => p.id === Number(route.query.c))) {
-  await navigateTo(entryUrl(Number(route.query.c)), { replace: true })
+  await navigateTo(entryIdUrl(Number(route.query.c)), { replace: true })
 }
 // Frecce sinistra/destra tra le schede, come si aspetta chi usa la tastiera
 const tabRefs = ref<HTMLButtonElement[]>([])
@@ -365,7 +365,7 @@ const viewerPhotos = computed(() => galleryItems.value.map(g => ({ image: g.imag
         <section v-else-if="tab === 'characters'" id="panel-characters" role="tabpanel" aria-labelledby="tab-characters" class="profile__panel">
           <ul v-if="pets.length" class="profile__chars">
             <li v-for="p in pets" :key="p.id">
-              <NuxtLink :to="entryUrl(p.id)" class="profile__char">
+              <NuxtLink :to="entryUrl(p)" class="profile__char">
                 <picture v-if="thumb(p)"><source v-for="s in photoSources(thumb(p), 'v', '(min-width: 760px) 240px, 46vw')" :key="`${s.media}${s.type}`" v-bind="s"><img :src="thumb(p)" alt="" loading="lazy" class="profile__char-img"></picture>
                 <span v-else class="profile__char-img profile__char-img--empty" aria-hidden="true">{{ p.name[0] }}</span>
                 <span class="profile__char-text">
@@ -398,7 +398,7 @@ const viewerPhotos = computed(() => galleryItems.value.map(g => ({ image: g.imag
                 <picture><source v-for="s in photoSources(g.image, 'v', '(min-width: 1040px) 240px, (min-width: 760px) 22vw, 46vw')" :key="s.type" v-bind="s"><img :src="g.image" alt="" loading="lazy" class="profile__art-img"></picture>
               </button>
               <p class="profile__art-meta">
-                <NuxtLink :to="entryUrl(g.petId)" class="profile__art-name">{{ g.pet }}</NuxtLink>
+                <NuxtLink :to="entryUrl({ owner: profile.username, name: g.pet })" class="profile__art-name">{{ g.pet }}</NuxtLink>
                 <span v-if="g.credit">{{ $t('photo.credit', { text: g.credit.text }) }}</span>
               </p>
             </li>

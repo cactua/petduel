@@ -25,8 +25,8 @@ export default defineEventHandler(async (event): Promise<Profile> => {
     loadGalleries(eq(pets.ownerId, profile.id), isMe),
     isMe ? shelterManage(profile.id) : null,
     HAS_ARTISTS
-      ? db.select({ photoId: photos.id, petId: pets.id, name: pets.name, image: photos.image }).from(photos)
-          .innerJoin(pets, eq(pets.id, photos.petId))
+      ? db.select({ photoId: photos.id, petId: pets.id, name: pets.name, owner: users.username, image: photos.image }).from(photos)
+          .innerJoin(pets, eq(pets.id, photos.petId)).innerJoin(users, eq(users.id, pets.ownerId))
           .where(and(eq(photos.artistId, profile.id), eq(photos.status, 'approved')))
           .orderBy(desc(photos.createdAt)).limit(60)
       : [],

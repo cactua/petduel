@@ -359,6 +359,14 @@ export const emailTokens = pgTable('email_tokens', {
 })
 export type EmailTokenKind = 'verify' | 'reset'
 
+// Nomi che un partecipante aveva prima di essere rinominato, come compaiono nell'indirizzo (entrySlug):
+// /u/<proprietario>/<vecchio-nome> continua a portare alla sua pagina. Un nome in uso ha sempre la precedenza
+export const petOldSlugs = pgTable('pet_old_slugs', {
+  ownerId: integer('owner_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  slug: text('slug').notNull(),
+  petId: integer('pet_id').notNull().references(() => pets.id, { onDelete: 'cascade' }),
+}, t => [unique().on(t.ownerId, t.slug)])
+
 // Sessioni chiuse con "Esci", fino alla scadenza naturale del cookie (poi si tolgono)
 export const revokedSessions = pgTable('revoked_sessions', {
   sid: text('sid').primaryKey(),
@@ -683,6 +691,12 @@ CREATE INDEX IF NOT EXISTS email_tokens_user ON email_tokens (user_id, kind);
 CREATE TABLE IF NOT EXISTS revoked_sessions (
   sid text PRIMARY KEY,
   expires_at timestamptz NOT NULL
+);
+CREATE TABLE IF NOT EXISTS pet_old_slugs (
+  owner_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  slug text NOT NULL,
+  pet_id integer NOT NULL REFERENCES pets (id) ON DELETE CASCADE,
+  UNIQUE (owner_id, slug)
 );
 CREATE TABLE IF NOT EXISTS admin_log (
   id serial PRIMARY KEY,
